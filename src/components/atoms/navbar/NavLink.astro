@@ -1,0 +1,25 @@
+---
+// src/components/atoms/navbar/NavLink.astro
+interface Props {
+    href: string;
+    text: string;
+}
+
+const { href, text } = Astro.props;
+---
+
+<a
+    href={href}
+    class="relative overflow-hidden h-6 group hover:text-[#4a7dbf] transition-colors duration-300"
+>
+    <span
+        class="block group-hover:-translate-y-full transition-transform duration-300"
+    >
+        {text}
+    </span>
+    <span
+        class="block absolute top-full left-0 group-hover:translate-y-[-100%] transition-transform duration-300 font-bold"
+    >
+        {text}
+    </span>
+</a>

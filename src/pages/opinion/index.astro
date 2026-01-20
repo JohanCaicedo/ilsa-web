@@ -1,0 +1,35 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { authorsConfig } from "../../lib/authors";
+---
+
+<Layout title="Opinión - ILSA" width="wide">
+    <div class="py-20 text-center">
+        <h1 class="text-4xl font-bold mb-6">Opinión</h1>
+        <p class="text-lg text-slate-600 mb-16">
+            Voces críticas para un derecho alternativo.
+        </p>
+
+        <div
+            class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-6xl mx-auto px-4"
+        >
+            {
+                Object.entries(authorsConfig).map(([slug, author]) => (
+                    <a
+                        href={`/opinion/${slug}`}
+                        class="group flex flex-col items-center gap-4 p-6 rounded-3xl border border-slate-100 hover:border-[#4a7dbf]/30 hover:shadow-xl hover:shadow-[#4a7dbf]/10 transition-all duration-300"
+                    >
+                        <img
+                            src={author.profileImage}
+                            alt={author.name}
+                            class="w-24 h-24 rounded-full object-cover shadow-md group-hover:scale-105 transition-transform"
+                        />
+                        <h3 class="font-bold text-slate-800 text-center group-hover:text-[#4a7dbf] transition-colors">
+                            {author.name}
+                        </h3>
+                    </a>
+                ))
+            }
+        </div>
+    </div>
+</Layout>

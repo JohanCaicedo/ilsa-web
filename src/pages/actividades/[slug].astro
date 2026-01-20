@@ -1,0 +1,17 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+// Placeholder for now, eventually will fetch from WP
+export function getStaticPaths() {
+    return [{ params: { slug: "placeholder-actividad" } }];
+}
+
+const { slug } = Astro.params;
+---
+
+<Layout title="Detalle de Actividad - ILSA" width="narrow">
+    <div class="py-20 text-center">
+        <h1 class="text-4xl font-bold mb-6">Actividad: {slug}</h1>
+        <p class="text-lg text-slate-600">Detalle de la actividad.</p>
+    </div>
+</Layout>

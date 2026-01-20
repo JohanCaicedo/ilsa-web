@@ -1,9 +1,9 @@
 export interface AuthorProfile {
   name: string;
-  profileImage: string; 
-  avatarImage: string;  
-  shortBio: string;     
-  fullBio: string;      
+  profileImage: string;
+  avatarImage: string;
+  shortBio: string;
+  fullBio: string;
   xUrl?: string;
   xHandle?: string;
 }
@@ -24,8 +24,53 @@ export const authorsConfig: Record<string, AuthorProfile> = {
     avatarImage: "https://ilsa.org.co/wp-content/uploads/revslider/slider-4/boaventura-300x290.jpg.webp",    // PON TU URL AQUÍ
     shortBio: "Académico portugués. Doctor en sociología, catedrático de la Facultad de Economía y director del Centro de Estudios Sociales de la Universidad de Coímbra. Profesor distinguido de la Universidad de Wisconsin-Madison.",
     fullBio: "Boaventura de Sousa Santos es catedrático emérito de Sociología y director del Centro de Estudios Sociales de la Universidad de Coimbra, así como Distinguished Legal Scholar en la Universidad de Wisconsin-Madison. Bajo el sello editorial ILSA ha publicado: Estado, derecho y luchas Sociales (1991); La globalización del derecho. Los nuevos caminos de la regulación y la emancipación (1998) (coedición con la Facultad de Derecho, Ciencias Políticas y Sociales de la Universidad Nacional de Colombia); La caída del Angelus Novus: ensayos para una nueva teoría social y una nueva práctica política (2003) (coedición con la Facultad de Derecho, Ciencias Políticas y Sociales de la Universidad Nacional de Colombia); Democracia y participación. El ejemplo del presupuesto participativo de Porto Alegre (2005); El milenio huérfano. Ensayos para una nueva cultura política (2005, 2011) (coedición con Trotta); Sociología Jurídica Crítica. Para un nuevo sentido común en el derecho (2009); Sociología Jurídica Crítica. Para un nuevo sentido común en el derecho (2009) (coedición con Trotta); y Las bifurcaciones del orden. Revolución, ciudad, campo e indignación (2018) (coedición ILSA, Siglo del Hombre y Trotta).",
-    xUrl: "#",
-    xHandle: "@"
+    xUrl: "",
+    xHandle: ""
+  },
+  "carlos-federico-mares": {
+    name: "Carlos Federico Mares",
+    profileImage: "https://ilsa.org.co/wp-content/uploads/2021/02/placeholder.jpg",
+    avatarImage: "https://ilsa.org.co/wp-content/uploads/2021/02/placeholder.jpg",
+    shortBio: "Jurista y académico.",
+    fullBio: "Biografía pendiente...",
+    xUrl: "",
+    xHandle: ""
+  },
+  "consuelo-quattrocchi": {
+    name: "Consuelo Quattrocchi",
+    profileImage: "https://ilsa.org.co/wp-content/uploads/2021/02/placeholder.jpg",
+    avatarImage: "https://ilsa.org.co/wp-content/uploads/2021/02/placeholder.jpg",
+    shortBio: "Investigadora.",
+    fullBio: "Biografía pendiente...",
+    xUrl: "",
+    xHandle: ""
+  },
+  "german-burgos-silva": {
+    name: "Germán Burgos Silva",
+    profileImage: "https://ilsa.org.co/wp-content/uploads/2021/02/placeholder.jpg",
+    avatarImage: "https://ilsa.org.co/wp-content/uploads/2021/02/placeholder.jpg",
+    shortBio: "Investigador.",
+    fullBio: "Biografía pendiente...",
+    xUrl: "",
+    xHandle: ""
+  },
+  "liliana-estupinan-achury": {
+    name: "Liliana Estupiñán Achury",
+    profileImage: "https://ilsa.org.co/wp-content/uploads/2021/02/placeholder.jpg",
+    avatarImage: "https://ilsa.org.co/wp-content/uploads/2021/02/placeholder.jpg",
+    shortBio: "Académica.",
+    fullBio: "Biografía pendiente...",
+    xUrl: "",
+    xHandle: ""
+  },
+  "mauricio-chamorro-rosero": {
+    name: "Mauricio Chamorro Rosero",
+    profileImage: "https://ilsa.org.co/wp-content/uploads/2021/02/placeholder.jpg",
+    avatarImage: "https://ilsa.org.co/wp-content/uploads/2021/02/placeholder.jpg",
+    shortBio: "Investigador.",
+    fullBio: "Biografía pendiente...",
+    xUrl: "",
+    xHandle: ""
   }
 };
 

@@ -1,0 +1,61 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const categories = [
+    { title: "Archivo Histórico", href: "/publicaciones/archivo-historico" },
+    { title: "Coediciones", href: "/publicaciones/coediciones" },
+    {
+        title: "Derecho y Liberación",
+        href: "/publicaciones/derecho-y-liberacion",
+    },
+    { title: "En Clave de Sur", href: "/publicaciones/en-clave-de-sur" },
+    {
+        title: "Revista El Otro Derecho",
+        href: "/publicaciones/revista-el-otro-derecho",
+    },
+    {
+        title: "Otras Publicaciones",
+        href: "/publicaciones/otras-publicaciones",
+    },
+    {
+        title: "Textos de Aquí y Ahora",
+        href: "/publicaciones/textos-de-aqui-y-ahora",
+    },
+    {
+        title: "Útiles para Conocer y Actuar",
+        href: "/publicaciones/utiles-para-conocer-y-actuar",
+    },
+];
+---
+
+<Layout title="Publicaciones - ILSA" width="wide">
+    <div class="py-20 text-center">
+        <h1 class="text-4xl font-bold mb-6 text-slate-900">
+            Nuestras Publicaciones
+        </h1>
+        <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-16">
+            Explore nuestra biblioteca de recursos, revistas y textos
+            académicos.
+        </p>
+
+        <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-4"
+        >
+            {
+                categories.map((cat) => (
+                    <a
+                        href={cat.href}
+                        class="group p-8 rounded-3xl border border-slate-200 bg-white hover:border-[#4a7dbf]/30 hover:shadow-xl hover:shadow-[#4a7dbf]/10 transition-all duration-300 text-left"
+                    >
+                        <h3 class="text-xl font-bold text-slate-800 group-hover:text-[#4a7dbf] transition-colors mb-2">
+                            {cat.title}
+                        </h3>
+                        <span class="text-sm font-medium text-slate-400 group-hover:text-[#4a7dbf]/70">
+                            Ver colección →
+                        </span>
+                    </a>
+                ))
+            }
+        </div>
+    </div>
+</Layout>

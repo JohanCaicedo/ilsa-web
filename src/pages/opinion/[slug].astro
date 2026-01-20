@@ -1,7 +1,6 @@
 ---
 // Archivo: src/pages/opinion/[slug].astro
 import Layout from "../../layouts/Layout.astro";
-import Navbar from "../../components/organisms/Navbar.astro";
 import { wpQuery } from "../../lib/wp";
 import { authorsConfig, defaultAuthor } from "../../lib/authors";
 
@@ -12,7 +11,8 @@ export async function getStaticPaths() {
 }
 
 const { slug } = Astro.params;
-const author = authorsConfig[slug as keyof typeof authorsConfig] || defaultAuthor;
+const author =
+  authorsConfig[slug as keyof typeof authorsConfig] || defaultAuthor;
 
 const data = await wpQuery({
   query: `
@@ -26,7 +26,7 @@ const data = await wpQuery({
       }
     }
   `,
-  variables: { category: slug }
+  variables: { category: slug },
 });
 
 const posts = data?.posts?.nodes || [];
@@ -34,182 +34,258 @@ const postsPerPage = 12;
 const totalPages = Math.ceil(posts.length / postsPerPage);
 
 const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString("es-CO", { day: 'numeric', month: 'short', year: 'numeric' });
+  return new Date(dateString).toLocaleDateString("es-CO", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
 };
 
 const getTitleSizeClass = (title: string) => {
   const len = title.length;
-  if (len > 80) return 'text-base leading-tight';
-  if (len > 50) return 'text-lg leading-snug';
-  return 'text-xl leading-snug';
+  if (len > 80) return "text-base leading-tight";
+  if (len > 50) return "text-lg leading-snug";
+  return "text-xl leading-snug";
 };
 
 // Algoritmo de gradientes para las tarjetas de artículos
 const cardGradients = [
-  "from-blue-400/20", 
-  "from-indigo-400/20", 
-  "from-sky-300/20", 
-  "from-cyan-400/20", 
-  "from-white/10"
+  "from-blue-400/20",
+  "from-indigo-400/20",
+  "from-sky-300/20",
+  "from-cyan-400/20",
+  "from-white/10",
 ];
 ---
 
 <Layout title={`${author.name} - ILSA`} width="wide">
   <div class="fixed inset-0 -z-10 bg-white"></div>
-  
-  <Navbar />
 
-  <main class="pt-32 pb-20 px-4 md:px-8 max-w-[1400px] mx-auto">
-    
-    <div class="w-full mb-20 flex justify-center">
-      <div class="bg-[#f3f4f6] rounded-[2.5rem] p-10 md:p-14 border border-slate-200 shadow-sm w-full max-w-5xl flex flex-col gap-10">
-        
-        <div class="flex flex-col md:flex-row items-center md:items-start gap-12 w-full">
-           
-           <div class="w-full md:w-1/3 flex justify-center md:justify-start">
-              <img 
-                src={author.profileImage} 
-                alt={author.name} 
-                class="w-56 h-56 md:w-72 md:h-72 rounded-full object-cover shadow-2xl border-[8px] border-white" 
-              />
-           </div>
+  <main class="pt-24 pb-20 px-4 md:px-8 max-w-[1400px] mx-auto">
+    <div class="w-full mb-20 relative flex justify-center">
+      <!-- Decorative Background Blobs for Glass Effect - Using ILSA Blue #4a7dbf -->
+      <div
+        class="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-full bg-gradient-to-r from-[#4a7dbf]/20 via-sky-300/20 to-[#4a7dbf]/20 blur-[90px] rounded-full -z-10 opacity-60"
+      >
+      </div>
 
-           <div class="w-full md:w-2/3 text-center md:text-left flex flex-col justify-center h-full">
-              <h1 class="text-3xl md:text-5xl font-black uppercase text-[#111827] mb-6 tracking-tighter leading-none italic">
-                {author.name}
-              </h1>
-
-              <p class="text-xs md:text-sm text-[#4b5563] font-normal leading-relaxed max-w-2xl">
-                {author.fullBio}
-              </p>
-           </div>
+      <div
+        class="glass-card bg-white/50 backdrop-blur-2xl rounded-[3rem] p-8 md:p-14 border border-white/60 shadow-[0_8px_32px_0_rgba(74,125,191,0.1)] w-full max-w-6xl flex flex-col gap-8 md:flex-row md:items-center md:gap-14 relative overflow-hidden group"
+      >
+        <!-- Subtle shimmer effect on hover -->
+        <div
+          class="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/40 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out pointer-events-none"
+        >
         </div>
 
-        {author.xUrl && (
-          <div class="flex justify-center w-full pt-6 border-t border-slate-200/50">
-             <a 
-               href={author.xUrl} 
-               target="_blank" 
-               class="inline-flex items-center gap-3 px-10 py-3 bg-white text-[#111827] rounded-full font-bold text-[10px] uppercase tracking-[0.2em] shadow-sm border border-slate-200 hover:shadow-md hover:scale-[1.02] transition-all duration-300"
-             >
-               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-               <span>Seguir a {author.xHandle}</span>
-             </a>
+        <div class="relative shrink-0 flex justify-center md:justify-start">
+          <div class="relative">
+            <!-- Blob behind image -->
+            <div
+              class="absolute -inset-4 bg-gradient-to-br from-[#4a7dbf]/20 to-sky-400/20 blur-xl rounded-full"
+            >
+            </div>
+            <img
+              src={author.profileImage}
+              alt={author.name}
+              class="relative w-40 h-40 md:w-56 md:h-56 rounded-full object-cover shadow-2xl ring-4 ring-white/80"
+            />
           </div>
-        )}
+        </div>
 
+        <div
+          class="flex flex-col text-center md:text-left relative z-10 w-full"
+        >
+          <h1
+            class="text-4xl md:text-6xl font-extrabold mb-4 tracking-tight leading-none bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-[#4a7dbf] to-slate-900 drop-shadow-sm"
+          >
+            {author.name}
+          </h1>
+
+          <p
+            class="text-[1rem] text-slate-600 leading-relaxed mb-8 font-normal max-w-3xl mx-auto md:mx-0 text-justify"
+          >
+            {author.fullBio}
+          </p>
+
+          {
+            author.xUrl && (
+              <div class="flex justify-center md:justify-start">
+                <a
+                  href={author.xUrl}
+                  target="_blank"
+                  class="group/btn relative inline-flex items-center gap-3 px-8 py-3 bg-white/80 hover:bg-white backdrop-blur-md border border-white/60 rounded-full text-sm font-bold text-[#4a7dbf] shadow-lg shadow-[#4a7dbf]/10 hover:-translate-y-0.5 hover:shadow-[#4a7dbf]/20 transition-all duration-300 overflow-hidden"
+                >
+                  <span class="absolute inset-0 bg-gradient-to-r from-[#4a7dbf]/10 to-sky-400/10 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+                  <svg
+                    class="w-4 h-4 fill-current text-[#4a7dbf] relative z-10"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                  </svg>
+                  <span class="relative z-10 tracking-wide uppercase">
+                    Seguir a{" "}
+                    {author.xHandle ? author.xHandle.replace("@", "") : ""}
+                  </span>
+                </a>
+              </div>
+            )
+          }
+        </div>
       </div>
     </div>
 
-    {totalPages > 1 && (
+    {
+      totalPages > 1 && (
         <div class="mb-12 flex justify-center">
-            <div class="inline-flex gap-3 p-2 bg-slate-50 rounded-full border border-slate-200 shadow-sm" id="tab-container">
-                {[...Array(totalPages)].map((_, i) => (
-                    <button 
-                        class={`tab-btn w-10 h-10 rounded-full flex items-center justify-center text-[11px] font-black transition-all ${i === 0 ? 'bg-[#375a9e] text-white shadow-lg scale-110' : 'text-slate-400 hover:text-[#4E7CCE]'}`}
-                        data-page={i}
-                    >
-                        {i + 1}
-                    </button>
-                ))}
-            </div>
+          <div
+            class="inline-flex gap-3 p-2 bg-slate-50 rounded-full border border-slate-200 shadow-sm"
+            id="tab-container"
+          >
+            {[...Array(totalPages)].map((_, i) => (
+              <button
+                class={`tab-btn w-10 h-10 rounded-full flex items-center justify-center text-[11px] font-black transition-all ${i === 0 ? "bg-[#375a9e] text-white shadow-lg scale-110" : "text-slate-400 hover:text-[#4E7CCE]"}`}
+                data-page={i}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
         </div>
-    )}
+      )
+    }
 
-    <div id="posts-grid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {posts.map((post: any, index: number) => {
-            const gradient = cardGradients[index % cardGradients.length];
-            return (
-            <a 
-                href={post.uri} 
-                class={`
+    <div
+      id="posts-grid"
+      class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6"
+    >
+      {
+        posts.map((post: any, index: number) => {
+          const gradient = cardGradients[index % cardGradients.length];
+          return (
+            <a
+              href={post.uri}
+              class={`
                     post-card relative flex flex-col h-80 p-8 rounded-[2.5rem] overflow-hidden group 
                     transition-all duration-500 hover:scale-[1.05] hover:shadow-2xl hover:shadow-[#4E7CCE]/20
                     border border-white/10 backdrop-blur-[2px]
-                    ${index >= postsPerPage ? 'hidden' : 'flex'}
+                    ${index >= postsPerPage ? "hidden" : "flex"}
                 `}
-                data-index={index}
+              data-index={index}
             >
-                <div class="absolute inset-0 -z-20 bg-[#1e3a8a]"></div>
-                
-                <div class={`absolute inset-0 -z-10 bg-gradient-to-br ${gradient} to-transparent opacity-40 group-hover:opacity-60 transition-opacity`}></div>
-                
-                <div class="absolute inset-0 -z-10 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
+              <div class="absolute inset-0 -z-20 bg-[#1e3a8a]" />
 
-                <div class="flex justify-between items-start w-full relative z-10 mb-4">
-                    <span class="px-2.5 py-1 rounded-lg bg-black/30 text-[9px] font-black text-white uppercase tracking-[0.2em] border border-white/10 backdrop-blur-sm">
-                        Opinión
-                    </span>
-                    <time class="text-[10px] font-bold text-white/80 uppercase tracking-tight">
-                        {formatDate(post.date)}
-                    </time>
-                </div>
-                
-                <div class="flex-1 flex items-center relative z-10">
-                    <h3 class={`${getTitleSizeClass(post.title)} font-bold text-white tracking-tight group-hover:text-blue-50 transition-colors drop-shadow-md`}>
-                        {post.title}
-                    </h3>
-                </div>
+              <div
+                class={`absolute inset-0 -z-10 bg-gradient-to-br ${gradient} to-transparent opacity-40 group-hover:opacity-60 transition-opacity`}
+              />
 
-                <div class="flex justify-end w-full relative z-10">
-                    <div class="w-11 h-11 rounded-full bg-white/20 flex items-center justify-center text-white group-hover:bg-white group-hover:text-[#1e3a8a] transition-all duration-300 backdrop-blur-md border border-white/20 shadow-inner">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                    </div>
+              <div class="absolute inset-0 -z-10 bg-black/10 group-hover:bg-black/0 transition-colors" />
+
+              <div class="flex justify-between items-start w-full relative z-10 mb-4">
+                <span class="px-2.5 py-1 rounded-lg bg-black/30 text-[9px] font-black text-white uppercase tracking-[0.2em] border border-white/10 backdrop-blur-sm">
+                  Opinión
+                </span>
+                <time class="text-[10px] font-bold text-white/80 uppercase tracking-tight">
+                  {formatDate(post.date)}
+                </time>
+              </div>
+
+              <div class="flex-1 flex items-center relative z-10">
+                <h3
+                  class={`${getTitleSizeClass(post.title)} font-bold text-white tracking-tight group-hover:text-blue-50 transition-colors drop-shadow-md`}
+                >
+                  {post.title}
+                </h3>
+              </div>
+
+              <div class="flex justify-end w-full relative z-10">
+                <div class="w-11 h-11 rounded-full bg-white/20 flex items-center justify-center text-white group-hover:bg-white group-hover:text-[#1e3a8a] transition-all duration-300 backdrop-blur-md border border-white/20 shadow-inner">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <>
+                      <path d="M5 12h14" />
+                      <path d="m12 5 7 7-7 7" />
+                    </>
+                  </svg>
                 </div>
+              </div>
             </a>
-            );
-        })}
+          );
+        })
+      }
     </div>
-
   </main>
 </Layout>
 
 <script>
-    function setupTabs() {
-        const tabs = document.querySelectorAll('.tab-btn');
-        const posts = document.querySelectorAll('.post-card');
-        const postsPerPage = 12;
+  function setupTabs() {
+    const tabs = document.querySelectorAll(".tab-btn");
+    const posts = document.querySelectorAll(".post-card");
+    const postsPerPage = 12;
 
-        if(tabs.length === 0) return;
+    if (tabs.length === 0) return;
 
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const page = parseInt(tab.getAttribute('data-page') || '0');
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const page = parseInt(tab.getAttribute("data-page") || "0");
 
-                tabs.forEach(t => {
-                    t.classList.remove('bg-[#375a9e]', 'text-white', 'shadow-lg', 'scale-110');
-                    t.classList.add('text-slate-400');
-                });
-                tab.classList.remove('text-slate-400');
-                tab.classList.add('bg-[#375a9e]', 'text-white', 'shadow-lg', 'scale-110');
-
-                const start = page * postsPerPage;
-                const end = start + postsPerPage;
-
-                posts.forEach((post, index) => {
-                    if (index >= start && index < end) {
-                        post.classList.remove('hidden');
-                        post.classList.add('flex');
-                        post.animate([
-                            { opacity: 0, transform: 'scale(0.95)' },
-                            { opacity: 1, transform: 'scale(1)' }
-                        ], { duration: 400, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
-                    } else {
-                        post.classList.add('hidden');
-                        post.classList.remove('flex');
-                    }
-                });
-
-                const grid = document.getElementById('posts-grid');
-                if(grid) {
-                     const yOffset = -150; 
-                     const y = grid.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                     window.scrollTo({top: y, behavior: 'smooth'});
-                }
-            });
+        tabs.forEach((t) => {
+          t.classList.remove(
+            "bg-[#375a9e]",
+            "text-white",
+            "shadow-lg",
+            "scale-110",
+          );
+          t.classList.add("text-slate-400");
         });
-    }
+        tab.classList.remove("text-slate-400");
+        tab.classList.add(
+          "bg-[#375a9e]",
+          "text-white",
+          "shadow-lg",
+          "scale-110",
+        );
 
-    setupTabs();
-    document.addEventListener('astro:page-load', setupTabs);
+        const start = page * postsPerPage;
+        const end = start + postsPerPage;
+
+        posts.forEach((post, index) => {
+          if (index >= start && index < end) {
+            post.classList.remove("hidden");
+            post.classList.add("flex");
+            post.animate(
+              [
+                { opacity: 0, transform: "scale(0.95)" },
+                { opacity: 1, transform: "scale(1)" },
+              ],
+              { duration: 400, easing: "cubic-bezier(0.16, 1, 0.3, 1)" },
+            );
+          } else {
+            post.classList.add("hidden");
+            post.classList.remove("flex");
+          }
+        });
+
+        const grid = document.getElementById("posts-grid");
+        if (grid) {
+          const yOffset = -150;
+          const y =
+            grid.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }
+      });
+    });
+  }
+
+  setupTabs();
+  document.addEventListener("astro:page-load", setupTabs);
 </script>

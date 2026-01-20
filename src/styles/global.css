@@ -160,3 +160,13 @@
     text-align: left;
   }
 }
+
+.interactive-gradient {
+  background-image: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      #4a7dbf 0%,
+      #0f172a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: opacity 0.3s;
+}

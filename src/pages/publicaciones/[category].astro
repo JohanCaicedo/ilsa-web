@@ -1,0 +1,31 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+export function getStaticPaths() {
+    const categories = [
+        "archivo-historico",
+        "coediciones",
+        "derecho-y-liberacion",
+        "en-clave-de-sur",
+        "revista-el-otro-derecho",
+        "otras-publicaciones",
+        "textos-de-aqui-y-ahora",
+        "utiles-para-conocer-y-actuar",
+    ];
+    return categories.map((category) => ({ params: { category } }));
+}
+
+const { category } = Astro.params;
+const formattedTitle = category
+    .replace(/-/g, " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+---
+
+<Layout title={`${formattedTitle} - Publicaciones ILSA`} width="wide">
+    <div class="py-20 text-center">
+        <h1 class="text-4xl font-bold mb-6">{formattedTitle}</h1>
+        <p class="text-lg text-slate-600">
+            Listado de publicaciones para esta categoría.
+        </p>
+    </div>
+</Layout>

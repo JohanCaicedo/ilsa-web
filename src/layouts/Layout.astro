@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import Navbar from "../components/organisms/Navbar.astro";
 
 interface Props {
     title: string;
@@ -31,25 +32,7 @@ const containerClass = width === "narrow" ? "max-w-4xl" : "max-w-[1400px]";
     <body
         class="bg-background text-foreground antialiased min-h-screen flex flex-col"
     >
-        <nav
-            class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
-        >
-            <div
-                class="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-4"
-            >
-                <a
-                    href="/"
-                    class="text-xl font-black tracking-tighter uppercase"
-                    >ILSA</a
-                >
-                <a
-                    href="/opinion"
-                    class="text-xs font-bold uppercase tracking-wide text-muted-foreground transition-colors hover:text-primary"
-                >
-                    Volver a Opinión
-                </a>
-            </div>
-        </nav>
+        <Navbar />
 
         <main
             class={`flex-1 w-full mx-auto px-4 md:px-8 py-8 ${containerClass}`}
