@@ -1,28 +1,96 @@
 ---
 import Layout from "../layouts/Layout.astro";
+// Podríamos importar un componente de botón global si lo prefieres,
+// pero usaremos Tailwind 4 directamente para el efecto Glass.
 ---
 
-<Layout title="Donaciones - ILSA" width="narrow">
-    <div class="py-20 text-center">
-        <h1 class="text-5xl font-black mb-6 text-slate-900 tracking-tight">
-            Apoya nuestra labor
-        </h1>
-        <p class="text-xl text-slate-600 mb-10 text-balance">
-            Tu contribución nos ayuda a continuar trabajando por una sociedad y
-            un derecho alternativos en América Latina.
-        </p>
-
+<Layout title="Apoya a ILSA - Donaciones" width="narrow">
+    <div class="relative py-16 sm:py-24">
         <div
-            class="p-10 bg-slate-50 rounded-[2.5rem] border border-slate-100 inline-block shadow-sm"
+            class="glass-panel max-w-3xl mx-auto rounded-[3rem] p-10 md:p-16 border border-white/50 bg-white/70 shadow-2xl backdrop-blur-2xl"
         >
-            <p class="text-lg text-slate-500 mb-6">
-                Información para realizar donaciones:
-            </p>
-            <button
-                class="px-8 py-4 bg-[#4a7dbf] text-white font-bold rounded-full shadow-lg shadow-[#4a7dbf]/30 hover:scale-105 transition-transform"
-            >
-                Realizar Donación
-            </button>
+            <div class="text-center mb-12">
+                <h2
+                    class="text-4xl md:text-5xl font-black mb-6 text-slate-900 tracking-tight leading-tight text-center mx-auto"
+                >
+                    Tu apoyo <span
+                        class="bg-clip-text text-transparent bg-gradient-to-r from-[#4a7dbf] to-violet-600"
+                        >transforma</span
+                    > realidades.
+                </h2>
+                <p class="text-lg text-slate-600 text-balance leading-relaxed">
+                    Contribuye a la construcción de un derecho alternativo y una
+                    sociedad más justa en América Latina. Cada donación financia
+                    nuestras investigaciones y actividades académicas.
+                </p>
+            </div>
+
+            <div class="max-w-xl mx-auto">
+                <h3
+                    class="text-xl font-bold text-slate-800 mb-8 text-center uppercase tracking-wider text-opacity-80"
+                >
+                    Selecciona un monto
+                </h3>
+
+                <div class="grid grid-cols-2 gap-4 mb-8">
+                    {
+                        ["5", "10", "20", "50"].map((amount) => (
+                            <a
+                                href={`https://buy.stripe.com/tu_enlace_donacion_${amount}`}
+                                class="flex items-center justify-center py-4 px-6 border border-slate-200/50 bg-white/50 hover:bg-white rounded-2xl font-bold text-slate-700 hover:border-[#4a7dbf] hover:text-[#4a7dbf] transition-all active:scale-95 shadow-sm hover:shadow-md"
+                            >
+                                ${amount} USD
+                            </a>
+                        ))
+                    }
+                </div>
+
+                <div class="space-y-4">
+                    <p class="text-sm text-slate-500 text-center px-4">
+                        Serás redirigido a nuestra pasarela segura de Stripe
+                        para completar la transacción.
+                    </p>
+
+                    <button
+                        onclick="window.location.href='https://buy.stripe.com/tu_enlace_personalizado'"
+                        class="w-full py-5 bg-[#4a7dbf] hover:bg-[#375a9e] text-white font-bold rounded-2xl shadow-xl shadow-[#4a7dbf]/20 hover:shadow-[#4a7dbf]/40 hover:-translate-y-1 transition-all flex items-center justify-center gap-2 group cursor-pointer"
+                    >
+                        Donar otro valor
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="group-hover:translate-x-1 transition-transform"
+                            ><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"
+                            ></path></svg
+                        >
+                    </button>
+                </div>
+
+                <div
+                    class="mt-10 pt-8 border-t border-slate-300/30 flex justify-center gap-6 grayscale opacity-60"
+                >
+                    <span
+                        class="text-xs font-medium uppercase tracking-widest text-slate-400 flex items-center gap-2"
+                    >
+                        <svg
+                            class="w-4 h-4"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm1.07-7.75l-.9.92C11.33 11.17 11 12.06 11 13h2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"
+                            ></path></svg
+                        >
+                        Seguro con Stripe
+                    </span>
+                </div>
+            </div>
         </div>
     </div>
 </Layout>

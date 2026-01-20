@@ -1,6 +1,9 @@
 ---
 import "../styles/global.css";
 import Navbar from "../components/organisms/Navbar.astro";
+import Footer from "../components/organisms/Footer.astro";
+import LiquidBackground from "../components/atoms/LiquidBackground.astro";
+import { ClientRouter } from "astro:transitions";
 
 interface Props {
     title: string;
@@ -26,22 +29,27 @@ const containerClass = width === "narrow" ? "max-w-4xl" : "max-w-[1400px]";
             content="ILSA - Instituto Latinoamericano para una Sociedad y un Derecho Alternativos"
         />
         <meta name="viewport" content="width=device-width" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link
+            rel="icon"
+            type="image/png"
+            href="http://api.ilsa.org.co/wp-content/uploads/2023/05/cropped-ILSA-Azul-Favicon-45-anos.png"
+        />
         <title>{title}</title>
+        <ClientRouter />
     </head>
     <body
-        class="bg-background text-foreground antialiased min-h-screen flex flex-col"
+        class="bg-transparent text-foreground antialiased min-h-screen flex flex-col relative"
     >
+        <LiquidBackground />
+
         <Navbar />
 
         <main
-            class={`flex-1 w-full mx-auto px-4 md:px-8 py-8 ${containerClass}`}
+            class={`flex-1 w-full mx-auto px-4 md:px-8 py-8 ${containerClass} relative z-10`}
         >
             <slot />
         </main>
 
-        <footer class="border-t py-6 text-center text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} ILSA. Todos los derechos reservados.
-        </footer>
+        <Footer />
     </body>
 </html>
