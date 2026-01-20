@@ -1,81 +1,44 @@
-# ILSA-Web
+# Proyecto Web ILSA
 
-Este repositorio contiene el código fuente para el sitio web del **Instituto Latinoamericano para una Sociedad y un Derecho Alternativos (ILSA)**.
+Repositorio oficial para el desarrollo del nuevo portal web del **Instituto Latinoamericano para una Sociedad y un Derecho Alternativos (ILSA)**.
 
-El proyecto está construido utilizando tecnologías web modernas para ofrecer un rendimiento óptimo, una experiencia de desarrollo ágil y una arquitectura mantenible.
+Este proyecto representa una modernización completa de la presencia digital de ILSA, utilizando una arquitectura basada en componentes (Atomic Design) y un diseño visual contemporáneo ("Liquid Glass").
+
+## 📚 Documentación Técnica
+Para detalles profundos sobre arquitectura, tokens de diseño y guías de desarrollo, consulta:
+👉 **[PROJECT_DOCUMENTATION.md](./PROJECT_DOCUMENTATION.md)**
 
 ## 🚀 Tecnologías Clave
 
-*   **[Astro](https://astro.build/)**: Framework web principal enfocado en contenido y rendimiento.
-*   **[React](https://react.dev/)**: Biblioteca para componentes de UI interactivos.
-*   **[Tailwind CSS](https://tailwindcss.com/)**: Framework de utilidades para el diseño y estilizado.
-*   **[Atomic Design](https://bradfrost.com/blog/post/atomic-web-design/)**: Metodología de diseño utilizada para organizar los componentes en `src/components` (atoms, molecules, organisms).
+*   **[Astro 5](https://astro.build/)**: Framework core. Renderizado híbrido (Estático + Islas).
+*   **[Tailwind CSS v4](https://tailwindcss.com/)**: Motor de estilos y sistema de diseño.
+*   **[TypeScript](https://www.typescriptlang.org/)**: Tipado estático para robustez.
+*   **Atomic Design**: Organización fractal de componentes (`src/components/atoms`, `molecules`, `organisms`).
 
-## 📋 Requisitos Previos
+## ✨ Características Recientes (v2.0)
 
-Antes de comenzar, asegúrate de tener instalado:
+*   **Navbar "Liquid Glass"**: Nueva navegación flotante con efectos de desenfoque (`backdrop-blur`), menús desplegables anidados y branding actualizado (Logo 2025).
+*   **Arquitectura de Contenidos Expandida**:
+    *   `/nosotros`: Secciones institucionales (Dirección, Junta).
+    *   `/opinion`: Sistema dinámico de columnistas basado en `authors.ts`.
+    *   `/publicaciones`: Catálogo organizado por categorías (Coediciones, Archivo Histórico, etc.).
+    *   `/actividades`: Calendario y listado de eventos.
+*   **Diseño Visual**: Implementación de tipografía `Inter` (Apple-style) y paleta de colores institucional (`--ilsa-blue`).
 
-*   [Node.js](https://nodejs.org/) (versión 18 o superior recomendada)
-*   npm (normalmente incluido con Node.js)
 
-## 🛠️ Instalación y Configuración
 
-1.  **Clonar el repositorio**:
-
-    ```bash
-    git clone <URL_DEL_REPOSITORIO>
-    cd ilsa-web
-    ```
-
-2.  **Instalar dependencias**:
-
-    ```bash
-    npm install
-    ```
-
-3.  **Iniciar el servidor de desarrollo**:
-
-    ```bash
-    npm run dev
-    ```
-
-    El sitio estará disponible en `http://localhost:4321`.
-
-## 📂 Estructura del Proyecto
-
-La estructura de directorios sigue las convenciones de Astro, con una organización de componentes basada en Atomic Design:
+## 📂 Estructura Principal
 
 ```text
-/
-├── public/           # Archivos estáticos (imágenes, fuentes, etc.)
-├── src/
-│   ├── components/   # Componentes de UI organizados por Atomic Design
-│   │   ├── atoms/
-│   │   ├── molecules/
-│   │   ├── organisms/
-│   │   └── ui/       # Componentes base de UI (ej. shadcn/ui)
-│   ├── layouts/      # Plantillas de diseño principales (ej. Layout.astro)
-│   ├── lib/          # Utilidades y funciones auxiliares
-│   ├── pages/        # Rutas y páginas del sitio (basado en archivos)
-│   └── styles/       # Estilos globales (global.css)
-├── astro.config.mjs  # Configuración de Astro
-├── package.json      # Dependencias y scripts
-└── tailwind.config.mjs # Configuración de Tailwind
+/src
+├── components/   # UI Kit (Atomic Design)
+│   ├── atoms/    # NavLink, NavButton, NavDropdown...
+│   └── organisms/# Navbar, Footer...
+├── layouts/      # Plantillas globales (Layout.astro)
+├── lib/          # Lógica (authors.ts, configuraciones)
+├── pages/        # Rutas (index, opinion/[slug], etc.)
+└── styles/       # global.css (Tokens de diseño)
 ```
 
-## 📜 Scripts Disponibles
-
-En el directorio del proyecto, puedes ejecutar:
-
-| Comando | Descripción |
-| :--- | :--- |
-| `npm run dev` | Inicia el servidor de desarrollo local. |
-| `npm run build` | Compila el sitio para producción en la carpeta `dist/`. |
-| `npm run preview` | Vista previa local de la compilación de producción. |
-| `npm run astro` | Ejecuta comandos CLI de Astro (ej. `astro add`). |
-
-## 🤝 Contribución
-
-1.  Asegúrate de seguir la estructura de componentes Atomic Design al crear nuevos elementos de UI.
-2.  Utiliza las clases de Tailwind CSS para el estilizado.
-3.  Mantén el código limpio y comentado donde sea necesario.
+---
+*Desarrollado con estándares de código moderno para ILSA.*
