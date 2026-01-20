@@ -1,0 +1,258 @@
+---
+interface Props {
+  title: string;
+  content: string;
+  date: string;
+  section: string;
+  authorName: string;
+  authorImg: string;
+  authorBio: string;
+  twitterUrl: string;
+  twitterHandle: string;
+}
+
+const {
+  title,
+  content,
+  date,
+  section,
+  authorName,
+  authorImg,
+  authorBio,
+  twitterUrl,
+  twitterHandle,
+} = Astro.props;
+
+const formattedDate = new Date(date).toLocaleDateString("es-CO", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+---
+
+<article class="ilsa-modern-article">
+  
+  <div class="header-row">
+    <span class="opinion-pill">{section}</span>
+    <span class="date-text">{formattedDate}</span>
+  </div>
+
+  <div class="titles-section">
+    <h1 class="main-title">{title}</h1>
+  </div>
+
+  <div class="author-card">
+    <img class="author-avatar" src={authorImg} alt={authorName} />
+    <div class="author-info">
+      <h4 class="author-name">{authorName}</h4>
+      <p class="author-bio">{authorBio}</p>
+      
+      {twitterUrl && (
+        <a href={twitterUrl} class="twitter-badge" target="_blank">
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="twitter-icon"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" fill="currentColor"></path></svg>
+          Seguir a {twitterHandle}
+        </a>
+      )}
+    </div>
+  </div>
+
+  <div class="content-body" set:html={content} />
+
+</article>
+
+<style>
+  /* --- ESTILOS BASE --- */
+  .ilsa-modern-article {
+    --ilsa-blue: #4E7CCE; /* Definido explícitamente */
+    --apple-gray-bg: #F5F5F7;
+    --apple-text-dark: #1d1d1f;
+    --apple-text-gray: #86868b;
+    
+    max-width: 850px;
+    margin: 40px auto;
+    background: #fff;
+    color: var(--apple-text-dark);
+    font-family: var(--font-sans, "Inter", sans-serif);
+  }
+
+  /* --- CABECERA --- */
+  .header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 30px;
+  }
+
+  /* CORRECCIÓN: Estilos de la Píldora (Pill) */
+  .opinion-pill {
+    background-color: var(--ilsa-blue) !important; /* Forzamos el azul */
+    color: #ffffff !important; /* Forzamos texto blanco */
+    padding: 6px 16px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 50px;
+    display: inline-block;
+    box-shadow: 0 2px 4px rgba(78, 124, 206, 0.25); /* Sombra sutil azul */
+  }
+
+  .date-text {
+    color: var(--apple-text-gray);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: capitalize;
+  }
+
+  /* --- TÍTULO --- */
+  .main-title {
+    font-size: 2.5rem;
+    line-height: 1.1;
+    font-weight: 800;
+    color: var(--apple-text-dark);
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+  }
+
+  /* --- TARJETA DE AUTOR (APPLE STYLE) --- */
+  .author-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 50px;
+    padding: 32px;
+    background-color: var(--apple-gray-bg);
+    border-radius: 24px; 
+    border: 1px solid rgba(0,0,0,0.02);
+  }
+
+  .author-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #e5e5e5;
+    flex-shrink: 0;
+  }
+
+  .author-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .author-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--apple-text-dark);
+    margin: 0 0 6px 0;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+
+  .author-bio {
+    font-size: 0.95rem;
+    color: var(--apple-text-gray);
+    line-height: 1.5;
+    margin: 0 0 16px 0;
+  }
+  
+  .twitter-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: #ffffff;
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--apple-text-dark);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+  }
+
+  .twitter-badge:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    color: var(--ilsa-blue);
+  }
+
+  .twitter-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* --- CUERPO DEL TEXTO --- */
+  .content-body {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #333;
+    text-align: justify;
+  }
+
+  .content-body :global(p) {
+    margin-bottom: 24px;
+  }
+
+  .content-body :global(h2), 
+  .content-body :global(h3) {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--apple-text-dark);
+    margin-top: 50px;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+  }
+
+  .content-body :global(a) {
+      color: var(--ilsa-blue);
+      text-decoration: none;
+      font-weight: 600;
+  }
+  .content-body :global(a:hover) {
+      text-decoration: underline;
+  }
+  
+  .content-body :global(blockquote) {
+    border-left: 4px solid var(--ilsa-blue);
+    padding: 15px 25px;
+    font-style: italic;
+    background: var(--apple-gray-bg);
+    border-radius: 0 12px 12px 0;
+    margin: 30px 0;
+    color: var(--apple-text-gray);
+  }
+
+  /* --- NOTAS AL PIE --- */
+  .content-body :global(.wp-block-footnotes) {
+    margin-top: 60px;
+    padding: 30px;
+    background-color: var(--apple-gray-bg);
+    border-radius: 16px;
+    font-size: 0.9rem;
+    color: var(--apple-text-gray);
+  }
+
+  .content-body :global(.wp-block-footnotes ol) {
+    padding-left: 20px !important;
+    list-style-type: decimal !important;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .main-title {
+        font-size: 2rem;
+    }
+    .author-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 24px;
+    }
+  }
+</style>

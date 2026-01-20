@@ -1,0 +1,93 @@
+---
+import { wpQuery } from "../lib/wp";
+import Layout from "../layouts/Layout.astro";
+import ArticlePost from "../components/organisms/ArticlePost.astro";
+import RelatedSlider from "../components/organisms/RelatedSlider.astro";
+import { authorsConfig, defaultAuthor } from "../lib/authors";
+
+interface Post {
+  uri: string;
+  title: string;
+  content: string;
+  date: string;
+  featuredImage?: { node: { sourceUrl: string } };
+  categories: {
+    nodes: { slug: string; name: string }[];
+  };
+}
+
+interface Props {
+  post: Post;
+  recentPosts: Post[];
+}
+
+export async function getStaticPaths() {
+  const data = await wpQuery({
+    query: `
+      query GetMasterData {
+        allPosts: posts(first: 100, where: { categoryName: "opinion" }) {
+          nodes {
+            uri
+            title
+            content
+            date
+            categories { nodes { slug name } }
+            featuredImage { node { sourceUrl } }
+          }
+        }
+        recentPosts: posts(first: 10, where: { categoryName: "opinion" }) {
+          nodes {
+            uri
+            title
+            date
+            categories { nodes { slug name } }
+            featuredImage { node { sourceUrl } }
+          }
+        }
+      }
+    `
+  });
+
+  const recentPosts = data.recentPosts.nodes;
+
+  return data.allPosts.nodes.map((post: any) => ({
+    params: { uri: post.uri === '/' ? undefined : post.uri.replace(/^\/|\/$/g, '') },
+    props: { post, recentPosts },
+  }));
+}
+
+const { post, recentPosts } = Astro.props;
+
+const authorKey = post.categories?.nodes.find((cat: any) => 
+  Object.keys(authorsConfig).includes(cat.slug)
+)?.slug as keyof typeof authorsConfig | undefined;
+
+const authorData = authorKey ? authorsConfig[authorKey] : defaultAuthor;
+
+const sliderPosts = recentPosts
+  .filter((p: any) => p.uri !== post.uri)
+  .map((p: any) => ({
+    ...p,
+    image: p.featuredImage?.node?.sourceUrl || "https://ilsa.org.co/wp-content/uploads/2021/02/placeholder.jpg" 
+  }));
+---
+
+<Layout title={post.title} width="wide">
+    <div class="mx-auto max-w-3xl"> 
+        <ArticlePost 
+          title={post.title}
+          content={post.content}
+          date={post.date}
+          section="OPINIÓN" 
+          authorName={authorData.name}
+          authorImg={authorData.avatarImage} 
+          authorBio={authorData.shortBio}
+          twitterUrl={authorData.xUrl || ""}
+          twitterHandle={authorData.xHandle || ""}
+        />
+    </div>
+
+    <div class="mt-20 border-t pt-10">
+        <RelatedSlider posts={sliderPosts} />
+    </div>
+</Layout>

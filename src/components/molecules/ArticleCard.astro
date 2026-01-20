@@ -1,0 +1,49 @@
+---
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+
+interface Props {
+  title: string;
+  excerpt: string;
+  date: string;
+  uri: string;     // Usamos URI para el enlace completo
+  category?: string;
+}
+
+const { title, excerpt, date, uri, category = "Opinión" } = Astro.props;
+
+const formattedDate = new Date(date).toLocaleDateString("es-CO", {
+  year: 'numeric', month: 'long', day: 'numeric'
+});
+---
+
+<Card className="flex flex-col h-full hover:shadow-lg transition-shadow border-slate-200 bg-white">
+  <CardHeader>
+    <div class="flex justify-between items-center mb-2">
+      <Badge variant="secondary" className="text-xs">{category}</Badge>
+      <span class="text-xs text-slate-500">{formattedDate}</span>
+    </div>
+    <CardTitle className="text-xl leading-tight">
+      <a href={uri} class="hover:text-blue-700 transition-colors">
+        {title}
+      </a>
+    </CardTitle>
+  </CardHeader>
+  
+  <CardContent className="flex-grow">
+    <div class="text-sm text-slate-600 line-clamp-3" set:html={excerpt} />
+  </CardContent>
+
+  <CardFooter>
+    <a href={uri} class="w-full">
+        <Button variant="outline" className="w-full">Leer artículo</Button>
+    </a>
+  </CardFooter>
+</Card>

@@ -1,0 +1,64 @@
+---
+import "../styles/global.css";
+
+interface Props {
+    title: string;
+    // 'narrow': Para lectura (artículos) - centra y limita mucho el ancho.
+    // 'wide': Para hubs (home, listados) - ancho completo hasta 1400px.
+    width?: "narrow" | "wide";
+}
+
+const { title, width = "wide" } = Astro.props;
+
+// Lógica centralizada del Responsive
+// En móvil: todos tienen px-4 (margen seguro).
+// En escritorio: 'narrow' se limita a 896px (max-w-4xl), 'wide' llega a 1400px.
+const containerClass = width === "narrow" ? "max-w-4xl" : "max-w-[1400px]";
+---
+
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="description"
+            content="ILSA - Instituto Latinoamericano para una Sociedad y un Derecho Alternativos"
+        />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <title>{title}</title>
+    </head>
+    <body
+        class="bg-background text-foreground antialiased min-h-screen flex flex-col"
+    >
+        <nav
+            class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+        >
+            <div
+                class="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-4"
+            >
+                <a
+                    href="/"
+                    class="text-xl font-black tracking-tighter uppercase"
+                    >ILSA</a
+                >
+                <a
+                    href="/opinion"
+                    class="text-xs font-bold uppercase tracking-wide text-muted-foreground transition-colors hover:text-primary"
+                >
+                    Volver a Opinión
+                </a>
+            </div>
+        </nav>
+
+        <main
+            class={`flex-1 w-full mx-auto px-4 md:px-8 py-8 ${containerClass}`}
+        >
+            <slot />
+        </main>
+
+        <footer class="border-t py-6 text-center text-sm text-muted-foreground">
+            &copy; {new Date().getFullYear()} ILSA. Todos los derechos reservados.
+        </footer>
+    </body>
+</html>
