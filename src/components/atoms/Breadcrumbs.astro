@@ -1,0 +1,50 @@
+---
+import { ChevronRight, Home } from "lucide-react";
+
+interface Props {
+    items: {
+        label: string;
+        href?: string;
+    }[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav
+    aria-label="Breadcrumb"
+    class="mb-6 flex flex-nowrap items-center text-sm text-muted-foreground overflow-hidden"
+>
+    <a
+        href="/"
+        class="flex items-center gap-1 hover:text-primary transition-colors shrink-0"
+        aria-label="Ir al inicio"
+    >
+        <Home className="h-4 w-4" />
+    </a>
+
+    {
+        items.map((item) => (
+            <>
+                <ChevronRight className="h-4 w-4 mx-2 text-muted-foreground/50 shrink-0" />
+                {item.href ? (
+                    <a
+                        href={item.href}
+                        class="hover:text-primary transition-colors font-medium capitalize last:text-foreground last:pointer-events-none truncate max-w-[100px] sm:max-w-[150px] md:max-w-[300px]"
+                        aria-current={
+                            item === items[items.length - 1]
+                                ? "page"
+                                : undefined
+                        }
+                    >
+                        {item.label}
+                    </a>
+                ) : (
+                    <span class="font-medium capitalize text-foreground truncate max-w-[100px] sm:max-w-[150px] md:max-w-[300px]">
+                        {item.label}
+                    </span>
+                )}
+            </>
+        ))
+    }
+</nav>

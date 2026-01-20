@@ -3,6 +3,8 @@ import { wpQuery } from "../lib/wp";
 import Layout from "../layouts/Layout.astro";
 import ArticlePost from "../components/organisms/ArticlePost.astro";
 import RelatedSlider from "../components/organisms/RelatedSlider.astro";
+import Breadcrumbs from "../components/atoms/Breadcrumbs.astro";
+import ReadingProgress from "../components/atoms/ReadingProgress.astro";
 import { authorsConfig, defaultAuthor } from "../lib/authors";
 
 interface Post {
@@ -45,21 +47,24 @@ export async function getStaticPaths() {
           }
         }
       }
-    `
+    `,
   });
 
   const recentPosts = data.recentPosts.nodes;
 
   return data.allPosts.nodes.map((post: any) => ({
-    params: { uri: post.uri === '/' ? undefined : post.uri.replace(/^\/|\/$/g, '') },
+    params: {
+      uri: post.uri === "/" ? undefined : post.uri.replace(/^\/|\/$/g, ""),
+    },
     props: { post, recentPosts },
   }));
 }
 
 const { post, recentPosts } = Astro.props;
+const currentUrl = Astro.url.href;
 
-const authorKey = post.categories?.nodes.find((cat: any) => 
-  Object.keys(authorsConfig).includes(cat.slug)
+const authorKey = post.categories?.nodes.find((cat: any) =>
+  Object.keys(authorsConfig).includes(cat.slug),
 )?.slug as keyof typeof authorsConfig | undefined;
 
 const authorData = authorKey ? authorsConfig[authorKey] : defaultAuthor;
@@ -68,26 +73,47 @@ const sliderPosts = recentPosts
   .filter((p: any) => p.uri !== post.uri)
   .map((p: any) => ({
     ...p,
-    image: p.featuredImage?.node?.sourceUrl || "https://ilsa.org.co/wp-content/uploads/2021/02/placeholder.jpg" 
+    image:
+      p.featuredImage?.node?.sourceUrl ||
+      "https://ilsa.org.co/wp-content/uploads/2021/02/placeholder.jpg",
   }));
+
+const breadcrumbItems = [{ label: "Opinión", href: "/opinion" }];
+
+if (authorKey) {
+  breadcrumbItems.push({
+    label: authorData.name,
+    href: `/opinion/${authorKey}`,
+  });
+}
+
+breadcrumbItems.push({
+  label: post.title,
+  href: Astro.url.pathname,
+});
 ---
 
 <Layout title={post.title} width="wide">
-    <div class="mx-auto max-w-3xl"> 
-        <ArticlePost 
-          title={post.title}
-          content={post.content}
-          date={post.date}
-          section="OPINIÓN" 
-          authorName={authorData.name}
-          authorImg={authorData.avatarImage} 
-          authorBio={authorData.shortBio}
-          twitterUrl={authorData.xUrl || ""}
-          twitterHandle={authorData.xHandle || ""}
-        />
-    </div>
+  <ReadingProgress />
 
-    <div class="mt-20 border-t pt-10">
-        <RelatedSlider posts={sliderPosts} />
-    </div>
+  <div class="mx-auto max-w-3xl pt-4">
+    <Breadcrumbs items={breadcrumbItems} />
+
+    <ArticlePost
+      title={post.title}
+      content={post.content}
+      date={post.date}
+      section="OPINIÓN"
+      authorName={authorData.name}
+      authorImg={authorData.avatarImage}
+      authorBio={authorData.shortBio}
+      twitterUrl={authorData.xUrl || ""}
+      twitterHandle={authorData.xHandle || ""}
+      url={currentUrl}
+    />
+  </div>
+
+  <div class="mt-20 border-t pt-10">
+    <RelatedSlider posts={sliderPosts} />
+  </div>
 </Layout>

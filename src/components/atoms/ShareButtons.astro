@@ -1,0 +1,85 @@
+---
+import { Twitter, Facebook, MessageCircle, Share2, Link } from "lucide-react";
+
+interface Props {
+    url: string;
+    title: string;
+}
+
+const { url, title } = Astro.props;
+
+const encodedUrl = encodeURIComponent(url);
+const encodedTitle = encodeURIComponent(title);
+---
+
+<div class="flex items-center gap-2">
+    <span
+        class="text-xs font-bold uppercase tracking-wider text-muted-foreground mr-2"
+        >Compartir:</span
+    >
+
+    <a
+        href={`https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="p-2 rounded-full bg-secondary hover:bg-[#1DA1F2] hover:text-white transition-all duration-300 group"
+        aria-label="Compartir en Twitter"
+    >
+        <Twitter className="h-4 w-4" />
+    </a>
+
+    <a
+        href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="p-2 rounded-full bg-secondary hover:bg-[#4267B2] hover:text-white transition-all duration-300 group"
+        aria-label="Compartir en Facebook"
+    >
+        <Facebook className="h-4 w-4" />
+    </a>
+
+    <a
+        href={`https://wa.me/?text=${encodedTitle}%20${encodedUrl}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="p-2 rounded-full bg-secondary hover:bg-[#25D366] hover:text-white transition-all duration-300 group"
+        aria-label="Compartir en WhatsApp"
+    >
+        <MessageCircle className="h-4 w-4" />
+    </a>
+
+    <button
+        id="copy-link-btn"
+        data-url={url}
+        class="p-2 rounded-full bg-secondary hover:bg-zinc-700 hover:text-white transition-all duration-300 cursor-pointer relative"
+        aria-label="Copiar enlace"
+    >
+        <Link className="h-4 w-4" />
+        <span
+            class="absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-white text-xs py-1 px-2 rounded opacity-0 transition-opacity pointer-events-none whitespace-nowrap"
+            id="copy-tooltip">Copiado!</span
+        >
+    </button>
+</div>
+
+<script>
+    const copyBtn = document.getElementById("copy-link-btn");
+    const tooltip = document.getElementById("copy-tooltip");
+
+    if (copyBtn && tooltip) {
+        copyBtn.addEventListener("click", async () => {
+            const url = copyBtn.dataset.url;
+            if (url) {
+                try {
+                    await navigator.clipboard.writeText(url);
+                    tooltip.classList.remove("opacity-0");
+                    setTimeout(() => {
+                        tooltip.classList.add("opacity-0");
+                    }, 2000);
+                } catch (err) {
+                    console.error("Error al copiar enlace:", err);
+                }
+            }
+        });
+    }
+</script>

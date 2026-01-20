@@ -1,0 +1,36 @@
+<div
+    class="fixed top-0 left-0 w-full h-1 z-50 bg-transparent pointer-events-none"
+>
+    <div
+        id="reading-progress-bar"
+        class="h-full bg-primary origin-left scale-x-0 transition-transform duration-100 ease-out"
+    >
+    </div>
+</div>
+
+<script>
+    function updateReadingProgress() {
+        const progressBar = document.getElementById("reading-progress-bar");
+        if (!progressBar) return;
+
+        const scrollTotal =
+            document.documentElement.scrollHeight - window.innerHeight;
+
+        // Si no hay scroll, no necesitamos barra
+        if (scrollTotal <= 0) {
+            progressBar.style.transform = "scaleX(0)";
+            return;
+        }
+
+        const scrollY = window.scrollY;
+        const progress = Math.min(Math.max(scrollY / scrollTotal, 0), 1);
+
+        progressBar.style.transform = `scaleX(${progress})`;
+    }
+
+    window.addEventListener("scroll", updateReadingProgress, { passive: true });
+    window.addEventListener("resize", updateReadingProgress);
+
+    // Inicializar
+    updateReadingProgress();
+</script>
