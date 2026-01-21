@@ -1,0 +1,119 @@
+---
+interface Props {
+    title: string;
+    isOpen?: boolean;
+    class?: string;
+    variant?: "light" | "dark";
+}
+
+const {
+    title,
+    isOpen = false,
+    class: className,
+    variant = "light",
+} = Astro.props;
+
+const variants = {
+    light: {
+        container: "bg-white/70 backdrop-blur-xl border border-white/60",
+        text: "text-slate-800",
+        contentBorder: "border-slate-100/50",
+        contentText: "text-slate-600",
+    },
+    dark: {
+        container: "bg-[#183069]/30 backdrop-blur-2xl border border-white/10",
+        text: "text-white",
+        contentBorder: "border-white/5",
+        contentText: "text-indigo-100/80",
+    },
+};
+
+const styles = variants[variant];
+---
+
+<div
+    class:list={[
+        "rounded-xl overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-[#4e7cce]/20 transition-all duration-300",
+        styles.container,
+        className,
+    ]}
+>
+    <button
+        class="accordion-btn w-full px-6 py-4 flex items-center justify-between text-left focus:outline-none group"
+        aria-expanded={isOpen ? "true" : "false"}
+    >
+        <span
+            class:list={[
+                "font-bold group-hover:text-[#4e7cce] transition-colors text-lg",
+                styles.text,
+            ]}
+        >
+            {title}
+        </span>
+        <span
+            class="icon ml-4 text-[#4e7cce] text-xl font-light leading-none transform transition-transform duration-300"
+        >
+            +
+        </span>
+    </button>
+    <div
+        class="accordion-content overflow-hidden transition-[max-height] duration-300 ease-in-out"
+        style={isOpen ? "max-height: 500px;" : "max-height: 0px;"}
+    >
+        <div
+            class:list={[
+                "px-6 pb-6 pt-2 border-t",
+                styles.contentText,
+                styles.contentBorder,
+            ]}
+        >
+            <slot />
+        </div>
+    </div>
+</div>
+
+<script>
+    function setupAccordion() {
+        const buttons = document.querySelectorAll(".accordion-btn");
+
+        buttons.forEach((button) => {
+            // Remove old listeners to avoid duplicates if re-running
+            const newButton = button.cloneNode(true) as HTMLElement;
+            if (button.parentNode) {
+                button.parentNode.replaceChild(newButton, button);
+            }
+
+            newButton.addEventListener("click", (e) => {
+                const btn = e.currentTarget as HTMLElement;
+                const container = btn.parentElement;
+                if (!container) return;
+
+                const content = container.querySelector(
+                    ".accordion-content",
+                ) as HTMLElement;
+                const icon = btn.querySelector(".icon") as HTMLElement;
+
+                const isExpanded = btn.getAttribute("aria-expanded") === "true";
+
+                // Toggle current
+                if (!isExpanded) {
+                    btn.setAttribute("aria-expanded", "true");
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    icon.innerHTML = "-"; // Or rotate
+                    button.classList.add("text-[#4e7cce]");
+                } else {
+                    btn.setAttribute("aria-expanded", "false");
+                    content.style.maxHeight = "0px";
+                    icon.innerHTML = "+";
+                    button.classList.remove("text-[#4e7cce]");
+                }
+            });
+        });
+    }
+
+    // Run on load
+    setupAccordion();
+
+    // Support Astro View Transitions if enabled later
+    document.addEventListener("astro:page-load", setupAccordion);
+</script>

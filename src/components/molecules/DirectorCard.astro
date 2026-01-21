@@ -1,0 +1,200 @@
+---
+interface Props {
+    name: string;
+    role: string;
+    image: string;
+    bio: string;
+    xUrl?: string;
+    linkedinUrl?: string;
+    variant?: "primary" | "secondary" | "dark" | "frosted";
+}
+
+const {
+    name,
+    role,
+    image,
+    bio,
+    xUrl,
+    linkedinUrl,
+    variant = "dark",
+} = Astro.props;
+
+const variants = {
+    dark: {
+        container: "bg-[#183069]/70 border-white/20 text-gray-800",
+        blob: "from-[#4e7cce] via-[#565ba0] to-[#5e3b69]",
+        inner: "bg-[#183069]/80 border-white/10 shadow-inner",
+        name: "text-white",
+        roleBorder: "border-[#4e7cce]/30",
+        roleBg: "bg-[#4e7cce]/10",
+        roleText: "text-[#4e7cce]",
+        bio: "text-slate-300/90",
+        social: "text-slate-400 hover:text-white",
+    },
+    frosted: {
+        container:
+            "bg-white/70 border-white/60 text-slate-800 shadow-xl shadow-slate-200/50",
+        blob: "from-[#4e7cce]/30 via-[#565ba0]/30 to-[#5e3b69]/30",
+        inner: "bg-white/60 border-white/40 shadow-sm",
+        name: "text-slate-800",
+        roleBorder: "border-[#4e7cce]/20",
+        roleBg: "bg-blue-50/50",
+        roleText: "text-[#4e7cce]",
+        bio: "text-slate-600/90",
+        social: "text-slate-400 hover:text-[#4e7cce]",
+    },
+};
+
+const styles = variants[variant as keyof typeof variants] || variants.dark;
+---
+
+<div
+    class:list={[
+        "interactive-card relative w-80 h-[440px] rounded-xl p-px backdrop-blur-2xl overflow-hidden cursor-pointer group mx-auto transition-transform duration-300 hover:scale-105 border",
+        styles.container,
+    ]}
+>
+    <!-- Gradient Blob -->
+    <div
+        class:list={[
+            "gradient-blob pointer-events-none blur-3xl rounded-full w-60 h-60 absolute z-0 transition-opacity duration-500 opacity-0 bg-gradient-to-r",
+            styles.blob,
+        ]}
+    >
+    </div>
+
+    <!-- Content -->
+    <div
+        class:list={[
+            "relative z-10 p-6 h-full w-full rounded-[11px] flex flex-col items-center justify-between text-center border",
+            styles.inner,
+        ]}
+    >
+        <div class="flex flex-col items-center w-full">
+            <div class="relative mb-4">
+                <div
+                    class="absolute -inset-1 bg-gradient-to-r from-[#4e7cce] to-[#5e3b69] rounded-full blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"
+                >
+                </div>
+                <img
+                    src={image}
+                    alt={name}
+                    class="relative w-24 h-24 rounded-full shadow-md object-cover border-2 border-[#4e7cce]/30"
+                />
+            </div>
+
+            <h2
+                class:list={[
+                    "text-xl font-extrabold mb-2 leading-tight min-h-[3.5rem] flex items-center justify-center line-clamp-2",
+                    styles.name,
+                ]}
+            >
+                {name}
+            </h2>
+
+            <div class="mb-4 h-8 flex items-center justify-center">
+                <span
+                    class:list={[
+                        "inline-block px-3 py-1 rounded-full border text-[10px] font-bold uppercase tracking-wider backdrop-blur-sm truncate max-w-[200px]",
+                        styles.roleBorder,
+                        styles.roleBg,
+                        styles.roleText,
+                    ]}
+                >
+                    {role}
+                </span>
+            </div>
+
+            <p
+                class:list={[
+                    "text-xs font-medium mb-4 px-1 leading-relaxed text-pretty line-clamp-4 min-h-[4rem]",
+                    styles.bio,
+                ]}
+            >
+                {bio}
+            </p>
+        </div>
+
+        <div
+            class:list={[
+                "flex space-x-4 pb-2 transition-colors duration-300",
+                styles.social,
+            ]}
+        >
+            {
+                xUrl && (
+                    <a
+                        href={xUrl}
+                        target="_blank"
+                        class="hover:-translate-y-0.5 transition-transform duration-300"
+                    >
+                        <span class="sr-only">X (Twitter)</span>
+                        <svg
+                            class="w-6 h-6"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                        >
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                    </a>
+                )
+            }
+
+            {
+                linkedinUrl && (
+                    <a
+                        href={linkedinUrl}
+                        target="_blank"
+                        class="hover:-translate-y-0.5 transition-transform duration-300"
+                    >
+                        <span class="sr-only">LinkedIn</span>
+                        <svg
+                            class="w-6 h-6"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                fill-rule="evenodd"
+                                d="M12.51 8.796v1.697a3.738 3.738 0 0 1 3.288-1.684c3.455 0 4.202 2.16 4.202 4.97V19.5h-3.2v-5.072c0-1.21-.244-2.766-2.128-2.766-1.827 0-2.139 1.317-2.139 2.676V19.5h-3.19V8.796h3.168ZM7.2 6.106a1.61 1.61 0 0 1-.988 1.483 1.595 1.595 0 0 1-1.743-.348A1.607 1.607 0 0 1 5.6 4.5a1.601 1.601 0 0 1 1.6 1.606Z"
+                                clip-rule="evenodd"
+                            />
+                            <path d="M7.2 8.809H4V19.5h3.2V8.809Z" />
+                        </svg>
+                    </a>
+                )
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    function setupCards() {
+        const cards = document.querySelectorAll(".interactive-card");
+
+        cards.forEach((card) => {
+            const blob = card.querySelector(".gradient-blob") as HTMLElement;
+            if (!blob) return;
+
+            card.addEventListener("mousemove", (e: Event) => {
+                const mouseEvent = e as MouseEvent;
+                const rect = card.getBoundingClientRect();
+                const x = mouseEvent.clientX - rect.left;
+                const y = mouseEvent.clientY - rect.top;
+
+                blob.style.left = `${x - 120}px`;
+                blob.style.top = `${y - 120}px`;
+            });
+
+            card.addEventListener("mouseenter", () => {
+                blob.style.opacity = "1";
+            });
+
+            card.addEventListener("mouseleave", () => {
+                blob.style.opacity = "0";
+            });
+        });
+    }
+
+    setupCards();
+    document.addEventListener("astro:page-load", setupCards);
+</script>

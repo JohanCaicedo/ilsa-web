@@ -1,26 +1,659 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import AccordionItem from "../../components/atoms/AccordionItem.astro";
+import DirectorCard from "../../components/molecules/DirectorCard.astro";
+import Breadcrumbs from "../../components/atoms/Breadcrumbs.astro";
+
+const breadcrumbItems = [{ label: "Nosotros", href: "/nosotros" }];
 ---
 
 <Layout title="Nosotros - ILSA" width="wide">
-    <div class="py-20 text-center">
-        <h1 class="text-4xl font-bold mb-6">Nosotros</h1>
-        <p class="text-lg text-slate-600 mb-8">
-            Conoce más sobre el Instituto Latinoamericano para una Sociedad y un
-            Derecho Alternativos.
-        </p>
+    <div class="relative min-h-screen text-[#3d3d47] overflow-hidden font-sans">
+        <!-- Global Atmosphere Gradients (Cool & Clean) -->
+        <div class="fixed top-0 left-0 w-full h-full pointer-events-none z-0">
+            <!-- Enhanced Blue/Coolness -->
+            <div
+                class="absolute top-[-20%] right-[-10%] w-[50%] h-[50%] bg-[#4e7cce]/5 rounded-full blur-[120px]"
+            >
+            </div>
+            <div
+                class="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#4e7cce]/5 rounded-full blur-[120px]"
+            >
+            </div>
+        </div>
 
-        <div class="flex justify-center gap-6">
-            <a
-                href="/nosotros/direccion-ejecutiva"
-                class="px-6 py-3 border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"
-                >Dirección Ejecutiva</a
+        <div class="relative z-10 pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto">
+            <Breadcrumbs items={breadcrumbItems} />
+
+            <!-- HERO SECTION -->
+            <section
+                class="mb-24 flex flex-col items-center text-center max-w-5xl mx-auto"
             >
-            <a
-                href="/nosotros/junta-directiva"
-                class="px-6 py-3 border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"
-                >Junta Directiva</a
+                <!-- Badge -->
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#4e7cce]/20 shadow-sm mb-8"
+                >
+                    <span class="relative flex h-3 w-3">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4e7cce] opacity-75"
+                        ></span>
+                        <span
+                            class="relative inline-flex rounded-full h-3 w-3 bg-[#4e7cce]"
+                        ></span>
+                    </span>
+                    <span
+                        class="text-xs md:text-sm font-bold text-[#4e7cce] uppercase tracking-widest"
+                    >
+                        Fundado en 1978
+                    </span>
+                </div>
+
+                <!-- Headline -->
+                <h1
+                    class="text-5xl md:text-6xl lg:text-7xl font-bold text-center text-[#3d3d47] mb-8 tracking-tight leading-[1.1]"
+                >
+                    Justicia Social y <br class="hidden md:block" />
+                    <span class="text-[#4e7cce]">Derecho Alternativo</span>
+                </h1>
+
+                <!-- Lead -->
+                <p
+                    class="text-xl md:text-2xl text-[#3d3d47]/80 max-w-3xl mx-auto leading-relaxed mb-12 text-pretty"
+                >
+                    Promovemos una visión crítica del derecho y la
+                    transformación social en América Latina, reconociendo la
+                    naturaleza como sujeto de derechos.
+                </p>
+
+                <!-- Hero Image -->
+                <div
+                    class="relative w-full h-[400px] md:h-[500px] mb-16 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-blue-900/10 group"
+                >
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-[#183069]/40 to-transparent z-10"
+                    >
+                    </div>
+                    <img
+                        src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1600&auto=format&fit=crop"
+                        alt="Territorio y Naturaleza"
+                        class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000"
+                    />
+                </div>
+
+                <!-- Feature Grid -->
+                <div class="grid md:grid-cols-3 gap-8 w-full text-left">
+                    <div
+                        class="p-8 rounded-2xl bg-white border border-slate-100 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-[#4e7cce]/10 transition-all duration-300 group"
+                    >
+                        <div
+                            class="w-12 h-12 rounded-lg bg-blue-50 text-[#4e7cce] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="w-6 h-6"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                ><path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                ></path></svg
+                            >
+                        </div>
+                        <h3 class="text-xl font-bold text-[#3d3d47] mb-3">
+                            Trayectoria Regional
+                        </h3>
+                        <p class="text-[#3d3d47]/70 text-sm leading-relaxed">
+                            Desde Bogotá para toda América Latina, consolidando
+                            una experiencia histórica en investigación y acción
+                            política.
+                        </p>
+                    </div>
+
+                    <div
+                        class="p-8 rounded-2xl bg-white border border-slate-100 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-[#5e3b69]/10 transition-all duration-300 group"
+                    >
+                        <div
+                            class="w-12 h-12 rounded-lg bg-purple-50 text-[#5e3b69] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="w-6 h-6"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                ><path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                                ></path></svg
+                            >
+                        </div>
+                        <h3 class="text-xl font-bold text-[#3d3d47] mb-3">
+                            Praxis Emancipatoria
+                        </h3>
+                        <p class="text-[#3d3d47]/70 text-sm leading-relaxed">
+                            Trabajamos junto a movimientos sociales,
+                            organizaciones de mujeres, campesinas e indígenas.
+                        </p>
+                    </div>
+
+                    <div
+                        class="p-8 rounded-2xl bg-white border border-slate-100 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-[#e9b384]/20 transition-all duration-300 group"
+                    >
+                        <div
+                            class="w-12 h-12 rounded-lg bg-orange-50 text-[#e9b384] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="w-6 h-6"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                ><path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                                ></path></svg
+                            >
+                        </div>
+                        <h3 class="text-xl font-bold text-[#3d3d47] mb-3">
+                            Enfoque Integral
+                        </h3>
+                        <p class="text-[#3d3d47]/70 text-sm leading-relaxed">
+                            Derechos económicos, socioambientales y de la
+                            naturaleza, con enfoques diferenciales.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Divider -->
+            <div
+                class="w-full h-px bg-gradient-to-r from-transparent via-[#3d3d47]/10 to-transparent mb-24"
             >
+            </div>
+
+            <!-- GEO PRESENCE -->
+            <section class="max-w-4xl mx-auto mb-24 text-center">
+                <h2 class="text-3xl font-bold text-[#3d3d47] mb-8">
+                    Presencia Geográfica
+                </h2>
+
+                <!-- Geo Visual -->
+                <div
+                    class="relative w-full h-[350px] rounded-3xl overflow-hidden shadow-lg border border-white/50 mb-10 group"
+                >
+                    <div
+                        class="absolute inset-0 bg-[#4e7cce]/10 z-10 mix-blend-multiply"
+                    >
+                    </div>
+                    <img
+                        src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1000&auto=format&fit=crop"
+                        alt="Mapa Latinoamérica"
+                        class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+                    />
+                </div>
+
+                <p class="text-[#3d3d47]/70 italic max-w-2xl mx-auto">
+                    Meta (Ariari), Cauca (Pacífico), Boyacá (Páramo de Pisba),
+                    Antioquia (Urabá), Santander (Vélez), Nariño (La Cocha), San
+                    Andrés y Providencia.
+                </p>
+            </section>
+
+            <!-- MISSION / VISION -->
+            <section class="grid md:grid-cols-2 gap-12 mb-32 items-center">
+                <!-- Mission Content -->
+                <div class="order-2 md:order-1">
+                    <div class="inline-flex items-center gap-2 mb-4">
+                        <span class="w-2 h-8 bg-[#4e7cce] rounded-full"></span>
+                        <h2 class="text-4xl font-bold text-[#3d3d47]">
+                            Misión
+                        </h2>
+                    </div>
+                    <p
+                        class="text-lg text-[#3d3d47] leading-relaxed mb-6 font-medium"
+                    >
+                        Transformación de relaciones sociales en perspectiva
+                        emancipadora.
+                    </p>
+                    <div
+                        class="space-y-4 text-[#3d3d47]/80 leading-relaxed text-pretty"
+                    >
+                        <p>
+                            ILSA contribuye con un enfoque alternativo y crítico
+                            del derecho. Articula pensamiento jurídico crítico,
+                            derecho nacido de las prácticas sociales y formación
+                            crítica.
+                        </p>
+                        <p>
+                            Promueve sujetos democráticos capaces de construir
+                            sociedad con justicia social, en armonía con la
+                            naturaleza.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Mission Image -->
+                <div
+                    class="order-1 md:order-2 w-full h-[450px] rounded-[2.5rem] overflow-hidden shadow-xl shadow-blue-900/10 relative group"
+                >
+                    <div
+                        class="absolute inset-0 bg-gradient-to-tr from-[#4e7cce]/20 to-transparent z-10"
+                    >
+                    </div>
+                    <img
+                        src="https://images.unsplash.com/photo-1582213782179-e0d71db5a483?q=80&w=800&auto=format&fit=crop"
+                        alt="Comunidad y Unión"
+                        class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                    />
+                </div>
+
+                <!-- Vision Image -->
+                <div
+                    class="w-full h-[450px] rounded-[2.5rem] overflow-hidden shadow-xl shadow-purple-900/10 relative group"
+                >
+                    <div
+                        class="absolute inset-0 bg-gradient-to-bl from-[#5e3b69]/20 to-transparent z-10"
+                    >
+                    </div>
+                    <img
+                        src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=800&auto=format&fit=crop"
+                        alt="Horizonte y Naturaleza"
+                        class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                    />
+                </div>
+
+                <!-- Vision Content -->
+                <div>
+                    <div class="inline-flex items-center gap-2 mb-4">
+                        <span class="w-2 h-8 bg-[#5e3b69] rounded-full"></span>
+                        <h2 class="text-4xl font-bold text-[#3d3d47]">
+                            Visión
+                        </h2>
+                    </div>
+                    <p
+                        class="text-lg text-[#3d3d47] leading-relaxed mb-6 font-medium"
+                    >
+                        Horizonte político de defensa y promoción integral.
+                    </p>
+                    <div
+                        class="space-y-4 text-[#3d3d47]/80 leading-relaxed text-pretty"
+                    >
+                        <p>
+                            ILSA será referente en la Región y Colombia por sus
+                            contribuciones teóricas y prácticas desde el derecho
+                            alternativo.
+                        </p>
+                        <p>
+                            Reconocida por su compromiso con el campesinado,
+                            mujeres, comunidades afro y pueblos indígenas en
+                            defensa de los territorios y distribución equitativa
+                            de la tierra.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CAMPOS DE ACCION -->
+            <section class="mb-32 max-w-7xl mx-auto">
+                <div
+                    class="flex flex-col md:flex-row items-center gap-12 lg:gap-16 p-6 md:p-12 rounded-[2.5rem] bg-white/50 backdrop-blur-3xl border border-white/60 shadow-xl shadow-slate-200/50"
+                >
+                    <!-- Left: Image -->
+                    <div class="w-full md:w-5/12 shrink-0">
+                        <div
+                            class="relative group rounded-2xl overflow-hidden shadow-2xl shadow-blue-900/10"
+                        >
+                            <div
+                                class="absolute inset-0 bg-[#4e7cce]/10 group-hover:bg-transparent transition-colors duration-500 z-10"
+                            >
+                            </div>
+                            <img
+                                src="https://images.unsplash.com/photo-1555212697-194d092e3b8f?q=80&w=830&h=844&auto=format&fit=crop"
+                                alt="Campos de Acción ILSA"
+                                class="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Right: Content -->
+                    <div class="w-full md:w-7/12">
+                        <p
+                            class="text-[#4e7cce] font-bold text-sm tracking-widest uppercase mb-2"
+                        >
+                            Nuestros Ejes
+                        </p>
+                        <h2
+                            class="text-3xl md:text-4xl font-bold text-[#3d3d47] mb-6"
+                        >
+                            Campos de Acción
+                        </h2>
+                        <p
+                            class="text-[#3d3d47]/70 text-base leading-relaxed mb-8"
+                        >
+                            Estructuramos nuestras intervenciones en ejes
+                            fundamentales para abordar la complejidad de los
+                            derechos humanos y la justicia social en la región.
+                        </p>
+
+                        <!-- Accordion Items -->
+                        <div class="space-y-3">
+                            <AccordionItem
+                                variant="light"
+                                title="Conflicto interno y construcción de paz"
+                                isOpen={true}
+                            >
+                                <p
+                                    class="mb-4 text-[#3d3d47] text-sm leading-relaxed"
+                                >
+                                    <strong>Enfoque:</strong> Derechos humanos, políticas
+                                    de seguridad, derecho transicional y garantías
+                                    de no repetición.
+                                </p>
+                            </AccordionItem>
+                            <AccordionItem
+                                variant="light"
+                                title="Producción del territorio y conflictividades"
+                            >
+                                <p
+                                    class="mb-4 text-[#3d3d47] text-sm leading-relaxed"
+                                >
+                                    <strong>Enfoque:</strong> Resistencias, alternativas
+                                    al desarrollo y conflictos socioambientales (territorialidades
+                                    del capital).
+                                </p>
+                            </AccordionItem>
+                            <AccordionItem
+                                variant="light"
+                                title="Perspectivas críticas sobre DDHH"
+                            >
+                                <p
+                                    class="mb-4 text-[#3d3d47] text-sm leading-relaxed"
+                                >
+                                    <strong>Enfoque:</strong> Políticas públicas inclusivas,
+                                    participación incidente y nuevos paradigmas jurídicos.
+                                </p>
+                            </AccordionItem>
+                            <AccordionItem
+                                variant="light"
+                                title="Género y derechos de las mujeres"
+                            >
+                                <p
+                                    class="mb-4 text-[#3d3d47] text-sm leading-relaxed"
+                                >
+                                    <strong>Enfoque:</strong> Acceso a la justicia,
+                                    economía del cuidado y participación política
+                                    de las mujeres.
+                                </p>
+                            </AccordionItem>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TEAM SECTION -->
+            <section class="mb-32">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-[#3d3d47] mb-4">
+                        Nuestro Equipo
+                    </h2>
+                    <div class="w-16 h-1 bg-[#4e7cce] mx-auto rounded-full">
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-8">
+                    <DirectorCard
+                        variant="frosted"
+                        name="Freddy Ordóñez Gómez"
+                        role="Director Ejecutivo"
+                        image="https://api.ilsa.org.co/wp-content/uploads/2022/08/Freddy-Recorte-scaled.jpg.webp"
+                        bio="Investigador y presidente de ILSA. Integrante del Centro de Pensamiento Amazonias (CEPAM)."
+                        xUrl="https://x.com/freddy_ordonez"
+                    />
+
+                    <!-- Placeholder Cards for others can be simpler or reused DirectorCard if we want uniform look -->
+                    <DirectorCard
+                        variant="frosted"
+                        name="Annette Pearson"
+                        role="Asesora de Dirección"
+                        image="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=600&auto=format&fit=crop"
+                        bio="Experta en cooperación internacional."
+                    />
+
+                    <DirectorCard
+                        variant="frosted"
+                        name="Francisco Javier Toloza"
+                        role="Asesor de Dirección"
+                        image="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop"
+                        bio="Politólogo y Magister en Sociología."
+                    />
+
+                    <DirectorCard
+                        variant="frosted"
+                        name="Germán Alfonso Palacio"
+                        role="Asesor de Dirección"
+                        image="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=600&auto=format&fit=crop"
+                        bio="Abogado e historiador (PhD)."
+                    />
+
+                    <DirectorCard
+                        variant="frosted"
+                        name="Ricardo Prestes Pazello"
+                        role="Asesor de Dirección"
+                        image="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600&auto=format&fit=crop"
+                        bio="Docente de sociología jurídica."
+                    />
+
+                    <DirectorCard
+                        variant="frosted"
+                        name="Yina Villamil Velásquez"
+                        role="Asesora de Dirección"
+                        image="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop"
+                        bio="Defensora de derechos humanos."
+                    />
+                </div>
+            </section>
+
+            <!-- BOARD SECTION -->
+            <section class="max-w-7xl mx-auto mb-24">
+                <h2 class="text-3xl font-bold text-center text-[#3d3d47] mb-12">
+                    Junta Directiva
+                </h2>
+
+                <div
+                    class="flex flex-col md:flex-row gap-4 h-[600px] md:h-[450px] w-full"
+                >
+                    <!-- Card 1: Presidenta -->
+                    <div
+                        class="relative group flex-grow transition-all duration-500 md:hover:grow-[3] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl"
+                    >
+                        <img
+                            class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
+                            src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&h=800&auto=format&fit=crop"
+                            alt="Cristina Luna Calpa"
+                        />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-[#183069] via-[#183069]/40 to-transparent opacity-90 transition-opacity duration-300"
+                        >
+                        </div>
+                        <div
+                            class="absolute inset-0 flex flex-col justify-end p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
+                        >
+                            <p
+                                class="text-[#efefef] font-bold text-xs tracking-widest uppercase mb-1 opacity-80 group-hover:opacity-100"
+                            >
+                                Presidenta
+                            </p>
+                            <h3
+                                class="text-xl md:text-2xl font-bold text-white mb-2 leading-tight"
+                            >
+                                Cristina Luna Calpa
+                            </h3>
+                            <div
+                                class="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100"
+                            >
+                                <p class="text-slate-300 text-sm mt-2">
+                                    Liderazgo estratégico y representación
+                                    institucional.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Vicepresidente -->
+                    <div
+                        class="relative group flex-grow transition-all duration-500 md:hover:grow-[3] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl"
+                    >
+                        <img
+                            class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
+                            src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=600&h=800&auto=format&fit=crop"
+                            alt="Ismael Díaz Barbosa"
+                        />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-[#183069] via-[#183069]/40 to-transparent opacity-90 transition-opacity duration-300"
+                        >
+                        </div>
+                        <div
+                            class="absolute inset-0 flex flex-col justify-end p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
+                        >
+                            <p
+                                class="text-[#efefef] font-bold text-xs tracking-widest uppercase mb-1 opacity-80 group-hover:opacity-100"
+                            >
+                                Vicepresidente
+                            </p>
+                            <h3
+                                class="text-xl md:text-2xl font-bold text-white mb-2 leading-tight"
+                            >
+                                Ismael Díaz Barbosa
+                            </h3>
+                            <div
+                                class="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100"
+                            >
+                                <p class="text-slate-300 text-sm mt-2">
+                                    Apoyo a la dirección y coordinación
+                                    política.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Secretario -->
+                    <div
+                        class="relative group flex-grow transition-all duration-500 md:hover:grow-[3] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl"
+                    >
+                        <img
+                            class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
+                            src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=600&h=800&auto=format&fit=crop"
+                            alt="Edwin de los Ríos Jaramillo"
+                        />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-[#183069] via-[#183069]/40 to-transparent opacity-90 transition-opacity duration-300"
+                        >
+                        </div>
+                        <div
+                            class="absolute inset-0 flex flex-col justify-end p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
+                        >
+                            <p
+                                class="text-[#efefef] font-bold text-xs tracking-widest uppercase mb-1 opacity-80 group-hover:opacity-100"
+                            >
+                                Secretario
+                            </p>
+                            <h3
+                                class="text-xl md:text-2xl font-bold text-white mb-2 leading-tight"
+                            >
+                                Edwin de los Ríos
+                            </h3>
+                            <div
+                                class="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100"
+                            >
+                                <p class="text-slate-300 text-sm mt-2">
+                                    Gestión administrativa y actas
+                                    institucionales.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Vocal -->
+                    <div
+                        class="relative group flex-grow transition-all duration-500 md:hover:grow-[3] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl"
+                    >
+                        <img
+                            class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
+                            src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=600&h=800&auto=format&fit=crop"
+                            alt="Maria Eugenia Ramírez Brisneda"
+                        />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-[#183069] via-[#183069]/40 to-transparent opacity-90 transition-opacity duration-300"
+                        >
+                        </div>
+                        <div
+                            class="absolute inset-0 flex flex-col justify-end p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
+                        >
+                            <p
+                                class="text-[#efefef] font-bold text-xs tracking-widest uppercase mb-1 opacity-80 group-hover:opacity-100"
+                            >
+                                Vocal
+                            </p>
+                            <h3
+                                class="text-xl md:text-2xl font-bold text-white mb-2 leading-tight"
+                            >
+                                Maria Eugenia Ramírez
+                            </h3>
+                            <div
+                                class="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100"
+                            >
+                                <p class="text-slate-300 text-sm mt-2">
+                                    Vigilancia y control de procesos
+                                    estratégicos.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 5: Vocal -->
+                    <div
+                        class="relative group flex-grow transition-all duration-500 md:hover:grow-[3] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl"
+                    >
+                        <img
+                            class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
+                            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&h=800&auto=format&fit=crop"
+                            alt="Julio Gaitán Bohórquez"
+                        />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-[#183069] via-[#183069]/40 to-transparent opacity-90 transition-opacity duration-300"
+                        >
+                        </div>
+                        <div
+                            class="absolute inset-0 flex flex-col justify-end p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
+                        >
+                            <p
+                                class="text-[#efefef] font-bold text-xs tracking-widest uppercase mb-1 opacity-80 group-hover:opacity-100"
+                            >
+                                Vocal
+                            </p>
+                            <h3
+                                class="text-xl md:text-2xl font-bold text-white mb-2 leading-tight"
+                            >
+                                Julio Gaitán Bohórquez
+                            </h3>
+                            <div
+                                class="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100"
+                            >
+                                <p class="text-slate-300 text-sm mt-2">
+                                    Asesoría experta y visión académica.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
 </Layout>
