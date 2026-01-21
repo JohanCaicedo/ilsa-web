@@ -3,11 +3,40 @@ import Layout from "../../layouts/Layout.astro";
 import AccordionItem from "../../components/atoms/AccordionItem.astro";
 import DirectorCard from "../../components/molecules/DirectorCard.astro";
 import Breadcrumbs from "../../components/atoms/Breadcrumbs.astro";
+import { wpQuery } from "../../lib/wp";
+import type { SeoData } from "../../lib/seo";
 
 const breadcrumbItems = [{ label: "Nosotros", href: "/nosotros" }];
+
+// Fetch SEO Data specifically for this page
+const data = await wpQuery({
+    query: `
+    query GetNosotrosSEO {
+      page(id: "/nosotros", idType: URI) {
+        seo {
+          title
+          metaDesc
+          canonical
+          opengraphTitle
+          opengraphDescription
+          opengraphImage {
+            sourceUrl
+          }
+          twitterTitle
+          twitterDescription
+          twitterImage {
+             sourceUrl
+          }
+        }
+      }
+    }
+  `,
+});
+
+const seoData: SeoData = data?.page?.seo;
 ---
 
-<Layout title="Nosotros - ILSA" width="wide">
+<Layout seo={seoData}>
     <div class="relative min-h-screen text-[#3d3d47] overflow-hidden font-sans">
         <!-- Global Atmosphere Gradients (Cool & Clean) -->
         <div class="fixed top-0 left-0 w-full h-full pointer-events-none z-0">
@@ -22,7 +51,7 @@ const breadcrumbItems = [{ label: "Nosotros", href: "/nosotros" }];
             </div>
         </div>
 
-        <div class="relative z-10 pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto">
+        <div class="relative z-10 pt-8 pb-24 px-6 md:px-12 max-w-7xl mx-auto">
             <Breadcrumbs items={breadcrumbItems} />
 
             <!-- HERO SECTION -->

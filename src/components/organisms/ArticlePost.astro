@@ -9,6 +9,7 @@ interface Props {
   authorName: string;
   authorImg: string;
   authorBio: string;
+  authorSlug?: string; // Optional slug for view transitions
   twitterUrl: string;
   twitterHandle: string;
   url: string; // New prop for sharing
@@ -22,6 +23,7 @@ const {
   authorName,
   authorImg,
   authorBio,
+  authorSlug,
   twitterUrl,
   twitterHandle,
   url,
@@ -68,6 +70,7 @@ const formattedDate = new Date(date).toLocaleDateString("es-CO", {
       class="w-20 h-20 rounded-full object-cover bg-muted shrink-0"
       src={authorImg}
       alt={authorName}
+      transition:name={authorSlug ? `author-photo-${authorSlug}` : undefined}
     />
     <div class="flex flex-col justify-center text-center md:text-left">
       <h4

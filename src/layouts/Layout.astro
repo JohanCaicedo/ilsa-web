@@ -4,19 +4,30 @@ import Navbar from "../components/organisms/Navbar.astro";
 import Footer from "../components/organisms/Footer.astro";
 import LiquidBackground from "../components/atoms/LiquidBackground.astro";
 import { ClientRouter } from "astro:transitions";
+import type { SeoData } from "../lib/seo";
+import { defaultSeo } from "../lib/seo";
 
 interface Props {
-    title: string;
-    // 'narrow': Para lectura (artículos) - centra y limita mucho el ancho.
-    // 'wide': Para hubs (home, listados) - ancho completo hasta 1400px.
+    title?: string;
     width?: "narrow" | "wide";
+    seo?: SeoData;
 }
 
-const { title, width = "wide" } = Astro.props;
+const { title, width = "wide", seo } = Astro.props;
 
-// Lógica centralizada del Responsive
-// En móvil: todos tienen px-4 (margen seguro).
-// En escritorio: 'narrow' se limita a 896px (max-w-4xl), 'wide' llega a 1400px.
+// Logic priority: Yoast SEO > Specific Prop > Default
+const finalTitle = seo?.title || title || defaultSeo.title;
+const metaDescription = seo?.metaDesc || defaultSeo.metaDesc;
+const canonicalUrl = seo?.canonical || Astro.url.href;
+
+// OpenGraph
+const ogTitle = seo?.opengraphTitle || finalTitle;
+const ogDescription = seo?.opengraphDescription || metaDescription;
+const ogImage =
+    seo?.opengraphImage?.sourceUrl ||
+    "https://ilsa.org.co/wp-content/uploads/2021/02/placeholder.jpg"; // Fallback image
+
+// Layout width logic
 const containerClass = width === "narrow" ? "max-w-4xl" : "max-w-[1400px]";
 ---
 
@@ -24,17 +35,39 @@ const containerClass = width === "narrow" ? "max-w-4xl" : "max-w-[1400px]";
 <html lang="es">
     <head>
         <meta charset="UTF-8" />
-        <meta
-            name="description"
-            content="ILSA - Instituto Latinoamericano para una Sociedad y un Derecho Alternativos"
-        />
         <meta name="viewport" content="width=device-width" />
         <link
             rel="icon"
             type="image/png"
             href="http://api.ilsa.org.co/wp-content/uploads/2023/05/cropped-ILSA-Azul-Favicon-45-anos.png"
         />
-        <title>{title}</title>
+
+        <!-- Primary Meta Tags -->
+        <title>{finalTitle}</title>
+        <meta name="title" content={finalTitle} />
+        <meta name="description" content={metaDescription} />
+        <link rel="canonical" href={canonicalUrl} />
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={Astro.url.href} />
+        <meta property="og:title" content={ogTitle} />
+        <meta property="og:description" content={ogDescription} />
+        <meta property="og:image" content={ogImage} />
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={Astro.url.href} />
+        <meta property="twitter:title" content={seo?.twitterTitle || ogTitle} />
+        <meta
+            property="twitter:description"
+            content={seo?.twitterDescription || ogDescription}
+        />
+        <meta
+            property="twitter:image"
+            content={seo?.twitterImage?.sourceUrl || ogImage}
+        />
+
         <ClientRouter />
     </head>
     <body
@@ -45,7 +78,8 @@ const containerClass = width === "narrow" ? "max-w-4xl" : "max-w-[1400px]";
         <Navbar />
 
         <main
-            class={`flex-1 w-full mx-auto px-4 md:px-8 py-8 ${containerClass} relative z-10`}
+            class={`flex-1 w-full mx-auto px-4 md:px-8 mt-24 pb-8 md:mt-28 ${containerClass} relative z-10`}
+            transition:animate="fade"
         >
             <slot />
         </main>
