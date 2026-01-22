@@ -50,3 +50,5 @@ El backend en `api.ilsa.org.co` devuelve objetos con la siguiente estructura. Ú
     - `title`, `metaDesc`, `canonical`.
     - Redes Sociales: `opengraphTitle`, `opengraphImage.sourceUrl`, `twitterImage.sourceUrl`.
     - Lectura: `readingTime` (tiempo estimado en minutos).
+## Protocolo de Finalización
+- Al final de cada sesión, el agente DEBE proponer la actualización de `@ai_memory.md` y generar el texto de un commit para Git basado en los cambios detectados en el sistema de archivos.

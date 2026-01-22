@@ -1,38 +1,147 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import Breadcrumbs from "../../components/atoms/Breadcrumbs.astro";
+import TeamCard from "../../components/molecules/TeamCard.astro";
+import RelatedSlider from "../../components/organisms/RelatedSlider.astro";
+import {
+    wpQuery,
+    MASTER_QUERY,
+    type MasterQueryResponse,
+    type PostNode,
+} from "../../lib/wp";
 import { authorsConfig } from "../../lib/authors";
+import type { SeoData } from "../../lib/seo";
 
 export const prerender = true;
+
+const breadcrumbItems = [{ label: "Opinión", href: "/opinion" }];
+
+// Fetch SEO and Post Data
+const data: MasterQueryResponse = await wpQuery(MASTER_QUERY);
+
+// Filter opinion articles (assuming category slug is 'opinion') and limit to 20
+const opinionArticles = (
+    data?.posts?.nodes?.filter((post: PostNode) =>
+        post.categories.nodes.some((cat) => cat.slug === "opinion"),
+    ) || []
+).slice(0, 20);
+
+// Use SEO from the first post or a default (Ideally we'd fetch a specific page for SEO)
+const seoData: SeoData = {
+    title: "Opinión - Justicia y Derecho Alternativo | ILSA",
+    metaDesc:
+        "Columnas de opinión, análisis crítico y pensamiento jurídico emancipador en América Latina.",
+};
+
+// Columnists list from local config
+const columnists = Object.values(authorsConfig);
 ---
 
-<Layout title="Opinión - ILSA" width="wide">
-    <div class="pt-12 pb-20 text-center">
-        <h1 class="text-4xl font-bold mb-6">Opinión</h1>
-        <p class="text-lg text-slate-600 mb-16">
-            Voces críticas para un derecho alternativo.
-        </p>
+<Layout seo={seoData}>
+    <div class="relative min-h-screen text-[#3d3d47] overflow-hidden font-sans">
+        <!-- Global Atmosphere Gradients (Liquid Glass Base) -->
+        <div class="fixed top-0 left-0 w-full h-full pointer-events-none z-0">
+            <div
+                class="absolute top-[-20%] right-[-10%] w-[50%] h-[50%] bg-[#4e7cce]/5 rounded-full blur-[120px]"
+            >
+            </div>
+            <div
+                class="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#5e3b69]/5 rounded-full blur-[120px]"
+            >
+            </div>
+        </div>
 
-        <div
-            class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-6xl mx-auto px-4"
-        >
-            {
-                Object.entries(authorsConfig).map(([slug, author]) => (
-                    <a
-                        href={`/opinion/${slug}`}
-                        class="group flex flex-col items-center gap-4 p-6 rounded-3xl border border-slate-100 hover:border-[#4a7dbf]/30 hover:shadow-xl hover:shadow-[#4a7dbf]/10 transition-all duration-300"
+        <div class="relative z-10 pt-8 pb-24 px-6 md:px-12 max-w-7xl mx-auto">
+            <Breadcrumbs items={breadcrumbItems} />
+
+            <!-- HERO SECTION (Adapted from nosotros/index.astro) -->
+            <section
+                class="mb-24 flex flex-col items-center text-center max-w-4xl mx-auto"
+            >
+                <!-- Badge -->
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#4e7cce]/20 shadow-sm mb-8"
+                >
+                    <span class="relative flex h-3 w-3">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4e7cce] opacity-75"
+                        ></span>
+                        <span
+                            class="relative inline-flex rounded-full h-3 w-3 bg-[#4e7cce]"
+                        ></span>
+                    </span>
+                    <span
+                        class="text-xs font-bold text-[#4e7cce] uppercase tracking-widest"
                     >
-                        <img
-                            src={author.profileImage}
-                            alt={author.name}
-                            class="w-24 h-24 rounded-full object-cover shadow-md group-hover:scale-105 transition-transform"
-                            transition:name={`author-photo-${slug}`}
-                        />
-                        <h3 class="font-bold text-slate-800 text-center group-hover:text-[#4a7dbf] transition-colors">
-                            {author.name}
-                        </h3>
-                    </a>
-                ))
-            }
+                        Pensamiento Crítico
+                    </span>
+                </div>
+
+                <!-- Headline -->
+                <h1
+                    class="text-5xl md:text-7xl font-bold text-[#3d3d47] mb-8 tracking-tight leading-[1.1]"
+                >
+                    Espacio de <span class="text-[#4e7cce]">Opinión</span>
+                </h1>
+
+                <!-- Lead -->
+                <p
+                    class="text-xl md:text-2xl text-[#3d3d47]/80 max-w-2xl mx-auto leading-relaxed text-pretty"
+                >
+                    Análisis, debates y reflexiones sobre el derecho, la
+                    justicia social y las luchas populares en el continente.
+                </p>
+            </section>
+
+            <!-- COLUMNISTS SECTION -->
+            <section class="mb-32">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-[#3d3d47] mb-4 text-center">
+                        Nuestras Voces
+                    </h2>
+                    <div class="w-16 h-1 bg-[#4e7cce] mx-auto rounded-full">
+                    </div>
+                </div>
+
+                <div
+                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto"
+                >
+                    {
+                        columnists.map((author) => (
+                            <TeamCard
+                                name={author.name}
+                                role="Columnista"
+                                bio={author.shortBio}
+                            />
+                        ))
+                    }
+                </div>
+            </section>
+
+            <!-- Divider -->
+            <div
+                class="w-full h-px bg-gradient-to-r from-transparent via-[#3d3d47]/10 to-transparent mb-24"
+            >
+            </div>
+
+            <!-- OPINION ARTICLES SECTION (Using RelatedSlider) -->
+            <section class="max-w-7xl mx-auto">
+                <div class="text-center mb-0">
+                    <div class="w-16 h-1 bg-[#5e3b69] mx-auto rounded-full">
+                    </div>
+                </div>
+
+                {
+                    opinionArticles.length > 0 ? (
+                        <RelatedSlider posts={opinionArticles} />
+                    ) : (
+                        <p class="text-center text-[#3d3d47]/60 italic mt-8">
+                            No se encontraron artículos de opinión en este
+                            momento.
+                        </p>
+                    )
+                }
+            </section>
         </div>
     </div>
 </Layout>

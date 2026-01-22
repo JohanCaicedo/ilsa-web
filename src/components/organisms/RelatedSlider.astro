@@ -10,118 +10,156 @@ interface Props {
 const { posts } = Astro.props;
 ---
 
-<section class="mx-auto mt-16 mb-16 w-full max-w-[1400px] px-4 md:px-8 relative group">
-  
+<section
+  class="related-slider-container mx-auto mt-16 mb-16 w-full max-w-[1400px] px-4 md:px-8 relative group"
+  data-slider-type="related"
+>
   <div class="mb-6 flex items-end justify-between border-b border-border pb-4">
-    <h3 class="text-xl md:text-2xl font-black tracking-tighter text-foreground uppercase">
+    <h3
+      class="text-xl md:text-2xl font-black tracking-tighter text-foreground uppercase"
+    >
       Últimos Artículos
     </h3>
-    
+
     <div class="hidden md:flex items-center gap-2">
-      <SliderArrow direction="left" id="btn-prev" />
-      <SliderArrow direction="right" id="btn-next" />
+      <SliderArrow direction="left" data-slider-prev />
+      <SliderArrow direction="right" data-slider-next />
     </div>
   </div>
 
-  <div 
-    id="track-container"
+  <div
     class="flex w-full gap-6 overflow-x-auto py-4 px-1 cursor-grab active:cursor-grabbing select-none [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden snap-x snap-mandatory"
+    data-slider-track
   >
-    {posts.map((post) => {
-      const img = post.featuredImage?.node?.sourceUrl || "https://ilsa.org.co/wp-content/uploads/2021/02/placeholder.jpg";
-      const authorName = post.categories?.nodes[0]?.name || "Opinión";
-      const formattedDate = new Date(post.date).toLocaleDateString("es-CO", { day: 'numeric', month: 'short' });
+    {
+      posts.map((post) => {
+        const img =
+          post.featuredImage?.node?.sourceUrl ||
+          "https://ilsa.org.co/wp-content/uploads/2021/02/placeholder.jpg";
+        const authorName = post.categories?.nodes[0]?.name || "Opinión";
+        const formattedDate = new Date(post.date).toLocaleDateString("es-CO", {
+          day: "numeric",
+          month: "short",
+        });
 
-      return (
-        <div class="snap-start shrink-0 transition-opacity duration-300">
-          <OpinionCard 
-            title={post.title}
-            author={authorName}
-            image={img}
-            date={formattedDate}
-            uri={post.uri}
-          />
-        </div>
-      );
-    })}
+        return (
+          <div class="snap-start shrink-0 transition-opacity duration-300">
+            <OpinionCard
+              title={post.title}
+              author={authorName}
+              image={img}
+              date={formattedDate}
+              uri={post.uri}
+            />
+          </div>
+        );
+      })
+    }
   </div>
 
-  <SliderProgress id="progress-bar" />
-
+  <SliderProgress data-slider-progress />
 </section>
 
 <script>
-  function initSlider() {
-    const slider = document.getElementById('track-container') as HTMLElement | null;
-    const progressBar = document.getElementById('progress-bar') as HTMLElement | null;
-    const btnPrev = document.getElementById('btn-prev');
-    const btnNext = document.getElementById('btn-next');
+  function setupSliders() {
+    const containers = document.querySelectorAll("[data-slider-type]");
 
-    if (!slider || !progressBar) return;
+    containers.forEach((container) => {
+      const track = container.querySelector(
+        "[data-slider-track]",
+      ) as HTMLElement | null;
+      const progress = container.querySelector(
+        "[data-slider-progress]",
+      ) as HTMLElement | null;
+      const btnPrev = container.querySelector("[data-slider-prev]");
+      const btnNext = container.querySelector("[data-slider-next]");
 
-    // --- 1. LÓGICA DE DRAG & DROP MEJORADA ---
-    let isDown = false;
-    let startX = 0;
-    let scrollLeft = 0;
+      if (!track || !progress) return;
 
-    slider.addEventListener('mousedown', (e: MouseEvent) => {
-      isDown = true;
-      slider.classList.add('active');
-      // CORRECCIÓN: Usamos getBoundingClientRect() para mayor precisión en layouts centrados
-      const rect = slider.getBoundingClientRect();
-      startX = e.pageX - rect.left;
-      scrollLeft = slider.scrollLeft;
-      
-      // Desactivamos snap momentáneamente para suavidad
-      slider.style.scrollSnapType = 'none';
-    });
+      // 1. Drag & Drop Logic
+      let isDown = false;
+      let startX = 0;
+      let scrollLeft = 0;
+      let moved = false;
 
-    const stopDragging = () => {
-      isDown = false;
-      slider.classList.remove('active');
-      slider.style.scrollSnapType = 'x mandatory'; // Reactivamos snap
-    };
+      track.addEventListener("mousedown", (e: MouseEvent) => {
+        isDown = true;
+        moved = false;
+        track.classList.add("active");
+        const rect = track.getBoundingClientRect();
+        startX = e.pageX - rect.left;
+        scrollLeft = track.scrollLeft;
 
-    slider.addEventListener('mouseleave', stopDragging);
-    slider.addEventListener('mouseup', stopDragging);
+        // Disable snap and smooth behavior for direct feel
+        track.style.scrollSnapType = "none";
+        track.style.scrollBehavior = "auto";
+      });
 
-    slider.addEventListener('mousemove', (e: MouseEvent) => {
-      if (!isDown) return;
-      e.preventDefault();
-      
-      const rect = slider.getBoundingClientRect();
-      const x = e.pageX - rect.left;
-      const walk = (x - startX) * 1.5; // Velocidad del arrastre
-      slider.scrollLeft = scrollLeft - walk;
-    });
+      const stopDragging = () => {
+        if (!isDown) return;
+        isDown = false;
+        track.classList.remove("active");
+        track.style.scrollSnapType = "x mandatory";
+        track.style.scrollBehavior = "smooth";
+      };
 
-    // --- 2. BARRA DE PROGRESO ---
-    const updateProgress = () => {
-      const maxScroll = slider.scrollWidth - slider.clientWidth;
-      if (maxScroll > 0) {
-        const percentage = (slider.scrollLeft / maxScroll) * 100;
-        progressBar.style.width = `${Math.min(100, Math.max(0, percentage))}%`;
+      track.addEventListener("mouseleave", stopDragging);
+      track.addEventListener("mouseup", stopDragging);
+
+      track.addEventListener("mousemove", (e: MouseEvent) => {
+        if (!isDown) return;
+
+        const rect = track.getBoundingClientRect();
+        const x = e.pageX - rect.left;
+        const walk = x - startX;
+
+        if (Math.abs(walk) > 5) {
+          moved = true;
+          e.preventDefault();
+          track.scrollLeft = scrollLeft - walk;
+        }
+      });
+
+      // Prevent clicks on links IF we moved
+      track.addEventListener(
+        "click",
+        (e: MouseEvent) => {
+          if (moved) {
+            e.preventDefault();
+            e.stopPropagation();
+            moved = false;
+          }
+        },
+        true,
+      ); // Capture phase to catch link clicks early
+
+      // 2. Progress Logic
+      const updateProgress = () => {
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        if (maxScroll > 0) {
+          const percentage = (track.scrollLeft / maxScroll) * 100;
+          progress.style.width = `${Math.min(100, Math.max(0, percentage))}%`;
+        }
+      };
+
+      track.addEventListener("scroll", updateProgress);
+      window.addEventListener("resize", updateProgress);
+      setTimeout(updateProgress, 100);
+
+      // 3. Arrow Logic
+      if (btnPrev && btnNext) {
+        btnPrev.addEventListener("click", () => {
+          track.scrollBy({ left: -320, behavior: "smooth" });
+        });
+        btnNext.addEventListener("click", () => {
+          track.scrollBy({ left: 320, behavior: "smooth" });
+        });
       }
-    };
-
-    slider.addEventListener('scroll', updateProgress);
-    window.addEventListener('resize', updateProgress);
-    // Inicializar barra
-    setTimeout(updateProgress, 100); 
-
-    // --- 3. BOTONES ---
-    if (btnPrev && btnNext) {
-      const scrollAmount = 300; 
-      btnPrev.addEventListener('click', () => {
-        slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-      });
-      btnNext.addEventListener('click', () => {
-        slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-      });
-    }
+    });
   }
 
-  // Ejecutar script
-  initSlider();
-  document.addEventListener('astro:page-load', initSlider);
+  // Initial load
+  setupSliders();
+  // Astro Page Loads
+  document.addEventListener("astro:page-load", setupSliders);
 </script>

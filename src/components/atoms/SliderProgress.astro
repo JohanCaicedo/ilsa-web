@@ -1,14 +1,22 @@
 ---
 interface Props {
-  id: string;
+  id?: string;
+  class?: string;
+  [key: string]: any;
 }
-const { id } = Astro.props;
+const { id, class: className, ...rest } = Astro.props;
 ---
 
-<div class="relative h-1.5 w-full overflow-hidden rounded-full bg-muted/40 mt-6">
+<div
+  class="relative h-1.5 w-full overflow-hidden rounded-full bg-muted/40 mt-6"
+>
   <div
     id={id}
-    class="absolute left-0 top-0 h-full w-0 rounded-full bg-primary transition-all duration-150 ease-out"
+    class:list={[
+      "absolute left-0 top-0 h-full w-0 rounded-full bg-primary transition-all duration-150 ease-out",
+      className,
+    ]}
+    {...rest}
   >
   </div>
 </div>

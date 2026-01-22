@@ -1,17 +1,23 @@
 ---
 interface Props {
   direction: "left" | "right";
-  id: string; // Necesitamos un ID para conectarlo al script
+  id?: string;
+  class?: string;
+  [key: string]: any;
 }
 
-const { direction, id } = Astro.props;
+const { direction, id, class: className, ...rest } = Astro.props;
 const isLeft = direction === "left";
 ---
 
 <button
   id={id}
   aria-label={isLeft ? "Anterior" : "Siguiente"}
-  class="group flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background shadow-sm transition-all hover:bg-muted hover:shadow-md active:scale-95 disabled:opacity-50"
+  class:list={[
+    "group flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background shadow-sm transition-all hover:bg-muted hover:shadow-md active:scale-95 disabled:opacity-50",
+    className,
+  ]}
+  {...rest}
 >
   <svg
     xmlns="http://www.w3.org/2000/svg"
