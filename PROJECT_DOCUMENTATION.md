@@ -170,3 +170,51 @@ query MasterQuery {
 ---
 *Generado automáticamente por Antigravity Agent - 2026-01-20*
 
+
+## 7. Infraestructura y Arquitectura
+
+Esta sección describe cómo está desplegado y conectado el sistema "Ilsa Web".
+
+### 7.1 Visión General del Sistema
+
+El sistema utiliza una arquitectura **Headless CMS**, desacoplando el frontend del backend de gestión de contenidos.
+
+-   **Frontend (La Web)**: Construido con **Astro** y desplegado en **Cloudflare Pages**. Es responsable de la presentación, el renderizado rápido y la experiencia de usuario.
+-   **Backend (Los Datos)**: **WordPress** (alojado en un hosting tradicional). Actúa únicamente como repositorio de contenidos y motor de gestión (Headless).
+-   **El Puente (API)**: La comunicación entre ambos mundos se realiza mediante **GraphQL**.
+
+### 7.2 Diagrama de Flujo de Datos
+
+```mermaid
+graph LR
+    User[Usuario Final] -->|HTTPS| CF[Cloudflare Pages (Frontend)]
+    CF -->|Build Time (SSG)| WP[WordPress API (Backend)]
+    WP -->|JSON/GraphQL| CF
+    Editor[Editor de Contenidos] -->|WP Admin| WP
+```
+
+### 7.3 Componentes de Infraestructura
+
+1.  **Frontend (Cloudflare Pages)**
+    *   **Repositorio**: Conectado a GitHub (`main` branch).
+    *   **Build Process**: Cada vez que se hace un `git push`, Cloudflare detecta el cambio, ejecuta `npm run build` y genera los archivos estáticos.
+    *   **Environment Variables**: Requiere `WORDPRESS_API_URL` configurada en el panel de Cloudflare para saber de dónde sacar los datos durante el build.
+
+2.  **Backend (WordPress Host)**
+    *   Debe tener habilitado **WPGraphQL** para exponer los datos.
+    *   No sirve tráfico web directo a usuarios finales (frontend), solo respuestas API al servidor de build de Cloudflare.
+
+3.  **DNS y Dominios**
+    *   **Web (`ilsa.org.co`)**: Apunta a **Cloudflare Pages** mediante registros `CNAME` o `A`. Esto asegura que la web se sirva desde la red global (CDN) de Cloudflare.
+    *   **Correo Electrónico**: Gestionado externamente (ej. Google Workspace). Los registros **MX** en el proveedor de DNS deben mantenerse intactos y apuntar a Google, *independientemente* de que el registro web apunte a Cloudflare.
+    *   **Backend (`lab.ilsa.org.co` o similar)**: Subdominio específico donde vive el WordPress para que los editores entren.
+
+### 7.4 Flujo de Despliegue (CI/CD)
+
+1.  Desarrollador hace cambios en código -> `push` a GitHub.
+2.  Cloudflare Pages detecta el commit.
+3.  Cloudflare inicia entorno de build -> Descarga repo -> Instala dependencias (`npm ci`).
+4.  Ejecuta `npm run build`:
+    *   Astro consulta la API de WordPress (GraphQL).
+    *   Genera HTML estático para todas las páginas.
+5.  Cloudflare despliega la carpeta `dist/` a su red global.
