@@ -26,19 +26,5 @@ Para detalles profundos sobre arquitectura, tokens de diseño y guías de desarr
 *   **Diseño Visual**: Implementación de tipografía `Inter` (Apple-style) y paleta de colores institucional (`--ilsa-blue`).
 
 
-
-## 📂 Estructura Principal
-
-```text
-/src
-├── components/   # UI Kit (Atomic Design)
-│   ├── atoms/    # NavLink, NavButton, NavDropdown...
-│   └── organisms/# Navbar, Footer...
-├── layouts/      # Plantillas globales (Layout.astro)
-├── lib/          # Lógica (authors.ts, configuraciones)
-├── pages/        # Rutas (index, opinion/[slug], etc.)
-└── styles/       # global.css (Tokens de diseño)
-```
-
 ---
 *Desarrollado con estándares de código moderno para ILSA.*

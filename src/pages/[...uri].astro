@@ -23,6 +23,8 @@ interface Props {
   recentPosts: Post[];
 }
 
+export const prerender = true;
+
 export async function getStaticPaths() {
   const data = await wpQuery({
     query: `

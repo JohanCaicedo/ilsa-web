@@ -21,30 +21,7 @@ El diseño busca evocar transparencia y modernidad institucional, evitando la es
 ### 3.1 Estructura de Directorios
 El proyecto sigue una estructura fractal basada en **Atomic Design** para los componentes y enrutamiento basado en archivos para las páginas.
 
-```
-d:/.dev/ilsa-web/
-├── src/
-│   ├── components/             # Biblioteca de Componentes UI
-│   │   ├── atoms/              # Bloques indivisibles (Botones, Links, Badges)
-│   │   │   ├── navbar/         # Átomos específicos del Navbar (NavLink, NavDropdown)
-│   │   │   └── ...
-│   │   ├── molecules/          # (Reservado para combinaciones de átomos)
-│   │   └── organisms/          # Bloques complejos (Navbar, Footer, ArticlePost)
-│   ├── layouts/                # Plantillas globales
-│   │   └── Layout.astro        # Wrapper principal (incluye Navbar/Footer)
-│   ├── lib/                    # Lógica de negocio y configuración
-│   │   └── authors.ts          # Fuente de verdad para datos de autores
-│   ├── pages/                  # Enrutamiento de Astro
-│   │   ├── actividades/        # Huésped dinámico de actividades
-│   │   ├── nosotros/           # Páginas estáticas institucionales
-│   │   ├── opinion/            # Sistema de columnas de autor
-│   │   ├── publicaciones/      # Catálogo dinámico por categorías
-│   │   └── index.astro         # Página de inicio
-│   └── styles/
-│       └── global.css          # Definición de tokens y resets
-├── public/                     # Assets estáticos (imágenes, favicon)
-└── tsconfig.json               # Configuración TypeScript
-```
+
 
 ### 3.2 Metodología Atomic Design (Implementación)
 -   **Átomos**: Componentes puros que reciben props simples.
@@ -112,6 +89,84 @@ El sitio usa `getStaticPaths()` para generar rutas desde datos estructurados.
 -   El menú se define en el objeto `navStructure` dentro de `src/components/organisms/Navbar.astro`.
 -   Soporta dos tipos: `"link"` (enlace directo) y `"dropdown"` (menú desplegable).
 -   Para items dropdown, si se provee `href`, el título padre es clicable.
+## Query de datos
+query MasterQuery {
+    posts(first: 1000) {
+    nodes {
+
+      id
+      databaseId
+      slug
+      uri
+      
+
+      title
+      date
+      modified 
+      excerpt 
+      content 
+      
+
+      categories {
+        nodes {
+          name
+          slug
+          termTaxonomyId
+        }
+      }
+      tags {
+        nodes {
+          name
+          slug
+        }
+      }
+      
+
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+          caption
+          mediaDetails {
+            width
+            height
+          }
+        }
+      }
+      
+
+      author {
+        node {
+          name
+          firstName
+          lastName
+          avatar {
+            url
+          }
+        }
+      }
+
+
+      seo {
+        title                 # Título SEO (lo que sale en Google en azul)
+        metaDesc              # Descripción meta (el texto gris en Google)
+        canonical             # URL canónica
+        opengraphTitle        # Título para Facebook/LinkedIn/WhatsApp
+        opengraphDescription  # Descripción para redes
+        opengraphImage {
+          sourceUrl           # La imagen que sale al compartir el link
+        }
+        twitterTitle          # Título específico para X (Twitter)
+        twitterDescription    # Descripción para X
+        twitterImage {
+          sourceUrl           # Imagen para X
+        }
+        readingTime           # Tiempo de lectura estimado (en minutos)
+      }
+    }
+  }
+}
 
 ---
 *Generado automáticamente por Antigravity Agent - 2026-01-20*
+

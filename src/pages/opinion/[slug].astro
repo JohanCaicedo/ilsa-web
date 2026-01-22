@@ -4,6 +4,8 @@ import Layout from "../../layouts/Layout.astro";
 import { wpQuery } from "../../lib/wp";
 import { authorsConfig, defaultAuthor } from "../../lib/authors";
 
+export const prerender = true;
+
 export async function getStaticPaths() {
   return Object.keys(authorsConfig).map((slug) => ({
     params: { slug },

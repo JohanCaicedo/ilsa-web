@@ -6,6 +6,8 @@ import Breadcrumbs from "../../components/atoms/Breadcrumbs.astro";
 import { wpQuery } from "../../lib/wp";
 import type { SeoData } from "../../lib/seo";
 
+export const prerender = true;
+
 const breadcrumbItems = [{ label: "Nosotros", href: "/nosotros" }];
 
 // Fetch SEO Data specifically for this page

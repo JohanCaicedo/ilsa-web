@@ -219,35 +219,37 @@ const navStructure = [
 </nav>
 
 <script>
-    const menuToggle = document.getElementById("menuToggle");
-    const mobileMenu = document.getElementById("mobileMenu");
+    document.addEventListener("astro:page-load", () => {
+        const menuToggle = document.getElementById("menuToggle");
+        const mobileMenu = document.getElementById("mobileMenu");
 
-    if (menuToggle && mobileMenu) {
-        menuToggle.addEventListener("click", () => {
-            // Toggle logic
-            if (mobileMenu.classList.contains("hidden")) {
-                mobileMenu.classList.remove("hidden");
-                mobileMenu.classList.add("flex");
-                // Prevent body scroll
-                document.body.style.overflow = "hidden";
-            } else {
-                mobileMenu.classList.add("hidden");
-                mobileMenu.classList.remove("flex");
-                // Restore body scroll
-                document.body.style.overflow = "";
-            }
-        });
-
-        // Close menu when clicking navigation links
-        const mobileLinks = mobileMenu.querySelectorAll("a");
-        mobileLinks.forEach((link) => {
-            link.addEventListener("click", () => {
-                mobileMenu.classList.add("hidden");
-                mobileMenu.classList.remove("flex");
-                document.body.style.overflow = "";
+        if (menuToggle && mobileMenu) {
+            menuToggle.addEventListener("click", () => {
+                // Toggle logic
+                if (mobileMenu.classList.contains("hidden")) {
+                    mobileMenu.classList.remove("hidden");
+                    mobileMenu.classList.add("flex");
+                    // Prevent body scroll
+                    document.body.style.overflow = "hidden";
+                } else {
+                    mobileMenu.classList.add("hidden");
+                    mobileMenu.classList.remove("flex");
+                    // Restore body scroll
+                    document.body.style.overflow = "";
+                }
             });
-        });
-    }
+
+            // Close menu when clicking navigation links
+            const mobileLinks = mobileMenu.querySelectorAll("a");
+            mobileLinks.forEach((link) => {
+                link.addEventListener("click", () => {
+                    mobileMenu.classList.add("hidden");
+                    mobileMenu.classList.remove("flex");
+                    document.body.style.overflow = "";
+                });
+            });
+        }
+    });
 </script>
 
 <style>
