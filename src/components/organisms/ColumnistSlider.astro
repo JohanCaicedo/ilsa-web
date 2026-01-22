@@ -15,15 +15,19 @@ const { posts } = Astro.props;
   class="columnist-slider-container mx-auto mt-16 mb-16 w-full max-w-[1400px] px-4 md:px-8 relative group"
   data-slider-type="columnist"
 >
-  <div class="mb-6 flex items-end justify-between border-b border-border pb-4">
-    <GradientText
-      text="Archivo de Opinión"
-      size="text-xl md:text-2xl"
-      weight="font-black"
-      from="var(--ilsa-blue-dark)"
-      to="var(--ilsa-blue)"
-      class="uppercase tracking-tighter"
-    />
+  <div
+    class="mb-6 flex flex-col md:flex-row items-center md:items-end justify-center md:justify-between border-b border-border pb-4 gap-4 md:gap-0"
+  >
+    <div class="w-full text-center md:text-left">
+      <GradientText
+        text="Archivo de Opinión"
+        size="text-xl md:text-2xl"
+        weight="font-black"
+        from="var(--ilsa-blue-dark)"
+        to="var(--ilsa-blue)"
+        class="uppercase tracking-tighter block w-fit mx-auto md:mx-0 text-center"
+      />
+    </div>
 
     <div class="hidden md:flex items-center gap-2">
       <SliderArrow direction="left" data-slider-prev />
