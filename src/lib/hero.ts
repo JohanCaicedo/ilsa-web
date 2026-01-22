@@ -10,27 +10,27 @@ export interface HeroSlideData {
 
 export const heroSlidesConfig: HeroSlideData[] = [
     {
-        title: "Derecho y Sociedad Alternativa",
-        excerpt: "Construyendo un sistema jurídico emancipador desde el Sur Global para la defensa de los derechos humanos y la justicia social.",
-        image: "/assets/hero_justice.png",
-        link: "/nosotros",
-        badge: "Nuestra Misión",
-        ctaText: "Conoce ILSA"
+        title: "Dossié",
+        excerpt: "Pesquisas em advocacia popular na america latina",
+        image: "https://api.ilsa.org.co/wp-content/uploads/2026/01/cover_issue_3245_pt_BR.webp",
+        link: "https://api.ilsa.org.co/2025/11/investigacion-abogacia-popular-latinoamerica/",
+        badge: "Publicación",
+        ctaText: "Leer Publicación"
     },
     {
-        title: "Investigación y Acción Jurídica",
+        title: "Voces en movimiento",
         excerpt: "Promovemos el pensamiento crítico y el acompañamiento a movimientos sociales en América Latina.",
-        image: "/assets/hero_research.png",
-        link: "/publicaciones",
-        badge: "Enfoque",
-        ctaText: "Ver Publicaciones"
+        image: "https://api.ilsa.org.co/wp-content/uploads/2026/01/Voces-en-movimiento-Destacada.webp",
+        link: "/Voces-en-movimiento",
+        badge: "Mujeres",
+        ctaText: "Conoce más"
     },
     {
-        title: "Redes de Colaboración",
-        excerpt: "Tejiendo alianzas estratégicas para el fortalecimiento de la sociedad civil y la democracia.",
-        image: "/assets/hero_community.png",
-        link: "/contacto",
-        badge: "Comunidad",
-        ctaText: "Únete a la Red"
+        title: "Jurimprudencias",
+        excerpt: "Retomamos el legado crítico de 1990 en formato podcast. Un espacio sonoro para repensar el derecho alternativo y la teoría jurídica.",
+        image: "https://api.ilsa.org.co/wp-content/uploads/2026/01/Slider-Podcast.webp",
+        link: "https://open.spotify.com/show/1QUNFi8S1z16xZpU4ZIpSa",
+        badge: "Podcast",
+        ctaText: "Escucha ahora"
     }
 ];

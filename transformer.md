@@ -18,3 +18,11 @@ Al recibir código de fuentes externas (como PrebuiltUI), el agente debe ejecuta
 ## 4. Registro y Memoria
 - **Catálogo**: Añadir el nuevo componente a `@components_catalog.md`.
 - **Memoria**: Documentar la creación en `@ai_memory.md` y generar el texto del commit para Git.
+## 5. Concistencia tipografía
+- **Fuente**: Usar la fuente Inter para el texto definidos en `@src/styles/global.css`.
+
+## 6. Concistencia colores
+- **Colores**: Usar los colores definidos en `@src/styles/global.css`.
+
+## 7. Concistencia estilos
+- **Estilos**: Usar los estilos definidos en `@src/styles/global.css`.

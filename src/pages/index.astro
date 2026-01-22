@@ -2,8 +2,8 @@
 import Layout from "../layouts/Layout.astro";
 import Navbar from "../components/organisms/Navbar.astro";
 import HomeHero from "../components/organisms/HomeHero.astro";
+import HomeNews from "../components/organisms/HomeNews.astro";
 import ColumnistSlider from "../components/organisms/ColumnistSlider.astro";
-import ArticleCard from "../components/molecules/ArticleCard.astro";
 import ImageGalleryHoveredContent from "../components/organisms/ImageGalleryHoveredContent.astro";
 import AlliesGrid from "../components/organisms/AlliesGrid.astro";
 import { heroSlidesConfig } from "../lib/hero";
@@ -22,12 +22,8 @@ const opinionPosts = allPosts
 	.filter((p) => p.categories.nodes.some((c) => c.slug === "opinion"))
 	.slice(0, 10);
 const newsPosts = allPosts
-	.filter(
-		(p) =>
-			!p.categories.nodes.some((c) => c.slug === "opinion") &&
-			p.id !== latestPost?.id,
-	)
-	.slice(0, 6);
+	.filter((p) => p.categories.nodes.some((c) => c.slug === "noticias"))
+	.slice(0, 3);
 const legalContextPosts = allPosts
 	.filter((p) =>
 		p.categories.nodes.some((c) =>
@@ -44,51 +40,16 @@ const legalContextPosts = allPosts
 	<Navbar />
 
 	<!-- HERO SECTION -->
-	<HomeHero slides={heroSlidesConfig} class="mb-20" />
+	<HomeHero slides={heroSlidesConfig} class="mb-8" />
 
+	<!-- NEWS SECTION -->
+	<HomeNews posts={newsPosts} class="mb-16" />
 	<!-- OPINION SECTION -->
 	<section class="max-w-[1400px] mx-auto px-6 mb-24">
 		<div class="flex items-center gap-4 mb-8">
-			<h2 class="text-3xl font-black text-slate-800 tracking-tight">
-				Opinión Crítica
-			</h2>
 			<div class="h-px flex-1 bg-slate-200"></div>
-			<a
-				href="/opinion"
-				class="text-sm font-bold text-[#4E7CCE] hover:underline"
-				>Ver todas</a
-			>
 		</div>
 		<ColumnistSlider posts={opinionPosts} />
-	</section>
-
-	<!-- NEWS SECTION -->
-	<section class="max-w-[1400px] mx-auto px-6 mb-24">
-		<div class="text-center mb-12">
-			<span
-				class="text-[#4E7CCE] font-bold text-sm uppercase tracking-widest mb-2 block"
-				>Actualidad</span
-			>
-			<h2 class="text-4xl font-black text-slate-900 tracking-tight">
-				Noticias y Análisis
-			</h2>
-		</div>
-
-		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-			{
-				newsPosts.map((post) => (
-					<ArticleCard
-						title={post.title}
-						excerpt={post.excerpt}
-						date={post.date}
-						uri={post.uri}
-						category={post.categories.nodes[0]?.name}
-						image={post.featuredImage?.node?.sourceUrl}
-						readingTime={post.seo?.readingTime}
-					/>
-				))
-			}
-		</div>
 	</section>
 
 	<!-- MULTIMEDIA & LEGAL CONTEXT -->

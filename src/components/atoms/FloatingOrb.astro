@@ -1,0 +1,124 @@
+---
+interface Props {
+    color?: string;
+    size?: string;
+    speed?: string; // e.g. "20s"
+    visible?: boolean;
+    class?: string;
+}
+
+const {
+    color = "var(--ilsa-blue)",
+    size = "400px",
+    speed = "25s",
+    visible = true,
+    class: className,
+} = Astro.props;
+
+if (!visible) {
+    return null;
+}
+
+const uniqueId = `orb-${crypto.randomUUID()}`;
+---
+
+<div
+    class={`fixed inset-0 pointer-events-none overflow-hidden z-[-1] select-none ${className}`}
+>
+    <!-- Removed fixed opacity-60 class to allow dynamic control via script/style -->
+    <div
+        id={uniqueId}
+        class="absolute rounded-full blur-[80px]"
+        style={`
+        width: ${size};
+        height: ${size};
+        background-color: ${color};
+        /* Initial position center */
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0.6; /* Start at max opacity */
+    `}
+        data-speed={speed}
+    >
+    </div>
+</div>
+
+<script define:vars={{ uniqueId }}>
+    (function () {
+        function init() {
+            const orb = document.getElementById(uniqueId);
+            if (!orb) return;
+
+            // Verify if animation is already running to avoid duplicates on re-renders
+            if (orb.dataset.isAnimating === "true") return;
+            orb.dataset.isAnimating = "true";
+
+            // Parse speed prop (e.g. "30s") to ms, default to 20000ms if failed
+            const speedStr = orb.getAttribute("data-speed") || "20s";
+            const baseDuration = parseFloat(speedStr) * 1000 || 20000;
+
+            // --- MOVEMENT ANIMATION ---
+            function move() {
+                const w = window.innerWidth;
+                const h = window.innerHeight;
+
+                // Random point relative to center
+                // Allow going slightly offscreen (1.5x)
+                const randomX = (Math.random() - 0.5) * w * 1.5;
+                const randomY = (Math.random() - 0.5) * h * 1.5;
+
+                // Randomize duration slightly (+/- 20%)
+                const duration = baseDuration * (0.8 + Math.random() * 0.4);
+
+                const animation = orb.animate(
+                    {
+                        transform: `translate(calc(-50% + ${randomX}px), calc(-50% + ${randomY}px))`,
+                    },
+                    {
+                        duration: duration,
+                        easing: "ease-in-out",
+                        fill: "forwards",
+                    },
+                );
+
+                animation.onfinish = move;
+            }
+
+            // --- OPACITY PULSE ANIMATION ---
+            // Independent loop for "breathing" effect
+            function pulse() {
+                // Max opacity 0.6 (current reference), Min opacity 0.05
+                const maxOpacity = 0.6;
+                const minOpacity = 0.05;
+
+                // Random target opacity between min and max
+                const targetOpacity =
+                    minOpacity + Math.random() * (maxOpacity - minOpacity);
+
+                // Slow transition: 3s to 8s
+                const duration = 3000 + Math.random() * 5000;
+
+                const animation = orb.animate(
+                    {
+                        opacity: targetOpacity,
+                    },
+                    {
+                        duration: duration,
+                        easing: "ease-in-out",
+                        fill: "forwards",
+                    },
+                );
+
+                animation.onfinish = pulse;
+            }
+
+            // Start independent loops
+            move();
+            pulse();
+        }
+
+        init();
+        document.addEventListener("astro:page-load", init);
+    })();
+</script>

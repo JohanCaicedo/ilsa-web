@@ -11,6 +11,9 @@
 
 ### Átomos (Atoms)
 - **`LiquidBackground.astro`**: 🟢 **Full Compliance**. Define la base visual del sistema con blobs animados (`animate-blob`), desenfoque (`blur-[90px]`) y textura de ruido.
+- **`LiquidBackground.astro`**: 🟢 **Full Compliance**. Define la base visual del sistema con blobs animados (`animate-blob`), desenfoque (`blur-[90px]`) y textura de ruido.
+- **`FloatingOrb.astro`**: 🔵 **Verificación**. Orbe con trayectoria aleatoria independiente (IIFE) y efecto breathing (pulsación de opacidad).
+- **`GradientText.astro`**: 🟢 **Interactividad**. Título que rastrea la posición del mouse para mover el gradiente.
 - **`Breadcrumbs.astro`**: 🟢 **Compliant**. Usa `backdrop_blur` y bordes translúcidos.
 - **`SliderArrow.astro` / `SliderProgress.astro`**: 🟢 **Generic Ready**. Refactorizados para soportar props dinámicas (`...rest`) y selección por atributos de datos (`data-slider-*`) en lugar de IDs fijos.
 
@@ -18,12 +21,13 @@
 - **`OpinionCard.astro`**: 🟢 **Full Compliance**. Implementa `backdrop-blur-md`, `bg-white/10` y `border-white/20`. Es el estándar para "Glassmorphism" en el sitio.
 - **`DirectorCard.astro`**: 🔥 **Premium Compliance**. Implementa refracción avanzada con blobs interactivos que siguen el cursor y variantes `dark`/`frosted`.
 - **`TeamCard.astro`**: 🟢 **Compliant**. Usa `backdrop-blur-xl` y `bg-white/70`, siguiendo el estilo "frosted glass".
-- **`ArticleCard.astro`**: 🟡 **Review Required**. Es funcional pero visualmente más simple; evaluar si debe adoptar más "refracción" para mayor consistencia.
+- **`NewsCard.astro`**: ❄️ **Frosty Glass**. `backdrop-blur-3xl`, `bg-white/10`. Layout optimizado: Título `text-xl` truncado, extracto completo, padding reducido (`p-5`) y footer pinned (`mt-auto`).
+- **`ArticleCard.astro`**: 🟡 **Legacy**. Se mantiene por seguridad pero ha sido reemplazada en el Home.
 
 ### Organismos (Organisms)
 - **`Navbar.astro`**: 🟢 **Compliant**. Estructura refractiva que ensambla átomos de navegación.
-- **`HomeHero.astro`**: 🟢 **Container**. Fondo 100% transparente con **SVG Animado**. Navegación solo con **puntos (dots)**, sin flechas.
-- **`HeroSlide.astro`**: 🟢 **Atom**. Grid layout. Botón única CTA. Integración visual total con el fondo de la página.
+- **`HomeHero.astro`**: 🟢 **Container**. Layout 50/50 equilibrado (6 columnas texto / 6 columnas imagen). Imagen significativamente ampliada.
+- **`HomeNews.astro`**: 🟢 **Organism**. Implementa `GradientText`, fuente Inter forzada (eliminado Poppins) y padding vertical reducido.
 - **`src/lib/hero.ts`**: 🆕 **Config**. Define `HeroSlideData` y exporta la configuración estática del hero.
 - **`src/lib/hero.ts`**: 🆕 **Config File**. Almacena la data del slider. Referencia imágenes locales `hero_justice.png`, `hero_research.png`, `hero_community.png`.
 - **`RelatedSlider.astro` / `ColumnistSlider.astro`**: 🟢 **Sistémicos**. Orquestan tarjetas y lógica de carrusel. Refactorizados para soportar múltiples instancias aisladas.
@@ -42,4 +46,5 @@
 ## 4. 🚀 Pendientes Críticos (Next Steps)
 - **Sincronización de Autores**: El mapeo en `authors.ts` debe mantenerse sincronizado con los perfiles en el WP de producción (`api.ilsa.org.co`).
 - **Placeholder Cleanup**: Reemplazar URLs temporales en `src/lib/authors.ts` por imágenes finales alojadas en el CDN/WP.
-- **Estandarización de `ArticleCard`**: Evaluar si este componente debe recibir el tratamiento de refracción de `OpinionCard` para mantener la coherencia visual total.
+- **Estandarización de `ArticleCard`**: Evaluar si este componente debe recibir el tratamiento de refracción de `OpinionCard`.
+- **Pulir Animaciones**: Verificar si los orbes flotantes consumen demasiados recursos en móviles (considerar `media (prefers-reduced-motion)`).

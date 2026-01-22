@@ -1,0 +1,59 @@
+---
+import { cn } from "../../lib/utils";
+import GradientText from "../atoms/GradientText.astro";
+import NewsCard from "../molecules/NewsCard.astro";
+import type { PostNode } from "../../lib/wp";
+
+interface Props {
+    posts: PostNode[];
+    class?: string;
+}
+
+const { posts, class: className } = Astro.props;
+---
+
+<section class={cn("py-12 relative", className)}>
+    <!-- Decorative Background for Glass Effect -->
+    <div
+        class="absolute inset-0 pointer-events-none select-none overflow-hidden -z-10 opacity-60"
+    >
+        <div
+            class="absolute top-[20%] left-[-10%] w-[600px] h-[600px] bg-[#4E7CCE]/5 rounded-full blur-[120px]"
+        >
+        </div>
+        <div
+            class="absolute bottom-[10%] right-[-10%] w-[500px] h-[500px] bg-[#5E3B69]/5 rounded-full blur-[100px]"
+        >
+        </div>
+    </div>
+    <div class="max-w-[1400px] mx-auto px-6 text-center">
+        <GradientText
+            text="Actualidad ILSA"
+            size="text-3xl md:text-5xl"
+            weight="font-semibold"
+            from="#4E7CCE"
+            to="#1e3a8a"
+            class="mb-2"
+        />
+        <p class="text-sm text-slate-500 text-center mt-2 max-w-md mx-auto">
+            Mantente informado con las últimas noticias, análisis y
+            actualizaciones de nuestra gestión.
+        </p>
+
+        <div class="flex flex-wrap items-stretch justify-center gap-10 mt-16">
+            {
+                posts.map((post) => (
+                    <NewsCard
+                        title={post.title}
+                        excerpt={post.excerpt}
+                        image={
+                            post.featuredImage?.node?.sourceUrl ||
+                            "/placeholder.jpg"
+                        }
+                        link={post.uri}
+                    />
+                ))
+            }
+        </div>
+    </div>
+</section>

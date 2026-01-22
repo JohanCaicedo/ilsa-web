@@ -57,10 +57,13 @@
 
 :root {
   --ilsa-blue: #4E7CCE;
+  --ilsa-blue-light: #adbee0;
   --ilsa-blue-dark: #375a9e;
   --ilsa-text-dark: #111827;
   --ilsa-text-gray: #4b5563;
   --ilsa-bg-light: #f3f4f6;
+  --ilsa-mujeres: #5e3b69;
+  --ilsa-mujeres-light: #af9cb5;
 
   --radius: 0.625rem;
   --background: oklch(1 0 0);

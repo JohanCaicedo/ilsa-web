@@ -3,6 +3,7 @@ import "../styles/global.css";
 import Navbar from "../components/organisms/Navbar.astro";
 import Footer from "../components/organisms/Footer.astro";
 import LiquidBackground from "../components/atoms/LiquidBackground.astro";
+import FloatingOrb from "../components/atoms/FloatingOrb.astro";
 import { ClientRouter } from "astro:transitions";
 import type { SeoData } from "../lib/seo";
 import { defaultSeo } from "../lib/seo";
@@ -74,6 +75,18 @@ const containerClass = width === "narrow" ? "max-w-4xl" : "max-w-[1400px]";
     <body
         class="bg-transparent text-foreground antialiased min-h-screen flex flex-col relative overflow-x-hidden w-full"
     >
+        <FloatingOrb
+            client:idle
+            color="var(--ilsa-blue-light)"
+            size="600px"
+            speed="30s"
+        />
+        <FloatingOrb
+            client:idle
+            color="var(--ilsa-mujeres-light)"
+            size="500px"
+            speed="45s"
+        />
         <LiquidBackground />
 
         <Navbar />

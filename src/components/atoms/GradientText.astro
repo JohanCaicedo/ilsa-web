@@ -1,0 +1,78 @@
+---
+import { cn } from "../../lib/utils";
+
+interface Props {
+    text: string;
+    as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "span" | "p";
+    size?: string;
+    weight?: string;
+    from?: string;
+    to?: string;
+    class?: string;
+}
+
+const {
+    text,
+    as: Tag = "h1",
+    size = "text-4xl md:text-6xl",
+    weight = "font-extrabold",
+    from = "#4a7dbf", // ILSA Blue default
+    to = "#1e3a8a", // Dark Blue default
+    class: className,
+} = Astro.props;
+---
+
+<Tag
+    class={cn(
+        "relative inline-block tracking-tight leading-tight",
+        size,
+        weight,
+        className,
+    )}
+>
+    <span
+        class="interactive-gradient-text bg-clip-text text-transparent transition-all duration-75 ease-linear block"
+        style={`
+      --x: 50%;
+      --y: 50%;
+      --gradient-from: ${from};
+      --gradient-to: ${to};
+      background-image: radial-gradient(circle at var(--x) var(--y), var(--gradient-from), var(--gradient-to));
+    `}
+    >
+        {text}
+    </span>
+</Tag>
+
+<script>
+    function setupInteractiveGradient() {
+        const elements = document.querySelectorAll(
+            ".interactive-gradient-text",
+        );
+
+        elements.forEach((el) => {
+            const element = el as HTMLElement;
+
+            const handleMouseMove = (e: MouseEvent) => {
+                const rect = element.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                element.style.setProperty("--x", `${x}px`);
+                element.style.setProperty("--y", `${y}px`);
+            };
+
+            // Optional: Reset to center on leave? Or keep last position.
+            // Let's keep smooth tracking.
+
+            // We attach the listener to the parent (or the text itself)
+            // Attaching to text might be tricky if "text-transparent" makes empty areas unclickable?
+            // No, it's still a block/inline-block.
+            element.addEventListener("mousemove", handleMouseMove);
+        });
+    }
+
+    // Init on load and after Astro swaps
+    setupInteractiveGradient();
+    document.addEventListener("astro:page-load", setupInteractiveGradient);
+</script>
