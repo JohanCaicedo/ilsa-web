@@ -1,20 +1,21 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import ImageGalleryHoveredContent from "../components/organisms/ImageGalleryHoveredContent.astro";
+
 export const prerender = true;
+
+
 ---
 
 <Layout title="Inicio - ILSA" width="wide">
-	<div
-		class="flex flex-col items-center justify-center min-h-[60vh] text-center"
-	>
+	<div class="flex flex-col items-center justify-center py-10 text-center">
 		<h1
 			class="text-6xl md:text-8xl font-black text-slate-900 tracking-tighter mb-6"
 		>
 			Inicio
 		</h1>
-		<p class="text-xl text-slate-600 max-w-2xl">
+		<p class="text-xl text-slate-600 max-w-2xl mb-12">
 			Bienvenido al Instituto Latinoamericano para una Sociedad y un
 			Derecho Alternativos.
 		</p>
-	</div>
 </Layout>

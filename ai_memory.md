@@ -22,6 +22,7 @@
 
 ### Organismos (Organisms)
 - **`Navbar.astro`**: 🟢 **Compliant**. Estructura refractiva que ensambla átomos de navegación.
+- **`ImageGalleryHoveredContent.astro`**: 🟢 **Full Compliance**. Organismo transformado de PrebuiltUI con estética Liquid Glass, usando `backdrop-blur-md` y `bg-white/10`.
 - **`RelatedSlider.astro` / `ColumnistSlider.astro`**: 🟢 **Sistémicos**. Orquestan tarjetas y lógica de carrusel. Refactorizados para soportar múltiples instancias aisladas.
     - **Lógica de Arrastre**: "Grab" de alta fidelidad para desktop con detección de umbral de 5px para distinguir entre scroll y clics.
     - **Selección Aislada**: Evita colisiones de IDs mediante selectores de atributos de datos y scoping en JavaScript.
@@ -35,6 +36,12 @@
 - **Protección de Clics en Sliders**: Se implementó una lógica de captura de eventos para prevenir que los enlaces en las tarjetas se activen accidentalmente durante un movimiento de arrastre.
 
 ## 4. 🚀 Pendientes Críticos (Next Steps)
+- **Re-integración de Galería**: El organismo `ImageGalleryHoveredContent.astro` ha sido creado y registrado, pero actualmente no está instanciado en ninguna página tras la última limpieza de `index.astro`. Definir su ubicación final.
 - **Sincronización de Autores**: El mapeo en `authors.ts` debe mantenerse sincronizado con los perfiles en el WP de producción (`api.ilsa.org.co`).
 - **Placeholder Cleanup**: Reemplazar URLs temporales en `src/lib/authors.ts` por imágenes finales alojadas en el CDN/WP.
 - **Estandarización de `ArticleCard`**: Evaluar si este componente debe recibir el tratamiento de refracción de `OpinionCard` para mantener la coherencia visual total.
+
+## 5. 🛠️ Auditoría de Sesión (2026-01-22)
+- **Logro**: Implementación de `ImageGalleryHoveredContent.astro`.
+- **Cumplimiento**: 🟢 **Full Liquid Glass**. Aplicado protocolo `transformer.md` para convertir código de PrebuiltUI a los estándares de ILSA (Astro + Tailwind 4.0 + Refracción).
+- **Consistencia**: El inventario en `agents.md` y la memoria en `ai_memory.md` han sido actualizados sincrónicamente.

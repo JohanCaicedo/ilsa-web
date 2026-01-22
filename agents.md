@@ -21,6 +21,7 @@ Antes de crear UI, verifica si puedes usar o extender estos archivos:
 
 ### Organismos (Organisms) - src/components/organisms/
 - **Estructura**: `Navbar.astro`.
+- **Galería**: `ImageGalleryHoveredContent.astro`.
 - **Contenido**: `ArticlePost.astro` (Cuerpo del post de WP).
 - **Sliders**: `ColumnistSlider.astro`, `RelatedSlider.astro`.
 
