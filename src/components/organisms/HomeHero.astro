@@ -1,0 +1,187 @@
+---
+import { cn } from "../../lib/utils";
+import HeroSlide from "./HeroSlide.astro";
+import type { HeroSlideData } from "../../lib/hero";
+
+interface Props {
+    slides: HeroSlideData[];
+    class?: string;
+}
+
+const { slides, class: className } = Astro.props;
+---
+
+<section
+    class={cn("relative w-full overflow-hidden bg-transparent", className)}
+>
+    <!-- Animated Atmospheric Background -->
+    <div
+        class="absolute inset-0 z-0 pointer-events-none select-none overflow-hidden"
+    >
+        <!-- Mask for seamless blending -->
+        <div
+            class="absolute inset-0 bg-transparent [mask-image:radial-gradient(closest-side,black_30%,transparent_100%)]"
+        >
+            <!-- Dynamic SVG Lines -->
+            <svg
+                class="absolute inset-0 w-full h-full opacity-40 animate-[spin_60s_linear_infinite]"
+                viewBox="0 0 1440 720"
+                fill="none"
+                preserveAspectRatio="xMidYMid slice"
+            >
+                <style>
+                    @keyframes dash {
+                        to {
+                            stroke-dashoffset: 0;
+                        }
+                    }
+                    .hero-line {
+                        stroke-dasharray: 1000;
+                        stroke-dashoffset: 1000;
+                        animation: dash 3s ease-out forwards;
+                    }
+                </style>
+                <path
+                    class="hero-line"
+                    stroke="var(--color-ilsa-blue)"
+                    stroke-opacity="0.15"
+                    stroke-width="2"
+                    d="M-15.227 702.342H1439.7"></path>
+                <circle
+                    class="hero-line"
+                    cx="711.819"
+                    cy="372.562"
+                    r="308.334"
+                    stroke="var(--color-ilsa-blue)"
+                    stroke-opacity="0.2"></circle>
+                <circle
+                    class="hero-line"
+                    cx="16.942"
+                    cy="20.834"
+                    r="308.334"
+                    stroke="var(--color-ilsa-blue-dark)"
+                    stroke-opacity="0.15"
+                    style="animation-delay: 0.5s"></circle>
+                <path
+                    class="hero-line"
+                    stroke="var(--color-ilsa-blue)"
+                    stroke-opacity="0.15"
+                    stroke-width="1.5"
+                    d="M-15.227 573.66H1439.7M-15.227 164.029H1439.7"
+                    style="animation-delay: 1s"></path>
+                <circle
+                    class="hero-line"
+                    cx="782.595"
+                    cy="411.166"
+                    r="308.334"
+                    stroke="var(--color-ilsa-text-gray)"
+                    stroke-opacity="0.1"
+                    style="animation-delay: 1.5s"></circle>
+            </svg>
+
+            <!-- Breathing Blobs -->
+            <div
+                class="absolute top-[-10%] right-[-5%] w-[40%] h-[60%] bg-[#4E7CCE]/10 rounded-full blur-[100px] animate-pulse"
+            >
+            </div>
+            <div
+                class="absolute bottom-[-10%] left-[-10%] w-[40%] h-[50%] bg-[#5E3B69]/10 rounded-full blur-[100px] animate-pulse"
+                style="animation-duration: 4s;"
+            >
+            </div>
+        </div>
+    </div>
+
+    <div class="relative z-10 swiper hero-swiper w-full h-full">
+        <div class="swiper-wrapper">
+            {
+                slides.map((slide, index) => (
+                    <div class="swiper-slide w-full">
+                        <HeroSlide
+                            title={slide.title}
+                            excerpt={slide.excerpt}
+                            image={slide.image}
+                            link={slide.link}
+                            badge={slide.badge}
+                            ctaText={slide.ctaText}
+                            isPriority={index === 0}
+                        />
+                    </div>
+                ))
+            }
+        </div>
+
+        <div class="swiper-pagination !bottom-10"></div>
+    </div>
+</section>
+
+<script>
+    import Swiper from "swiper";
+    import {
+        Navigation,
+        Pagination,
+        Autoplay,
+        EffectFade,
+    } from "swiper/modules";
+    import "swiper/css";
+    import "swiper/css/navigation";
+    import "swiper/css/pagination";
+    import "swiper/css/effect-fade"; // Opcional si quieres fade en vez de slide
+
+    document.addEventListener("astro:page-load", () => {
+        const swiper = new Swiper(".hero-swiper", {
+            modules: [Navigation, Pagination, Autoplay, EffectFade],
+
+            // Configuración clave para evitar el "baile"
+            loop: true, // Infinito
+            slidesPerView: 1, // Solo uno a la vez
+            spaceBetween: 0, // Sin espacios raros
+            autoHeight: true, // SE AJUSTA A LA ALTURA DEL CONTENIDO DEL SLIDE ACTUAL
+
+            // Efecto suave
+            effect: "fade",
+            fadeEffect: { crossFade: true }, // Evita que se vea el fondo blanco al cambiar
+
+            autoplay: {
+                delay: 6000,
+                disableOnInteraction: false,
+            },
+
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+                // Esto arregla que solo salgan 2 puntos
+                dynamicBullets: true,
+            },
+
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+        });
+    });
+</script>
+
+<style>
+    /* Ajustes finos para la paginación de Swiper con tus colores */
+    :global(.swiper-pagination-bullet) {
+        background: #4e7cce; /* ILSA Blue Base */
+        opacity: 0.3;
+        width: 10px;
+        height: 10px;
+        transition: all 0.3s ease;
+    }
+    :global(.swiper-pagination-bullet-active) {
+        background: #4e7cce; /* ILSA Blue Active */
+        opacity: 1;
+        width: 24px;
+        border-radius: 999px;
+    }
+
+    /* Navigation cleanup */
+    :global(.swiper-button-next:after),
+    :global(.swiper-button-prev:after) {
+        font-size: 1.2rem !important; /* Smaller arrows */
+        font-weight: bold;
+    }
+</style>

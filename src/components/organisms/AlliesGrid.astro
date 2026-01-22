@@ -1,0 +1,57 @@
+---
+import TeamCard from "../molecules/TeamCard.astro";
+
+const allies = [
+    {
+        name: "CCFD-Terre Solidaire",
+        role: "Desarrollo Rural y Paz",
+        bio: "Aliado estratégico en el fortalecimiento de comunidades rurales.",
+    },
+    {
+        name: "Diakonia",
+        role: "Derechos Humanos",
+        bio: "Apoyo fundamental en la defensa de los derechos humanos y equidad de género.",
+    },
+    {
+        name: "Both ENDS",
+        role: "Justicia Ambiental",
+        bio: "Colaboración en proyectos de sostenibilidad y justicia ambiental.",
+    },
+    {
+        name: "HEKS / EPER",
+        role: "Transformación de Conflictos",
+        bio: "Cooperación para la construcción de paz y resolución de conflictos.",
+    },
+];
+---
+
+<section class="max-w-[1400px] mx-auto px-6 py-20">
+    <div class="text-center mb-16">
+        <h2
+            class="text-3xl md:text-4xl font-black text-slate-800 mb-4 tracking-tight"
+        >
+            Red Institucional y Aliados
+        </h2>
+        <div
+            class="w-20 h-1.5 bg-gradient-to-r from-[#4E7CCE] to-[#5e3b69] mx-auto rounded-full"
+        >
+        </div>
+        <p class="max-w-2xl mx-auto mt-6 text-slate-600">
+            ILSA mantiene su independencia crítica gracias al apoyo de la
+            cooperación internacional.
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {
+            allies.map((ally) => (
+                <TeamCard
+                    name={ally.name}
+                    role={ally.role}
+                    bio={ally.bio}
+                    class="min-h-[280px]"
+                />
+            ))
+        }
+    </div>
+</section>

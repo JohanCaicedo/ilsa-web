@@ -11,11 +11,37 @@ interface GalleryItem {
 interface Props {
     title?: string;
     description?: string;
-    items: GalleryItem[];
+    items?: GalleryItem[];
     className?: string;
 }
 
-const { title, description, items, className } = Astro.props;
+const defaultItems: GalleryItem[] = [
+    {
+        title: "Justicia Climática",
+        description:
+            "Defensa territorial y protección de la biodiversidad en el Amazonas.",
+        image: "https://api.ilsa.org.co/wp-content/uploads/2025/01/gallery-1.jpg",
+    },
+    {
+        title: "Derechos Campesinos",
+        description:
+            "Fortalecimiento de las zonas de reserva campesina y soberanía alimentaria.",
+        image: "https://api.ilsa.org.co/wp-content/uploads/2025/01/gallery-2.jpg",
+    },
+    {
+        title: "Género y Justicia",
+        description:
+            "Investigación y acción participativa con mujeres rurales.",
+        image: "https://api.ilsa.org.co/wp-content/uploads/2025/01/gallery-3.jpg",
+    },
+];
+
+const {
+    title = "Nuestra Praxis en Imágenes",
+    description,
+    items = defaultItems,
+    className,
+} = Astro.props;
 ---
 
 <section class={cn("w-full py-12", className)}>

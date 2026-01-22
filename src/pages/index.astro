@@ -1,21 +1,197 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/organisms/Navbar.astro";
+import HomeHero from "../components/organisms/HomeHero.astro";
+import ColumnistSlider from "../components/organisms/ColumnistSlider.astro";
+import ArticleCard from "../components/molecules/ArticleCard.astro";
 import ImageGalleryHoveredContent from "../components/organisms/ImageGalleryHoveredContent.astro";
+import AlliesGrid from "../components/organisms/AlliesGrid.astro";
+import { heroSlidesConfig } from "../lib/hero";
+import { wpQuery, MASTER_QUERY, type MasterQueryResponse } from "../lib/wp";
+import { cn } from "../lib/utils";
 
 export const prerender = true;
 
+// Data Fetching
+const data: MasterQueryResponse = await wpQuery(MASTER_QUERY);
+const allPosts = data?.posts?.nodes || [];
 
+// Segments
+const latestPost = allPosts[0]; // Kept for reference but not used in Hero
+const opinionPosts = allPosts
+	.filter((p) => p.categories.nodes.some((c) => c.slug === "opinion"))
+	.slice(0, 10);
+const newsPosts = allPosts
+	.filter(
+		(p) =>
+			!p.categories.nodes.some((c) => c.slug === "opinion") &&
+			p.id !== latestPost?.id,
+	)
+	.slice(0, 6);
+const legalContextPosts = allPosts
+	.filter((p) =>
+		p.categories.nodes.some((c) =>
+			["acciones-juridicas", "actividades"].includes(c.slug),
+		),
+	)
+	.slice(0, 3);
 ---
 
-<Layout title="Inicio - ILSA" width="wide">
-	<div class="flex flex-col items-center justify-center py-10 text-center">
-		<h1
-			class="text-6xl md:text-8xl font-black text-slate-900 tracking-tighter mb-6"
+<Layout
+	title="ILSA - Instituto Latinoamericano para una Sociedad y un Derecho Alternativos"
+	width="wide"
+>
+	<Navbar />
+
+	<!-- HERO SECTION -->
+	<HomeHero slides={heroSlidesConfig} class="mb-20" />
+
+	<!-- OPINION SECTION -->
+	<section class="max-w-[1400px] mx-auto px-6 mb-24">
+		<div class="flex items-center gap-4 mb-8">
+			<h2 class="text-3xl font-black text-slate-800 tracking-tight">
+				Opinión Crítica
+			</h2>
+			<div class="h-px flex-1 bg-slate-200"></div>
+			<a
+				href="/opinion"
+				class="text-sm font-bold text-[#4E7CCE] hover:underline"
+				>Ver todas</a
+			>
+		</div>
+		<ColumnistSlider posts={opinionPosts} />
+	</section>
+
+	<!-- NEWS SECTION -->
+	<section class="max-w-[1400px] mx-auto px-6 mb-24">
+		<div class="text-center mb-12">
+			<span
+				class="text-[#4E7CCE] font-bold text-sm uppercase tracking-widest mb-2 block"
+				>Actualidad</span
+			>
+			<h2 class="text-4xl font-black text-slate-900 tracking-tight">
+				Noticias y Análisis
+			</h2>
+		</div>
+
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+			{
+				newsPosts.map((post) => (
+					<ArticleCard
+						title={post.title}
+						excerpt={post.excerpt}
+						date={post.date}
+						uri={post.uri}
+						category={post.categories.nodes[0]?.name}
+						image={post.featuredImage?.node?.sourceUrl}
+						readingTime={post.seo?.readingTime}
+					/>
+				))
+			}
+		</div>
+	</section>
+
+	<!-- MULTIMEDIA & LEGAL CONTEXT -->
+	<section
+		class="mb-24 bg-slate-50 py-20 border-y border-slate-200/60 relative overflow-hidden"
+	>
+		<!-- Background Decor -->
+		<div
+			class="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none"
 		>
-			Inicio
-		</h1>
-		<p class="text-xl text-slate-600 max-w-2xl mb-12">
-			Bienvenido al Instituto Latinoamericano para una Sociedad y un
-			Derecho Alternativos.
-		</p>
+			<div
+				class="absolute top-[10%] left-[5%] w-[300px] h-[300px] bg-[#4E7CCE]/20 rounded-full blur-[80px]"
+			>
+			</div>
+			<div
+				class="absolute bottom-[10%] right-[5%] w-[400px] h-[400px] bg-[#5E3B69]/10 rounded-full blur-[100px]"
+			>
+			</div>
+		</div>
+
+		<div class="max-w-[1400px] mx-auto px-6 relative z-10">
+			<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+				<!-- Multimedia Gallery -->
+				<div class="space-y-8">
+					<div class="flex items-center justify-between mb-4">
+						<h3 class="text-2xl font-bold text-slate-800">
+							Galería Multimedia
+						</h3>
+						<div class="flex items-center gap-2">
+							<span class="flex h-3 w-3 relative">
+								<span
+									class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"
+								></span>
+								<span
+									class="relative inline-flex rounded-full h-3 w-3 bg-red-500"
+								></span>
+							</span>
+							<span class="text-xs font-bold text-slate-500"
+								>En vivo</span
+							>
+						</div>
+					</div>
+					<div
+						class="rounded-2xl overflow-hidden shadow-2xl shadow-slate-200 border border-white/50 bg-white/50 backdrop-blur-sm"
+					>
+						<ImageGalleryHoveredContent />
+					</div>
+				</div>
+
+				<!-- Legal / Activities List -->
+				<div>
+					<h3
+						class="text-2xl font-bold text-slate-800 mb-8 border-l-4 border-[#5E3B69] pl-4"
+					>
+						Acciones Jurídicas y Actividades
+					</h3>
+					<div class="grid gap-6">
+						{
+							legalContextPosts.length > 0 ? (
+								legalContextPosts.map((post) => (
+									<a
+										href={post.uri}
+										class="group block p-6 bg-white rounded-xl border border-slate-200 hover:border-[#4E7CCE]/30 hover:shadow-lg transition-all duration-300"
+									>
+										<div class="flex justify-between items-start mb-3">
+											<span class="text-xs font-bold text-slate-500 uppercase">
+												{post.categories.nodes[0]?.name}
+											</span>
+											<span class="text-xs text-slate-400">
+												{new Date(
+													post.date,
+												).toLocaleDateString()}
+											</span>
+										</div>
+										<h4 class="text-lg font-bold text-slate-800 group-hover:text-[#4E7CCE] transition-colors mb-2 leading-tight">
+											{post.title}
+										</h4>
+										<div
+											class="text-sm text-slate-600 line-clamp-2"
+											set:html={post.excerpt}
+										/>
+									</a>
+								))
+							) : (
+								<div class="p-8 text-center text-slate-500 bg-slate-100 rounded-xl border border-dashed border-slate-300">
+									No hay actividades recientes para mostrar.
+								</div>
+							)
+						}
+					</div>
+					<div class="mt-8 text-right">
+						<a
+							href="/actividades"
+							class="inline-flex items-center text-sm font-bold text-[#5E3B69] hover:underline"
+						>
+							Ver todas las actividades →
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ALLIES SECTION -->
+	<AlliesGrid />
 </Layout>
