@@ -37,3 +37,16 @@ Antes de crear UI, verifica si puedes usar o extender estos archivos:
 ## 4. Historial y Consistencia
 - Revisa siempre `@src/components` antes de proponer una nueva "molécula".
 - Si refactorizas, actualiza este contexto para no repetir errores pasados.
+
+## 5. Esquema de Datos (GraphQL MasterQuery)
+El backend en `api.ilsa.org.co` devuelve objetos con la siguiente estructura. Úsala para tipar componentes y extraer metadatos:
+
+- **Identificadores**: `id`, `databaseId`, `slug`, `uri`.
+- **Contenido**: `title`, `date`, `modified`, `excerpt`, `content`.
+- **Clasificación**: `categories` y `tags` (acceder vía `nodes`).
+- **Multimedia**: `featuredImage.node` incluye `sourceUrl`, `altText` y `mediaDetails` (width/height).
+- **Autor**: `author.node` incluye `name`, `firstName`, `lastName` y `avatar.url`.
+- **SEO (Yoast)**: Acceder vía campo `seo`. Incluye:
+    - `title`, `metaDesc`, `canonical`.
+    - Redes Sociales: `opengraphTitle`, `opengraphImage.sourceUrl`, `twitterImage.sourceUrl`.
+    - Lectura: `readingTime` (tiempo estimado en minutos).
