@@ -1,92 +1,87 @@
 ---
-import { wpQuery } from "../lib/wp";
+import {
+  wpQuery,
+  MASTER_QUERY,
+  type MasterQueryResponse,
+  type PostNode,
+} from "../lib/wp";
 import Layout from "../layouts/Layout.astro";
 import ArticlePost from "../components/organisms/ArticlePost.astro";
 import RelatedSlider from "../components/organisms/RelatedSlider.astro";
 import Breadcrumbs from "../components/atoms/Breadcrumbs.astro";
 import ReadingProgress from "../components/atoms/ReadingProgress.astro";
 import { authorsConfig, defaultAuthor } from "../lib/authors";
-
-interface Post {
-  uri: string;
-  title: string;
-  content: string;
-  date: string;
-  featuredImage?: { node: { sourceUrl: string } };
-  categories: {
-    nodes: { slug: string; name: string }[];
-  };
-}
-
-interface Props {
-  post: Post;
-  recentPosts: Post[];
-}
+import { cn } from "../lib/utils";
 
 export const prerender = true;
 
 export async function getStaticPaths() {
-  const data = await wpQuery({
-    query: `
-      query GetMasterData {
-        allPosts: posts(first: 100, where: { categoryName: "opinion" }) {
-          nodes {
-            uri
-            title
-            content
-            date
-            categories { nodes { slug name } }
-            featuredImage { node { sourceUrl } }
-          }
-        }
-        recentPosts: posts(first: 10, where: { categoryName: "opinion" }) {
-          nodes {
-            uri
-            title
-            date
-            categories { nodes { slug name } }
-            featuredImage { node { sourceUrl } }
-          }
-        }
-      }
-    `,
-  });
+  const data: MasterQueryResponse = await wpQuery(MASTER_QUERY);
+  const allPosts = data.posts.nodes;
 
-  const recentPosts = data.recentPosts.nodes;
-
-  return data.allPosts.nodes.map((post: any) => ({
+  return allPosts.map((post) => ({
     params: {
       uri: post.uri === "/" ? undefined : post.uri.replace(/^\/|\/$/g, ""),
     },
-    props: { post, recentPosts },
+    props: {
+      post,
+      allPosts, // Pass all posts to filter specific related ones at runtime
+    },
   }));
 }
 
-const { post, recentPosts } = Astro.props;
+interface Props {
+  post: PostNode;
+  allPosts: PostNode[];
+}
+
+const { post, allPosts } = Astro.props;
 const currentUrl = Astro.url.href;
 
-const authorKey = post.categories?.nodes.find((cat: any) =>
-  Object.keys(authorsConfig).includes(cat.slug),
-)?.slug as keyof typeof authorsConfig | undefined;
+// 1. Identify Category
+const primaryCategory = post.categories?.nodes[0];
+const categorySlug = primaryCategory?.slug;
+const categoryName = primaryCategory?.name || "Actualidad";
 
-const authorData = authorKey ? authorsConfig[authorKey] : defaultAuthor;
+// 2. Author Logic (Only for Opinion)
+const isOpinion = post.categories?.nodes.some((c) => c.slug === "opinion");
 
-const sliderPosts = recentPosts
-  .filter((p: any) => p.uri !== post.uri)
-  .map((p: any) => ({
+const authorKey = isOpinion
+  ? (post.categories?.nodes.find((cat) =>
+      Object.keys(authorsConfig).includes(cat.slug),
+    )?.slug as keyof typeof authorsConfig | undefined)
+  : undefined;
+
+const authorData = authorKey ? authorsConfig[authorKey] : undefined;
+
+// 3. Related Posts Logic
+// Filter posts that share at least one category, prioritize same category
+const relatedPosts = allPosts
+  .filter((p) => p.uri !== post.uri) // Exclude current
+  .filter((p) => {
+    if (!categorySlug) return true; // If current has no cat, show any recent
+    return p.categories.nodes.some((c) => c.slug === categorySlug);
+  })
+  .slice(0, 10)
+  .map((p) => ({
     ...p,
     image:
       p.featuredImage?.node?.sourceUrl ||
       "https://ilsa.org.co/wp-content/uploads/2021/02/placeholder.jpg",
   }));
 
-const breadcrumbItems = [{ label: "Opinión", href: "/opinion" }];
-
-if (authorKey) {
-  breadcrumbItems.push({
-    label: authorData.name,
-    href: `/opinion/${authorKey}`,
-  });
+// 4. Breadcrumbs
+const breadcrumbItems = [];
+if (isOpinion) {
+  breadcrumbItems.push({ label: "Opinión", href: "/opinion" });
+  if (authorData) {
+    breadcrumbItems.push({
+      label: authorData.name,
+      href: `/opinion/${authorKey}`,
+    });
+  }
+} else if (categorySlug) {
+  breadcrumbItems.push({ label: categoryName, href: `/${categorySlug}` }); // Assuming category pages exist or just visual
 }
 
 breadcrumbItems.push({
@@ -95,7 +90,7 @@ breadcrumbItems.push({
 });
 ---
 
-<Layout title={post.title} width="wide">
+<Layout title={post.seo?.title || post.title} width="wide">
   <ReadingProgress />
 
   <div class="mx-auto max-w-3xl pt-4">
@@ -105,18 +100,18 @@ breadcrumbItems.push({
       title={post.title}
       content={post.content}
       date={post.date}
-      section="OPINIÓN"
-      authorName={authorData.name}
-      authorImg={authorData.avatarImage}
-      authorBio={authorData.shortBio}
+      section={categoryName}
+      authorName={authorData?.name}
+      authorImg={authorData?.avatarImage}
+      authorBio={authorData?.shortBio}
       authorSlug={authorKey}
-      twitterUrl={authorData.xUrl || ""}
-      twitterHandle={authorData.xHandle || ""}
+      twitterUrl={authorData?.xUrl || ""}
+      twitterHandle={authorData?.xHandle || ""}
       url={currentUrl}
     />
   </div>
 
   <div class="mt-20 border-t pt-10">
-    <RelatedSlider posts={sliderPosts} />
+    <RelatedSlider posts={relatedPosts} />
   </div>
 </Layout>
