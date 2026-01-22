@@ -3,11 +3,11 @@ interface WpQueryOptions {
   variables?: Record<string, any>;
 }
 
-const API_URL = import.meta.env.WORDPRESS_API_URL;
+const API_URL = import.meta.env.WORDPRESS_API_URL || "https://api.ilsa.org.co/graphql";
 
 export async function wpQuery(options: string | WpQueryOptions) {
-  const { query, variables } = typeof options === 'string' 
-    ? { query: options, variables: {} } 
+  const { query, variables } = typeof options === 'string'
+    ? { query: options, variables: {} }
     : options;
 
   if (!API_URL) {
