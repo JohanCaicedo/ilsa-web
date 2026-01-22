@@ -58,9 +58,17 @@ const cardGradients = [
   "from-cyan-400/20",
   "from-white/10",
 ];
+const breadcrumbItems = [
+  { label: "Opinión", href: "/opinion" },
+  { label: author.name, href: Astro.url.href },
+];
 ---
 
-<Layout title={`${author.name} - ILSA`} width="wide">
+<Layout
+  title={`${author.name} - ILSA`}
+  width="wide"
+  breadcrumbs={breadcrumbItems}
+>
   <main class="pt-24 pb-20 px-4 md:px-8 max-w-[1400px] mx-auto">
     <div class="w-full mb-20 relative flex justify-center">
       <div

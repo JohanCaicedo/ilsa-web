@@ -27,7 +27,7 @@ export const authorsConfig: Record<string, AuthorProfile> = {
     xUrl: "",
     xHandle: ""
   },
-  "carlos-federico-mares": {
+  "carlos-frederico-mares": {
     name: "Carlos Federico Mares",
     profileImage: "https://api.ilsa.org.co/wp-content/uploads/2023/02/Carlos-Frederico-Mares.jpg.webp",
     avatarImage: "https://api.ilsa.org.co/wp-content/uploads/2023/02/Carlos-Frederico-Mares.jpg.webp",
@@ -45,7 +45,7 @@ export const authorsConfig: Record<string, AuthorProfile> = {
     xUrl: "",
     xHandle: ""
   },
-  "german-burgos-silva": {
+  "german-burgos": {
     name: "Germán Burgos Silva",
     profileImage: "https://api.ilsa.org.co/wp-content/uploads/2026/01/german-burgos-200x200-scale.jpg",
     avatarImage: "https://api.ilsa.org.co/wp-content/uploads/2026/01/german-burgos-200x200-scale.jpg",

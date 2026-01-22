@@ -5,17 +5,26 @@ import Footer from "../components/organisms/Footer.astro";
 import LiquidBackground from "../components/atoms/LiquidBackground.astro";
 import FloatingOrb from "../components/atoms/FloatingOrb.astro";
 import { ClientRouter } from "astro:transitions";
-import type { SeoData } from "../lib/seo";
+import { type SeoData } from "../lib/seo";
 import { defaultSeo } from "../lib/seo";
+import Breadcrumbs from "../components/atoms/Breadcrumbs.astro";
+import { generateBreadcrumbs, type BreadcrumbItem } from "../lib/breadcrumbs";
+
 export const prerender = true;
 
 interface Props {
     title?: string;
     width?: "narrow" | "wide";
     seo?: SeoData;
+    breadcrumbs?: BreadcrumbItem[];
 }
 
-const { title, width = "wide", seo } = Astro.props;
+const { title, width = "wide", seo, breadcrumbs } = Astro.props;
+
+const isHome = Astro.url.pathname === "/";
+const computedBreadcrumbs = !isHome
+    ? breadcrumbs || generateBreadcrumbs(Astro.url)
+    : [];
 
 // Logic priority: Yoast SEO > Specific Prop > Default
 const finalTitle = seo?.title || title || defaultSeo.title;
@@ -89,6 +98,11 @@ const containerClass = width === "narrow" ? "max-w-4xl" : "max-w-[1400px]";
             class={`flex-1 w-full mx-auto px-4 md:px-8 mt-24 pb-8 md:mt-28 ${containerClass} relative z-10`}
             transition:animate="fade"
         >
+            {
+                computedBreadcrumbs.length > 0 && (
+                    <Breadcrumbs items={computedBreadcrumbs} />
+                )
+            }
             <slot />
         </main>
 

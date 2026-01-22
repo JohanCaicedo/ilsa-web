@@ -1,0 +1,105 @@
+---
+interface Props {
+    totalPages: number;
+    gridId?: string;
+    cardClass?: string;
+}
+
+const {
+    totalPages,
+    gridId = "posts-grid",
+    cardClass = "post-card",
+} = Astro.props;
+---
+
+{
+    totalPages > 1 && (
+        <div class="mb-12 flex justify-center">
+            <div
+                class="inline-flex gap-3 p-2 bg-slate-50 rounded-full border border-slate-200 shadow-sm"
+                id={`tab-container-${gridId}`}
+            >
+                {[...Array(totalPages)].map((_, i) => (
+                    <button
+                        class={`tab-btn-${gridId} w-10 h-10 rounded-full flex items-center justify-center text-[11px] font-black transition-all ${i === 0 ? "bg-[#375a9e] text-white shadow-lg scale-110" : "text-slate-400 hover:text-[#4E7CCE]"}`}
+                        data-page={i}
+                        data-grid={gridId}
+                        data-card={cardClass}
+                    >
+                        {i + 1}
+                    </button>
+                ))}
+            </div>
+        </div>
+    )
+}
+
+<script define:vars={{ gridId, cardClass }}>
+    function setupTabs() {
+        const tabs = document.querySelectorAll(`.tab-btn-${gridId}`);
+        const posts = document.querySelectorAll(`.${cardClass}`);
+        const postsPerPage = 12;
+
+        if (tabs.length === 0) return;
+
+        tabs.forEach((tab) => {
+            tab.addEventListener("click", () => {
+                const page = parseInt(tab.getAttribute("data-page") || "0");
+
+                tabs.forEach((t) => {
+                    t.classList.remove(
+                        "bg-[#375a9e]",
+                        "text-white",
+                        "shadow-lg",
+                        "scale-110",
+                    );
+                    t.classList.add("text-slate-400");
+                });
+                tab.classList.remove("text-slate-400");
+                tab.classList.add(
+                    "bg-[#375a9e]",
+                    "text-white",
+                    "shadow-lg",
+                    "scale-110",
+                );
+
+                const start = page * postsPerPage;
+                const end = start + postsPerPage;
+
+                posts.forEach((post, index) => {
+                    if (index >= start && index < end) {
+                        post.classList.remove("hidden");
+                        post.classList.add("flex");
+                        post.animate(
+                            [
+                                { opacity: 0, transform: "scale(0.95)" },
+                                { opacity: 1, transform: "scale(1)" },
+                            ],
+                            {
+                                duration: 400,
+                                easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+                            },
+                        );
+                    } else {
+                        post.classList.add("hidden");
+                        post.classList.remove("flex");
+                    }
+                });
+
+                const grid = document.getElementById(gridId);
+                if (grid) {
+                    const yOffset = -150;
+                    const y =
+                        grid.getBoundingClientRect().top +
+                        window.pageYOffset +
+                        yOffset;
+                    window.scrollTo({ top: y, behavior: "smooth" });
+                }
+            });
+        });
+    }
+
+    // Setup on load and after swap
+    setupTabs();
+    document.addEventListener("astro:page-load", setupTabs);
+</script>

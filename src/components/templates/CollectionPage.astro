@@ -1,0 +1,158 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { wpQuery } from "../../lib/wp";
+import { collectionsConfig } from "../../lib/collections";
+import OpinionCard from "../../components/molecules/OpinionCard.astro";
+import Pagination from "../../components/molecules/Pagination.astro";
+import GradientText from "../../components/atoms/GradientText.astro";
+
+interface Props {
+    collection: string;
+}
+
+const { collection } = Astro.props;
+const config = collectionsConfig[collection as keyof typeof collectionsConfig];
+
+if (!config) {
+    throw new Error(`Collection not found in config: ${collection}`);
+}
+
+// Fetch posts matching the configured WP category slug
+const data = await wpQuery({
+    query: `
+    query GetCollectionPosts($category: String!) {
+      posts(where: { categoryName: $category }, first: 100) {
+        nodes {
+          title
+          uri
+          date
+          excerpt
+          featuredImage {
+            node {
+              sourceUrl
+            }
+          }
+        }
+      }
+    }
+  `,
+    variables: { category: config.wpCategorySlug },
+});
+
+const posts = data?.posts?.nodes || [];
+const postsPerPage = 12;
+const totalPages = Math.ceil(posts.length / postsPerPage);
+
+// Card gradients logic
+const cardGradients = [
+    "from-blue-400/20",
+    "from-indigo-400/20",
+    "from-sky-300/20",
+    "from-cyan-400/20",
+    "from-white/10",
+];
+
+const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("es-CO", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+    });
+};
+---
+
+<Layout title={`${config.title} - Publicaciones ILSA`} width="wide">
+    <main class="pt-24 pb-20 px-4 md:px-8 max-w-[1400px] mx-auto min-h-screen">
+        <!-- Header -->
+        <div class="text-center mb-16">
+            <GradientText
+                text={config.title}
+                size="text-4xl md:text-6xl"
+                weight="font-black"
+                from="var(--ilsa-blue)"
+                to="var(--ilsa-mujeres)"
+                class="justify-center mb-6 block w-fit mx-auto text-center"
+            />
+            {
+                config.description && (
+                    <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+                        {config.description}
+                    </p>
+                )
+            }
+            <!-- Slot for extra content (User might want specific header content per collection) -->
+            <slot name="header-extra" />
+        </div>
+
+        <!-- Pagination Top -->
+        <Pagination
+            totalPages={totalPages}
+            gridId={`collection-grid-${collection}`}
+            cardClass={`collection-card-${collection}`}
+        />
+
+        <!-- Archive Grid -->
+        <div
+            id={`collection-grid-${collection}`}
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+            {
+                posts.length > 0 ? (
+                    posts.map((post: any, index: number) => {
+                        const gradient =
+                            cardGradients[index % cardGradients.length];
+                        const img =
+                            post.featuredImage?.node?.sourceUrl ||
+                            "https://ilsa.org.co/wp-content/uploads/2021/02/placeholder.jpg";
+
+                        return (
+                            <div
+                                class={`collection-card-${collection} ${index >= postsPerPage ? "hidden" : "flex"} w-full fade-in`}
+                                data-index={index}
+                            >
+                                <OpinionCard
+                                    title={post.title}
+                                    author={config.title}
+                                    image={img}
+                                    date={formatDate(post.date)}
+                                    uri={post.uri}
+                                />
+                            </div>
+                        );
+                    })
+                ) : (
+                    <div class="col-span-full text-center py-20">
+                        <p class="text-xl text-slate-500">
+                            No se encontraron publicaciones en esta colección.
+                        </p>
+                    </div>
+                )
+            }
+        </div>
+
+        <!-- Pagination Bottom -->
+        <div class="mt-12">
+            <Pagination
+                totalPages={totalPages}
+                gridId={`collection-grid-${collection}`}
+                cardClass={`collection-card-${collection}`}
+            />
+        </div>
+    </main>
+</Layout>
+
+<style>
+    .fade-in {
+        animation: fadeIn 0.5s ease-out forwards;
+    }
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>

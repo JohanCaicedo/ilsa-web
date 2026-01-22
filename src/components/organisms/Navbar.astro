@@ -3,6 +3,7 @@
 import NavLink from "../atoms/navbar/NavLink.astro";
 import NavDropdown from "../atoms/navbar/NavDropdown.astro";
 import NavButton from "../atoms/navbar/NavButton.astro";
+import { collectionsConfig } from "../../lib/collections";
 
 const navStructure = [
     { type: "link", text: "Inicio", href: "/" },
@@ -22,8 +23,7 @@ const navStructure = [
         type: "dropdown",
         text: "Opinión",
         href: "/opinion",
-        // Mapping specific authors based on user request. Using generic slugs for now matching the names.
-        // In a real app we might fetch this dynamically, but user provided specific list.
+        // Mapping specific authors based on user request.
         items: [
             {
                 label: "Boaventura de Sousa Santos",
@@ -31,7 +31,7 @@ const navStructure = [
             },
             {
                 label: "Carlos Federico Mares",
-                href: "/opinion/carlos-federico-mares",
+                href: "/opinion/carlos-frederico-mares",
             },
             {
                 label: "Consuelo Quattrocchi",
@@ -43,7 +43,7 @@ const navStructure = [
             },
             {
                 label: "Germán Burgos Silva",
-                href: "/opinion/german-burgos-silva",
+                href: "/opinion/german-burgos",
             },
             {
                 label: "Liliana Estupiñán Achury",
@@ -58,38 +58,11 @@ const navStructure = [
     {
         type: "dropdown",
         text: "Publicaciones",
-        href: "/publicaciones",
-        items: [
-            {
-                label: "Archivo Histórico",
-                href: "/publicaciones/archivo-historico",
-            },
-            { label: "Coediciones", href: "/publicaciones/coediciones" },
-            {
-                label: "Derecho y Liberación",
-                href: "/publicaciones/derecho-y-liberacion",
-            },
-            {
-                label: "En Clave de Sur",
-                href: "/publicaciones/en-clave-de-sur",
-            },
-            {
-                label: "Revista El Otro Derecho",
-                href: "/publicaciones/revista-el-otro-derecho",
-            },
-            {
-                label: "Otras Publicaciones",
-                href: "/publicaciones/otras-publicaciones",
-            },
-            {
-                label: "Textos de Aquí y Ahora",
-                href: "/publicaciones/textos-de-aqui-y-ahora",
-            },
-            {
-                label: "Útiles para Conocer y Actuar",
-                href: "/publicaciones/utiles-para-conocer-y-actuar",
-            },
-        ],
+        href: "/publicaciones", // Default or list page? Using generic one or first
+        items: Object.entries(collectionsConfig).map(([slug, config]) => ({
+            label: config.title,
+            href: `/publicaciones/${slug}`,
+        })),
     },
 ];
 ---

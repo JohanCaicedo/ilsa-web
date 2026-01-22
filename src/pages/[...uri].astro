@@ -8,10 +8,10 @@ import {
 import Layout from "../layouts/Layout.astro";
 import ArticlePost from "../components/organisms/ArticlePost.astro";
 import RelatedSlider from "../components/organisms/RelatedSlider.astro";
-import Breadcrumbs from "../components/atoms/Breadcrumbs.astro";
 import ReadingProgress from "../components/atoms/ReadingProgress.astro";
 import { authorsConfig, defaultAuthor } from "../lib/authors";
 import { cn } from "../lib/utils";
+import { collectionsConfig } from "../lib/collections";
 
 export const prerender = true;
 
@@ -81,7 +81,21 @@ if (isOpinion) {
     });
   }
 } else if (categorySlug) {
-  breadcrumbItems.push({ label: categoryName, href: `/${categorySlug}` }); // Assuming category pages exist or just visual
+  // Check if this category corresponds to a Collection
+  const collectionEntry = Object.entries(collectionsConfig).find(
+    ([_, config]) => config.wpCategorySlug === categorySlug,
+  );
+
+  if (collectionEntry) {
+    const [slug, config] = collectionEntry;
+    breadcrumbItems.push({
+      label: config.title,
+      href: `/publicaciones/${slug}`,
+    });
+  } else {
+    // Default fallback (e.g. for uncategorized or standard categories)
+    breadcrumbItems.push({ label: categoryName, href: `/${categorySlug}` });
+  }
 }
 
 breadcrumbItems.push({
@@ -90,12 +104,15 @@ breadcrumbItems.push({
 });
 ---
 
-<Layout title={post.seo?.title || post.title} width="wide">
+<Layout
+  title={post.seo?.title || post.title}
+  seo={post.seo}
+  width="wide"
+  breadcrumbs={breadcrumbItems}
+>
   <ReadingProgress />
 
   <div class="mx-auto max-w-3xl pt-4">
-    <Breadcrumbs items={breadcrumbItems} />
-
     <ArticlePost
       title={post.title}
       content={post.content}
