@@ -2,6 +2,7 @@
 import OpinionCard from "../molecules/OpinionCard.astro";
 import SliderArrow from "../atoms/SliderArrow.astro";
 import SliderProgress from "../atoms/SliderProgress.astro";
+import GradientText from "../atoms/GradientText.astro";
 
 interface Props {
   posts: any[];
@@ -15,11 +16,14 @@ const { posts } = Astro.props;
   data-slider-type="columnist"
 >
   <div class="mb-6 flex items-end justify-between border-b border-border pb-4">
-    <h3
-      class="text-xl md:text-2xl font-black tracking-tighter text-foreground uppercase"
-    >
-      Archivo de Opinión
-    </h3>
+    <GradientText
+      text="Archivo de Opinión"
+      size="text-xl md:text-2xl"
+      weight="font-black"
+      from="var(--ilsa-blue-dark)"
+      to="var(--ilsa-blue)"
+      class="uppercase tracking-tighter"
+    />
 
     <div class="hidden md:flex items-center gap-2">
       <SliderArrow direction="left" data-slider-prev />

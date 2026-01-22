@@ -40,7 +40,9 @@ const { posts, class: className } = Astro.props;
             actualizaciones de nuestra gestión.
         </p>
 
-        <div class="flex flex-wrap items-stretch justify-center gap-10 mt-16">
+        <div
+            class="flex flex-nowrap md:flex-wrap items-stretch justify-start md:justify-center gap-4 md:gap-10 mt-10 md:mt-16 overflow-x-auto snap-x snap-mandatory px-6 md:px-0 -mx-6 md:mx-0 pb-8 md:pb-0 scrollbar-hide"
+        >
             {
                 posts.map((post) => (
                     <NewsCard
@@ -51,9 +53,20 @@ const { posts, class: className } = Astro.props;
                             "/placeholder.jpg"
                         }
                         link={post.uri}
+                        className="snap-center shrink-0 w-[85vw] md:w-auto"
                     />
                 ))
             }
         </div>
+
+        <style>
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+        </style>
     </div>
 </section>
