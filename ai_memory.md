@@ -22,12 +22,17 @@
 - **`DirectorCard.astro`**: 🔥 **Premium Compliance**. Implementa refracción avanzada con blobs interactivos que siguen el cursor y variantes `dark`/`frosted`.
 - **`TeamCard.astro`**: 🟢 **Compliant**. Usa `backdrop-blur-xl` y `bg-white/70`, siguiendo el estilo "frosted glass".
 - **`NewsCard.astro`**: ❄️ **Frosty Glass**. `backdrop-blur-3xl`, `bg-white/10`. Layout optimizado: Título `text-xl` truncado, extracto completo, padding reducido (`p-5`) y footer pinned (`mt-auto`).
+- **`NewsCard.astro`**: ❄️ **Frosty Glass**. `backdrop-blur-3xl`, `bg-white/10`. Layout optimizado: Título `text-xl` truncado, extracto completo, padding reducido (`p-5`) y footer pinned (`mt-auto`).
+- **`LegalActionRow.astro`**: 🆕 **Pill Component**. Molécula en forma de píldora (`rounded-full`) para listas compactas. Sin imágenes, solo título y badge de acción. Soporta fecha de publicación.
 - **`ArticleCard.astro`**: 🟡 **Legacy**. Se mantiene por seguridad pero ha sido reemplazada en el Home.
 
 ### Organismos (Organisms)
 - **`Navbar.astro`**: 🟢 **Compliant**. Estructura refractiva que ensambla átomos de navegación.
 - **`HomeHero.astro`**: 🟢 **Container**. Layout 50/50 equilibrado (6 columnas texto / 6 columnas imagen). Imagen significativamente ampliada.
+- **`HomeHero.astro`**: 🟢 **Container**. Layout 50/50 equilibrado (6 columnas texto / 6 columnas imagen). Imagen significativamente ampliada.
 - **`HomeNews.astro`**: 🟢 **Organism**. Implementa `GradientText`, fuente Inter forzada (eliminado Poppins) y padding vertical reducido.
+- **`HomeLegalActions.astro`**: 🆕 **Liquid Container**. Organismo encapsulado en un contenedor de vidrio (`rounded-[2.5rem]`, `bg-white/40`) con máscara de desvanecimiento radial para evitar bordes duros en la decoración de fondo.
+- **`AlliesGrid.astro`**: 🔄 **Marquee Refactor**. Transformado en un carrusel infinito (Marquee) con CSS puro. Usa `mask-image` para desvanecimiento lateral agnóstico al fondo.
 - **`src/lib/hero.ts`**: 🆕 **Config**. Define `HeroSlideData` y exporta la configuración estática del hero.
 - **`src/lib/hero.ts`**: 🆕 **Config File**. Almacena la data del slider. Referencia imágenes locales `hero_justice.png`, `hero_research.png`, `hero_community.png`.
 - **`RelatedSlider.astro` / `ColumnistSlider.astro`**: 🟢 **Sistémicos**. Orquestan tarjetas y lógica de carrusel. Refactorizados para soportar múltiples instancias aisladas.
@@ -42,6 +47,9 @@
 - **Aislamiento de Sliders**: Se abandonó el uso de IDs globales (`btn-prev`, etc.) a favor de selectores de atributos de datos. Esto es crítico para la estabilidad en aplicaciones Astro con transiciones de página nativas.
 - **Mapeo de `authors.ts`**: Se desacopló la bio y fotos de los autores de WordPress para permitir perfiles más ricos y personalizados sin depender de la base de datos de WP.
 - **Protección de Clics en Sliders**: Se implementó una lógica de captura de eventos para prevenir que los enlaces en las tarjetas se activen accidentalmente durante un movimiento de arrastre.
+- **Refactorización de Acciones Jurídicas**: Se migró de una sección "hardcoded" en `index.astro` a un componente organismo dedicado (`HomeLegalActions`). Se cambió el diseño de Grid de Tarjetas a Lista de Píldoras (`LegalActionRow`) para optimizar espacio vertical y legibilidad.
+- **Corrección de Layout**: Se movieron `ImageGallery` y `Allies` dentro del componente `<Layout>` en `index.astro` para corregir la posición del footer.
+- **Filtrado Estricto WP**: En `index.astro`, se restringió la query de Acciones Jurídicas específicamente al slug `acciones-juridicas`, eliminando la mezcla con `actividades` para mayor precisión de datos.
 
 ## 4. 🚀 Pendientes Críticos (Next Steps)
 - **Sincronización de Autores**: El mapeo en `authors.ts` debe mantenerse sincronizado con los perfiles en el WP de producción (`api.ilsa.org.co`).

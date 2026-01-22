@@ -1,0 +1,76 @@
+---
+import { cn } from "../../lib/utils";
+import Button from "../Button.astro";
+---
+
+<section class="w-full px-6 mb-24">
+    <div class="max-w-[1400px] mx-auto">
+        <div
+            class={cn(
+                "relative flex flex-col items-center justify-center text-center p-10 md:p-16 rounded-3xl overflow-hidden",
+                "bg-gradient-to-br from-[#5E3B69] to-[#380B60]", // Using ILSA Purple base
+                "shadow-2xl shadow-[#5E3B69]/30",
+            )}
+        >
+            <!-- Background Decoration -->
+            <div class="absolute inset-0 z-0">
+                <div
+                    class="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"
+                >
+                </div>
+                <div
+                    class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#4E7CCE]/20 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2"
+                >
+                </div>
+            </div>
+
+            <div class="relative z-10 flex flex-col items-center">
+                <!-- Cleaner Label -->
+                <div
+                    class="flex flex-wrap items-center justify-center p-3 px-6 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-sm mb-8"
+                >
+                    <p class="font-medium text-white">
+                        Únete a nuestra comunidad digital
+                    </p>
+                </div>
+
+                <!-- Content -->
+                <h2
+                    class="text-3xl md:text-5xl font-bold max-w-2xl text-white text-center mb-6 tracking-tight"
+                >
+                    Conéctate con ILSA en todas partes
+                </h2>
+
+                <p class="text-white/80 text-lg max-w-xl mb-10 leading-relaxed">
+                    Sigue de cerca nuestras investigaciones, eventos y
+                    publicaciones especiales directamente en tu feed.
+                </p>
+
+                <!-- CTA Button -->
+                <Button
+                    href="https://instagram.com/ilsa_colombia"
+                    class="bg-white text-[#5E3B69] hover:bg-white/90 border-transparent px-8 py-6 text-base shadow-xl flex items-center gap-2"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="lucide lucide-instagram"
+                        ><rect width="20" height="20" x="2" y="2" rx="5" ry="5"
+                        ></rect><path
+                            d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
+                        ></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"
+                        ></line></svg
+                    >
+                    Seguir en Instagram
+                </Button>
+            </div>
+        </div>
+    </div>
+</section>
