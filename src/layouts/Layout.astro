@@ -9,6 +9,7 @@ import { type SeoData } from "../lib/seo";
 import { defaultSeo } from "../lib/seo";
 import Breadcrumbs from "../components/atoms/Breadcrumbs.astro";
 import { generateBreadcrumbs, type BreadcrumbItem } from "../lib/breadcrumbs";
+import { EasterEggManager } from "../components/easter-egg/EasterEggManager";
 
 export const prerender = true;
 
@@ -107,5 +108,6 @@ const containerClass = width === "narrow" ? "max-w-4xl" : "max-w-[1400px]";
         </main>
 
         <Footer />
+        <EasterEggManager client:idle />
     </body>
 </html>
