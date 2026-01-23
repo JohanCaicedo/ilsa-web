@@ -18,6 +18,7 @@
     - **Fix Crítico**: Añadido `pb-2` para evitar clipping de descenders (g, j, p) causado por `background-clip: text`.
 - **`Breadcrumbs.astro`**: 🟢 **Universal & Smart**. Usa `backdrop_blur` y bordes translúcidos. Ahora integrado globalmente en `Layout.astro` con generación automática de rutas.
 - **`SliderArrow.astro` / `SliderProgress.astro`**: 🟢 **Generic Ready**. Refactorizados para soportar props dinámicas (`...rest`) y selección por atributos de datos (`data-slider-*`) en lugar de IDs fijos.
+- **`SmartImage.astro`**: 🟢 **Performance Core**. Componente estándar para todas las imágenes. Maneja `loading="lazy"` (configurable), `decoding="async"` y transición de opacidad (fade-in) automática con `data-loaded`.
 
 ### Moléculas (Molecules)
 - **`OpinionCard.astro`**: 🟢 **Full Compliance**. Implementa `backdrop-blur-md`, `bg-white/10` y `border-white/20`. Es el estándar para "Glassmorphism" en el sitio. Reutilizado en sistema de Colecciones.
@@ -103,10 +104,28 @@
 - **Universalización de Artículos**: Se eliminó la restricción de que `[...uri].astro` solo sirviera opinión. Ahora es la plantilla maestra para cualquier contenido, garantizando consistencia de diseño y SEO en todo el sitio.
 - **Estabilidad de Layout**: En `AlliesGrid` y `ImageGallery`, se usaron propiedades de flexbox rígidas (`shrink-0`, `min-w`) para evitar deformaciones en pantallas estrechas.
 
-## 4. 🚀 Pendientes Críticos (Next Steps)
+### Optimización de Imágenes (SmartImage)
+- **Problema**: Carga inconsistente de imágenes, falta de feedback visual (placeholders) y CLS potencial.
+- **Solución**: Creación de `SmartImage.astro`.
+    - Centraliza `loading="lazy"` y `decoding="async"`.
+    - Implementa "Fade-in" suave usando CSS y atributo `data-loaded`.
+    - Soporta `priority={true}` para LCP (imágenes de Hero).
+    - Reemplazó etiquetas `<img>` directas en `DirectorCard`, `OpinionCard`, `ArticleCard`, `NewsCard`, `HeroSlide`, etc.
+
+## 5. ✅ Estado de Validación (QA)
+- **Desktop (Chrome)**: 
+    - Estética Liquid Glass verificada (Blurred Cards, Translucent Nav, Gradients).
+    - `SmartImage` operativo con transiciones suaves.
+    - No hay errores en consola.
+- **Mobile (iOS Viewport)**:
+    - Layout estable (Sin overflow horizontal).
+    - Menu hamburguesa funcional.
+    - Sliders (News/Gallery) con scroll nativo fluido.
+    - Textos legibles y centrados.
+
+## 6. 🚀 Pendientes Críticos (Next Steps)
 - **Testing de Colecciones**: Verificar que todas las 8 páginas de publicaciones renderizan correctamente con datos reales de WordPress
 - **Validación de Breadcrumbs**: Probar navegación en rutas profundas (ej: post dentro de colección dentro de publicaciones)
 - **Build de Producción**: Ejecutar `npm run build` para verificar sitemap.xml y rutas estáticas
 - **Google Search Console**: Enviar sitemap una vez desplegado a producción
 - **Accesibilidad**: Verificar áreas táctiles en TeamCards clickables y navegación por teclado en breadcrumbs
-- **Performance**: Considerar lazy loading de imágenes en grids de colecciones si el volumen crece

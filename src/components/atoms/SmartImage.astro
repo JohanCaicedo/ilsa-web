@@ -1,0 +1,33 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "../../lib/utils";
+
+interface Props extends HTMLAttributes<"img"> {
+    priority?: boolean;
+}
+
+const {
+    src,
+    alt,
+    class: className,
+    width,
+    height,
+    priority = false,
+    ...rest
+} = Astro.props;
+---
+
+<img
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={priority ? "eager" : "lazy"}
+    decoding="async"
+    class={cn(
+        "transition-opacity duration-700 ease-in-out opacity-0 data-[loaded=true]:opacity-100",
+        className,
+    )}
+    onload="this.setAttribute('data-loaded', 'true')"
+    {...rest}
+/>

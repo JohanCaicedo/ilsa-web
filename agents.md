@@ -14,7 +14,7 @@ Antes de crear UI, verifica si puedes usar o extender estos archivos:
 ### Átomos (Atoms) - src/components/atoms/
 - **Botones**: `Button.astro`, `navbar/NavButton.astro`.
 - **Navegación**: `navbar/NavLink.astro`, `navbar/NavDropdown.astro`, `Breadcrumbs.astro`.
-- **Funcionales**: `ReadingProgress.astro`, `ShareButtons.astro`, `SliderArrow.astro`, `SliderProgress.astro`.
+- **Funcionales**: `ReadingProgress.astro`, `ShareButtons.astro`, `SliderArrow.astro`, `SliderProgress.astro`, `SmartImage.astro`.
 
 ### Moléculas (Molecules) - src/components/molecules/
 - **Tarjetas**: `ArticleCard.astro` (general) y `OpinionCard.astro` (específica para columnas).
@@ -34,6 +34,7 @@ Antes de crear UI, verifica si puedes usar o extender estos archivos:
 3. **Diseño (Liquid Glass)**: Sigue el sistema de refracción. Usa `backdrop-blur-md`, `bg-white/10` y `border-white/20`. Consulta `Liquid glass.docx` para la física del vidrio.
 4. **Layout**: Usa `Layout.astro`. Respeta las props `title` y `width` ("narrow" | "wide") para el ancho del contenedor.
 5. **Utilidades**: Usa `cn` de `src/lib/utils.ts` para combinar clases de Tailwind.
+6. **Imágenes**: Usa SIEMPRE `SmartImage.astro` en lugar de `<img>`. Este componente maneja lazy loading, decodificación asíncrona y animaciones de entrada automáticamente.
 
 ## 4. Historial y Consistencia
 - Revisa siempre `@src/components` antes de proponer una nueva "molécula".

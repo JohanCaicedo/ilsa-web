@@ -1,5 +1,6 @@
 ---
 import ShareButtons from "../atoms/ShareButtons.astro";
+import SmartImage from "../atoms/SmartImage.astro";
 
 interface Props {
   title: string;
@@ -67,12 +68,14 @@ const formattedDate = new Date(date).toLocaleDateString("es-CO", {
     authorName && (
       <div class="author-section flex flex-col md:flex-row items-center md:items-start gap-6 mb-12 p-8 bg-secondary/50 rounded-3xl border border-transparent">
         {authorImg && (
-          <img
+          <SmartImage
             class="w-20 h-20 rounded-full object-cover bg-muted shrink-0"
             src={authorImg}
             alt={authorName}
-            transition:name={
-              authorSlug ? `author-photo-${authorSlug}` : undefined
+            style={
+              authorSlug
+                ? `view-transition-name: author-photo-${authorSlug}`
+                : undefined
             }
           />
         )}

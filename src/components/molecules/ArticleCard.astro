@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import SmartImage from "../atoms/SmartImage.astro";
 
 interface Props {
   title: string;
@@ -43,11 +44,10 @@ const formattedDate = new Date(date).toLocaleDateString("es-CO", {
     image && (
       <div class="relative w-full h-48 overflow-hidden">
         <div class="absolute inset-0 bg-slate-900/10 group-hover:bg-transparent transition-colors z-10" />
-        <img
+        <SmartImage
           src={image}
           alt={title}
           class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-          loading="lazy"
         />
       </div>
     )

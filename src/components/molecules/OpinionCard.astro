@@ -1,4 +1,5 @@
 ---
+import SmartImage from "../atoms/SmartImage.astro";
 interface Props {
   title: string;
   author: string;
@@ -15,11 +16,10 @@ const { title, author, image, date, uri } = Astro.props;
   class="group relative block h-[380px] w-[280px] shrink-0 overflow-hidden rounded-3xl bg-muted shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
 >
   <div class="absolute inset-0 h-full w-full overflow-hidden">
-    <img
+    <SmartImage
       src={image}
       alt={title}
       class="h-full w-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
-      loading="lazy"
     />
   </div>
 

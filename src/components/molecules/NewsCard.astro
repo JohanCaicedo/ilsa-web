@@ -1,5 +1,6 @@
 ---
 import { cn } from "../../lib/utils";
+import SmartImage from "../atoms/SmartImage.astro";
 
 interface Props {
     title: string;
@@ -29,11 +30,10 @@ const { title, excerpt, image, link, className } = Astro.props;
         </div>
 
         <div class="h-52 overflow-hidden relative z-10">
-            <img
+            <SmartImage
                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                 src={image}
                 alt={title}
-                loading="lazy"
             />
             <!-- Image Overlay for text contrast if needed -->
             <div
