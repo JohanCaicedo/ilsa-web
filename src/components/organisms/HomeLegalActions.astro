@@ -15,7 +15,7 @@ const { posts, class: className } = Astro.props;
 
 <section class={cn("relative w-full py-20 bg-transparent", className)}>
     <div
-        class="absolute inset-0 z-0 pointer-events-none overflow-hidden"
+        class="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-40"
         style="mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%); -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);"
     >
         <div
@@ -31,7 +31,7 @@ const { posts, class: className } = Astro.props;
     <!-- Liquid Glass Container -->
     <div class="relative z-10 max-w-[1400px] mx-auto px-6">
         <div
-            class="rounded-[2.5rem] bg-white/40 backdrop-blur-3xl border border-white/50 shadow-2xl p-8 md:py-16 md:px-24 overflow-hidden relative"
+            class="rounded-[2.5rem] bg-white/40 backdrop-blur-md border border-white/50 shadow-2xl p-8 md:py-16 md:px-24 overflow-hidden relative"
         >
             <!-- Frosty overlay within the card -->
             <div
@@ -53,7 +53,9 @@ const { posts, class: className } = Astro.props;
                             to="var(--ilsa-blue)"
                             class="mb-3 block w-fit mx-auto md:mx-0 text-center"
                         />
-                        <p class="text-slate-600 max-w-lg text-lg font-medium">
+                        <p
+                            class="text-slate-600 max-w-lg text-lg font-medium text-pretty"
+                        >
                             Defensa de derechos humanos, litigio estratégico y
                             acompañamiento a comunidades.
                         </p>

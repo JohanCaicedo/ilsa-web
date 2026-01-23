@@ -16,12 +16,12 @@ const { title, excerpt, image, link, className } = Astro.props;
 <a
     href={link}
     class={cn(
-        "block max-w-[340px] hover:-translate-y-2 transition-transform duration-500 group perspective-1000",
+        "block max-w-[340px] hover:-translate-y-2 transition-transform duration-500 group perspective-1000 p-1",
         className,
     )}
 >
     <div
-        class="h-full flex flex-col rounded-3xl overflow-hidden border border-white/20 bg-white/10 backdrop-blur-3xl shadow-lg hover:shadow-2xl hover:bg-white/20 transition-all duration-300 relative"
+        class="h-full flex flex-col rounded-3xl overflow-hidden border border-white/20 bg-white/10 backdrop-blur-md shadow-lg hover:shadow-2xl hover:bg-white/20 transition-all duration-300 relative"
     >
         <!-- Frosty Glow Layer -->
         <div
@@ -62,7 +62,7 @@ const { title, excerpt, image, link, className } = Astro.props;
                     >Leer más</span
                 >
                 <div
-                    class="h-8 w-8 rounded-full bg-white/40 flex items-center justify-center group-hover:bg-[#4E7CCE] group-hover:text-white transition-colors duration-300"
+                    class="h-8 w-8 rounded-full bg-white/40 flex items-center justify-center group-hover:bg-[#4E7CCE] group-hover:text-white transition-colors duration-300 backdrop-blur-sm border border-white/30 shadow-sm"
                 >
                     <span class="text-sm">→</span>
                 </div>

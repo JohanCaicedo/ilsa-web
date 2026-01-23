@@ -80,13 +80,15 @@ const { slides, class: className } = Astro.props;
             </svg>
 
             <!-- Breathing Blobs -->
+            <!-- Breathing Blobs - Refined -->
             <div
-                class="absolute top-[-10%] right-[-5%] w-[40%] h-[60%] bg-[#4E7CCE]/10 rounded-full blur-[100px] animate-pulse"
+                class="absolute top-[-20%] right-[-10%] w-[60%] h-[70%] bg-[#4E7CCE]/10 rounded-full blur-[120px] animate-pulse"
+                style="animation-duration: 8s;"
             >
             </div>
             <div
-                class="absolute bottom-[-10%] left-[-10%] w-[40%] h-[50%] bg-[#5E3B69]/10 rounded-full blur-[100px] animate-pulse"
-                style="animation-duration: 4s;"
+                class="absolute bottom-[-10%] left-[-10%] w-[50%] h-[60%] bg-[#5E3B69]/10 rounded-full blur-[120px] animate-pulse"
+                style="animation-duration: 10s;"
             >
             </div>
         </div>
@@ -140,11 +142,13 @@ const { slides, class: className } = Astro.props;
 
             // Efecto suave
             effect: "fade",
-            fadeEffect: { crossFade: true }, // Evita que se vea el fondo blanco al cambiar
+            fadeEffect: { crossFade: true },
+            speed: 1000, // Transición más lenta y elegante
 
             autoplay: {
-                delay: 6000,
+                delay: 8000, // Más tiempo para leer
                 disableOnInteraction: false,
+                pauseOnMouseEnter: true, // UX improvement: pause when user wants to read
             },
 
             pagination: {
@@ -164,18 +168,23 @@ const { slides, class: className } = Astro.props;
 
 <style>
     /* Ajustes finos para la paginación de Swiper con tus colores */
+    /* Ajustes finos para la paginación de Swiper con estilo Liquid Glass */
     :global(.swiper-pagination-bullet) {
-        background: #4e7cce; /* ILSA Blue Base */
-        opacity: 0.3;
-        width: 10px;
-        height: 10px;
-        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.2); /* Glass base */
+        opacity: 1;
+        width: 12px;
+        height: 12px;
+        backdrop-filter: blur(4px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
     :global(.swiper-pagination-bullet-active) {
         background: #4e7cce; /* ILSA Blue Active */
-        opacity: 1;
-        width: 24px;
+        width: 40px;
         border-radius: 999px;
+        border-color: rgba(78, 124, 206, 0.5);
+        box-shadow: 0 0 15px rgba(78, 124, 206, 0.4);
     }
 
     /* Navigation cleanup */

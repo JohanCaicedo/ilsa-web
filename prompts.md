@@ -8,7 +8,7 @@ He terminado la sesión de trabajo por hoy. Por favor, ejecuta el Protocolo de F
 
         Nuevos componentes creados y su nivel de cumplimiento con Liquid Glass.
 
-        Refactorizaciones realizadas (especialmente en @src/lib/wp.ts o lógica de sliders).
+        Refactorizaciones realizadas
 
         Decisiones de diseño tomadas para mantener la consistencia.
 

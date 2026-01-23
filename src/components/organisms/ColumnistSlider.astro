@@ -36,8 +36,11 @@ const { posts } = Astro.props;
   </div>
 
   <div
-    class="flex w-full gap-6 overflow-x-auto py-4 px-1 cursor-grab active:cursor-grabbing select-none [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden snap-x snap-mandatory"
+    class="flex w-full gap-6 overflow-x-auto py-4 px-1 cursor-grab active:cursor-grabbing select-none [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden snap-x snap-mandatory focus-visible:ring-2 focus-visible:ring-[#4E7CCE] focus-visible:outline-none rounded-xl"
     data-slider-track
+    tabindex="0"
+    aria-label="Lista de columnas de opinión"
+    role="region"
   >
     {
       posts.map((post) => {

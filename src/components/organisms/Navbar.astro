@@ -4,6 +4,7 @@ import NavLink from "../atoms/navbar/NavLink.astro";
 import NavDropdown from "../atoms/navbar/NavDropdown.astro";
 import NavButton from "../atoms/navbar/NavButton.astro";
 import { collectionsConfig } from "../../lib/collections";
+import { authorsConfig } from "../../lib/authors";
 
 const navStructure = [
     { type: "link", text: "Inicio", href: "/" },
@@ -23,37 +24,13 @@ const navStructure = [
         type: "dropdown",
         text: "Opinión",
         href: "/opinion",
-        // Mapping specific authors based on user request.
-        items: [
-            {
-                label: "Boaventura de Sousa Santos",
-                href: "/opinion/boaventura-de-sousa-santos",
-            },
-            {
-                label: "Carlos Federico Mares",
-                href: "/opinion/carlos-frederico-mares",
-            },
-            {
-                label: "Consuelo Quattrocchi",
-                href: "/opinion/consuelo-quattrocchi",
-            },
-            {
-                label: "Freddy Ordóñez Gómez",
-                href: "/opinion/freddy-ordonez-gomez",
-            },
-            {
-                label: "Germán Burgos Silva",
-                href: "/opinion/german-burgos",
-            },
-            {
-                label: "Liliana Estupiñán Achury",
-                href: "/opinion/liliana-estupinan-achury",
-            },
-            {
-                label: "Mauricio Chamorro Rosero",
-                href: "/opinion/mauricio-chamorro-rosero",
-            },
-        ],
+        // Mapping specific authors based on configuration
+        items: Object.entries(authorsConfig)
+            .map(([slug, author]) => ({
+                label: author.name,
+                href: `/opinion/${slug}`,
+            }))
+            .sort((a, b) => a.label.localeCompare(b.label)),
     },
     {
         type: "dropdown",

@@ -24,7 +24,7 @@
 - **`OpinionCard.astro`**: 🟢 **Full Compliance**. Implementa `backdrop-blur-md`, `bg-white/10` y `border-white/20`. Es el estándar para "Glassmorphism" en el sitio. Reutilizado en sistema de Colecciones.
 - **`Pagination.astro`**: 🆕 **Client-Side Pagination**. Componente reutilizable extraído de `opinion/[slug].astro`. Maneja paginación de grids mediante JavaScript con animaciones suaves.
 - **`DirectorCard.astro`**: 🔥 **Premium Compliance**. Implementa refracción avanzada con blobs interactivos que siguen el cursor y variantes `dark`/`frosted`.
-- **`TeamCard.astro`**: 🟢 **Compliant & Clickable**. Usa `backdrop-blur-xl` y `bg-white/70`. Ahora envuelto en anchors en `/opinion` para navegación a perfiles de autores.
+- **`TeamCard.astro`**: 🟢 **Redesigned**. Molécula cuadrada (`aspect-square`) con animación "Center-to-Edge Reveal" (`clip-path`). Soporta doble imagen (cover/profile) gestionada desde `src/lib/columnistImages.ts`. Leyenda interactiva con entrada top-to-bottom y tipografía optimizada.
 - **`NewsCard.astro`**: ❄️ **Frosty Glass**. `backdrop-blur-3xl`, `bg-white/10`. Layout optimizado para móvil: soporta snap-scrolling y `shrink-0`.
 - **`LegalActionRow.astro`**: 🆕 **Pill Component**. Molécula en forma de píldora (`rounded-full`) para listas compactas. Sin imágenes, solo título y badge de acción. Soporta fecha de publicación.
 - **`ArticleCard.astro`**: 🟢 **Responsive & Conditional**. Refactorizado para ocultar la sección de "autor" si no se proporcionan props (usado en posts genéricos vs opinión).
@@ -112,6 +112,18 @@
     - Soporta `priority={true}` para LCP (imágenes de Hero).
     - Reemplazó etiquetas `<img>` directas en `DirectorCard`, `OpinionCard`, `ArticleCard`, `NewsCard`, `HeroSlide`, etc.
 
+### Opinion Page Visibility Fix (Session Highlight)
+- **Problema**: Contenido de `/opinion` invisible debido a clases de animación de librería faltante (`tailwindcss-animate`).
+- **Solución**: Reemplazo de `opacity-0`/`animate-in` por animaciones CSS nativas (`@keyframes enter`) en `src/pages/opinion/index.astro`. Garantiza visibilidad sin dependencias externas rotas.
+
+### TeamCard Redesign (VIP Experience)
+- **Objetivo**: Elevar la percepción de los columnistas con una estética "Premium/Contundente".
+- **Decisión**: 
+    - Card cuadrada (`aspect-square`) con imagen full-bleed.
+    - **Dual Image System**: Implementado en `src/lib/columnistImages.ts` (Profile + Cover).
+    - **Interacción**: Animación `clip-path` circular para revelar al autor sobre el cover art.
+    - **Branding**: Uso sutil de `var(--ilsa-blue)` en bordes y sombras para integración suave.
+
 ## 5. ✅ Estado de Validación (QA)
 - **Desktop (Chrome)**: 
     - Estética Liquid Glass verificada (Blurred Cards, Translucent Nav, Gradients).
@@ -129,3 +141,5 @@
 - **Build de Producción**: Ejecutar `npm run build` para verificar sitemap.xml y rutas estáticas
 - **Google Search Console**: Enviar sitemap una vez desplegado a producción
 - **Accesibilidad**: Verificar áreas táctiles en TeamCards clickables y navegación por teclado en breadcrumbs
+- **TeamCard Mobile**: Verificar la sensación "táctil" (`active:scale-95`) en dispositivos reales iOS/Android.
+- **Content Population**: Completar los covers artísticos faltantes en `src/lib/columnistImages.ts` para los demás columnistas.
