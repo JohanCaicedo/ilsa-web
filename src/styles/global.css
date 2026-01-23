@@ -199,6 +199,9 @@
 
 .animate-blob {
   animation: blob 10s infinite;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
 }
 
 .animation-delay-2000 {
@@ -219,6 +222,21 @@
   box-shadow:
     0 8px 32px 0 var(--glass-shadow),
     inset 0 0 0 1px var(--glass-highlight);
+  /* Safari Fixes */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Safari/iOS Specific Utilities */
+.ios-glass-fix {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.touch-scroll {
+  -webkit-overflow-scrolling: touch;
 }
 
 .glass-panel-dark {

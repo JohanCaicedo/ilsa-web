@@ -26,6 +26,7 @@ const {
     decoding="async"
     class={cn(
         "transition-opacity duration-700 ease-in-out opacity-0 data-[loaded=true]:opacity-100",
+        "translate-z-0 backface-hidden", // Safari Perf
         className,
     )}
     onload="this.setAttribute('data-loaded', 'true')"
