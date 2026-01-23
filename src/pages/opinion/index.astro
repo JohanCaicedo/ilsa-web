@@ -4,8 +4,7 @@ import Breadcrumbs from "../../components/atoms/Breadcrumbs.astro";
 import TeamCard from "../../components/molecules/TeamCard.astro";
 import RelatedSlider from "../../components/organisms/RelatedSlider.astro";
 import {
-    wpQuery,
-    MASTER_QUERY,
+    fetchAllPosts, // Use fetchAllPosts
     type MasterQueryResponse,
     type PostNode,
 } from "../../lib/wp";
@@ -14,14 +13,18 @@ import {
     columnistImages,
     defaultColumnistImage,
 } from "../../lib/columnistImages";
+import {
+    HIDE_SENSITIVE_AUTHORS,
+    SENSITIVE_AUTHORS,
+} from "../../lib/presentationConfig";
 import type { SeoData } from "../../lib/seo";
 
 export const prerender = true;
 
 const breadcrumbItems = [{ label: "Opinión", href: "/opinion" }];
 
-// Fetch SEO and Post Data
-const data: MasterQueryResponse = await wpQuery(MASTER_QUERY);
+// Fetch SEO and Post Data (Fetch ALL posts now)
+const data: MasterQueryResponse = await fetchAllPosts();
 
 // Filter opinion articles (assuming category slug is 'opinion') and limit to 20
 const opinionArticles = (
@@ -121,29 +124,35 @@ const columnists = Object.values(authorsConfig);
                     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto perspective-1000"
                 >
                     {
-                        Object.entries(authorsConfig).map(([slug, author]) => (
-                            <a
-                                href={`/opinion/${slug}`}
-                                class="block h-full group transition-transform duration-500 hover:-translate-y-2"
-                            >
-                                <TeamCard
-                                    name={author.name}
-                                    profileImage={
-                                        (
-                                            columnistImages[slug] ||
-                                            defaultColumnistImage
-                                        ).profile
-                                    }
-                                    coverImage={
-                                        (
-                                            columnistImages[slug] ||
-                                            defaultColumnistImage
-                                        ).cover
-                                    }
-                                    class="h-full group-hover:border-[#4e7cce]/50 group-hover:shadow-2xl group-hover:shadow-[#4e7cce]/10 transition-all duration-500"
-                                />
-                            </a>
-                        ))
+                        Object.entries(authorsConfig)
+                            .filter(
+                                ([slug]) =>
+                                    !HIDE_SENSITIVE_AUTHORS ||
+                                    !SENSITIVE_AUTHORS.includes(slug),
+                            )
+                            .map(([slug, author]) => (
+                                <a
+                                    href={`/opinion/${slug}`}
+                                    class="block h-full group transition-transform duration-500 hover:-translate-y-2"
+                                >
+                                    <TeamCard
+                                        name={author.name}
+                                        profileImage={
+                                            (
+                                                columnistImages[slug] ||
+                                                defaultColumnistImage
+                                            ).profile
+                                        }
+                                        coverImage={
+                                            (
+                                                columnistImages[slug] ||
+                                                defaultColumnistImage
+                                            ).cover
+                                        }
+                                        class="h-full group-hover:border-[#4e7cce]/50 group-hover:shadow-2xl group-hover:shadow-[#4e7cce]/10 transition-all duration-500"
+                                    />
+                                </a>
+                            ))
                     }
                 </div>
             </section>

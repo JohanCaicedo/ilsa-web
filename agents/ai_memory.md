@@ -39,7 +39,7 @@
 ### Organismos (Organisms)
 - **`Navbar.astro`**: 🟢 **Dynamic & Synced**. 
     - Dropdown "Publicaciones" generado dinámicamente desde `collectionsConfig`
-    - Dropdown "Opinión" actualizado con slugs correctos de autores (`carlos-frederico-mares`, `german-burgos`)
+    - Dropdown "Opinión" filtrado por `HIDE_SENSITIVE_AUTHORS` (Feature Flag).
 - **`HomeHero.astro`**: 🟢 **Mobile Optimized**. Alineación de títulos y espaciado ajustado dinámicamente (`flex-col` en móvil, `flex-row` en desktop).
 - **`HomeNews.astro`**: 🟢 **Layout Adaptativo**. En móvil usa un slider horizontal (`snap-x`, `flex-nowrap`, scroll oculto) en lugar de grid apilado, mejorando drásticamente el uso del espacio vertical.
 - **`HomeLegalActions.astro`**: 🆕 **Liquid Container**. Organismo encapsulado en un contenedor de vidrio con título centrado en móvil.
@@ -55,6 +55,7 @@
 ### Páginas (Pages)
 - **`[...uri].astro`**: 🟢 **Global Entry Point & SEO Enhanced**. 
     - Refactorizada para manejar TODAS las rutas de posts (Noticias, Opinión, Publicaciones).
+    - **Fetch All**: Implementado `fetchAllPosts()` para superar el límite de 1000 entradas de WP.
     - **SEO Fix**: Ahora pasa el objeto completo `post.seo` a `Layout` para meta tags correctos (antes solo pasaba title).
     - **Breadcrumbs Inteligentes**: Mapea categorías de WP a rutas de Astro usando `collectionsConfig`.
 - **`/publicaciones/*.astro`**: 🆕 **Physical Static Pages**. 8 archivos individuales creados:
@@ -142,4 +143,18 @@
 - **Google Search Console**: Enviar sitemap una vez desplegado a producción
 - **Accesibilidad**: Verificar áreas táctiles en TeamCards clickables y navegación por teclado en breadcrumbs
 - **TeamCard Mobile**: Verificar la sensación "táctil" (`active:scale-95`) en dispositivos reales iOS/Android.
-- **Content Population**: Completar los covers artísticos faltantes en `src/lib/columnistImages.ts` para los demás columnistas.
+- **Content Population**: Completar los covers artísticos faltantes en `src/lib/columnistImages.ts`.
+
+## 7. 🛠️ Nuevas Decisiones de Arquitectura (Session Update)
+
+### WordPress Pagination Strategy (Fetch All)
+- **Problema**: `MASTER_QUERY` limitada a 1000 items ocultaba posts antiguos.
+- **Solución**: Implementado `fetchAllPosts` en `src/lib/wp.ts` con paginación recursiva (`hasNextPage`).
+- **Impacto**: Garantiza integridad de datos en `[...uri].astro`.
+
+### Feature Flags
+- **Contexto**: Necesidad de ocultar autores específicos para presentaciones.
+- **Solución**: `src/lib/presentationConfig.ts` con `HIDE_SENSITIVE_AUTHORS`.
+
+### Image Optimization
+- **Cambio**: `TeamCard` migrado a `SmartImage` para rendimiento y UX (fade-in).

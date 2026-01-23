@@ -6,6 +6,8 @@ interface Props {
     class?: string;
 }
 
+import SmartImage from "../atoms/SmartImage.astro";
+
 const { name, profileImage, coverImage, class: className } = Astro.props;
 ---
 
@@ -18,12 +20,15 @@ const { name, profileImage, coverImage, class: className } = Astro.props;
     <!-- 1. BACKGROUND (Cover Image) -->
     <!-- Visible initially, stays as base layer -->
     <div class="absolute inset-0 z-0">
-        <img
-            src={coverImage}
-            alt=""
-            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90"
-            loading="lazy"
-        />
+        <div
+            class="w-full h-full opacity-90 transition-transform duration-700 group-hover:scale-110"
+        >
+            <SmartImage
+                src={coverImage}
+                alt=""
+                class="w-full h-full object-cover"
+            />
+        </div>
         <!-- Blue-tinted overlay for branding -->
         <div class="absolute inset-0 bg-[#4E7CCE]/10 mix-blend-overlay"></div>
         <!-- Text contrast overlay -->
@@ -36,11 +41,10 @@ const { name, profileImage, coverImage, class: className } = Astro.props;
         class="absolute inset-0 z-10 transition-[clip-path] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
         style="clip-path: circle(0% at 50% 50%);"
     >
-        <img
+        <SmartImage
             src={profileImage}
             alt={name}
             class="w-full h-full object-cover"
-            loading="lazy"
         />
     </div>
 

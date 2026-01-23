@@ -3,6 +3,10 @@
 import NavLink from "../atoms/navbar/NavLink.astro";
 import NavDropdown from "../atoms/navbar/NavDropdown.astro";
 import NavButton from "../atoms/navbar/NavButton.astro";
+import {
+    HIDE_SENSITIVE_AUTHORS,
+    SENSITIVE_AUTHORS,
+} from "../../lib/presentationConfig";
 import { collectionsConfig } from "../../lib/collections";
 import { authorsConfig } from "../../lib/authors";
 
@@ -26,6 +30,11 @@ const navStructure = [
         href: "/opinion",
         // Mapping specific authors based on configuration
         items: Object.entries(authorsConfig)
+            .filter(
+                ([slug]) =>
+                    !HIDE_SENSITIVE_AUTHORS ||
+                    !SENSITIVE_AUTHORS.includes(slug),
+            )
             .map(([slug, author]) => ({
                 label: author.name,
                 href: `/opinion/${slug}`,

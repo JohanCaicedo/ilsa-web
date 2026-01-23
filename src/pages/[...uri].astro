@@ -1,7 +1,6 @@
 ---
 import {
-  wpQuery,
-  MASTER_QUERY,
+  fetchAllPosts, // Import new function
   type MasterQueryResponse,
   type PostNode,
 } from "../lib/wp";
@@ -16,7 +15,7 @@ import { collectionsConfig } from "../lib/collections";
 export const prerender = true;
 
 export async function getStaticPaths() {
-  const data: MasterQueryResponse = await wpQuery(MASTER_QUERY);
+  const data: MasterQueryResponse = await fetchAllPosts(); // Use Fetch All
   const allPosts = data.posts.nodes;
 
   return allPosts.map((post) => ({

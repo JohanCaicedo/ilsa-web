@@ -11,6 +11,10 @@ export interface WpQueryOptions {
 export interface MasterQueryResponse {
   posts: {
     nodes: PostNode[];
+    pageInfo: {
+      hasNextPage: boolean;
+      endCursor: string;
+    };
   };
 }
 
@@ -67,8 +71,8 @@ export interface PostNode {
  * Consulta Maestra para Entradas y Páginas
  */
 export const MASTER_QUERY = `
-  query MasterQuery {
-    posts(first: 1000) {
+  query MasterQuery($first: Int = 100, $after: String = "") {
+    posts(first: $first, after: $after) {
       nodes {
         id
         databaseId
@@ -130,6 +134,10 @@ export const MASTER_QUERY = `
           readingTime
         }
       }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
     }
   }
 `;
@@ -182,4 +190,45 @@ export async function wpQuery<T = any>(options: string | WpQueryOptions): Promis
     console.error('Fallo en wpQuery:', error);
     throw error;
   }
+}
+
+/**
+ * Recupera TODAS las entradas paginando automáticamente
+ */
+export async function fetchAllPosts(): Promise<MasterQueryResponse> {
+  let allNodes: PostNode[] = [];
+  let hasNextPage = true;
+  let endCursor = "";
+
+  while (hasNextPage) {
+    console.log(`Fetching posts... (cursor: ${endCursor})`);
+
+    // Using explicit loop with cursor
+    const data = await wpQuery<MasterQueryResponse>({
+      query: MASTER_QUERY,
+      variables: {
+        first: 100, // Safe batch size
+        after: endCursor
+      }
+    });
+
+    const postsData = data?.posts;
+    if (!postsData) break;
+
+    allNodes = [...allNodes, ...postsData.nodes];
+
+    hasNextPage = postsData.pageInfo?.hasNextPage || false;
+    endCursor = postsData.pageInfo?.endCursor || "";
+  }
+
+  // Return a synthetic response resembling the original structure but with ALL nodes
+  return {
+    posts: {
+      nodes: allNodes,
+      pageInfo: {
+        hasNextPage: false,
+        endCursor: "",
+      }
+    }
+  };
 }
