@@ -1,0 +1,104 @@
+---
+/**
+ * LiquidContainer.astro
+ *
+ * Un contenedor experimental "Plug & Play" que aplica el efecto "Liquid Glass"
+ * de Apple (viscosidad + refracción de luz) a cualquier contenido que envuelva.
+ *
+ * Uso:
+ * <LiquidContainer>
+ *   <h1>Hola Mundo</h1>
+ * </LiquidContainer>
+ */
+
+interface Props {
+    className?: string;
+    intensity?: "low" | "medium" | "high";
+}
+
+const { className = "", intensity = "medium" } = Astro.props;
+
+// Configuración de intensidad (blur + opacidad) - Ajustado para efecto "Frosty"
+// Configuración de intensidad (blur + opacidad) - Ajustado para efecto "Frosty"
+const intensityMap = {
+    low: "backdrop-blur-md bg-white/40 border-white/40 shadow-sm backdrop-brightness-125",
+    medium: "backdrop-blur-xl bg-white/60 border-white/50 shadow-md backdrop-brightness-150 saturate-150", // Brightness+Saturate ayuda al contraste
+    high: "backdrop-blur-2xl bg-white/80 border-white/60 shadow-lg backdrop-brightness-150",
+};
+
+const baseStyles = intensityMap[intensity];
+---
+
+<div
+    class:list={[
+        "liquid-card group relative transition-all duration-300",
+        className,
+    ]}
+>
+    <!-- Background Container (Clipped) -->
+    <div
+        class:list={[
+            "absolute inset-0 overflow-hidden rounded-2xl border pointer-events-none transform-gpu", // GPU accel para evitar flicker en iOS
+            baseStyles,
+        ]}
+    >
+        <!-- Capa de brillo seguidor (Spotlight) -->
+        <div
+            class="absolute -inset-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.4), transparent 40%); z-index: 0;"
+        >
+        </div>
+
+        <!-- Capa de ruido sutil para textura -->
+        <div
+            class="absolute inset-0 opacity-[0.03] mix-blend-overlay"
+            style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"
+        >
+        </div>
+    </div>
+
+    <!-- Contenido real (Slot) - Permitimos que sobresalga -->
+    <div class="relative z-10 h-full w-full">
+        <slot />
+    </div>
+</div>
+
+<script>
+    // Lógica de seguimiento del mouse aislada
+    // Solo se ejecuta en el cliente y si el dispositivo soporta hover (no táctil)
+    if (window.matchMedia("(hover: hover)").matches) {
+        document.querySelectorAll(".liquid-card").forEach((card) => {
+            const htmlCard = card as HTMLElement;
+
+            htmlCard.addEventListener("mousemove", (e) => {
+                requestAnimationFrame(() => {
+                    const rect = htmlCard.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    htmlCard.style.setProperty("--mouse-x", `${x}px`);
+                    htmlCard.style.setProperty("--mouse-y", `${y}px`);
+                });
+            });
+        });
+    }
+</script>
+
+<style>
+    /* Animación de entrada suave */
+    .liquid-card {
+        will-change: transform, opacity;
+        animation: floatIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+
+    @keyframes floatIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px) scale(0.98);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+</style>
