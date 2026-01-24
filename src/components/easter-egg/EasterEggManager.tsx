@@ -41,17 +41,27 @@ export const EasterEggManager: React.FC = () => {
             if (isVisible) return;
 
             // Konami Code Logic
-            const newSequence = [...inputSequence, e.key];
+            // Normalize key to lowercase for robust matching (ignore CapsLock/Shift)
+            const key = e.key.toLowerCase();
+            const newSequence = [...inputSequence, key];
+
+            // Debug log (remove in final prod if desired, but useful now)
+            console.log('Easter Egg Input:', key, newSequence.slice(-10));
+
+            // Normalize target code
+            const targetCode = KONAMI_CODE.map(k => k.toLowerCase());
 
             // Keep only the last N keys needed
-            if (newSequence.length > KONAMI_CODE.length) {
+            if (newSequence.length > targetCode.length) {
                 newSequence.shift();
             }
 
             setInputSequence(newSequence);
 
             // Check match
-            if (JSON.stringify(newSequence) === JSON.stringify(KONAMI_CODE)) {
+            if (JSON.stringify(newSequence) === JSON.stringify(targetCode)) {
+                console.log('Konami Code Activated!');
+
                 // Verify it's not mobile before activating
                 const isMobile = window.matchMedia("(max-width: 768px)").matches ||
                     ('ontouchstart' in window);
@@ -60,6 +70,8 @@ export const EasterEggManager: React.FC = () => {
                     setIsVisible(true);
                     localStorage.setItem('glass_breaker_active', 'true'); // Persist active state
                     document.body.style.overflow = 'hidden'; // Lock scrolling
+                } else {
+                    console.log('Easter egg disabled on mobile');
                 }
             }
         };
