@@ -8,47 +8,110 @@ interface Props {
 }
 
 const { title, isOpen = false, class: className } = Astro.props;
+const id = `acc-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
-<div class={cn("border-b border-gray-200 last:border-0", className)}>
-    <details class="group" open={isOpen}>
-        <summary
-            class="flex w-full cursor-pointer list-none items-center justify-between py-4 text-left font-bold uppercase tracking-wide text-slate-900 transition-colors hover:text-[#4e7cce] focus:outline-none"
+<div
+    class={cn(
+        "border-b border-gray-200 last:border-0 accordion-item",
+        className,
+    )}
+    data-open={isOpen ? "true" : "false"}
+>
+    <button
+        type="button"
+        aria-expanded={isOpen}
+        aria-controls={id}
+        class="accordion-trigger flex w-full cursor-pointer items-center justify-between py-5 text-left font-bold uppercase tracking-wide text-slate-900 transition-colors hover:text-[#4e7cce] focus:outline-none group"
+    >
+        <span>{title}</span>
+        <span
+            class="ml-4 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-50 text-slate-400 group-hover:bg-blue-50 group-hover:text-blue-500 transition-all duration-500 ease-[cubic-bezier(0.87,0,0.13,1)]"
         >
-            <span>{title}</span>
-            <span
-                class="ml-4 flex h-4 w-4 shrink-0 items-center justify-center transition-transform duration-300 group-open:rotate-45"
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="h-4 w-4 transition-transform duration-500 ease-[cubic-bezier(0.87,0,0.13,1)] icon-plus"
             >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="h-4 w-4"
-                >
-                    <path d="M5 12h14"></path>
-                    <path d="M12 5v14"></path>
-                </svg>
-            </span>
-        </summary>
-        <div
-            class="pb-4 text-sm leading-relaxed text-slate-600 animate-in slide-in-from-top-2 fade-in duration-300"
-        >
+                <path d="M12 5v14"></path>
+                <path d="M5 12h14"></path>
+            </svg>
+        </span>
+    </button>
+    <div
+        id={id}
+        class="accordion-content overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.87,0,0.13,1)]"
+        style={isOpen ? "max-height: none;" : "max-height: 0px;"}
+    >
+        <div class="pb-6 text-sm leading-relaxed text-slate-600">
             <slot />
         </div>
-    </details>
+    </div>
 </div>
 
-<style>
-    details > summary {
-        list-style: none;
+<script>
+    function setupAccordions() {
+        const items = document.querySelectorAll(".accordion-item");
+
+        items.forEach((item) => {
+            const trigger = item.querySelector(".accordion-trigger");
+            const content = item.querySelector(
+                ".accordion-content",
+            ) as HTMLElement;
+            const icon = item.querySelector(".icon-plus");
+
+            // Init state check (if hardcoded to open, set height)
+            if (item.getAttribute("data-open") === "true") {
+                trigger?.classList.add("active");
+                if (icon) icon.classList.add("rotate-45");
+                if (content)
+                    content.style.maxHeight = content.scrollHeight + "px";
+            }
+
+            // Remove old listener if re-running
+            if (trigger) {
+                const newTrigger = trigger.cloneNode(true);
+                trigger.parentNode?.replaceChild(newTrigger, trigger);
+            }
+
+            // Re-select
+            const finalTrigger = item.querySelector(".accordion-trigger");
+
+            finalTrigger?.addEventListener("click", () => {
+                const isOpen = item.getAttribute("data-open") === "true";
+                const contentInner = item.querySelector(
+                    ".accordion-content",
+                ) as HTMLElement;
+                const iconInner = item.querySelector(".icon-plus");
+
+                if (isOpen) {
+                    // CLOSE
+                    item.setAttribute("data-open", "false");
+                    finalTrigger.setAttribute("aria-expanded", "false");
+                    finalTrigger.classList.remove("active");
+                    iconInner?.classList.remove("rotate-45");
+                    contentInner.style.maxHeight = "0px";
+                } else {
+                    // OPEN
+                    item.setAttribute("data-open", "true");
+                    finalTrigger.setAttribute("aria-expanded", "true");
+                    finalTrigger.classList.add("active");
+                    iconInner?.classList.add("rotate-45");
+                    contentInner.style.maxHeight =
+                        contentInner.scrollHeight + "px";
+                }
+            });
+        });
     }
-    details > summary::-webkit-details-marker {
-        display: none;
-    }
-</style>
+
+    // Init
+    setupAccordions();
+    document.addEventListener("astro:page-load", setupAccordions);
+</script>

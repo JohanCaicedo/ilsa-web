@@ -1,8 +1,6 @@
 // src/lib/wp.ts
 
-/**
- * Interfaces para tipar la respuesta de WordPress y dar contexto al Agente
- */
+// Interfaces
 export interface WpQueryOptions {
   query: string;
   variables?: Record<string, any>;
@@ -67,9 +65,7 @@ export interface PostNode {
   };
 }
 
-/**
- * Consulta Maestra para Entradas y Páginas
- */
+// Global Queries
 export const MASTER_QUERY = `
   query MasterQuery($first: Int = 100, $after: String = "") {
     posts(first: $first, after: $after) {
@@ -144,29 +140,45 @@ export const MASTER_QUERY = `
 
 const API_URL = import.meta.env.WORDPRESS_API_URL || "https://api.ilsa.org.co/graphql";
 
-/**
- * Envoltorio centralizado para peticiones GraphQL con Cache Busting
- */
-import { createHash } from 'node:crypto';
-import * as fs from 'node:fs';
-import * as path from 'node:path';
+// Helper Functions
+export async function fetchAllPosts(): Promise<MasterQueryResponse> {
+  let allNodes: PostNode[] = [];
+  let hasNextPage = true;
+  let endCursor = "";
 
-const CACHE_DIR = path.join(process.cwd(), '.cache', 'wp');
+  while (hasNextPage) {
+    console.log(`Fetching posts... (cursor: ${endCursor})`);
 
-// Ensure cache directory exists in Node environment
-if (typeof process !== 'undefined' && process.versions && process.versions.node) {
-  try {
-    if (!fs.existsSync(CACHE_DIR)) {
-      fs.mkdirSync(CACHE_DIR, { recursive: true });
-    }
-  } catch (e) {
-    // Ignore errors if we can't create directory (e.g. read-only env)
-    console.warn('Could not create WP cache directory, proceeding without cache.');
+    const data = await wpQuery<MasterQueryResponse>({
+      query: MASTER_QUERY,
+      variables: {
+        first: 100,
+        after: endCursor
+      }
+    });
+
+    const postsData = data?.posts;
+    if (!postsData) break;
+
+    allNodes = [...allNodes, ...postsData.nodes];
+    hasNextPage = postsData.pageInfo?.hasNextPage || false;
+    endCursor = postsData.pageInfo?.endCursor || "";
   }
+
+  return {
+    posts: {
+      nodes: allNodes,
+      pageInfo: {
+        hasNextPage: false,
+        endCursor: "",
+      }
+    }
+  };
 }
 
 /**
  * Envoltorio centralizado para peticiones GraphQL con Smart Caching
+ * Usa Dynamic Imports para evitar errores de compilación en Cloudflare Runtime
  */
 export async function wpQuery<T = any>(options: string | WpQueryOptions): Promise<T> {
   const { query, variables } = typeof options === 'string'
@@ -177,28 +189,45 @@ export async function wpQuery<T = any>(options: string | WpQueryOptions): Promis
     throw new Error("WORDPRESS_API_URL no definida en las variables de entorno.");
   }
 
-  // Generate Cache Key
-  const queryHash = createHash('md5')
-    .update(query + JSON.stringify(variables || {}))
-    .digest('hex');
-  const cachePath = path.join(CACHE_DIR, `${queryHash}.json`);
-
-  // Try Cache (Only in Node/Build context)
+  // Detect Node Environment (Only True during Build Step for Prerender)
   const isNode = typeof process !== 'undefined' && process.versions && process.versions.node;
+  let cachedData: T | null = null;
+  let cachePath = "";
+  let fs: any = null; // Dynamic module container
 
+  // Try Cache Logic (Only in Node)
   if (isNode) {
     try {
+      // Dynamic Imports prevent bundling 'node:fs' in Cloudflare Worker runtime
+      const crypto = await import('node:crypto');
+      fs = await import('node:fs');
+      const path = await import('node:path');
+
+      const CACHE_DIR = path.join(process.cwd(), '.cache', 'wp');
+
+      if (!fs.existsSync(CACHE_DIR)) {
+        fs.mkdirSync(CACHE_DIR, { recursive: true });
+      }
+
+      const queryHash = crypto.createHash('md5')
+        .update(query + JSON.stringify(variables || {}))
+        .digest('hex');
+
+      cachePath = path.join(CACHE_DIR, `${queryHash}.json`);
+
       if (fs.existsSync(cachePath)) {
-        // Cache HIT
         const raw = fs.readFileSync(cachePath, 'utf-8');
-        return JSON.parse(raw);
+        cachedData = JSON.parse(raw);
       }
     } catch (e) {
-      // Ignore cache read errors
+      // Silent fail on cache logic
     }
   }
 
-  // URL limpia SIN timestamp para permitir caching del lado del servidor/CDN si aplica
+  // Return Cache Hit
+  if (cachedData) return cachedData;
+
+  // Network Fetch (No Timestamp)
   const url = API_URL;
 
   try {
@@ -214,7 +243,6 @@ export async function wpQuery<T = any>(options: string | WpQueryOptions): Promis
     });
 
     if (!res.ok) {
-      // Retry logic or explicit error could go here
       const errorText = await res.text();
       console.error(`Error de red (${res.status}):`, errorText);
       throw new Error(`Petición fallida: ${res.statusText}`);
@@ -227,12 +255,12 @@ export async function wpQuery<T = any>(options: string | WpQueryOptions): Promis
       throw new Error('La API de WordPress devolvió errores.');
     }
 
-    // Write Cache (Only in Node/Build context)
-    if (isNode && data) {
+    // Write Cache (Only in Node)
+    if (isNode && data && fs && cachePath) {
       try {
         fs.writeFileSync(cachePath, JSON.stringify(data), 'utf-8');
       } catch (e) {
-        // Ignore cache write errors
+        // Ignore write errors
       }
     }
 
@@ -242,45 +270,4 @@ export async function wpQuery<T = any>(options: string | WpQueryOptions): Promis
     console.error('Fallo en wpQuery:', error);
     throw error;
   }
-}
-
-/**
- * Recupera TODAS las entradas paginando automáticamente
- */
-export async function fetchAllPosts(): Promise<MasterQueryResponse> {
-  let allNodes: PostNode[] = [];
-  let hasNextPage = true;
-  let endCursor = "";
-
-  while (hasNextPage) {
-    console.log(`Fetching posts... (cursor: ${endCursor})`);
-
-    // Using explicit loop with cursor
-    const data = await wpQuery<MasterQueryResponse>({
-      query: MASTER_QUERY,
-      variables: {
-        first: 100, // Safe batch size
-        after: endCursor
-      }
-    });
-
-    const postsData = data?.posts;
-    if (!postsData) break;
-
-    allNodes = [...allNodes, ...postsData.nodes];
-
-    hasNextPage = postsData.pageInfo?.hasNextPage || false;
-    endCursor = postsData.pageInfo?.endCursor || "";
-  }
-
-  // Return a synthetic response resembling the original structure but with ALL nodes
-  return {
-    posts: {
-      nodes: allNodes,
-      pageInfo: {
-        hasNextPage: false,
-        endCursor: "",
-      }
-    }
-  };
 }
