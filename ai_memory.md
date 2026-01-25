@@ -212,3 +212,12 @@
 
 ### Image Optimization
 - **Cambio**: `TeamCard` migrado a `SmartImage` para rendimiento y UX (fade-in).
+
+### UI Polish & Visual Refinement (Session Highlight)
+- **HomeHero Spacing**:
+    - Reducción drástica del padding vertical (`py-20` -> `py-5`) para maximizar el "Fold".
+    - Ajuste proporcional en desktop (`py-10`) para balance.
+- **Navbar Call-to-Actions (CTAs)**:
+    - **Donaciones**: Rediseño a "Vivaldi" style. Color sólido `#4e7cce` (Ilsa Blue) + Hover Glow + Shimmer + Icon Pulse.
+    - **Actividades**: Rediseño a "Outline Clean". Borde fino (1px) `#4e7cce`. Hover limpia con fondo azul claro (`#adbee0`) y texto blanco. Transiciones suaves `fade`.
+    - **Objetivo**: Diferenciar jerarquía visual entre "Apoyar" (Sólido) y "Participar" (Outline).
