@@ -32,9 +32,15 @@ const data = await wpQuery({
           uri
           date
           excerpt
-        }
-      }
-    }
+          featuredImage {
+            node {
+              sourceUrl
+              mediaDetails {
+                width
+                height
+              }
+            }
+          }
   `,
     variables: { category: config.wpCategorySlug },
 });
@@ -115,6 +121,14 @@ const formatDate = (dateString: string) => {
                                     image={img}
                                     date={formatDate(post.date)}
                                     uri={post.uri}
+                                    width={
+                                        post.featuredImage?.node?.mediaDetails
+                                            ?.width
+                                    }
+                                    height={
+                                        post.featuredImage?.node?.mediaDetails
+                                            ?.height
+                                    }
                                 />
                             </div>
                         );

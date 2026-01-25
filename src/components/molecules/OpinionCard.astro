@@ -6,9 +6,29 @@ interface Props {
   image: string;
   date: string;
   uri: string;
+  width?: number;
+  height?: number;
 }
 
-const { title, author, image, date, uri } = Astro.props;
+const {
+  title,
+  author,
+  image,
+  date,
+  uri,
+  width = 400,
+  height = 400,
+} = Astro.props;
+
+// Optimize dimensions: Constraint height to 380px (card height) and calculate proportional width
+const TARGET_HEIGHT = 380;
+// Ensure we have valid numbers to avoid division by zero or NaN
+const validW = Number(width) || 400;
+const validH = Number(height) || 400;
+const aspectRatio = validW / validH;
+
+const finalHeight = TARGET_HEIGHT;
+const finalWidth = Math.round(TARGET_HEIGHT * aspectRatio);
 ---
 
 <a
@@ -19,6 +39,8 @@ const { title, author, image, date, uri } = Astro.props;
     <SmartImage
       src={image}
       alt={title}
+      width={finalWidth}
+      height={finalHeight}
       class="h-full w-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
     />
   </div>

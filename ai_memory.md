@@ -49,10 +49,18 @@
     - **Fix Crítico**: Añadido `pb-2` para evitar clipping de descenders (g, j, p) causado por `background-clip: text`.
 - **`Breadcrumbs.astro`**: 🟢 **Universal & Smart**. Usa `backdrop_blur` y bordes translúcidos. Ahora integrado globalmente en `Layout.astro` con generación automática de rutas.
 - **`SliderArrow.astro` / `SliderProgress.astro`**: 🟢 **Generic Ready**. Refactorizados para soportar props dinámicas (`...rest`) y selección por atributos de datos (`data-slider-*`) en lugar de IDs fijos.
-- **`SmartImage.astro`**: 🟢 **Performance Core**. Componente estándar para todas las imágenes. Maneja `loading="lazy"` (configurable), `decoding="async"` y transición de opacidad (fade-in) automática con `data-loaded`.
+- **`ProgressBar.astro`**: 🆕 **Navigation Feedback**. 
+    - Atom that integrates `nprogress` for visual feedback during Astro view transitions.
+    - Styled with Ilsa Blue gradients to match the Liquid Glass aesthetic.
+- **`SmartImage.astro`**: 🟢 **Performance Core (v2)**. 
+    - Refactored to use `astro:assets` (`<Image />`). 
+    - Automates WebP conversion and resizing. 
+    - Now requires explicit `width` and `height` (fetched from WP `mediaDetails`).
 
 ### Moléculas (Molecules)
-- **`OpinionCard.astro`**: 🟢 **Full Compliance**. Implementa `backdrop-blur-md`, `bg-white/10` y `border-white/20`. Es el estándar para "Glassmorphism" en el sitio. Reutilizado en sistema de Colecciones.
+- **`OpinionCard.astro`**: 🟢 **Performance Optimized**. 
+    - Fixed height of **380px** enforced via proportional width calculation.
+    - Prevents image deformation and ensures pixel-perfect loading.
 - **`Pagination.astro`**: 🆕 **Client-Side Pagination**. Componente reutilizable extraído de `opinion/[slug].astro`. Maneja paginación de grids mediante JavaScript con animaciones suaves.
 - **`DirectorCard.astro`**: 🔥 **Premium Compliance**. Implementa refracción avanzada con blobs interactivos que siguen el cursor y variantes `dark`/`frosted`.
 - **`TeamCard.astro`**: 🟢 **Redesigned**. Molécula cuadrada (`aspect-square`) con animación "Center-to-Edge Reveal" (`clip-path`). Soporta doble imagen (cover/profile) gestionada desde `src/lib/columnistImages.ts`. Leyenda interactiva con entrada top-to-bottom y tipografía optimizada.
@@ -94,7 +102,10 @@
     - `revista-el-otro-derecho.astro`, `otras-publicaciones.astro`, `textos-de-aqui-y-ahora.astro`, `utiles-para-conocer-y-actuar.astro`
     - Todos usan `CollectionPage` template con prop `collection` específico
     - Permite customización futura por archivo sin duplicar código
-- **`/publicaciones/index.astro`**: 🟢 **Collections Hub**. Landing page que lista todas las colecciones con cards interactivas.
+- **`/publicaciones/index.astro`**: 🟢 **Liquid Glass Redesign**. 
+    - Landing page overhauled with a light "Liquid Glass" aesthetic. 
+    - Uses icons and glass cards for collection navigation. 
+    - Optimized for performance with `astro:assets`.
 - **`/opinion/index.astro`**: 🟢 **Enhanced Navigation**. TeamCards ahora son clickables (wrapped in `<a>`), iterando sobre `Object.entries(authorsConfig)` para generar URLs correctas.
 
 ## 3. 🛠️ Decisiones de Refactorización y Racional
@@ -167,6 +178,13 @@
     - Sliders (News/Gallery) con scroll nativo fluido.
     - Textos legibles y centrados.
 
+### Cloudflare & WP Stability (Session Highlight)
+- **`wp.ts`**:
+    - **Cloudflare Fix**: Refactored to use dynamic imports for Node.js modules (`fs`, `crypto`). Prevents crashes in Edge runtime.
+    - **Image Metadata**: Queries updated to fetch `mediaDetails` for all featured images.
+- **Global Transitions**:
+    - **Fade/Dissolve**: Overrode Astro's default slide animation with a custom `opacity` fade in `global.css`.
+    - **Loading UI**: Integrated NProgress via `ProgressBar.astro` for immediate user feedback on route change.
 
 ### Liquid Glass System Overhaul (Session Highlight)
 - **Problema**: La implementación anterior de `Liquid3D` generaba pantallas negras (fallo de transmisión) y carecía de legibilidad/tinte consistente.
@@ -181,11 +199,9 @@
 - **Cohesión**: Todos los elementos flotantes (Navbar, Dropdowns) ahora comparten el mismo ADN visual.
 
 ## 6. 🚀 Pendientes Críticos (Next Steps)
-- **Performance WebGL**: Monitorear el impacto de tener múltiples canvas R3F (Navbar + Dropdowns abiertos). Podría requerir instancing si el usuario abre muchos menús.
-- **Mobile Menu Animation**: Verificar que la animación de entrada del menú móvil se sienta fluida con el nuevo peso visual del glassmorphism.
-- **Testing de Colecciones**: Verificar que todas las 8 páginas de publicaciones renderizan correctamente con datos reales de WordPress
-- **Validación de Breadcrumbs**: Probar navegación en rutas profundas
-- **Build de Producción**: Ejecutar `npm run build` para verificar sitemap.xml
+- **Image Optimization Audit**: Verify if other non-publication pages (Home, Opinion) need their queries updated to fetch `mediaDetails` for full `SmartImage` v2 compatibility.
+- **CSS Transitions**: Fine-tune fade duration if 0.5s feels too slow for some users.
+- **Production Build**: Verify that Cloudflare Pages correctly handles the new `astro:assets` optimization (Image Service configuration).
 
 
 ### Global Performance & Retina Optimization (Session Highlight)

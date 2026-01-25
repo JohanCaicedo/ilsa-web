@@ -30,6 +30,10 @@ const data = await wpQuery({
           featuredImage {
             node {
               sourceUrl
+              mediaDetails {
+                width
+                height
+              }
             }
           }
         }
@@ -116,6 +120,14 @@ const formatDate = (dateString: string) => {
                                     image={img}
                                     date={formatDate(post.date)}
                                     uri={post.uri}
+                                    width={
+                                        post.featuredImage?.node?.mediaDetails
+                                            ?.width
+                                    }
+                                    height={
+                                        post.featuredImage?.node?.mediaDetails
+                                            ?.height
+                                    }
                                 />
                             </div>
                         );

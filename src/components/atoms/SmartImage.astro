@@ -1,8 +1,13 @@
 ---
-import type { HTMLAttributes } from "astro/types";
+import { Image } from "astro:assets";
 import { cn } from "../../lib/utils";
 
-interface Props extends HTMLAttributes<"img"> {
+interface Props {
+    src: string;
+    alt: string;
+    width?: number;
+    height?: number;
+    class?: string;
     priority?: boolean;
 }
 
@@ -10,20 +15,19 @@ const {
     src,
     alt,
     class: className,
-    width,
-    height,
+    width = 800,
+    height = 600,
     priority = false,
     ...rest
 } = Astro.props;
 ---
 
-<img
+<Image
     src={src}
     alt={alt}
     width={width}
     height={height}
     loading={priority ? "eager" : "lazy"}
-    fetchpriority={priority ? "high" : "auto"}
     decoding="async"
     class={cn(
         "transition-opacity duration-700 ease-in-out opacity-0 data-[loaded=true]:opacity-100",

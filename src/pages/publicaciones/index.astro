@@ -1,63 +1,170 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import GradientText from "../../components/atoms/GradientText.astro";
+import LiquidContainer from "../../components/experimental/LiquidContainer.astro";
 
 export const prerender = true;
 
 const categories = [
-    { title: "Archivo Histórico", href: "/publicaciones/archivo-historico" },
-    { title: "Coediciones", href: "/publicaciones/coediciones" },
     {
-        title: "Derecho y Liberación",
-        href: "/publicaciones/derecho-y-liberacion",
+        title: "Archivo Histórico",
+        href: "/publicaciones/archivo-historico",
+        desc: "Documentación y memoria histórica de ILSA a través de las décadas.",
+        icon: "archive",
+        color: "from-amber-500/10 to-orange-500/10",
+        text: "group-hover:text-amber-600",
     },
-    { title: "En Clave de Sur", href: "/publicaciones/en-clave-de-sur" },
     {
         title: "Revista El Otro Derecho",
         href: "/publicaciones/revista-el-otro-derecho",
+        desc: "Análisis crítico jurídico y social desde el pensamiento alternativo.",
+        icon: "book",
+        color: "from-blue-500/10 to-cyan-500/10",
+        text: "group-hover:text-blue-600",
     },
     {
-        title: "Otras Publicaciones",
-        href: "/publicaciones/otras-publicaciones",
+        title: "Derecho y Liberación",
+        href: "/publicaciones/derecho-y-liberacion",
+        desc: "Perspectivas emancipadoras del derecho y las luchas sociales.",
+        icon: "scale",
+        color: "from-emerald-500/10 to-teal-500/10",
+        text: "group-hover:text-emerald-600",
+    },
+    {
+        title: "En Clave de Sur",
+        href: "/publicaciones/en-clave-de-sur",
+        desc: "Pensamiento desde Latinoamerica para el mundo.",
+        icon: "compass",
+        color: "from-violet-500/10 to-purple-500/10",
+        text: "group-hover:text-violet-600",
+    },
+    {
+        title: "Coediciones",
+        href: "/publicaciones/coediciones",
+        desc: "Obras colaborativas con aliados estratégicos y movimientos.",
+        icon: "users",
+        color: "from-rose-500/10 to-pink-500/10",
+        text: "group-hover:text-rose-600",
     },
     {
         title: "Textos de Aquí y Ahora",
         href: "/publicaciones/textos-de-aqui-y-ahora",
+        desc: "Reflexiones urgentes sobre la coyuntura actual.",
+        icon: "zap",
+        color: "from-indigo-500/10 to-blue-500/10",
+        text: "group-hover:text-indigo-600",
     },
     {
         title: "Útiles para Conocer y Actuar",
         href: "/publicaciones/utiles-para-conocer-y-actuar",
+        desc: "Herramientas prácticas para la acción jurídica y social.",
+        icon: "tool",
+        color: "from-cyan-500/10 to-sky-500/10",
+        text: "group-hover:text-cyan-600",
+    },
+    {
+        title: "Otras Publicaciones",
+        href: "/publicaciones/otras-publicaciones",
+        desc: "Compilaciones, informes especiales y ediciones únicas.",
+        icon: "grid",
+        color: "from-slate-500/10 to-gray-500/10",
+        text: "group-hover:text-slate-600",
     },
 ];
 ---
 
 <Layout title="Publicaciones - ILSA" width="wide">
-    <div class="pt-12 pb-20 text-center">
-        <h1 class="text-4xl font-bold mb-6 text-slate-900">
-            Nuestras Publicaciones
-        </h1>
-        <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-16">
-            Explore nuestra biblioteca de recursos, revistas y textos
-            académicos.
-        </p>
+    <div class="relative min-h-screen pb-32 overflow-hidden selection:bg-blue-100 selection:text-blue-900">
+        
+        <!-- Light Liquid Background -->
+        <div class="fixed inset-0 z-0 h-screen w-full bg-slate-50">
+             <LiquidContainer
+                class="absolute inset-0 w-full h-full opacity-60 mix-blend-multiply"
+                intensity="medium"
+                use3D={true}
+                frosted={true}
+                clipContent={false}
+            />
+            <!-- Additional Ambient Gradients -->
+             <div class="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-white to-transparent pointer-events-none"></div>
+        </div>
 
-        <div
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-4"
-        >
-            {
-                categories.map((cat) => (
-                    <a
-                        href={cat.href}
-                        class="group p-8 rounded-3xl border border-slate-200 bg-white hover:border-[#4a7dbf]/30 hover:shadow-xl hover:shadow-[#4a7dbf]/10 transition-all duration-300 text-left"
-                    >
-                        <h3 class="text-xl font-bold text-slate-800 group-hover:text-[#4a7dbf] transition-colors mb-2">
-                            {cat.title}
-                        </h3>
-                        <span class="text-sm font-medium text-slate-400 group-hover:text-[#4a7dbf]/70">
-                            Ver colección →
-                        </span>
+        <!-- Content Flow -->
+        <div class="relative z-10 pt-32 px-4 max-w-7xl mx-auto">
+            
+            <!-- Hero -->
+            <div class="text-center mb-24 space-y-8">
+                 <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 bg-white/50 backdrop-blur-md text-sm text-slate-500 tracking-wider uppercase font-bold shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-[var(--ilsa-blue)] animate-pulse"></span>
+                    Biblioteca Digital
+                </div>
+
+                <GradientText
+                    text="Nuestras Publicaciones"
+                    size="text-5xl md:text-8xl text-center"
+                    weight="font-black"
+                    from="var(--ilsa-blue)"
+                    to="var(--ilsa-blue-dark)"
+                    class="justify-center block drop-shadow-sm tracking-tight pb-4"
+                />
+                
+                <p class="text-lg md:text-2xl text-slate-600 max-w-3xl mx-auto text-balance leading-relaxed font-light">
+                    Un archivo vivo de pensamiento crítico. Explore décadas de investigación legal, 
+                    <span class="text-[var(--ilsa-blue)] font-medium">memoria histórica</span> y herramientas para la acción social.
+                </p>
+            </div>
+
+            <!-- Glass Grid (Light Mode) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                {categories.map((cat) => (
+                    <a href={cat.href} class="group relative block h-full">
+                        <!-- Glass Card Body -->
+                        <div class="relative h-full overflow-hidden rounded-3xl border border-slate-200 bg-white/60 backdrop-blur-xl p-8 transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:bg-white/80 group-hover:border-slate-300 group-hover:shadow-xl shadow-sm">
+                            
+                            <!-- Internal Glow Gradient -->
+                            <div class={`absolute inset-0 bg-gradient-to-br ${cat.color} opacity-0 transition-opacity duration-700 group-hover:opacity-100 blur-xl`}></div>
+                            
+                            <!-- Content -->
+                            <div class="relative z-10 flex flex-col h-full">
+                                <!-- Icon / Header -->
+                                <div class="flex items-start justify-between mb-6">
+                                    <div class={`p-3 rounded-2xl bg-white border border-slate-100 text-slate-400 transition-colors duration-300 ${cat.text} group-hover:scale-110 shadow-sm`}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                            {cat.icon === 'archive' && <><path d="M21 8v13H3V8M1 3h22v5H1z" /><path d="M10 12h4" /></>}
+                                            {cat.icon === 'book' && <><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" /></>}
+                                            {cat.icon === 'scale' && <><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z" /><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z" /><path d="M7 21h10" /><path d="M12 3v18" /><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" /></>}
+                                            {cat.icon === 'compass' && <><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36 6.36-2.12z"/></>}
+                                            {cat.icon === 'users' && <><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></>}
+                                            {cat.icon === 'zap' && <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />}
+                                            {cat.icon === 'tool' && <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />}
+                                            {cat.icon === 'grid' && <><rect width="7" height="7" x="3" y="3" rx="1" /><rect width="7" height="7" x="14" y="3" rx="1" /><rect width="7" height="7" x="14" y="14" rx="1" /><rect width="7" height="7" x="3" y="14" rx="1" /></>}
+                                        </svg>
+                                    </div>
+                                    <span class="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 transform">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400">
+                                            <path d="M7 17L17 7"/>
+                                            <path d="M7 7h10v10"/>
+                                        </svg>
+                                    </span>
+                                </div>
+
+                                <h3 class="text-2xl font-bold text-slate-800 mb-3 tracking-tight group-hover:text-[var(--ilsa-blue)] transition-colors">
+                                    {cat.title}
+                                </h3>
+                                
+                                <p class="text-slate-600/90 text-sm leading-relaxed mb-6 flex-grow border-t border-slate-100 pt-4 font-medium">
+                                    {cat.desc}
+                                </p>
+
+                                <div class="flex items-center text-xs font-bold text-slate-400 uppercase tracking-widest transition-colors duration-300 group-hover:text-[var(--ilsa-blue)]">
+                                    <span>Explorar</span>
+                                    <div class="h-[1px] w-8 bg-slate-300 ml-3 transition-all duration-300 group-hover:w-16 group-hover:bg-[var(--ilsa-blue)]"></div>
+                                </div>
+                            </div>
+                        </div>
                     </a>
-                ))
-            }
+                ))}
+            </div>
         </div>
     </div>
 </Layout>

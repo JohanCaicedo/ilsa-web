@@ -1,0 +1,70 @@
+---
+
+---
+
+<script>
+    import NProgress from "nprogress";
+    // We'll import the CSS here or in global.css, but importing here is self-contained.
+    // However, Astro might need the CSS provided specifically.
+    // Standard nprogress import often works if the loader handles it.
+    import "nprogress/nprogress.css";
+
+    NProgress.configure({ showSpinner: false, speed: 400, minimum: 0.1 });
+
+    document.addEventListener("astro:before-preparation", () => {
+        NProgress.start();
+    });
+
+    // This event triggers when the new page content is loaded but before swapped
+    document.addEventListener("astro:after-preparation", () => {
+        // We don't stop here, we stop after swap or page load
+    });
+
+    document.addEventListener("astro:after-swap", () => {
+        // NProgress.done(); // handled in page-load usually
+    });
+
+    document.addEventListener("astro:page-load", () => {
+        NProgress.done();
+    });
+</script>
+
+<style is:global>
+    /* Customize NProgress for 'Liquid Glass' Aesthetic */
+
+    #nprogress {
+        pointer-events: none;
+    }
+
+    #nprogress .bar {
+        background: #0ea5e9; /* Sky 500 */
+        background: linear-gradient(
+            to right,
+            #0ea5e9,
+            #6366f1
+        ); /* Sky 500 to Indigo 500 */
+        position: fixed;
+        z-index: 1031;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        box-shadow:
+            0 0 10px #0ea5e9,
+            0 0 5px #0ea5e9;
+    }
+
+    /* Fancy blue blur */
+    #nprogress .peg {
+        display: block;
+        position: absolute;
+        right: 0px;
+        width: 100px;
+        height: 100%;
+        box-shadow:
+            0 0 10px #0ea5e9,
+            0 0 5px #0ea5e9;
+        opacity: 1;
+        transform: rotate(3deg) translate(0px, -4px);
+    }
+</style>
