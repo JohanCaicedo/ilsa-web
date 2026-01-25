@@ -61,7 +61,9 @@ const navStructure = [
 <div class="fixed top-0 left-0 right-0 z-50 p-4">
     <LiquidContainer
         intensity="medium"
-        className="flex items-center px-6 md:px-10 py-3 rounded-full text-slate-800 text-sm shadow-lg shadow-slate-200/50 ios-glass-fix transition-all duration-300"
+        clipContent={false}
+        frosted={true}
+        class="w-full flex items-center px-6 md:px-10 py-3 rounded-full text-slate-800 text-sm shadow-lg shadow-slate-200/50 ios-glass-fix transition-all duration-300"
     >
         <nav class="flex items-center w-full">
             <a
@@ -78,7 +80,7 @@ const navStructure = [
 
             <!-- Desktop Menu -->
             <div
-                class="hidden md:flex items-center gap-8 flex-1 font-medium h-10"
+                class="hidden md:flex items-center gap-8 font-medium h-10 ml-8"
             >
                 {
                     navStructure.map((item) =>
@@ -95,8 +97,11 @@ const navStructure = [
                 }
             </div>
 
+            <!-- Spacer to push actions to right -->
+            <div class="flex-grow"></div>
+
             <!-- Desktop Actions -->
-            <div class="hidden ml-auto md:flex items-center gap-4">
+            <div class="hidden md:flex items-center gap-4">
                 <NavButton variant="secondary" href="/actividades">
                     Actividades
                 </NavButton>
@@ -113,23 +118,25 @@ const navStructure = [
             </div>
 
             <!-- Mobile Toggle -->
-            <button
-                id="menuToggle"
-                class="md:hidden text-slate-700 hover:text-[#4a7dbf] transition-colors p-3 ml-auto relative z-[60]"
-                aria-label="Abrir menú"
-            >
-                <svg
-                    class="w-7 h-7"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2.5"
-                    viewBox="0 0 24 24"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+            <div class="md:hidden ml-auto flex items-center">
+                <button
+                    id="menuToggle"
+                    class="text-slate-700 hover:text-[#4a7dbf] transition-colors p-3 relative z-[60]"
+                    aria-label="Abrir menú"
                 >
-                    <path d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
+                    <svg
+                        class="w-7 h-7"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.5"
+                        viewBox="0 0 24 24"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
         </nav>
     </LiquidContainer>
 
