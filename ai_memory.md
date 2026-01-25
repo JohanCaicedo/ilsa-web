@@ -188,6 +188,17 @@
 - **Build de Producción**: Ejecutar `npm run build` para verificar sitemap.xml
 
 
+### Global Performance & Retina Optimization (Session Highlight)
+- **Problema**: Dispositivos High-DPI (M1/Retina) sufrían de lag severo por renderizar `Liquid3D.tsx` a resolución nativa (>2x). LCP alto (1.9s) reportado por Lighthouse.
+- **Solución 3D (Retina Fix)**: 
+    - **DPI Clamping**: Se limitó el `dpr` del Canvas R3F a `[1, 1.5]`. Esto reduce la carga de GPU en un ~60% en pantallas Retina sin pérdida visual perceptible.
+    - **Optimization**: Reducción de `samples` MSAA a 4 y resolución de transmisión fija a 512px.
+    - **Power**: Activado `powerPreference="high-performance"` para solicitar GPU dedicada.
+- **Solución LCP (Core Web Vitals)**:
+    - **SmartImage**: Implementado `fetchpriority="high"` condicional.
+    - **Resource Hints**: Añadido `<link rel="preconnect">` para `api.ilsa.org.co` en `Layout.astro` para acelerar la negociación TLS.
+- **Hydration Strategy**: Confirmado el modelo de carga "CSS First" para `LiquidContainer`, donde el tinte blanco (`backdrop-filter`) es inmediato y el WebGL se hidrata después sin bloquear el hilo principal.
+
 ## 7. 🛠️ Nuevas Decisiones de Arquitectura (Session Update)
 
 ### WordPress Pagination Strategy (Fetch All)

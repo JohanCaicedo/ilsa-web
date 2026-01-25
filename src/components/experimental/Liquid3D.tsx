@@ -27,8 +27,8 @@ const GlassPanel: React.FC<Liquid3DProps> = ({ intensity = "medium", frosted = f
             <planeGeometry args={[1, 1]} />
             <MeshTransmissionMaterial
                 backside={false}
-                samples={settings.samples}
-                resolution={settings.resolution}
+                samples={4}                 // Performance: Reduced samples from default (often 6-10)
+                resolution={512}            // Performance: Fixed resolution for transmission buffer
                 transmission={0}            // Disabled to ensure reliable overlay on HTML
                 transparent={true}
                 opacity={frosted ? 0.2 : 0.05} // Increased slightly for milky look
@@ -52,8 +52,12 @@ export default function Liquid3D(props: Liquid3DProps) {
     return (
         <div style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, pointerEvents: 'none', zIndex: 0 }}>
             <Canvas
-                dpr={[1, 2]}
-                gl={{ alpha: true, antialias: true }}
+                dpr={[1, 1.5]} // Performance: Clamp DPR to 1.5 max for Retina screens
+                gl={{
+                    antialias: false, // Performance: Disable MSAA on main buffer (Material handles its own)
+                    powerPreference: "high-performance",
+                    alpha: true
+                }}
                 camera={{ position: [0, 0, 5], fov: 45 }}
                 resize={{ scroll: false, debounce: 0 }}
             >
