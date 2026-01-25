@@ -7,6 +7,7 @@ Actúa como un experto en Astro 5.1 y Tailwind 4.0. Tu objetivo es mantener la c
 - **Estilos**: Tailwind CSS 4.0 (usando @theme inline en global.css).
 - **Backend**: WordPress Headless vía GraphQL (WPGraphQL).
 - **Integraciones**: React para componentes complejos y Lucide para iconos.
+- **Viusal**: Threejs para animaciones complejas.
 
 ## 2. Inventario de Componentes Existentes (¡NO DUPLICAR!)
 Antes de crear UI, verifica si puedes usar o extender estos archivos:

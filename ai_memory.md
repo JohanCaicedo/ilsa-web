@@ -221,3 +221,15 @@
     - **Donaciones**: Rediseño a "Vivaldi" style. Color sólido `#4e7cce` (Ilsa Blue) + Hover Glow + Shimmer + Icon Pulse.
     - **Actividades**: Rediseño a "Outline Clean". Borde fino (1px) `#4e7cce`. Hover limpia con fondo azul claro (`#adbee0`) y texto blanco. Transiciones suaves `fade`.
     - **Objetivo**: Diferenciar jerarquía visual entre "Apoyar" (Sólido) y "Participar" (Outline).
+
+### Revista El Otro Derecho & Build Optimization
+- **Revista El Otro Derecho**:
+    - Página customizada (`src/pages/publicaciones/revista-el-otro-derecho.astro`) desacoplada del template genérico.
+    - Implementación de Layout 2 columnas (Historia + Acordeones).
+    - Creación de `SimpleAccordion` para gestión limpia de contenido.
+- **Bug Fixes**:
+    - **Pagination**: Reemplazado script `define:vars` por lógica delegada robusta para corregir fallos en producción.
+    - **Grid Alignment**: Corregido el "shift left" en grids de publicaciones mediante `justify-items-center`.
+- **Performance (Build & Runtime)**:
+    - **Smart Build Cache**: Implementado caché local en `src/lib/wp.ts` (MD5 hash de queries). Elimina peticiones redundantes a WP durante el build.
+    - **Resultado**: Build ultra-rápido (cache hit) + Experiencia de usuario instantánea (prerender static HTML).

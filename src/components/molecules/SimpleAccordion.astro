@@ -1,0 +1,54 @@
+---
+import { cn } from "../../lib/utils";
+
+interface Props {
+    title: string;
+    isOpen?: boolean;
+    class?: string;
+}
+
+const { title, isOpen = false, class: className } = Astro.props;
+---
+
+<div class={cn("border-b border-gray-200 last:border-0", className)}>
+    <details class="group" open={isOpen}>
+        <summary
+            class="flex w-full cursor-pointer list-none items-center justify-between py-4 text-left font-bold uppercase tracking-wide text-slate-900 transition-colors hover:text-[#4e7cce] focus:outline-none"
+        >
+            <span>{title}</span>
+            <span
+                class="ml-4 flex h-4 w-4 shrink-0 items-center justify-center transition-transform duration-300 group-open:rotate-45"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="h-4 w-4"
+                >
+                    <path d="M5 12h14"></path>
+                    <path d="M12 5v14"></path>
+                </svg>
+            </span>
+        </summary>
+        <div
+            class="pb-4 text-sm leading-relaxed text-slate-600 animate-in slide-in-from-top-2 fade-in duration-300"
+        >
+            <slot />
+        </div>
+    </details>
+</div>
+
+<style>
+    details > summary {
+        list-style: none;
+    }
+    details > summary::-webkit-details-marker {
+        display: none;
+    }
+</style>

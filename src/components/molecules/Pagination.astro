@@ -34,19 +34,41 @@ const {
     )
 }
 
-<script define:vars={{ gridId, cardClass }}>
-    function setupTabs() {
-        const tabs = document.querySelectorAll(`.tab-btn-${gridId}`);
-        const posts = document.querySelectorAll(`.${cardClass}`);
-        const postsPerPage = 12;
+<script>
+    function setupPagination() {
+        // Find all pagination buttons (using attribute selector to catch dynamic classes)
+        const allTabs = document.querySelectorAll(
+            "button[data-grid][data-card]",
+        );
 
-        if (tabs.length === 0) return;
+        if (allTabs.length === 0) return;
 
-        tabs.forEach((tab) => {
-            tab.addEventListener("click", () => {
-                const page = parseInt(tab.getAttribute("data-page") || "0");
+        allTabs.forEach((tab) => {
+            // Clone node to remove old listeners (safety for view transitions)
+            const newTab = tab.cloneNode(true);
+            tab.parentNode?.replaceChild(newTab, tab);
+        });
 
-                tabs.forEach((t) => {
+        // Re-query after cloning
+        const refreshedTabs = document.querySelectorAll(
+            "button[data-grid][data-card]",
+        );
+
+        refreshedTabs.forEach((tab) => {
+            tab.addEventListener("click", (e) => {
+                const target = e.currentTarget as HTMLButtonElement;
+                const gridId = target.dataset.grid;
+                const cardClass = target.dataset.card;
+                const page = parseInt(target.dataset.page || "0");
+
+                if (!gridId || !cardClass) return;
+
+                // Update ALL tabs for this specific grid (top and bottom pagination)
+                const gridTabs = document.querySelectorAll(
+                    `button[data-grid="${gridId}"]`,
+                );
+
+                gridTabs.forEach((t) => {
                     t.classList.remove(
                         "bg-[#375a9e]",
                         "text-white",
@@ -54,23 +76,31 @@ const {
                         "scale-110",
                     );
                     t.classList.add("text-slate-400");
-                });
-                tab.classList.remove("text-slate-400");
-                tab.classList.add(
-                    "bg-[#375a9e]",
-                    "text-white",
-                    "shadow-lg",
-                    "scale-110",
-                );
 
+                    // Sync active state visually across top/bottom
+                    if (t.getAttribute("data-page") === page.toString()) {
+                        t.classList.remove("text-slate-400");
+                        t.classList.add(
+                            "bg-[#375a9e]",
+                            "text-white",
+                            "shadow-lg",
+                            "scale-110",
+                        );
+                    }
+                });
+
+                // Filter logic
+                const posts = document.querySelectorAll(`.${cardClass}`);
+                const postsPerPage = 12;
                 const start = page * postsPerPage;
                 const end = start + postsPerPage;
 
                 posts.forEach((post, index) => {
+                    const el = post as HTMLElement;
                     if (index >= start && index < end) {
-                        post.classList.remove("hidden");
-                        post.classList.add("flex");
-                        post.animate(
+                        el.classList.remove("hidden");
+                        el.classList.add("flex");
+                        el.animate(
                             [
                                 { opacity: 0, transform: "scale(0.95)" },
                                 { opacity: 1, transform: "scale(1)" },
@@ -81,11 +111,12 @@ const {
                             },
                         );
                     } else {
-                        post.classList.add("hidden");
-                        post.classList.remove("flex");
+                        el.classList.add("hidden");
+                        el.classList.remove("flex");
                     }
                 });
 
+                // Scroll to top of grid
                 const grid = document.getElementById(gridId);
                 if (grid) {
                     const yOffset = -150;
@@ -99,7 +130,7 @@ const {
         });
     }
 
-    // Setup on load and after swap
-    setupTabs();
-    document.addEventListener("astro:page-load", setupTabs);
+    // Initialize
+    setupPagination();
+    document.addEventListener("astro:page-load", setupPagination);
 </script>

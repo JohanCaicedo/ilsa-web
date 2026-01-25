@@ -1,6 +1,359 @@
 ---
-import CollectionPage from "../../components/templates/CollectionPage.astro";
+import Layout from "../../layouts/Layout.astro";
+import { wpQuery } from "../../lib/wp";
+import OpinionCard from "../../components/molecules/OpinionCard.astro";
+import Pagination from "../../components/molecules/Pagination.astro";
+import SimpleAccordion from "../../components/molecules/SimpleAccordion.astro";
+import GradientText from "../../components/atoms/GradientText.astro";
+
 export const prerender = true;
+
+const COLLECTION_SLUG = "revista-el-otro-derecho-publicaciones";
+const COLLECTION_TITLE = "Revista El Otro Derecho";
+
+// Fetch posts
+const data = await wpQuery({
+    query: `
+    query GetRevistaPosts($category: String!) {
+      posts(where: { categoryName: $category }, first: 100) {
+        nodes {
+          title
+          uri
+          date
+          excerpt
+          featuredImage {
+            node {
+              sourceUrl
+            }
+          }
+        }
+      }
+    }
+  `,
+    variables: { category: COLLECTION_SLUG },
+});
+
+const posts = data?.posts?.nodes || [];
+const postsPerPage = 12;
+const totalPages = Math.ceil(posts.length / postsPerPage);
+
+const cardGradients = [
+    "from-blue-400/20",
+    "from-indigo-400/20",
+    "from-sky-300/20",
+    "from-cyan-400/20",
+    "from-white/10",
+];
+
+const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("es-CO", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+    });
+};
 ---
 
-<CollectionPage collection="revista-el-otro-derecho" />
+<Layout title={`${COLLECTION_TITLE} - Publicaciones ILSA`} width="wide">
+    <main
+        class="relative pt-24 pb-20 px-4 md:px-8 max-w-[1400px] mx-auto min-h-screen"
+    >
+        <!-- Ambient Background -->
+        <div
+            class="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-50/50 via-white to-white pointer-events-none"
+        >
+        </div>
+
+        <!-- Header / Custom Description Section -->
+        <div class="mb-24">
+            <div class="relative mb-16 text-center">
+                <GradientText
+                    text={COLLECTION_TITLE}
+                    size="text-4xl md:text-6xl"
+                    weight="font-black"
+                    from="var(--ilsa-blue)"
+                    to="var(--ilsa-blue-dark)"
+                    class="justify-center block w-fit mx-auto text-balance drop-shadow-sm"
+                />
+                <div
+                    class="h-1 w-24 bg-gradient-to-r from-transparent via-[var(--ilsa-blue)] to-transparent mx-auto mt-6 opacity-30 rounded-full"
+                >
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+                <!-- Left Column: History -->
+                <div
+                    class="prose prose-lg prose-slate text-slate-600 leading-loose max-w-none text-pretty"
+                >
+                    <p
+                        class="first-letter:text-5xl first-letter:font-bold first-letter:text-[var(--ilsa-blue)] first-letter:mr-3 first-letter:float-left"
+                    >
+                        Durante sus primeros diez años, nuestro instituto se
+                        enfocó en la coordinación regional entre grupos de
+                        servicios legales y el intercambio de información. En
+                        1988, se creó la revista <strong
+                            class="text-slate-900 font-bold"
+                            >El Otro Derecho</strong
+                        > como órgano del movimiento de servicios legales alternativos.
+                        La revista se unió a otras publicaciones jurídicas críticas
+                        y ha pasado por tres etapas a lo largo de sus 34 años.
+                    </p>
+                    <p>
+                        En la primera etapa (1988-1998), se publicaban tres
+                        números al año y se incluían temas de sociología
+                        jurídica y ciencias políticas. En la segunda etapa
+                        (1999-2006), la revista abordó temas de derechos humanos
+                        y justicia.
+                    </p>
+                    <p>
+                        Desde 2007, la revista ha ampliado su enfoque, abordando
+                        diversas preocupaciones de la crítica jurídica
+                        latinoamericana y destacando la labor de los grupos de
+                        servicios legales alternativos.
+                    </p>
+                </div>
+
+                <!-- Right Column: Accordions -->
+                <div
+                    class="sticky top-24 backdrop-blur-xl bg-white/60 border border-white/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-8 rounded-2xl ring-1 ring-black/5"
+                >
+                    <SimpleAccordion title="Dirección" isOpen={true}>
+                        <div
+                            class="font-semibold text-slate-800 tracking-tight"
+                        >
+                            Freddy Ordóñez Gómez
+                        </div>
+                    </SimpleAccordion>
+
+                    <SimpleAccordion title="Comité Científico">
+                        <ul class="space-y-3 text-sm">
+                            <li
+                                class="flex justify-between items-center border-b border-slate-100 pb-2 hover:bg-slate-50/50 transition-colors rounded px-2 -mx-2"
+                            >
+                                <span class="font-medium text-slate-700"
+                                    >Alejandro Médici</span
+                                >
+                                <span
+                                    class="font-bold text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full tracking-wider"
+                                    >ARG</span
+                                >
+                            </li>
+                            <li
+                                class="flex justify-between items-center border-b border-slate-100 pb-2 hover:bg-slate-50/50 transition-colors rounded px-2 -mx-2"
+                            >
+                                <span class="font-medium text-slate-700"
+                                    >Beatriz Rajland</span
+                                >
+                                <span
+                                    class="font-bold text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full tracking-wider"
+                                    >ARG</span
+                                >
+                            </li>
+                            <li
+                                class="flex justify-between items-center border-b border-slate-100 pb-2 hover:bg-slate-50/50 transition-colors rounded px-2 -mx-2"
+                            >
+                                <span class="font-medium text-slate-700"
+                                    >Laura Pautassi</span
+                                >
+                                <span
+                                    class="font-bold text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full tracking-wider"
+                                    >ARG</span
+                                >
+                            </li>
+                            <li
+                                class="flex justify-between items-center border-b border-slate-100 pb-2 hover:bg-slate-50/50 transition-colors rounded px-2 -mx-2"
+                            >
+                                <span class="font-medium text-slate-700"
+                                    >Sebastián Pilo</span
+                                >
+                                <span
+                                    class="font-bold text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full tracking-wider"
+                                    >ARG</span
+                                >
+                            </li>
+                            <li
+                                class="flex justify-between items-center border-b border-slate-100 pb-2 hover:bg-slate-50/50 transition-colors rounded px-2 -mx-2"
+                            >
+                                <span class="font-medium text-slate-700"
+                                    >Antonio Carlos Wolkmer</span
+                                >
+                                <span
+                                    class="font-bold text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full tracking-wider"
+                                    >BRA</span
+                                >
+                            </li>
+                            <li
+                                class="flex justify-between items-center border-b border-slate-100 pb-2 hover:bg-slate-50/50 transition-colors rounded px-2 -mx-2"
+                            >
+                                <span class="font-medium text-slate-700"
+                                    >Carlos Frederico Marés</span
+                                >
+                                <span
+                                    class="font-bold text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full tracking-wider"
+                                    >BRA</span
+                                >
+                            </li>
+                            <li
+                                class="flex justify-between items-center border-b border-slate-100 pb-2 hover:bg-slate-50/50 transition-colors rounded px-2 -mx-2"
+                            >
+                                <span class="font-medium text-slate-700"
+                                    >Juliana Paula Magalhães</span
+                                >
+                                <span
+                                    class="font-bold text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full tracking-wider"
+                                    >BRA</span
+                                >
+                            </li>
+                            <li
+                                class="flex justify-between items-center border-b border-slate-100 pb-2 hover:bg-slate-50/50 transition-colors rounded px-2 -mx-2"
+                            >
+                                <span class="font-medium text-slate-700"
+                                    >Germán Palacio Castañeda</span
+                                >
+                                <span
+                                    class="font-bold text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full tracking-wider"
+                                    >COL</span
+                                >
+                            </li>
+                            <li
+                                class="flex justify-between items-center border-b border-slate-100 pb-2 hover:bg-slate-50/50 transition-colors rounded px-2 -mx-2"
+                            >
+                                <span class="font-medium text-slate-700"
+                                    >Víctor Manuel Moncayo</span
+                                >
+                                <span
+                                    class="font-bold text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full tracking-wider"
+                                    >COL</span
+                                >
+                            </li>
+                            <li
+                                class="flex justify-between items-center border-b border-slate-100 pb-2 hover:bg-slate-50/50 transition-colors rounded px-2 -mx-2"
+                            >
+                                <span class="font-medium text-slate-700"
+                                    >Boaventura de Sousa Santos</span
+                                >
+                                <span
+                                    class="font-bold text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full tracking-wider"
+                                    >PRT</span
+                                >
+                            </li>
+                        </ul>
+                    </SimpleAccordion>
+
+                    <SimpleAccordion title="Comité Editorial">
+                        <ul class="space-y-1 text-sm">
+                            <li
+                                class="p-2 border-b border-slate-100 hover:bg-slate-50/50 transition-colors rounded -mx-2 font-medium text-slate-700"
+                            >
+                                Carlos Frederico Marés
+                            </li>
+                            <li
+                                class="p-2 border-b border-slate-100 hover:bg-slate-50/50 transition-colors rounded -mx-2 font-medium text-slate-700"
+                            >
+                                Diana Isabel Molina Rodríguez
+                            </li>
+                            <li
+                                class="p-2 border-b border-slate-100 hover:bg-slate-50/50 transition-colors rounded -mx-2 font-medium text-slate-700"
+                            >
+                                Freddy Ordóñez Gómez
+                            </li>
+                            <li
+                                class="p-2 border-b border-slate-100 hover:bg-slate-50/50 transition-colors rounded -mx-2 font-medium text-slate-700"
+                            >
+                                Luisa Fernanda García
+                            </li>
+                            <li
+                                class="p-2 border-b border-slate-100 hover:bg-slate-50/50 transition-colors rounded -mx-2 font-medium text-slate-700"
+                            >
+                                Manuel Jacques
+                            </li>
+                        </ul>
+                    </SimpleAccordion>
+
+                    <SimpleAccordion title="Diseño">
+                        <div
+                            class="font-semibold text-slate-800 tracking-tight"
+                        >
+                            Johan Camilo Caicedo
+                        </div>
+                    </SimpleAccordion>
+                </div>
+            </div>
+        </div>
+
+        <!-- Archive Grid -->
+        <h3
+            class="text-2xl font-bold text-slate-800 mb-8 border-l-4 border-[var(--ilsa-blue)] pl-4"
+        >
+            Números Publicados
+        </h3>
+
+        <Pagination
+            totalPages={totalPages}
+            gridId="revista-grid"
+            cardClass="revista-card"
+        />
+
+        <div
+            id="revista-grid"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8 justify-items-center"
+        >
+            {
+                posts.length > 0 ? (
+                    posts.map((post: any, index: number) => {
+                        const img =
+                            post.featuredImage?.node?.sourceUrl ||
+                            "https://ilsa.org.co/wp-content/uploads/2021/02/placeholder.jpg";
+
+                        return (
+                            <div
+                                class={`revista-card ${index >= postsPerPage ? "hidden" : "flex"} w-full justify-center fade-in`}
+                                data-index={index}
+                            >
+                                <OpinionCard
+                                    title={post.title}
+                                    author={COLLECTION_TITLE}
+                                    image={img}
+                                    date={formatDate(post.date)}
+                                    uri={post.uri}
+                                />
+                            </div>
+                        );
+                    })
+                ) : (
+                    <div class="col-span-full text-center py-20">
+                        <p class="text-xl text-slate-500">
+                            No se encontraron publicaciones en esta colección.
+                        </p>
+                    </div>
+                )
+            }
+        </div>
+
+        <!-- Pagination Bottom -->
+        <div class="mt-12">
+            <Pagination
+                totalPages={totalPages}
+                gridId="revista-grid"
+                cardClass="revista-card"
+            />
+        </div>
+    </main>
+</Layout>
+
+<style>
+    .fade-in {
+        animation: fadeIn 0.5s ease-out forwards;
+    }
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>

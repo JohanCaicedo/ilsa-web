@@ -147,6 +147,27 @@ const API_URL = import.meta.env.WORDPRESS_API_URL || "https://api.ilsa.org.co/gr
 /**
  * Envoltorio centralizado para peticiones GraphQL con Cache Busting
  */
+import { createHash } from 'node:crypto';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+
+const CACHE_DIR = path.join(process.cwd(), '.cache', 'wp');
+
+// Ensure cache directory exists in Node environment
+if (typeof process !== 'undefined' && process.versions && process.versions.node) {
+  try {
+    if (!fs.existsSync(CACHE_DIR)) {
+      fs.mkdirSync(CACHE_DIR, { recursive: true });
+    }
+  } catch (e) {
+    // Ignore errors if we can't create directory (e.g. read-only env)
+    console.warn('Could not create WP cache directory, proceeding without cache.');
+  }
+}
+
+/**
+ * Envoltorio centralizado para peticiones GraphQL con Smart Caching
+ */
 export async function wpQuery<T = any>(options: string | WpQueryOptions): Promise<T> {
   const { query, variables } = typeof options === 'string'
     ? { query: options, variables: {} }
@@ -156,11 +177,32 @@ export async function wpQuery<T = any>(options: string | WpQueryOptions): Promis
     throw new Error("WORDPRESS_API_URL no definida en las variables de entorno.");
   }
 
-  // Implementa parámetro de tiempo para evitar caché en desarrollo/build
-  const urlNoCache = `${API_URL}?t=${Date.now()}`;
+  // Generate Cache Key
+  const queryHash = createHash('md5')
+    .update(query + JSON.stringify(variables || {}))
+    .digest('hex');
+  const cachePath = path.join(CACHE_DIR, `${queryHash}.json`);
+
+  // Try Cache (Only in Node/Build context)
+  const isNode = typeof process !== 'undefined' && process.versions && process.versions.node;
+
+  if (isNode) {
+    try {
+      if (fs.existsSync(cachePath)) {
+        // Cache HIT
+        const raw = fs.readFileSync(cachePath, 'utf-8');
+        return JSON.parse(raw);
+      }
+    } catch (e) {
+      // Ignore cache read errors
+    }
+  }
+
+  // URL limpia SIN timestamp para permitir caching del lado del servidor/CDN si aplica
+  const url = API_URL;
 
   try {
-    const res = await fetch(urlNoCache, {
+    const res = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -172,6 +214,7 @@ export async function wpQuery<T = any>(options: string | WpQueryOptions): Promis
     });
 
     if (!res.ok) {
+      // Retry logic or explicit error could go here
       const errorText = await res.text();
       console.error(`Error de red (${res.status}):`, errorText);
       throw new Error(`Petición fallida: ${res.statusText}`);
@@ -182,6 +225,15 @@ export async function wpQuery<T = any>(options: string | WpQueryOptions): Promis
     if (errors) {
       console.error('Error GraphQL:', JSON.stringify(errors, null, 2));
       throw new Error('La API de WordPress devolvió errores.');
+    }
+
+    // Write Cache (Only in Node/Build context)
+    if (isNode && data) {
+      try {
+        fs.writeFileSync(cachePath, JSON.stringify(data), 'utf-8');
+      } catch (e) {
+        // Ignore cache write errors
+      }
     }
 
     return data;
