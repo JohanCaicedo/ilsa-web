@@ -76,8 +76,8 @@ export const authorsConfig: Record<string, AuthorProfile> = {
 
 export const defaultAuthor: AuthorProfile = {
   name: "Instituto ILSA",
-  profileImage: "https://ilsa.org.co/wp-content/uploads/2021/02/placeholder.jpg",
-  avatarImage: "https://ilsa.org.co/wp-content/uploads/2021/02/placeholder.jpg",
+  profileImage: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect fill='%23e5e7eb' width='400' height='400'/%3E%3C/svg%3E",
+  avatarImage: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect fill='%23e5e7eb' width='400' height='400'/%3E%3C/svg%3E",
   shortBio: "Investigación y acción jurídica popular.",
   fullBio: "El Instituto Latinoamericano para una Sociedad y un Derecho Alternativos (ILSA) trabaja desde 1978..."
 };

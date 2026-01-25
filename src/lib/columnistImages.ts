@@ -36,6 +36,6 @@ export const columnistImages: Record<string, ColumnistImageConfig> = {
 };
 
 export const defaultColumnistImage: ColumnistImageConfig = {
-    profile: "https://ilsa.org.co/wp-content/uploads/2021/02/placeholder.jpg",
+    profile: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect fill='%23e5e7eb' width='400' height='400'/%3E%3C/svg%3E",
     cover: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=800&auto=format&fit=crop"
 };

@@ -38,7 +38,7 @@ const ogTitle = seo?.opengraphTitle || finalTitle;
 const ogDescription = seo?.opengraphDescription || metaDescription;
 const ogImage =
     seo?.opengraphImage?.sourceUrl ||
-    "https://ilsa.org.co/wp-content/uploads/2021/02/placeholder.jpg"; // Fallback image
+    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect fill='%23e5e7eb' width='400' height='400'/%3E%3C/svg%3E"; // Fallback image
 
 // Layout width logic
 const containerClass = width === "narrow" ? "max-w-4xl" : "max-w-[1400px]";
