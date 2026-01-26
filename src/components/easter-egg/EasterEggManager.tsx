@@ -40,7 +40,12 @@ export const EasterEggManager: React.FC = () => {
             // If game is active, don't listen for code (except Esc)
             if (isVisible) return;
 
-            // Konami Code Logic
+            // Konami Code Logic (Desktop only)
+            const isMobile = window.matchMedia("(max-width: 768px)").matches ||
+                ('ontouchstart' in window);
+
+            if (isMobile) return; // Mobile users use triple-tap instead
+
             // Normalize key to lowercase for robust matching (ignore CapsLock/Shift)
             const key = e.key.toLowerCase();
             const newSequence = [...inputSequence, key];
@@ -61,23 +66,27 @@ export const EasterEggManager: React.FC = () => {
             // Check match
             if (JSON.stringify(newSequence) === JSON.stringify(targetCode)) {
                 console.log('Konami Code Activated!');
-
-                // Verify it's not mobile before activating
-                const isMobile = window.matchMedia("(max-width: 768px)").matches ||
-                    ('ontouchstart' in window);
-
-                if (!isMobile) {
-                    setIsVisible(true);
-                    localStorage.setItem('glass_breaker_active', 'true'); // Persist active state
-                    document.body.style.overflow = 'hidden'; // Lock scrolling
-                } else {
-                    console.log('Easter egg disabled on mobile');
-                }
+                setIsVisible(true);
+                localStorage.setItem('glass_breaker_active', 'true');
+                document.body.style.overflow = 'hidden';
             }
         };
 
+        // Listen for triple-tap activation from Navbar
+        const handleTripleTap = () => {
+            console.log('Triple-tap event received!');
+            setIsVisible(true);
+            localStorage.setItem('glass_breaker_active', 'true');
+            document.body.style.overflow = 'hidden';
+        };
+
         window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
+        window.addEventListener('activate-easter-egg', handleTripleTap);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('activate-easter-egg', handleTripleTap);
+        };
     }, [inputSequence, isVisible]);
 
     if (!isVisible) return null;

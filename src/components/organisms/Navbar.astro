@@ -68,6 +68,7 @@ const navStructure = [
         <nav class="flex items-center w-full">
             <a
                 href="/"
+                id="ilsa-logo"
                 class="shrink-0 flex items-center pr-10"
                 aria-label="ILSA Home"
             >
@@ -283,6 +284,47 @@ const navStructure = [
                 });
             });
         }
+    });
+
+    // Triple-Tap Easter Egg Activation (Mobile Support)
+    document.addEventListener("astro:page-load", () => {
+        const logo = document.getElementById("ilsa-logo");
+        if (!logo) return;
+
+        let tapCount = 0;
+        let tapTimer: number | null = null;
+
+        const resetTaps = () => {
+            tapCount = 0;
+            if (tapTimer) clearTimeout(tapTimer);
+            tapTimer = null;
+        };
+
+        logo.addEventListener("click", (e: MouseEvent) => {
+            // Prevenir navegación en taps 2 y 3
+            if (tapCount > 0) {
+                e.preventDefault();
+            }
+
+            tapCount++;
+
+            // Reset timer
+            if (tapTimer) clearTimeout(tapTimer);
+
+            // Si llega a 3 taps, activar Easter Egg
+            if (tapCount === 3) {
+                console.log("Triple-tap detected! Activating Easter Egg...");
+
+                // Disparar evento personalizado que el EasterEggManager escuchará
+                const activationEvent = new CustomEvent("activate-easter-egg");
+                window.dispatchEvent(activationEvent);
+
+                resetTaps();
+            } else {
+                // Reset después de 600ms si no llega a 3
+                tapTimer = window.setTimeout(resetTaps, 600);
+            }
+        });
     });
 </script>
 
