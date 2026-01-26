@@ -190,37 +190,18 @@ export async function wpQuery<T = any>(options: string | WpQueryOptions): Promis
   }
 
   // Detect Node Environment (Only True during Build Step for Prerender)
-  const isNode = typeof process !== 'undefined' && process.versions && process.versions.node;
+  // We use import.meta.env.SSR as the primary guard for server-side logic
+  const isSSR = import.meta.env.SSR;
   let cachedData: T | null = null;
-  let cachePath = "";
-  let fs: any = null; // Dynamic module container
 
-  // Try Cache Logic (Only in Node)
-  if (isNode) {
+  // Try Cache Logic (Only in SSR/Node)
+  if (isSSR) {
     try {
-      // Dynamic Imports prevent bundling 'node:fs' in Cloudflare Worker runtime
-      const crypto = await import('node:crypto');
-      fs = await import('node:fs');
-      const path = await import('node:path');
-
-      const CACHE_DIR = path.join(process.cwd(), '.cache', 'wp');
-
-      if (!fs.existsSync(CACHE_DIR)) {
-        fs.mkdirSync(CACHE_DIR, { recursive: true });
-      }
-
-      const queryHash = crypto.createHash('md5')
-        .update(query + JSON.stringify(variables || {}))
-        .digest('hex');
-
-      cachePath = path.join(CACHE_DIR, `${queryHash}.json`);
-
-      if (fs.existsSync(cachePath)) {
-        const raw = fs.readFileSync(cachePath, 'utf-8');
-        cachedData = JSON.parse(raw);
-      }
+      // Dynamic import of the cache module to prevent bundler from including it in client bundle
+      const { readCache } = await import('./wp-cache');
+      cachedData = readCache<T>(query, variables);
     } catch (e) {
-      // Silent fail on cache logic
+      // Silent fail on cache logic (module not found or not in Node)
     }
   }
 
@@ -255,10 +236,11 @@ export async function wpQuery<T = any>(options: string | WpQueryOptions): Promis
       throw new Error('La API de WordPress devolvió errores.');
     }
 
-    // Write Cache (Only in Node)
-    if (isNode && data && fs && cachePath) {
+    // Write Cache (Only in SSR/Node)
+    if (isSSR && data) {
       try {
-        fs.writeFileSync(cachePath, JSON.stringify(data), 'utf-8');
+        const { writeCache } = await import('./wp-cache');
+        writeCache(query, variables, data);
       } catch (e) {
         // Ignore write errors
       }

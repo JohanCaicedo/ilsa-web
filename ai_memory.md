@@ -34,8 +34,9 @@
 ## 1. 🏗️ Estado de la Arquitectura
 - **Core**: Astro 5.16.11 con Tailwind CSS 4.1.18.
 - **Data Layer (`src/lib/wp.ts`)**: 
-    - **Refactorizado 2.0**: Se añadieron interfaces `MasterQueryResponse` y `PostNode` para tipado estricto. Se centralizó la `MASTER_QUERY` que obtiene el 90% de los datos comunes del sitio.
-    - **Caché**: Mantiene `urlNoCache` mediante `t=` para desarrollo e invalidación de caché en cada petición POST.
+    - **Refactorizado 2.1 (Cloudflare Edge Safe)**: Se aisló la lógica de caché basada en sistema de archivos (`fs`, `path`, `crypto`) en un módulo independiente `src/lib/wp-cache.ts`. `wp.ts` ahora lo importa dinámicamente **solo** cuando `import.meta.env.SSR` es verdadero y estamos en un entorno Node válido (build time). Esto previene que el código cliente o Edge Functions fallen al intentar bundler dependencias de Node.js.
+    - **Interfaces**: Mantiene `MasterQueryResponse` y `PostNode`. Centraliza `MASTER_QUERY`.
+    - **Caché**: Mantiene `urlNoCache` mediante `t=` para desarrollo.
 - **Adaptador**: Cloudflare `@astrojs/cloudflare` para despliegue en Pages/Workers.
 - **SEO**: Integración `@astrojs/sitemap` configurada con dominio `https://ilsa.org.co`. Genera `sitemap.xml` automáticamente en cada build.
 
@@ -179,8 +180,8 @@
     - Textos legibles y centrados.
 
 ### Cloudflare & WP Stability (Session Highlight)
-- **`wp.ts`**:
-    - **Cloudflare Fix**: Refactored to use dynamic imports for Node.js modules (`fs`, `crypto`). Prevents crashes in Edge runtime.
+- **`wp.ts` (Build Safe)**:
+    - **Cloudflare Fix**: Lógica `fs`/`path` aislada en `wp-cache.ts` con imports dinámicos. Esto resuelve el error "Could not resolve 'fs'" en Cloudflare Pages, permitiendo cachée local durante el build y ejecuciones limpias en el Edge.
     - **Image Metadata**: Queries updated to fetch `mediaDetails` for all featured images.
 - **Global Transitions**:
     - **Fade/Dissolve**: Overrode Astro's default slide animation with a custom `opacity` fade in `global.css`.
@@ -248,4 +249,5 @@
     - **Grid Alignment**: Corregido el "shift left" en grids de publicaciones mediante `justify-items-center`.
 - **Performance (Build & Runtime)**:
     - **Smart Build Cache**: Implementado caché local en `src/lib/wp.ts` (MD5 hash de queries). Elimina peticiones redundantes a WP durante el build.
+    - **Isoalted Node Logic**: `src/lib/wp-cache.ts` se usa para separar lógica `fs` de Node.js, preveniendo import failures en Cloudflare.
     - **Resultado**: Build ultra-rápido (cache hit) + Experiencia de usuario instantánea (prerender static HTML).
