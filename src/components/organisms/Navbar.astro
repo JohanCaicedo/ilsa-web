@@ -295,6 +295,12 @@ const navStructure = [
         const PRESS_DURATION = 2000; // 2 seconds delay
 
         const startPress = (e: Event) => {
+            // Check if mobile (Game is currently disabled on mobile)
+            const isMobile =
+                window.matchMedia("(max-width: 768px)").matches ||
+                "ontouchstart" in window;
+            if (isMobile) return;
+
             // Only accept primary mouse button
             if (e instanceof MouseEvent && e.button !== 0) return;
 

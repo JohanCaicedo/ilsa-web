@@ -72,9 +72,17 @@ export const EasterEggManager: React.FC = () => {
             }
         };
 
-        // Listen for triple-tap activation from Navbar
+        // Listen for triple-tap activation from Navbar (now Long Press)
         const handleTripleTap = () => {
-            console.log('Triple-tap event received!');
+            const isMobile = window.matchMedia("(max-width: 768px)").matches ||
+                ('ontouchstart' in window);
+
+            if (isMobile) {
+                console.log('Easter Egg disabled on mobile for now.');
+                return;
+            }
+
+            console.log('Easter Egg event received!');
             setIsVisible(true);
             localStorage.setItem('glass_breaker_active', 'true');
             document.body.style.overflow = 'hidden';
