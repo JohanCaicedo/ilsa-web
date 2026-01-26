@@ -18,23 +18,46 @@ export async function getStaticPaths() {
   const data: MasterQueryResponse = await fetchAllPosts(); // Use Fetch All
   const allPosts = data.posts.nodes;
 
-  return allPosts.map((post) => ({
-    params: {
-      uri: post.uri === "/" ? undefined : post.uri.replace(/^\/|\/$/g, ""),
-    },
-    props: {
-      post,
-      allPosts, // Pass all posts to filter specific related ones at runtime
-    },
-  }));
+  return allPosts.map((post) => {
+    // Logic moved from component to getStaticPaths
+    const primaryCategory = post.categories?.nodes[0];
+    const categorySlug = primaryCategory?.slug;
+
+    // Filter posts that share at least one category, prioritize same category
+    const relatedPosts = allPosts
+      .filter((p) => p.uri !== post.uri) // Exclude current
+      .filter((p) => {
+        if (!categorySlug) return true; // If current has no cat, show any recent
+        return p.categories.nodes.some((c) => c.slug === categorySlug);
+      })
+      .slice(0, 10)
+      .map((p) => ({
+        ...p,
+        // Strip heavy content for related posts to save build size
+        content: "",
+        image:
+          p.featuredImage?.node?.sourceUrl ||
+          "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect fill='%23e5e7eb' width='400' height='400'/%3E%3C/svg%3E",
+      }));
+
+    return {
+      params: {
+        uri: post.uri === "/" ? undefined : post.uri.replace(/^\/|\/$/g, ""),
+      },
+      props: {
+        post,
+        relatedPosts, // Pass computed related posts instead of allPosts
+      },
+    };
+  });
 }
 
 interface Props {
   post: PostNode;
-  allPosts: PostNode[];
+  relatedPosts: any[]; // Update props interface
 }
 
-const { post, allPosts } = Astro.props;
+const { post, relatedPosts } = Astro.props;
 const currentUrl = Astro.url.href;
 
 // 1. Identify Category
@@ -53,21 +76,7 @@ const authorKey = isOpinion
 
 const authorData = authorKey ? authorsConfig[authorKey] : undefined;
 
-// 3. Related Posts Logic
-// Filter posts that share at least one category, prioritize same category
-const relatedPosts = allPosts
-  .filter((p) => p.uri !== post.uri) // Exclude current
-  .filter((p) => {
-    if (!categorySlug) return true; // If current has no cat, show any recent
-    return p.categories.nodes.some((c) => c.slug === categorySlug);
-  })
-  .slice(0, 10)
-  .map((p) => ({
-    ...p,
-    image:
-      p.featuredImage?.node?.sourceUrl ||
-      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect fill='%23e5e7eb' width='400' height='400'/%3E%3C/svg%3E",
-  }));
+// 3. Related Posts Logic -> MOVED TO getStaticPaths
 
 // 4. Breadcrumbs
 const breadcrumbItems = [];
