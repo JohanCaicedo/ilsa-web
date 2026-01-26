@@ -2,6 +2,13 @@
 
 ## Inventario de Componentes (Nuevos)
 
+### Navigation UX (Nuevo)
+- **`PageLoader.astro`**: 🆕 **Full Screen Transition Mask**.
+    - **Función**: Intercepta eventos de Astro View Transitions (`before-preparation`) para mostrar un overlay inmediato al hacer clic en un enlace.
+    - **UX Goal**: Oculta el estado "congelado" del navegador mientras se obtienen datos JSON o HTML del servidor.
+    - **Estética**: Fondo `bg-white/90` con `backdrop-blur-xl` y spinner central con borde `var(--ilsa-blue)`.
+    - **Integración**: Global en `Layout.astro`.
+
 ### Easter Egg (Glass Breaker)
 - **`GlassBreakerEngine.tsx`**: Motor de juego tipo "Breakout" renderizado en Canvas sobre la UI.
     - **Liquid Glass Compliance**: 8/10. Usa `backdrop-blur-md` y `bg-white/90` para los menús de estado (Ready/GameOver), manteniendo consistencia con la estética de vidrio del sitio. Los elementos de juego (barra, particulas) usan colores planos (`ILSA_BLUE`) por solicitud explícita de visibilidad.
@@ -15,7 +22,7 @@
     - **Persistencia**: Usa `localStorage` para reiniciar el juego automáticamente tras la navegación.
 
 ## Refactorizaciones y Cambios
-- **`Layout.astro`**: Se integró `EasterEggManager` globalmente. Se ajustó la estrategia de hidratación de `client:idle` a `client:load` para corregir problemas de input en producción.
+- **`Layout.astro`**: Se integró `PageLoader` globalmente. Se integró `EasterEggManager` globalmente. Se ajustó la estrategia de hidratación de `client:idle` a `client:load` para corregir problemas de input en producción.
 - **`GlassBreakerEngine.tsx`**: Se eliminaron todos los comentarios del código fuente para limpieza final. Se ajustó el loop de audio para corregir desincronización (drift) cuando el contexto de audio se suspende.
 
 ## Next Steps (Pendientes Críticos)
@@ -53,6 +60,7 @@
 - **`ProgressBar.astro`**: 🆕 **Navigation Feedback**. 
     - Atom that integrates `nprogress` for visual feedback during Astro view transitions.
     - Styled with Ilsa Blue gradients to match the Liquid Glass aesthetic.
+- **`PageLoader.astro`**: 🆕 **Transition Mask**. Overlay de pantalla completa con spinner que oculta la carga de páginas lentas durante la navegación de Astro.
 - **`SmartImage.astro`**: 🟢 **Performance Core (v2)**. 
     - Refactored to use `astro:assets` (`<Image />`). 
     - Automates WebP conversion and resizing. 
@@ -185,7 +193,7 @@
     - **Image Metadata**: Queries updated to fetch `mediaDetails` for all featured images.
 - **Global Transitions**:
     - **Fade/Dissolve**: Overrode Astro's default slide animation with a custom `opacity` fade in `global.css`.
-    - **Loading UI**: Integrated NProgress via `ProgressBar.astro` for immediate user feedback on route change.
+    - **Loading UI**: Integrated NProgress via `ProgressBar.astro`, and **`PageLoader.astro`** for a premium full-screen transition mask.
 
 ### Liquid Glass System Overhaul (Session Highlight)
 - **Problema**: La implementación anterior de `Liquid3D` generaba pantallas negras (fallo de transmisión) y carecía de legibilidad/tinte consistente.

@@ -1,0 +1,57 @@
+---
+
+---
+
+<div
+    id="page-loader"
+    class="fixed inset-0 z-40 flex items-center justify-center bg-transparent opacity-0 pointer-events-none transition-opacity duration-300"
+    aria-hidden="true"
+>
+    <div
+        class="relative flex flex-col items-center gap-4 p-6 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 shadow-xl"
+    >
+        <!-- Spinner -->
+        <div
+            class="w-10 h-10 rounded-full border-4 border-white/30 border-t-[var(--ilsa-blue)] animate-spin"
+        >
+        </div>
+    </div>
+</div>
+
+<script>
+    const loader = document.getElementById("page-loader");
+    let timeoutId: number | undefined;
+
+    function showLoader() {
+        if (loader) {
+            // Clear any pending hide timeouts
+            clearTimeout(timeoutId);
+            loader.classList.remove("opacity-0", "pointer-events-none");
+            loader.setAttribute("aria-hidden", "false");
+        }
+    }
+
+    function hideLoader() {
+        if (loader) {
+            // Small delay to ensure smooth transition prevents flickering on fast loads
+            timeoutId = setTimeout(() => {
+                loader.classList.add("opacity-0", "pointer-events-none");
+                loader.setAttribute("aria-hidden", "true");
+            }, 300) as unknown as number;
+        }
+    }
+
+    // Astro View Transitions Events
+    document.addEventListener("astro:before-preparation", () => {
+        showLoader();
+    });
+
+    document.addEventListener("astro:after-swap", () => {
+        // Keep loader visible for a moment if needed, or hide immediately
+        // If we want to mask the painting, we can wait for page-load
+    });
+
+    document.addEventListener("astro:page-load", () => {
+        hideLoader();
+    });
+</script>
