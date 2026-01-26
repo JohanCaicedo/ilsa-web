@@ -84,9 +84,6 @@ export const EasterEggManager: React.FC = () => {
 
     return (
         <div className="fixed inset-0 z-[9999] animate-in fade-in duration-500">
-            <div className="absolute top-4 right-4 text-gray-400 text-sm font-mono z-50">
-                [ESC] to exit
-            </div>
             <GlassBreakerEngine onExit={closeGame} />
         </div>
     );

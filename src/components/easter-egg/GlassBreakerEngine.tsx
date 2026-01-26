@@ -7,6 +7,8 @@ interface Block {
     height: number;
     domElement: HTMLElement;
     active: boolean;
+    health: number;
+    maxHealth: number;
 }
 
 interface Particle {
@@ -26,6 +28,7 @@ interface Ball {
     dy: number;
     radius: number;
     active: boolean;
+    rotation?: number; // Para animación de rotación visual
 }
 
 interface Props {
@@ -33,15 +36,42 @@ interface Props {
 }
 
 const SITE_ROUTES = [
+    // Home
     '/',
+
+    // Nosotros
     '/nosotros',
     '/nosotros/junta-directiva',
     '/nosotros/direccion-ejecutiva',
+
+    // Opinión
     '/opinion',
+    '/opinion/boaventura-de-sousa-santos',
+    '/opinion/carlos-frederico-mares',
+    '/opinion/consuelo-quattrocchi',
+    '/opinion/freddy-ordonez-gomez',
+    '/opinion/german-burgos',
+    '/opinion/liliana-estupinan-achury',
+    '/opinion/mauricio-chamorro-rosero',
+
+    // Publicaciones
     '/publicaciones',
+    '/publicaciones/archivo-historico',
+    '/publicaciones/coediciones',
+    '/publicaciones/derecho-y-liberacion',
+    '/publicaciones/en-clave-de-sur',
+    '/publicaciones/otras-publicaciones',
+    '/publicaciones/revista-el-otro-derecho',
+    '/publicaciones/textos-de-aqui-y-ahora',
+    '/publicaciones/utiles-para-conocer-y-actuar',
+
+    // Otras páginas
     '/donaciones',
     '/contacto',
-    '/actividades'
+    '/actividades',
+
+    // Lab (opcional, puedes comentar si no quieres incluirlo)
+    '/lab/liquid-test'
 ];
 
 class AudioController {
@@ -58,78 +88,90 @@ class AudioController {
         }
     }
 
-    startBGM() {
+    async startBGM() {
         if (!this.ctx) return;
-
-        const N = {
-            E5: 659.25, E4: 329.63, C4: 261.63, G4: 392.00, C5: 523.25,
-            G3: 196.00, C3: 130.81, A3: 220.00, B3: 246.94, Bb3: 233.08,
-            A4: 440.00, G5: 783.99, F5: 698.46, A5: 880.00, B5: 987.77,
-            B4: 493.88, Bb4: 466.16, D5: 587.33, F4: 349.23, D4: 293.66
-        };
-
-        const tempo = 1.0;
-        let noteTime = this.ctx.currentTime;
 
         this.gain = this.ctx.createGain();
         this.gain.connect(this.ctx.destination);
-        this.gain.gain.value = 0.3;
+        this.gain.gain.value = 0.25; // Volumen más bajo para música de fondo
 
-        const playNote = (freq: number, dur: number, time: number) => {
-            if (!this.ctx || !this.gain) return;
-            const osc = this.ctx.createOscillator();
-            osc.type = 'square';
-            osc.frequency.setValueAtTime(freq, time);
+        try {
+            // Cargar el archivo MIDI JSON
+            const response = await fetch('/assets/music.json');
+            const midiData = await response.json();
 
-            const noteGain = this.ctx.createGain();
-            noteGain.gain.setValueAtTime(0.3, time);
-            noteGain.gain.exponentialRampToValueAtTime(0.001, time + dur - 0.05);
-
-            osc.connect(noteGain);
-            noteGain.connect(this.gain);
-
-            osc.start(time);
-            osc.stop(time + dur);
-        };
-
-        const scheduleLoop = () => {
-            const now = this.ctx!.currentTime;
-            if (noteTime < now || noteTime > now + 3.0) {
-                noteTime = now + 0.1;
+            // Encontrar el track del Piano
+            const pianoTrack = midiData.tracks.find((track: any) => track.name === 'Piano');
+            if (!pianoTrack || !pianoTrack.notes) {
+                console.warn('No se encontró el track de Piano en el MIDI');
+                return;
             }
 
-            const s = 0.2;
-            const l = 0.4;
+            // Función para convertir número MIDI a frecuencia
+            const midiToFreq = (midi: number): number => {
+                return 440 * Math.pow(2, (midi - 69) / 12);
+            };
 
-            const melody = [
-                [N.F4, s], [N.A4, s], [N.C5, l],
-                [N.D5, s], [N.C5, s], [N.B4, s], [N.A4, s],
-                [N.B4, s], [N.E4, s], [N.G4, l],
-                [N.A4, s], [N.G4, s], [N.F4, s], [N.E4, s],
-                [N.F4, s], [N.A4, s], [N.C5, l],
-                [N.D5, s], [N.C5, s], [N.B4, s], [N.A4, s],
-                [N.B4, s], [N.E4, s], [N.C5, l],
-                [N.E5, s], [N.D5, s], [N.C5, s], [N.G4, s],
-                [0, s]
-            ];
+            // Función para reproducir una nota
+            const playNote = (freq: number, startTime: number, duration: number, velocity: number) => {
+                if (!this.ctx || !this.gain) return;
 
-            melody.forEach(([freq, dur]) => {
-                if (freq > 0) playNote(freq, dur * 0.9, noteTime);
-                noteTime += dur;
-            });
-        };
+                const osc = this.ctx.createOscillator();
+                const noteGain = this.ctx.createGain();
 
-        scheduleLoop();
+                // Sonido GBA: onda cuadrada
+                osc.type = 'square';
+                osc.frequency.value = freq;
 
-        const loopInterval = 6600;
-        this.bgmInterval = window.setInterval(scheduleLoop, loopInterval);
+                // control ganancia según velocity MIDI
+                const volume = velocity * 0.3; // Ajustar volumen con velocity
+                noteGain.gain.setValueAtTime(volume, startTime);
+                noteGain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+
+                osc.connect(noteGain);
+                noteGain.connect(this.gain);
+
+                osc.start(startTime);
+                osc.stop(startTime + duration);
+            };
+
+            // Programar todas las notas
+            const scheduleMusic = () => {
+                if (!this.ctx) return;
+
+                const startTime = this.ctx.currentTime + 0.1;
+
+                pianoTrack.notes.forEach((note: any) => {
+                    const freq = midiToFreq(note.midi);
+                    const time = startTime + note.time;
+                    const duration = note.duration * 0.95; // Ligeramente más corto para articulación
+                    const velocity = note.velocity || 0.7;
+
+                    playNote(freq, time, duration, velocity);
+                });
+
+                // Calcular duración total de la música
+                const lastNote = pianoTrack.notes[pianoTrack.notes.length - 1];
+                const totalDuration = (lastNote.time + lastNote.duration + 1) * 1000;
+
+                // Repetir la música en loop
+                this.bgmInterval = window.setTimeout(() => {
+                    scheduleMusic();
+                }, totalDuration);
+            };
+
+            scheduleMusic();
+
+        } catch (error) {
+            console.error('Error cargando música MIDI:', error);
+        }
     }
 
     bgmInterval: number | null = null;
 
     stopBGM() {
         if (this.bgmInterval) {
-            clearInterval(this.bgmInterval);
+            clearTimeout(this.bgmInterval); // Ahora usamos setTimeout en lugar de setInterval
             this.bgmInterval = null;
         }
         if (this.gain) {
@@ -249,8 +291,11 @@ export const GlassBreakerEngine: React.FC<Props> = ({ onExit }) => {
     const requestRef = useRef<number | null>(null);
     const audioRef = useRef<AudioController | null>(null);
 
+    const totalScoreRef = useRef(0);
+
     const [lives, setLives] = useState(3);
-    const [score, setScore] = useState(0);
+    const [score, setScore] = useState(0); // This represents SESSION score
+    const [displayTotalScore, setDisplayTotalScore] = useState(0); // Display aggregation
     const [gameState, setGameState] = useState<'scanning' | 'ready' | 'playing' | 'gameover'>('scanning');
 
     const balls = useRef<Ball[]>([]);
@@ -276,22 +321,27 @@ export const GlassBreakerEngine: React.FC<Props> = ({ onExit }) => {
         };
 
         if (typeof window !== 'undefined') {
-            const savedScore = localStorage.getItem('glass_score');
-            if (savedScore) {
-                setScore(parseInt(savedScore));
+            const savedTotal = localStorage.getItem('glass_total_score');
+            if (savedTotal) {
+                const parsed = parseInt(savedTotal);
+                totalScoreRef.current = parsed;
+                setDisplayTotalScore(parsed);
             }
         }
 
         const scanElements = () => {
             const newBlocks: Block[] = [];
-            const selector = [
+
+            // Define selectors with associated health
+            // Note: We use querySelectorAll for all, then assign health logic
+            const allSelector = [
                 'h1', 'h2', 'h3', 'p',
                 'img', 'button', 'a.btn',
                 '.card', 'article', 'nav',
                 'header', 'footer'
             ].join(',');
 
-            const elements = document.querySelectorAll(selector);
+            const elements = document.querySelectorAll(allSelector);
 
             elements.forEach(el => {
                 const rect = el.getBoundingClientRect();
@@ -303,13 +353,25 @@ export const GlassBreakerEngine: React.FC<Props> = ({ onExit }) => {
                 ) {
                     if ((el as HTMLElement).style.opacity === '0') return;
 
+                    let hp = 1;
+                    const tagName = el.tagName.toLowerCase();
+
+                    if (tagName === 'p') hp = 2;
+                    else if (['h2', 'h3', 'h4'].includes(tagName)) hp = 3; // Reduced slightly for balance
+                    else if (['nav', 'header', 'footer'].includes(tagName)) hp = 5;
+
+                    // 10% chance of random bonus health (up to 5)
+                    if (Math.random() > 0.9) hp = Math.min(hp + 2, 5);
+
                     newBlocks.push({
                         x: rect.left,
                         y: rect.top,
                         width: rect.width,
                         height: rect.height,
                         domElement: el as HTMLElement,
-                        active: true
+                        active: true,
+                        health: hp,
+                        maxHealth: hp
                     });
                 }
             });
@@ -377,14 +439,30 @@ export const GlassBreakerEngine: React.FC<Props> = ({ onExit }) => {
 
     const handleWin = () => {
         audioRef.current?.playWin();
-
         triggerConfetti();
 
-        setScore(prevScore => {
-            const lifeBonus = lives * 500;
-            const finalScore = prevScore + lifeBonus;
-            return finalScore;
-        });
+        // Calculate points for this round
+        // Note: 'score' state in this closure might be stale if handleWin called from loop?
+        // Actually handleWin is called from loop, so 'score' IS stale (it will be 0 or initial).
+        // WE MUST USE A REF for session score if we want to read it accurately in the loop callback!
+        // But wait, setScore implementation sets session score properly.
+        // We can just add the lifeBonus effectively to the TOTAL directly.
+
+        // However, 'score' is being incremented via setScore(s => s+100).
+        // So we don't have the final value easily accessible here synchronously unless we track it
+        // in a ref as well.
+
+        // Let's rely on what we have. For now, let's just save the Life Bonus to total.
+        // The block breakage points (100 each) should happen immediately.
+
+        // FIX: We need to change the block-break logic to update totalScoreRef immediately too.
+
+        const lifeBonus = lives * 500;
+
+        const newTotal = totalScoreRef.current + lifeBonus;
+        totalScoreRef.current = newTotal;
+        setDisplayTotalScore(newTotal);
+        localStorage.setItem('glass_total_score', newTotal.toString());
 
         localStorage.removeItem('glass_breaker_active');
 
@@ -394,7 +472,8 @@ export const GlassBreakerEngine: React.FC<Props> = ({ onExit }) => {
     };
 
     const handleGameOver = () => {
-        localStorage.removeItem('glass_score');
+        // Points are already saved incrementally when blocks break.
+        // Just fail state.
         setGameState('gameover');
     };
 
@@ -407,11 +486,20 @@ export const GlassBreakerEngine: React.FC<Props> = ({ onExit }) => {
             paddle.current.x = e.clientX - rect.left - paddle.current.width / 2;
         };
 
-        const handleInput = (e: KeyboardEvent | MouseEvent) => {
+        const handleTouchMove = (e: TouchEvent) => {
+            e.preventDefault(); // Prevenir scroll
+            const rect = canvas.getBoundingClientRect();
+            const touch = e.touches[0];
+            if (touch) {
+                paddle.current.x = touch.clientX - rect.left - paddle.current.width / 2;
+            }
+        };
+
+        const handleInput = (e: KeyboardEvent | MouseEvent | TouchEvent) => {
             audioRef.current?.resume();
 
             if (gameState === 'ready') {
-                if ((e instanceof KeyboardEvent && e.code === 'Space') || e.type === 'click') {
+                if ((e instanceof KeyboardEvent && e.code === 'Space') || e.type === 'click' || e.type === 'touchstart') {
                     const b = balls.current[0];
                     if (b) {
                         b.dx = (Math.random() - 0.5) * 6;
@@ -421,7 +509,7 @@ export const GlassBreakerEngine: React.FC<Props> = ({ onExit }) => {
                     setGameState('playing');
                 }
             } else if (gameState === 'playing') {
-                if (e.type === 'click' || (e instanceof KeyboardEvent && e.code === 'Space')) {
+                if (e.type === 'click' || e.type === 'touchstart' || (e instanceof KeyboardEvent && e.code === 'Space')) {
                     balls.current.forEach(b => {
                         if (b.active) {
                             b.dx *= 1.3;
@@ -445,8 +533,10 @@ export const GlassBreakerEngine: React.FC<Props> = ({ onExit }) => {
         };
 
         window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('touchmove', handleTouchMove, { passive: false });
         window.addEventListener('keydown', handleInput);
         window.addEventListener('click', handleInput);
+        window.addEventListener('touchstart', handleInput);
 
         const loop = () => {
             const ctx = canvas.getContext('2d');
@@ -457,14 +547,6 @@ export const GlassBreakerEngine: React.FC<Props> = ({ onExit }) => {
             ctx.clearRect(0, 0, width, height);
 
             let activeBallsCount = 0;
-            let activeBlocksCount = 0;
-
-            blocks.current.forEach(b => { if (b.active) activeBlocksCount++ });
-
-            if (activeBlocksCount === 0 && blocks.current.length > 0 && gameState === 'playing') {
-                handleWin();
-                return;
-            }
 
             if (gameState === 'ready') {
                 const b = balls.current[0];
@@ -492,6 +574,7 @@ export const GlassBreakerEngine: React.FC<Props> = ({ onExit }) => {
                         audioRef.current?.playLoss();
                     }
 
+                    // Paddle Collision
                     if (
                         b.y + b.radius >= height - 40 &&
                         b.y - b.radius <= height - 40 + paddle.current.height &&
@@ -504,6 +587,7 @@ export const GlassBreakerEngine: React.FC<Props> = ({ onExit }) => {
                         audioRef.current?.playLaunch();
                     }
 
+                    // Block Collision
                     for (const block of blocks.current) {
                         if (!block.active) continue;
 
@@ -513,11 +597,16 @@ export const GlassBreakerEngine: React.FC<Props> = ({ onExit }) => {
                             b.y > block.y - b.radius &&
                             b.y < block.y + block.height + b.radius
                         ) {
-                            block.active = false;
+                            // Logic Update: Decrement Health
+                            block.health -= 1;
+                            audioRef.current?.playBeep();
 
+                            // Visual Feedback for Damage
+                            const healthPct = block.health / block.maxHealth;
                             block.domElement.style.transition = 'opacity 0.1s';
-                            block.domElement.style.opacity = '0';
+                            block.domElement.style.opacity = (healthPct * 0.8 + 0.2).toString(); // Never fully invisible until destroyed
 
+                            // Bounce logic
                             const cx = block.x + block.width / 2;
                             const cy = block.y + block.height / 2;
                             const dx = b.x - cx;
@@ -529,25 +618,46 @@ export const GlassBreakerEngine: React.FC<Props> = ({ onExit }) => {
                                 b.dy *= -1;
                             }
 
-                            setScore(s => s + 100);
-                            audioRef.current?.playBeep();
+                            // Destroy logic
+                            if (block.health <= 0) {
+                                block.active = false;
+                                block.domElement.style.opacity = '0';
 
-                            for (let i = 0; i < 8; i++) {
-                                particles.current.push({
-                                    x: block.x + Math.random() * block.width,
-                                    y: block.y + Math.random() * block.height,
-                                    vx: (Math.random() - 0.5) * 10,
-                                    vy: (Math.random() - 0.5) * 10,
-                                    life: 1.0,
-                                    color: Math.random() > 0.5 ? ILSA_BLUE : 'white',
-                                    size: Math.random() * 4 + 2
-                                });
+                                // Update Session Score for legacy/debug
+                                setScore(s => s + 100);
+
+                                // Update Persistent Score Immediately
+                                const newTotal = totalScoreRef.current + 100;
+                                totalScoreRef.current = newTotal;
+                                setDisplayTotalScore(newTotal);
+                                localStorage.setItem('glass_total_score', newTotal.toString());
+
+                                for (let i = 0; i < 8; i++) {
+                                    particles.current.push({
+                                        x: block.x + Math.random() * block.width,
+                                        y: block.y + Math.random() * block.height,
+                                        vx: (Math.random() - 0.5) * 10,
+                                        vy: (Math.random() - 0.5) * 10,
+                                        life: 1.0,
+                                        color: Math.random() > 0.5 ? ILSA_BLUE : 'white',
+                                        size: Math.random() * 4 + 2
+                                    });
+                                }
+                                spawnMultiball(b.x, b.y);
                             }
-                            spawnMultiball(b.x, b.y);
-                            break;
+
+                            break; // Hit one block per frame per ball
                         }
                     }
                 });
+
+                // Check for win condition AFTER processing all collisions
+                // This ensures blocks destroyed in this frame are counted
+                const remainingBlocks = blocks.current.filter(b => b.active).length;
+                if (remainingBlocks === 0 && blocks.current.length > 0) {
+                    handleWin();
+                    return;
+                }
 
                 if (activeBallsCount === 0) {
                     if (lives > 1) {
@@ -561,6 +671,7 @@ export const GlassBreakerEngine: React.FC<Props> = ({ onExit }) => {
                 }
             }
 
+            // ... (particles loop same)
             for (let i = particles.current.length - 1; i >= 0; i--) {
                 const p = particles.current[i];
                 p.x += p.vx;
@@ -569,13 +680,28 @@ export const GlassBreakerEngine: React.FC<Props> = ({ onExit }) => {
                 if (p.life <= 0) particles.current.splice(i, 1);
             }
 
+            // Render Blocks with Health-based Opacity/Color logic?
             blocks.current.forEach(block => {
                 if (!block.active) return;
-                ctx.strokeStyle = 'rgba(78, 124, 206, 0.4)';
-                ctx.lineWidth = 1;
+
+                // Opacity based on health ratio
+                const ratio = block.health / block.maxHealth;
+
+                ctx.shadowBlur = 15 * ratio;
+                ctx.shadowColor = '#FFB800';
+
+                ctx.strokeStyle = `rgba(255, 214, 0, ${ratio * 0.8 + 0.2})`; // Fade stroke slightly
+                ctx.lineWidth = 2.5;
+
+                ctx.fillStyle = `rgba(255, 184, 0, ${0.1 * ratio})`;
+                ctx.fillRect(block.x, block.y, block.width, block.height);
+
                 ctx.strokeRect(block.x, block.y, block.width, block.height);
+
+                ctx.shadowBlur = 0;
             });
 
+            // ... (paddle and rest same)
             const grd = ctx.createLinearGradient(paddle.current.x, 0, paddle.current.x + paddle.current.width, 0);
             grd.addColorStop(0, ILSA_BLUE);
             grd.addColorStop(1, ILSA_BLUE_DARK);
@@ -593,7 +719,25 @@ export const GlassBreakerEngine: React.FC<Props> = ({ onExit }) => {
                 if (!b.active) return;
 
                 if (ballImg.current) {
-                    ctx.drawImage(ballImg.current, b.x - b.radius, b.y - b.radius, b.radius * 2, b.radius * 2);
+                    // Guardar el estado actual del canvas
+                    ctx.save();
+
+                    // Trasladar al centro de la pelota
+                    ctx.translate(b.x, b.y);
+
+                    // Calcular rotación basada en la velocidad horizontal
+                    // La rotación acumulada simula que la pelota "rueda"
+                    const rotationSpeed = b.dx * 0.1; // Ajustar sensibilidad
+                    if (!b.rotation) b.rotation = 0; // Inicializar si no existe
+                    b.rotation += rotationSpeed;
+
+                    ctx.rotate(b.rotation);
+
+                    // Dibujar la imagen centrada en el origen (0,0)
+                    ctx.drawImage(ballImg.current, -b.radius, -b.radius, b.radius * 2, b.radius * 2);
+
+                    // Restaurar el estado del canvas
+                    ctx.restore();
                 } else {
                     ctx.fillStyle = ILSA_TEXT_DARK;
                     ctx.beginPath();
@@ -623,12 +767,22 @@ export const GlassBreakerEngine: React.FC<Props> = ({ onExit }) => {
 
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('touchmove', handleTouchMove);
             window.removeEventListener('keydown', handleInput);
             window.removeEventListener('click', handleInput);
+            window.removeEventListener('touchstart', handleInput);
             if (requestRef.current) cancelAnimationFrame(requestRef.current);
         };
 
-    }, [gameState, lives]);
+    }, [gameState, lives]); // totalScore used in handleWin ref closure? Ideally no, refs or state?
+    // Using refs for blocks but state for Score. Score inside loop will be closure stale if not careful?
+    // Actually loop calls handleWin which uses setScore(callback). That's fine.
+    // READ totalScore inside handleWin? It will be stale.
+    // We should use a ref for totalScore if we want to read it in the loop reliably without re-binding?
+    // Or just rely on setTotalScore callback?
+    // setTotalScore(prev => prev + scoreRef.current)
+
+    // Minimal change: just use block logic in view. Score display needs update too.
 
 
     return (
@@ -640,48 +794,97 @@ export const GlassBreakerEngine: React.FC<Props> = ({ onExit }) => {
                 className="block w-full h-full pointer-events-auto"
             />
 
-            <div className="absolute top-6 left-8 flex flex-col font-sans drop-shadow-md">
-                <span className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">PUNTAJE TOTAL</span>
-                <span className="text-2xl font-bold text-[#4E7CCE] animate-in slide-in-from-left-2">{score.toLocaleString()}</span>
+            {/* Score Panel - Premium Glass */}
+            <div className="absolute top-6 left-8 flex flex-col font-sans drop-shadow-sm pointer-events-none">
+                <div className="bg-white/30 backdrop-blur-xl border border-white/40 px-5 py-3 rounded-2xl shadow-[0_8px_32px_rgba(31,38,135,0.07)]">
+                    <span className="text-[10px] uppercase tracking-widest text-slate-600 font-bold mb-1 block opacity-80">Puntaje Total</span>
+                    <span className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#4E7CCE] to-[#375a9e] font-mono tabular-nums leading-none">
+                        {displayTotalScore.toLocaleString()}
+                    </span>
+                </div>
             </div>
 
-            <div className="absolute top-6 right-8 flex gap-1 drop-shadow-md">
-                {Array.from({ length: lives }).map((_, i) => (
-                    <div key={i} className="w-2 h-2 rounded-full bg-[#4E7CCE]"></div>
-                ))}
+            {/* Lives Panel - Glowing Orbs */}
+            <div className="absolute top-6 right-8 pointer-events-none">
+                <div className="bg-white/30 backdrop-blur-xl border border-white/40 px-4 py-3 rounded-full shadow-sm flex items-center gap-3">
+                    <span className="text-[10px] uppercase tracking-wider text-slate-600 font-bold mr-1">Vidas</span>
+                    <div className="flex gap-1.5">
+                        {Array.from({ length: 3 }).map((_, i) => (
+                            <div
+                                key={i}
+                                className={`w-3 h-3 rounded-full transition-all duration-500 border border-white/50 ${i < lives
+                                    ? "bg-gradient-to-tr from-[#4E7CCE] to-cyan-400 shadow-[0_0_10px_rgba(78,124,206,0.6)] scale-100"
+                                    : "bg-slate-200/50 scale-75 opacity-50"
+                                    }`}
+                            ></div>
+                        ))}
+                    </div>
+                </div>
             </div>
 
+            {/* Exit Button - Mobile Friendly */}
+            <button
+                onClick={onExit}
+                className="absolute top-20 right-8 bg-red-500/80 hover:bg-red-600/90 active:bg-red-700/90 backdrop-blur-xl border border-white/40 px-4 py-2 rounded-full shadow-lg pointer-events-auto transition-all active:scale-95 z-50"
+            >
+                <span className="text-white text-xs font-bold">✕ SALIR</span>
+            </button>
+
+            {/* Controls Hint - Top Center */}
+            {gameState !== 'gameover' && (
+                <div className="absolute top-6 left-1/2 -translate-x-1/2 pointer-events-none drop-shadow-sm">
+                    <div className="bg-white/30 backdrop-blur-xl border border-white/40 px-5 py-3 rounded-full flex gap-4 text-[10px] font-bold text-slate-600 uppercase tracking-widest shadow-[0_8px_32px_rgba(31,38,135,0.07)]">
+                        <span className="flex items-center gap-2"><span className="bg-white/60 px-1.5 py-0.5 rounded text-[#4E7CCE] ring-1 ring-white/50">ESPACIO</span> LANZAR</span>
+                        <span className="w-px h-full bg-slate-400/20"></span>
+                        <span className="flex items-center gap-2"><span className="bg-white/60 px-1.5 py-0.5 rounded text-[#4E7CCE] ring-1 ring-white/50">ESC</span> SALIR</span>
+                    </div>
+                </div>
+            )}
+
+            {/* Ready State - Floating Pill */}
             {gameState === 'ready' && (
-                <div className="absolute top-2/3 left-1/2 -translate-x-1/2 text-center pointer-events-none drop-shadow-lg">
-                    <div className="bg-white/90 backdrop-blur-md px-6 py-2 rounded-full border border-blue-100 shadow-xl animate-bounce">
-                        <p className="text-sm font-medium text-[#4E7CCE] tracking-wide">
-                            CLIC PARA INICIAR
+                <div className="absolute top-2/3 left-1/2 -translate-x-1/2 text-center pointer-events-none z-50">
+                    <div className="bg-white/60 backdrop-blur-2xl px-8 py-4 rounded-full border border-white/60 shadow-[0_0_40px_rgba(78,124,206,0.2)] animate-pulse">
+                        <p className="text-sm font-bold text-[#4E7CCE] tracking-[0.2em] uppercase">
+                            Clic para iniciar
                         </p>
                     </div>
                 </div>
             )}
 
+            {/* Game Over Modal - Ultra Glass */}
             {gameState === 'gameover' && (
-                <div className="absolute inset-0 bg-white/50 backdrop-blur-md flex items-center justify-center flex-col animate-in fade-in duration-500 pointer-events-auto cursor-auto">
-                    <div className="bg-white p-12 rounded-3xl shadow-2xl border border-gray-100 text-center">
-                        <h1 className="text-4xl font-bold text-[#111827] mb-2">¡Juego Terminado!</h1>
-                        <p className="text-xl text-[#4E7CCE] mb-8 font-medium">Puntaje Final: {score.toLocaleString()}</p>
+                <div className="absolute inset-0 bg-slate-900/20 backdrop-blur-sm flex items-center justify-center flex-col animate-in fade-in duration-500 pointer-events-auto cursor-auto z-50">
+                    <div className="bg-white/80 backdrop-blur-2xl p-12 rounded-[2.5rem] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15)] border border-white/60 text-center max-w-md w-full relative overflow-hidden group">
 
-                        <div className="flex gap-4 justify-center">
+                        {/* Decorative Background gradient */}
+                        <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#4E7CCE] via-cyan-400 to-[#4E7CCE]"></div>
+                        <div className="absolute -top-20 -right-20 w-60 h-60 bg-blue-400/10 rounded-full blur-3xl pointer-events-none"></div>
+                        <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-purple-400/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                        <h1 className="text-4xl font-bold text-slate-800 mb-2 tracking-tight">¡Juego Terminado!</h1>
+                        <div className="my-8 relative">
+                            <span className="text-sm text-slate-500 uppercase tracking-widest font-semibold block mb-2">Puntaje Final</span>
+                            <span className="text-5xl font-mono font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#4E7CCE] to-[#375a9e]">
+                                {score.toLocaleString()}
+                            </span>
+                        </div>
+
+                        <div className="flex gap-4 justify-center relative z-10 w-full">
+                            <button
+                                onClick={onExit}
+                                className="flex-1 px-6 py-3.5 border border-slate-200 text-slate-600 rounded-xl font-semibold hover:bg-slate-50 hover:border-slate-300 transition-all active:scale-[0.98]"
+                            >
+                                Salir
+                            </button>
                             <button
                                 onClick={() => {
                                     localStorage.setItem('glass_breaker_active', 'true');
                                     window.location.reload();
                                 }}
-                                className="px-6 py-2 bg-[#4E7CCE] text-white rounded-lg font-medium hover:bg-[#375a9e] transition-colors shadow-lg hover:shadow-xl"
+                                className="flex-1 px-6 py-3.5 bg-gradient-to-r from-[#4E7CCE] to-[#375a9e] text-white rounded-xl font-bold shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 transition-all active:scale-[0.98]"
                             >
-                                Intentar de Nuevo
-                            </button>
-                            <button
-                                onClick={onExit}
-                                className="px-6 py-2 border border-gray-300 text-gray-600 rounded-lg font-medium hover:bg-gray-50 transition-colors"
-                            >
-                                Salir
+                                Reintentar
                             </button>
                         </div>
                     </div>
