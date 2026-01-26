@@ -4,8 +4,10 @@ import SliderArrow from "../atoms/SliderArrow.astro";
 import SliderProgress from "../atoms/SliderProgress.astro";
 import GradientText from "../atoms/GradientText.astro";
 
+import type { CardPostNode } from "../../lib/wp";
+
 interface Props {
-  posts: any[];
+  posts: CardPostNode[];
 }
 
 const { posts } = Astro.props;

@@ -2,11 +2,11 @@
 import { cn } from "../../lib/utils";
 import GradientText from "../atoms/GradientText.astro";
 import LegalActionRow from "../molecules/LegalActionRow.astro";
-import type { PostNode } from "../../lib/wp";
+import type { CardPostNode } from "../../lib/wp";
 import Button from "../Button.astro";
 
 interface Props {
-    posts: PostNode[];
+    posts: CardPostNode[];
     class?: string;
 }
 

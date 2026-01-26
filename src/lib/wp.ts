@@ -16,6 +16,32 @@ export interface MasterQueryResponse {
   };
 }
 
+export interface CardPostNode {
+  id: string;
+  slug: string;
+  uri: string;
+  title: string;
+  date: string;
+  excerpt: string;
+  categories: {
+    nodes: Array<{ name: string; slug: string }>;
+  };
+  featuredImage?: {
+    node: {
+      sourceUrl: string;
+      altText: string;
+    };
+  };
+  author: {
+    node: {
+      name: string;
+      firstName: string;
+      lastName: string;
+      avatar: { url: string };
+    };
+  };
+}
+
 export interface PostNode {
   id: string;
   databaseId: number;
@@ -138,9 +164,70 @@ export const MASTER_QUERY = `
   }
 `;
 
+export const CARD_QUERY = `
+  query GetPostsByCategory($first: Int!, $categoryName: String) {
+    posts(first: $first, where: { categoryName: $categoryName }) {
+      nodes {
+        id
+        slug
+        uri
+        title
+        date
+        excerpt
+        categories {
+          nodes {
+            name
+            slug
+          }
+        }
+        featuredImage {
+          node {
+            sourceUrl
+            altText
+          }
+        }
+        author {
+          node {
+            name
+            firstName
+            lastName
+            avatar {
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 const API_URL = import.meta.env.WORDPRESS_API_URL || "https://api.ilsa.org.co/graphql";
 
 // Helper Functions
+export async function getPostsByCategory(categorySlug: string, count: number): Promise<CardPostNode[]> {
+  // Fetch a buffer to resolve "strict category" filtering client-side
+  // because WPGraphQL 'categoryName' includes children by default.
+  // We ask for more posts to ensure we have enough after filtering.
+  const fetchCount = count + 20;
+
+  const data = await wpQuery<{ posts: { nodes: CardPostNode[] } }>({
+    query: CARD_QUERY,
+    variables: {
+      first: fetchCount,
+      categoryName: categorySlug
+    }
+  });
+
+  const allNodes = data?.posts?.nodes || [];
+
+  // Strict Filter: Ensure the post explicitly has the requested category slug
+  // This removes posts that are only in subcategories
+  const strictNodes = allNodes.filter(node =>
+    node.categories.nodes.some(cat => cat.slug === categorySlug)
+  );
+
+  return strictNodes.slice(0, count);
+}
 export async function fetchAllPosts(): Promise<MasterQueryResponse> {
   let allNodes: PostNode[] = [];
   let hasNextPage = true;

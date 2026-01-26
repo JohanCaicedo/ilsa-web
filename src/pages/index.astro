@@ -9,28 +9,17 @@ import ImageGalleryHoveredContent from "../components/organisms/ImageGalleryHove
 import HomeLegalActions from "../components/organisms/HomeLegalActions.astro";
 import AlliesGrid from "../components/organisms/AlliesGrid.astro";
 import { heroSlidesConfig } from "../lib/hero";
-import { wpQuery, MASTER_QUERY, type MasterQueryResponse } from "../lib/wp";
+import { getPostsByCategory } from "../lib/wp";
 import { cn } from "../lib/utils";
 
 export const prerender = true;
 
-// Data Fetching
-const data: MasterQueryResponse = await wpQuery(MASTER_QUERY);
-const allPosts = data?.posts?.nodes || [];
-
-// Segments
-const latestPost = allPosts[0]; // Kept for reference but not used in Hero
-const opinionPosts = allPosts
-	.filter((p) => p.categories.nodes.some((c) => c.slug === "opinion"))
-	.slice(0, 10);
-const newsPosts = allPosts
-	.filter((p) => p.categories.nodes.some((c) => c.slug === "noticias"))
-	.slice(0, 3);
-const legalActionsPosts = allPosts
-	.filter((p) =>
-		p.categories.nodes.some((c) => c.slug === "acciones-juridicas"),
-	)
-	.slice(0, 3);
+// Data Fetching (Parallel Requests)
+const [newsPosts, opinionPosts, legalActionsPosts] = await Promise.all([
+	getPostsByCategory("noticias", 3),
+	getPostsByCategory("opinion", 7),
+	getPostsByCategory("acciones-juridicas", 3),
+]);
 ---
 
 <Layout
