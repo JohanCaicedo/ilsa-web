@@ -69,9 +69,6 @@ const SITE_ROUTES = [
     '/donaciones',
     '/contacto',
     '/actividades',
-
-    // Lab (opcional, puedes comentar si no quieres incluirlo)
-    '/lab/liquid-test'
 ];
 
 class AudioController {

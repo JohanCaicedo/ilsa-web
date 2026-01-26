@@ -58,6 +58,17 @@
 
 - **`Layout.astro`**: (Sin cambios esta sesión).
 
+### Session 26/01/2026 - Performance & Mobile UX (Evening)
+- **`usePerformance.ts`**: 🆕 Hook para detectar capacidades del dispositivo (CPU, RAM, UserAgent).
+    - **Niveles**: 'low' (Mobile/Weak), 'medium', 'high'.
+- **`Liquid3D.tsx`**: 
+    - **Optimización**: Se desactiva completamente (retorna `null`) en tier 'low' para garantizar 60fps.
+    - **Adaptive Quality**: Reduce resolución y samples en tier 'medium'.
+- **`Navbar.astro`**: 
+    - **Easter Egg Activation**: Implementado **Long Press (2s)** en el logo.
+    - **Mobile UX**: Previene menú contextual y navegación accidental al mantener presionado.
+    - **Feedback**: Vibración háptica (200ms) al activar.
+
 ## Next Steps (Pendientes Críticos)
 
 ### Prioridad Alta (Próxima Sesión)
@@ -79,6 +90,7 @@
 - `feat(easter-egg): add durability system and persistent scoring`
 - `feat(easter-egg): integrate MIDI music with GBA synthesis`
 - `feat(easter-egg): add full mobile touch support`
+- `feat(perf): implement adaptive 3d rendering and long-press easter egg activation`
 
 ---
 

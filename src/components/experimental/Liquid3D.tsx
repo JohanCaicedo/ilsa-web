@@ -2,24 +2,32 @@ import React, { useRef } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
 import { MeshTransmissionMaterial, Environment } from '@react-three/drei';
 import * as THREE from 'three';
+import { usePerformance } from '../../lib/hooks/usePerformance';
 
 interface Liquid3DProps {
     intensity?: "low" | "medium" | "high";
     frosted?: boolean;
 }
 
-const GlassPanel: React.FC<Liquid3DProps> = ({ intensity = "medium", frosted = false }) => {
+const GlassPanel: React.FC<Liquid3DProps & { performanceTier: 'low' | 'medium' | 'high' }> = ({ intensity = "medium", frosted = false, performanceTier }) => {
     const meshRef = useRef<THREE.Mesh>(null);
     const { viewport } = useThree();
 
     // Preset configurations for detail and quality
+    // Downgraded based on performance tier if needed
     const config = {
-        low: { samples: 6, resolution: 512, thickness: 0.2 },
-        medium: { samples: 10, resolution: 512, thickness: 1.5 },
-        high: { samples: 16, resolution: 1024, thickness: 2.5 }
+        low: { samples: 4, resolution: 256, thickness: 0.2 },
+        medium: { samples: 6, resolution: 512, thickness: 1.5 },
+        high: { samples: 10, resolution: 1024, thickness: 2.5 }
     };
 
-    const settings = config[intensity];
+    // Select config based on strictness: if performance is medium, max intensity is medium
+    const effectiveIntensity = performanceTier === 'medium' && intensity === 'high' ? 'medium' : intensity;
+    const settings = config[effectiveIntensity];
+
+    // Further reduce samples for medium tier to ensure smoothness
+    const samples = performanceTier === 'medium' ? 4 : (effectiveIntensity === 'low' ? 4 : 8);
+
     const roughness = frosted ? 0.6 : 0.2;
 
     return (
@@ -27,8 +35,8 @@ const GlassPanel: React.FC<Liquid3DProps> = ({ intensity = "medium", frosted = f
             <planeGeometry args={[1, 1]} />
             <MeshTransmissionMaterial
                 backside={false}
-                samples={4}                 // Performance: Reduced samples from default (often 6-10)
-                resolution={512}            // Performance: Fixed resolution for transmission buffer
+                samples={samples}
+                resolution={settings.resolution}
                 transmission={0}            // Disabled to ensure reliable overlay on HTML
                 transparent={true}
                 opacity={frosted ? 0.2 : 0.05} // Increased slightly for milky look
@@ -49,19 +57,28 @@ const GlassPanel: React.FC<Liquid3DProps> = ({ intensity = "medium", frosted = f
 };
 
 export default function Liquid3D(props: Liquid3DProps) {
+    const { shouldRender3D, tier, pixelRatio } = usePerformance();
+
+    if (!shouldRender3D) {
+        return null; // Render nothing, letting the CSS fallback in LiquidContainer take over
+    }
+
     return (
         <div style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, pointerEvents: 'none', zIndex: 0 }}>
             <Canvas
-                dpr={[1, 1.5]} // Performance: Clamp DPR to 1.5 max for Retina screens
+                dpr={[1, pixelRatio]}
                 gl={{
-                    antialias: false, // Performance: Disable MSAA on main buffer (Material handles its own)
+                    antialias: false,
                     powerPreference: "high-performance",
-                    alpha: true
+                    alpha: true,
+                    stencil: false,
+                    depth: false
                 }}
                 camera={{ position: [0, 0, 5], fov: 45 }}
                 resize={{ scroll: false, debounce: 0 }}
+                frameloop="demand" // Render only when interaction happens or prop changes to save battery
             >
-                <GlassPanel {...props} />
+                <GlassPanel {...props} performanceTier={tier} />
                 <ambientLight intensity={1} />
                 <pointLight position={[10, 10, 10]} intensity={2.5} color="#ffffff" />
                 <pointLight position={[-10, 5, 10]} intensity={1.5} color="#a0c5ff" />

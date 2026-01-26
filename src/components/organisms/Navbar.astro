@@ -286,44 +286,70 @@ const navStructure = [
         }
     });
 
-    // Triple-Tap Easter Egg Activation (Mobile Support)
+    // Long Press Easter Egg Activation (Mobile & Desktop)
     document.addEventListener("astro:page-load", () => {
         const logo = document.getElementById("ilsa-logo");
         if (!logo) return;
 
-        let tapCount = 0;
-        let tapTimer: number | null = null;
+        let pressTimer: number | null = null;
+        const PRESS_DURATION = 2000; // 2 seconds delay
 
-        const resetTaps = () => {
-            tapCount = 0;
-            if (tapTimer) clearTimeout(tapTimer);
-            tapTimer = null;
-        };
+        const startPress = (e: Event) => {
+            // Only accept primary mouse button
+            if (e instanceof MouseEvent && e.button !== 0) return;
 
-        logo.addEventListener("click", (e: MouseEvent) => {
-            // Prevenir navegación en taps 2 y 3
-            if (tapCount > 0) {
-                e.preventDefault();
-            }
+            // Clear any existing timer just in case
+            if (pressTimer) clearTimeout(pressTimer);
 
-            tapCount++;
+            pressTimer = window.setTimeout(() => {
+                // Success!
+                console.log("Long Press detected! Activating Easter Egg...");
 
-            // Reset timer
-            if (tapTimer) clearTimeout(tapTimer);
+                // Haptic Feedback (Vibration)
+                if (window.navigator && window.navigator.vibrate) {
+                    window.navigator.vibrate(200); // 200ms vibration
+                }
 
-            // Si llega a 3 taps, activar Easter Egg
-            if (tapCount === 3) {
-                console.log("Triple-tap detected! Activating Easter Egg...");
-
-                // Disparar evento personalizado que el EasterEggManager escuchará
+                // Dispatch Activation Event
                 const activationEvent = new CustomEvent("activate-easter-egg");
                 window.dispatchEvent(activationEvent);
 
-                resetTaps();
-            } else {
-                // Reset después de 600ms si no llega a 3
-                tapTimer = window.setTimeout(resetTaps, 600);
+                pressTimer = null;
+
+                // Prevent the subsequent click from navigating
+                logo.addEventListener(
+                    "click",
+                    (clickEvent) => {
+                        clickEvent.preventDefault();
+                        clickEvent.stopImmediatePropagation();
+                    },
+                    { once: true, capture: true },
+                );
+            }, PRESS_DURATION);
+        };
+
+        const cancelPress = () => {
+            if (pressTimer) {
+                clearTimeout(pressTimer);
+                pressTimer = null;
             }
+        };
+
+        // Inputs
+        logo.addEventListener("mousedown", startPress);
+        logo.addEventListener("touchstart", startPress, { passive: true });
+
+        // Cancellations
+        logo.addEventListener("mouseup", cancelPress);
+        logo.addEventListener("mouseleave", cancelPress);
+        logo.addEventListener("touchend", cancelPress);
+        logo.addEventListener("touchcancel", cancelPress);
+        logo.addEventListener("touchmove", cancelPress); // Cancel if user scrolls
+
+        // Prevent Context Menu on Mobile (allows holding the image without popup)
+        logo.addEventListener("contextmenu", (e) => {
+            // Only prevent if we want to enforce the secret (optional, but cleaner)
+            e.preventDefault();
         });
     });
 </script>
