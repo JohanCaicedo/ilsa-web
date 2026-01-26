@@ -10,9 +10,9 @@ export interface HeroSlideData {
 
 export const heroSlidesConfig: HeroSlideData[] = [
     {
-        title: "Dossié",
-        excerpt: "Pesquisas em advocacia popular na america latina",
-        image: "https://api.ilsa.org.co/wp-content/uploads/2026/01/cover_issue_3245_pt_BR.webp",
+        title: "Dossiê",
+        excerpt: "Pesquisas em advocacia popular na America Latina",
+        image: "/images/hero-home/cover_issue_3245_pt_BR.webp",
         link: "https://api.ilsa.org.co/2025/11/investigacion-abogacia-popular-latinoamerica/",
         badge: "Publicación",
         ctaText: "Leer Publicación"

@@ -184,6 +184,10 @@ export const CARD_QUERY = `
           node {
             sourceUrl
             altText
+            mediaDetails {
+              width
+              height
+            }
           }
         }
         author {
