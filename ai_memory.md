@@ -148,3 +148,19 @@
 # 📚 Archivo de Contexto Técnico (Consolidado)
 
 
+
+### Session 27/01/2026 - Critical Bug Fixes & UI Enhancements
+- **Slider Fixes**:
+  - **`RelatedSlider.astro`**: Scoped selector to `[data-slider-type="related"]` to resolve conflict with ColumnistSlider.
+  - **`ColumnistSlider.astro`**: Refactored to use unique `data-columnist-*` attributes, isolating logic and fixing arrow navigation issues.
+- **Pagination**:
+  - **`AuthorPage.astro`**: Refactored to use the shared `Pagination.astro` component, eliminating custom/legacy logic.
+- **UI & Navigation**:
+  - **`nosotros/index.astro`**:
+    - **Team Modal**: Implemented `TeamModal.astro` (using native `<dialog>`) and refactored `DirectorCard` to trigger it.
+    - **Deep Linking**: Added IDs to sections for direct navigation.
+    - **Styling**: Updated styling to match brand guidelines (`--ilsa-blue`).
+  - **`Navbar.astro`**: Updated "Nosotros" dropdown with deep links (Historia, Misión, etc.).
+- **Data/Logic**:
+  - **`collections.ts`**: Updated slugs for 'coediciones' and 'en-clave-de-sur' (added `-publicaciones` suffix) to fix "Empty Collections" bug.
+  - **`src/lib/team.ts`**: Centralized team data structure.

@@ -2,8 +2,10 @@
 import Layout from "../../layouts/Layout.astro";
 import AccordionItem from "../../components/atoms/AccordionItem.astro";
 import DirectorCard from "../../components/molecules/DirectorCard.astro";
+import TeamModal from "../../components/molecules/TeamModal.astro";
 import Breadcrumbs from "../../components/atoms/Breadcrumbs.astro";
 import { wpQuery } from "../../lib/wp";
+import { teamData, boardData } from "../../lib/team";
 import type { SeoData } from "../../lib/seo";
 
 export const prerender = true;
@@ -56,7 +58,8 @@ const seoData: SeoData = data?.page?.seo;
         <div class="relative z-10 pt-8 pb-24 px-6 md:px-12 max-w-7xl mx-auto">
             <!-- HERO SECTION -->
             <section
-                class="mb-24 flex flex-col items-center text-center max-w-5xl mx-auto"
+                id="historia"
+                class="mb-24 flex flex-col items-center text-center max-w-5xl mx-auto scroll-mt-32"
             >
                 <!-- Badge -->
                 <div
@@ -241,7 +244,10 @@ const seoData: SeoData = data?.page?.seo;
                 <div class="order-2 md:order-1">
                     <div class="inline-flex items-center gap-2 mb-4">
                         <span class="w-2 h-8 bg-[#4e7cce] rounded-full"></span>
-                        <h2 class="text-4xl font-bold text-[#3d3d47]">
+                        <h2
+                            class="text-4xl font-bold text-[#3d3d47]"
+                            id="mision"
+                        >
                             Misión
                         </h2>
                     </div>
@@ -302,7 +308,10 @@ const seoData: SeoData = data?.page?.seo;
                 <div>
                     <div class="inline-flex items-center gap-2 mb-4">
                         <span class="w-2 h-8 bg-[#5e3b69] rounded-full"></span>
-                        <h2 class="text-4xl font-bold text-[#3d3d47]">
+                        <h2
+                            class="text-4xl font-bold text-[#3d3d47]"
+                            id="vision"
+                        >
                             Visión
                         </h2>
                     </div>
@@ -429,7 +438,10 @@ const seoData: SeoData = data?.page?.seo;
             <!-- TEAM SECTION -->
             <section class="mb-32">
                 <div class="text-center mb-16">
-                    <h2 class="text-4xl font-bold text-[#3d3d47] mb-4">
+                    <h2
+                        class="text-4xl font-bold text-[#3d3d47] mb-4"
+                        id="direccion-equipo"
+                    >
                         Nuestro Equipo
                     </h2>
                     <div class="w-16 h-1 bg-[#4e7cce] mx-auto rounded-full">
@@ -437,252 +449,65 @@ const seoData: SeoData = data?.page?.seo;
                 </div>
 
                 <div class="flex flex-wrap justify-center gap-8">
-                    <DirectorCard
-                        variant="frosted"
-                        name="Freddy Ordóñez Gómez"
-                        role="Director Ejecutivo"
-                        image="https://api.ilsa.org.co/wp-content/uploads/2022/08/Freddy-Recorte-scaled.jpg.webp"
-                        bio="Investigador y presidente de ILSA. Integrante del Centro de Pensamiento Amazonias (CEPAM)."
-                        xUrl="https://x.com/freddy_ordonez"
-                    />
-
-                    <!-- Placeholder Cards for others can be simpler or reused DirectorCard if we want uniform look -->
-                    <DirectorCard
-                        variant="frosted"
-                        name="Annette Pearson"
-                        role="Asesora de Dirección"
-                        image="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=600&auto=format&fit=crop"
-                        bio="Experta en cooperación internacional."
-                    />
-
-                    <DirectorCard
-                        variant="frosted"
-                        name="Francisco Javier Toloza"
-                        role="Asesor de Dirección"
-                        image="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop"
-                        bio="Politólogo y Magister en Sociología."
-                    />
-
-                    <DirectorCard
-                        variant="frosted"
-                        name="Germán Alfonso Palacio"
-                        role="Asesor de Dirección"
-                        image="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=600&auto=format&fit=crop"
-                        bio="Abogado e historiador (PhD)."
-                    />
-
-                    <DirectorCard
-                        variant="frosted"
-                        name="Ricardo Prestes Pazello"
-                        role="Asesor de Dirección"
-                        image="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600&auto=format&fit=crop"
-                        bio="Docente de sociología jurídica."
-                    />
-
-                    <DirectorCard
-                        variant="frosted"
-                        name="Yina Villamil Velásquez"
-                        role="Asesora de Dirección"
-                        image="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop"
-                        bio="Defensora de derechos humanos."
-                    />
+                    {
+                        teamData.map((member) => (
+                            <DirectorCard
+                                variant="frosted"
+                                name={member.name}
+                                role={member.role}
+                                image={member.image}
+                                bio={member.bio}
+                                xUrl={member.xUrl}
+                                id={member.id}
+                            />
+                        ))
+                    }
                 </div>
             </section>
 
             <!-- BOARD SECTION -->
             <section class="max-w-7xl mx-auto mb-24">
-                <h2 class="text-3xl font-bold text-center text-[#3d3d47] mb-12">
+                <h2
+                    class="text-3xl font-bold text-center text-[#3d3d47] mb-12"
+                    id="junta-directiva"
+                >
                     Junta Directiva
                 </h2>
 
                 <div
                     class="flex flex-col md:flex-row gap-4 h-[600px] md:h-[450px] w-full"
                 >
-                    <!-- Card 1: Presidenta -->
-                    <div
-                        class="relative group flex-grow transition-all duration-500 md:hover:grow-[3] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl"
-                    >
-                        <img
-                            class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
-                            src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&h=800&auto=format&fit=crop"
-                            alt="Cristina Luna Calpa"
-                        />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-[#183069] via-[#183069]/40 to-transparent opacity-90 transition-opacity duration-300"
-                        >
-                        </div>
-                        <div
-                            class="absolute inset-0 flex flex-col justify-end p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
-                        >
-                            <p
-                                class="text-[#efefef] font-bold text-xs tracking-widest uppercase mb-1 opacity-80 group-hover:opacity-100"
-                            >
-                                Presidenta
-                            </p>
-                            <h3
-                                class="text-xl md:text-2xl font-bold text-white mb-2 leading-tight"
-                            >
-                                Cristina Luna Calpa
-                            </h3>
+                    {
+                        boardData.map((member) => (
                             <div
-                                class="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100"
+                                class="interactive-card relative group flex-grow transition-all duration-500 md:hover:grow-[3] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl cursor-pointer"
+                                data-team-id={member.id}
                             >
-                                <p class="text-slate-300 text-sm mt-2">
-                                    Liderazgo estratégico y representación
-                                    institucional.
-                                </p>
+                                <img
+                                    class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
+                                    src={member.image}
+                                    alt={member.name}
+                                />
+                                <div class="absolute inset-0 bg-gradient-to-t from-[#183069] via-[#183069]/40 to-transparent opacity-90 transition-opacity duration-300" />
+                                <div class="absolute inset-0 flex flex-col justify-end p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                    <p class="text-[#efefef] font-bold text-xs tracking-widest uppercase mb-1 opacity-80 group-hover:opacity-100">
+                                        {member.role}
+                                    </p>
+                                    <h3 class="text-xl md:text-2xl font-bold text-white mb-2 leading-tight">
+                                        {member.name}
+                                    </h3>
+                                    <div class="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100">
+                                        <p class="text-slate-300 text-sm mt-2">
+                                            {member.bio}
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- Card 2: Vicepresidente -->
-                    <div
-                        class="relative group flex-grow transition-all duration-500 md:hover:grow-[3] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl"
-                    >
-                        <img
-                            class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
-                            src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=600&h=800&auto=format&fit=crop"
-                            alt="Ismael Díaz Barbosa"
-                        />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-[#183069] via-[#183069]/40 to-transparent opacity-90 transition-opacity duration-300"
-                        >
-                        </div>
-                        <div
-                            class="absolute inset-0 flex flex-col justify-end p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
-                        >
-                            <p
-                                class="text-[#efefef] font-bold text-xs tracking-widest uppercase mb-1 opacity-80 group-hover:opacity-100"
-                            >
-                                Vicepresidente
-                            </p>
-                            <h3
-                                class="text-xl md:text-2xl font-bold text-white mb-2 leading-tight"
-                            >
-                                Ismael Díaz Barbosa
-                            </h3>
-                            <div
-                                class="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100"
-                            >
-                                <p class="text-slate-300 text-sm mt-2">
-                                    Apoyo a la dirección y coordinación
-                                    política.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Card 3: Secretario -->
-                    <div
-                        class="relative group flex-grow transition-all duration-500 md:hover:grow-[3] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl"
-                    >
-                        <img
-                            class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
-                            src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=600&h=800&auto=format&fit=crop"
-                            alt="Edwin de los Ríos Jaramillo"
-                        />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-[#183069] via-[#183069]/40 to-transparent opacity-90 transition-opacity duration-300"
-                        >
-                        </div>
-                        <div
-                            class="absolute inset-0 flex flex-col justify-end p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
-                        >
-                            <p
-                                class="text-[#efefef] font-bold text-xs tracking-widest uppercase mb-1 opacity-80 group-hover:opacity-100"
-                            >
-                                Secretario
-                            </p>
-                            <h3
-                                class="text-xl md:text-2xl font-bold text-white mb-2 leading-tight"
-                            >
-                                Edwin de los Ríos
-                            </h3>
-                            <div
-                                class="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100"
-                            >
-                                <p class="text-slate-300 text-sm mt-2">
-                                    Gestión administrativa y actas
-                                    institucionales.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Card 4: Vocal -->
-                    <div
-                        class="relative group flex-grow transition-all duration-500 md:hover:grow-[3] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl"
-                    >
-                        <img
-                            class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
-                            src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=600&h=800&auto=format&fit=crop"
-                            alt="Maria Eugenia Ramírez Brisneda"
-                        />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-[#183069] via-[#183069]/40 to-transparent opacity-90 transition-opacity duration-300"
-                        >
-                        </div>
-                        <div
-                            class="absolute inset-0 flex flex-col justify-end p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
-                        >
-                            <p
-                                class="text-[#efefef] font-bold text-xs tracking-widest uppercase mb-1 opacity-80 group-hover:opacity-100"
-                            >
-                                Vocal
-                            </p>
-                            <h3
-                                class="text-xl md:text-2xl font-bold text-white mb-2 leading-tight"
-                            >
-                                Maria Eugenia Ramírez
-                            </h3>
-                            <div
-                                class="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100"
-                            >
-                                <p class="text-slate-300 text-sm mt-2">
-                                    Vigilancia y control de procesos
-                                    estratégicos.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Card 5: Vocal -->
-                    <div
-                        class="relative group flex-grow transition-all duration-500 md:hover:grow-[3] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl"
-                    >
-                        <img
-                            class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
-                            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&h=800&auto=format&fit=crop"
-                            alt="Julio Gaitán Bohórquez"
-                        />
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-[#183069] via-[#183069]/40 to-transparent opacity-90 transition-opacity duration-300"
-                        >
-                        </div>
-                        <div
-                            class="absolute inset-0 flex flex-col justify-end p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
-                        >
-                            <p
-                                class="text-[#efefef] font-bold text-xs tracking-widest uppercase mb-1 opacity-80 group-hover:opacity-100"
-                            >
-                                Vocal
-                            </p>
-                            <h3
-                                class="text-xl md:text-2xl font-bold text-white mb-2 leading-tight"
-                            >
-                                Julio Gaitán Bohórquez
-                            </h3>
-                            <div
-                                class="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100"
-                            >
-                                <p class="text-slate-300 text-sm mt-2">
-                                    Asesoría experta y visión académica.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                        ))
+                    }
                 </div>
             </section>
         </div>
+        <TeamModal />
     </div>
 </Layout>

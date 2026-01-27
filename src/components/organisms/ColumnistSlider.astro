@@ -32,14 +32,14 @@ const { posts } = Astro.props;
     </div>
 
     <div class="hidden md:flex items-center gap-2">
-      <SliderArrow direction="left" data-slider-prev />
-      <SliderArrow direction="right" data-slider-next />
+      <SliderArrow direction="left" data-columnist-prev />
+      <SliderArrow direction="right" data-columnist-next />
     </div>
   </div>
 
   <div
     class="flex w-full gap-6 overflow-x-auto py-4 px-1 cursor-grab active:cursor-grabbing select-none [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden snap-x snap-mandatory focus-visible:ring-2 focus-visible:ring-[#4E7CCE] focus-visible:outline-none rounded-xl"
-    data-slider-track
+    data-columnist-track
     tabindex="0"
     aria-label="Lista de columnas de opinión"
     role="region"
@@ -70,7 +70,7 @@ const { posts } = Astro.props;
     }
   </div>
 
-  <SliderProgress data-slider-progress />
+  <SliderProgress data-columnist-progress />
 </section>
 
 <script>
@@ -81,13 +81,13 @@ const { posts } = Astro.props;
 
     containers.forEach((container) => {
       const track = container.querySelector(
-        "[data-slider-track]",
+        "[data-columnist-track]",
       ) as HTMLElement | null;
       const progress = container.querySelector(
-        "[data-slider-progress]",
+        "[data-columnist-progress]",
       ) as HTMLElement | null;
-      const btnPrev = container.querySelector("[data-slider-prev]");
-      const btnNext = container.querySelector("[data-slider-next]");
+      const btnPrev = container.querySelector("[data-columnist-prev]");
+      const btnNext = container.querySelector("[data-columnist-next]");
 
       if (!track) return;
 

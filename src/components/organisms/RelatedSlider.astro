@@ -62,7 +62,9 @@ const { posts } = Astro.props;
 
 <script>
   function setupSliders() {
-    const containers = document.querySelectorAll("[data-slider-type]");
+    const containers = document.querySelectorAll(
+      '[data-slider-type="related"]',
+    );
 
     containers.forEach((container) => {
       const track = container.querySelector(

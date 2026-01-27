@@ -1,0 +1,175 @@
+---
+import { teamData, boardData } from "../../lib/team";
+
+// Combine all data for lookup
+const allMembers = [...teamData, ...boardData];
+---
+
+<dialog
+    id="team-modal"
+    class="backdrop:bg-black/40 backdrop:backdrop-blur-sm bg-transparent p-0 m-auto max-w-4xl w-[90%] md:w-[800px] h-fit rounded-[2.5rem] shadow-2xl focus:outline-none open:animate-in open:fade-in open:zoom-in-95 open:duration-300"
+>
+    <div
+        class="relative bg-white/90 backdrop-blur-2xl rounded-[2.5rem] border border-white/60 overflow-hidden shadow-[0_8px_32px_0_rgba(78,124,206,0.2)] md:grid md:grid-cols-2 md:items-stretch"
+    >
+        <!-- Close Button -->
+        <button
+            id="close-modal"
+            class="absolute top-4 right-4 z-50 p-2 rounded-full bg-white/50 hover:bg-white text-slate-800 hover:text-red-500 transition-colors cursor-pointer border border-white/40 shadow-sm"
+            aria-label="Cerrar modal"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg
+            >
+        </button>
+
+        <!-- Left: Image Section -->
+        <div class="relative h-64 md:h-auto min-h-full w-full overflow-hidden">
+            <div
+                class="absolute inset-0 bg-[#183069]/10 mix-blend-multiply z-10"
+            >
+            </div>
+            <!-- Dynamic Image -->
+            <img
+                id="modal-image"
+                src=""
+                alt=""
+                class="w-full h-full object-cover object-center"
+            />
+            <div
+                class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-[#183069]/80 to-transparent z-20"
+            >
+            </div>
+        </div>
+
+        <!-- Right: Content Section -->
+        <div class="p-8 md:p-12 flex flex-col justify-center relative">
+            <!-- Background Decoration -->
+            <div
+                class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#4e7cce]/20 to-transparent rounded-full blur-3xl -z-10 translate-x-1/2 -translate-y-1/2"
+            >
+            </div>
+
+            <div class="mb-6">
+                <span
+                    id="modal-role"
+                    class="inline-block px-3 py-1 rounded-full bg-[#4e7cce]/10 text-[#4e7cce] text-xs font-bold uppercase tracking-widest border border-[#4e7cce]/20 mb-3"
+                >
+                    Cargo
+                </span>
+                <h2
+                    id="modal-name"
+                    class="text-3xl md:text-4xl font-extrabold text-[#3d3d47] leading-tight"
+                >
+                    Nombre
+                </h2>
+            </div>
+
+            <div class="space-y-4">
+                <p
+                    id="modal-description"
+                    class="text-slate-600 leading-relaxed text-lg font-medium"
+                >
+                    Descripción completa.
+                </p>
+            </div>
+
+            <!-- Social Links Container (Visible if links exist) -->
+            <div
+                id="modal-socials"
+                class="mt-8 flex gap-4 pt-6 border-t border-slate-200/50"
+            >
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </div>
+</dialog>
+
+<script define:vars={{ allMembers }}>
+    // We pass the data from server to client safely
+    const membersData = allMembers;
+
+    document.addEventListener("astro:page-load", () => {
+        const modal = document.getElementById("team-modal");
+        const cards = document.querySelectorAll(
+            ".interactive-card[data-team-id]",
+        );
+        const closeBtn = document.getElementById("close-modal");
+
+        if (!modal || !closeBtn) return;
+
+        // Elements to update
+        const els = {
+            image: document.getElementById("modal-image"),
+            name: document.getElementById("modal-name"),
+            role: document.getElementById("modal-role"),
+            desc: document.getElementById("modal-description"),
+            social: document.getElementById("modal-socials"),
+        };
+
+        const openModal = (id) => {
+            const member = membersData.find((m) => m.id === id);
+            if (!member) return;
+
+            // Update content
+            if (els.image) els.image.src = member.image;
+            if (els.image) els.image.alt = member.name;
+            if (els.name) els.name.textContent = member.name;
+            if (els.role) els.role.textContent = member.role;
+            if (els.desc) els.desc.textContent = member.fullDescription;
+
+            // Socials logic (Basic X impl)
+            if (els.social) {
+                els.social.innerHTML = "";
+                if (member.xUrl) {
+                    els.social.innerHTML += `
+                        <a href="${member.xUrl}" target="_blank" class="flex items-center gap-2 text-slate-400 hover:text-[#4e7cce] transition-colors font-semibold text-sm">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
+                            <span>Seguir</span>
+                        </a>
+                     `;
+                }
+            }
+
+            modal.showModal();
+            // Prevent body scroll
+            document.body.style.overflow = "hidden";
+        };
+
+        const closeModal = () => {
+            modal.close();
+            document.body.style.overflow = "";
+        };
+
+        cards.forEach((card) => {
+            card.addEventListener("click", () => {
+                const id = card.getAttribute("data-team-id");
+                if (id) openModal(id);
+            });
+        });
+
+        closeBtn.addEventListener("click", closeModal);
+
+        // Click outside to close
+        modal.addEventListener("click", (e) => {
+            const rect = modal.getBoundingClientRect();
+            const isInDialog =
+                rect.top <= e.clientY &&
+                e.clientY <= rect.top + rect.height &&
+                rect.left <= e.clientX &&
+                e.clientX <= rect.left + rect.width;
+            if (!isInDialog) {
+                closeModal();
+            }
+        });
+    });
+</script>

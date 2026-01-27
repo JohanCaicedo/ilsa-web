@@ -16,7 +16,6 @@
         const scrollTotal =
             document.documentElement.scrollHeight - window.innerHeight;
 
-        // Si no hay scroll, no necesitamos barra
         if (scrollTotal <= 0) {
             progressBar.style.transform = "scaleX(0)";
             return;
@@ -31,6 +30,5 @@
     window.addEventListener("scroll", updateReadingProgress, { passive: true });
     window.addEventListener("resize", updateReadingProgress);
 
-    // Inicializar
     updateReadingProgress();
 </script>

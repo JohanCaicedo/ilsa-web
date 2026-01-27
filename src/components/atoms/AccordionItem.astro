@@ -100,12 +100,12 @@ const styles = variants[variant];
                     btn.setAttribute("aria-expanded", "true");
                     content.style.maxHeight = content.scrollHeight + "px";
                     icon.innerHTML = "-"; // Or rotate
-                    button.classList.add("text-[#4e7cce]");
+                    btn.classList.add("text-[#4e7cce]");
                 } else {
                     btn.setAttribute("aria-expanded", "false");
                     content.style.maxHeight = "0px";
                     icon.innerHTML = "+";
-                    button.classList.remove("text-[#4e7cce]");
+                    btn.classList.remove("text-[#4e7cce]");
                 }
             });
         });

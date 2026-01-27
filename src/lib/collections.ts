@@ -11,7 +11,7 @@ export const collectionsConfig: Record<string, CollectionConfig> = {
     },
     "coediciones": {
         title: "Coediciones",
-        wpCategorySlug: "coediciones",
+        wpCategorySlug: "coediciones-publicaciones",
     },
     "derecho-y-liberacion": {
         title: "Derecho y Liberación",
@@ -19,7 +19,7 @@ export const collectionsConfig: Record<string, CollectionConfig> = {
     },
     "en-clave-de-sur": {
         title: "En Clave de Sur",
-        wpCategorySlug: "en-clave-de-sur",
+        wpCategorySlug: "en-clave-de-sur-publicaciones",
     },
     "revista-el-otro-derecho": {
         title: "Revista El Otro Derecho",
