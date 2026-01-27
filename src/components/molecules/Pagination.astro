@@ -3,12 +3,14 @@ interface Props {
     totalPages: number;
     gridId?: string;
     cardClass?: string;
+    postsPerPage?: number;
 }
 
 const {
     totalPages,
     gridId = "posts-grid",
     cardClass = "post-card",
+    postsPerPage = 12,
 } = Astro.props;
 ---
 
@@ -18,6 +20,7 @@ const {
             <div
                 class="inline-flex gap-3 p-2 bg-slate-50 rounded-full border border-slate-200 shadow-sm"
                 id={`tab-container-${gridId}`}
+                data-posts-per-page={postsPerPage}
             >
                 {[...Array(totalPages)].map((_, i) => (
                     <button
@@ -60,6 +63,12 @@ const {
                 const gridId = target.dataset.grid;
                 const cardClass = target.dataset.card;
                 const page = parseInt(target.dataset.page || "0");
+                const container = target.closest(
+                    "div[data-posts-per-page]",
+                ) as HTMLElement;
+                const postsPerPage = parseInt(
+                    container?.dataset.postsPerPage || "12",
+                );
 
                 if (!gridId || !cardClass) return;
 
@@ -91,7 +100,6 @@ const {
 
                 // Filter logic
                 const posts = document.querySelectorAll(`.${cardClass}`);
-                const postsPerPage = 12;
                 const start = page * postsPerPage;
                 const end = start + postsPerPage;
 

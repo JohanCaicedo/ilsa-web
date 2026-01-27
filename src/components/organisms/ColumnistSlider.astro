@@ -89,25 +89,46 @@ const { posts } = Astro.props;
       const btnPrev = container.querySelector("[data-slider-prev]");
       const btnNext = container.querySelector("[data-slider-next]");
 
-      if (!track || !progress) return;
+      if (!track) return;
 
+      // Robust Arrow Wiring
+      if (btnPrev) {
+        // Ensure button is clickable over other elements
+        (btnPrev as HTMLElement).style.zIndex = "10";
+        btnPrev.addEventListener("click", (e) => {
+          e.stopPropagation(); // Prevent bubbling issues
+          track.scrollBy({ left: -320, behavior: "smooth" });
+        });
+      }
+
+      if (btnNext) {
+        (btnNext as HTMLElement).style.zIndex = "10";
+        btnNext.addEventListener("click", (e) => {
+          e.stopPropagation();
+          track.scrollBy({ left: 320, behavior: "smooth" });
+        });
+      }
+
+      // Drag Logic
       let isDown = false;
       let startX = 0;
       let scrollLeft = 0;
       let moved = false;
 
-      track.addEventListener("mousedown", (e: MouseEvent) => {
+      const onMouseDown = (e: MouseEvent) => {
         isDown = true;
         moved = false;
         track.classList.add("active");
         const rect = track.getBoundingClientRect();
         startX = e.pageX - rect.left;
         scrollLeft = track.scrollLeft;
+
+        // Temporarily disable snap for smooth dragging
         track.style.scrollSnapType = "none";
         track.style.scrollBehavior = "auto";
-      });
+      };
 
-      const stopDragging = () => {
+      const onMouseLeave = () => {
         if (!isDown) return;
         isDown = false;
         track.classList.remove("active");
@@ -115,36 +136,34 @@ const { posts } = Astro.props;
         track.style.scrollBehavior = "smooth";
       };
 
-      track.addEventListener("mouseleave", stopDragging);
-      track.addEventListener("mouseup", stopDragging);
-
-      track.addEventListener("mousemove", (e: MouseEvent) => {
+      const onMouseUp = (e: MouseEvent) => {
         if (!isDown) return;
+        onMouseLeave();
+        // If we barely moved, it's a click, let it bubble.
+        // If we moved significantly, it's a drag, consume the click.
+        if (moved) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      };
+
+      const onMouseMove = (e: MouseEvent) => {
+        if (!isDown) return;
+        e.preventDefault(); // Prevent text selection
 
         const rect = track.getBoundingClientRect();
         const x = e.pageX - rect.left;
-        const walk = x - startX;
+        const walk = (x - startX) * 1.5; // Friction multiplier
 
         if (Math.abs(walk) > 5) {
           moved = true;
-          e.preventDefault();
           track.scrollLeft = scrollLeft - walk;
         }
-      });
+      };
 
-      track.addEventListener(
-        "click",
-        (e: MouseEvent) => {
-          if (moved) {
-            e.preventDefault();
-            e.stopPropagation();
-            moved = false;
-          }
-        },
-        true,
-      );
-
+      // Progress Bar Logic
       const updateProgress = () => {
+        if (!progress) return;
         const maxScroll = track.scrollWidth - track.clientWidth;
         if (maxScroll > 0) {
           const percentage = (track.scrollLeft / maxScroll) * 100;
@@ -152,21 +171,33 @@ const { posts } = Astro.props;
         }
       };
 
-      track.addEventListener("scroll", updateProgress);
-      window.addEventListener("resize", updateProgress);
-      setTimeout(updateProgress, 100);
+      // Events
+      track.addEventListener("mousedown", onMouseDown);
+      track.addEventListener("mouseleave", onMouseLeave);
+      track.addEventListener("mouseup", onMouseUp);
+      track.addEventListener("mousemove", onMouseMove);
 
-      if (btnPrev && btnNext) {
-        btnPrev.addEventListener("click", () => {
-          track.scrollBy({ left: -400, behavior: "smooth" });
-        });
-        btnNext.addEventListener("click", () => {
-          track.scrollBy({ left: 400, behavior: "smooth" });
-        });
-      }
+      // Capture click to prevent opening links if dragged
+      track.addEventListener(
+        "click",
+        (e) => {
+          if (moved) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        },
+        { capture: true },
+      );
+
+      track.addEventListener("scroll", updateProgress, { passive: true });
+      window.addEventListener("resize", updateProgress);
+
+      // Initial calculation
+      requestAnimationFrame(updateProgress);
     });
   }
 
+  // Init
   setupColumnistSliders();
   document.addEventListener("astro:page-load", setupColumnistSliders);
 </script>

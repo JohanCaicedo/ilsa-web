@@ -67,7 +67,20 @@
 - **`Navbar.astro`**: 
     - **Easter Egg Activation**: Implementado **Long Press (2s)** en el logo.
     - **Mobile UX**: Previene menú contextual y navegación accidental al mantener presionado.
+    - **Easter Egg Activation**: Implementado **Long Press (2s)** en el logo.
+    - **Mobile UX**: Previene menú contextual y navegación accidental al mantener presionado.
     - **Feedback**: Vibración háptica (200ms) al activar.
+
+### Session 26/01/2026 - Interactive Components Fixes & Robustness
+- **`NavDropdown.astro`**: 
+    - **Perf**: Se desactivó `Liquid3D` (`use3D={false}`) para evitar colapso de contextos WebGL y "cajas negras" en menús.
+- **`SimpleAccordion.astro`**: 
+    - **Refactor**: Reescritura total del script. Se eliminó `cloneNode` (frágil) y se implementó **Event Delegation** en `document` para soportar View Transitions.
+- **`ColumnistSlider.astro`**: 
+    - **UX/Fix**: Corrección de `z-index` (10) en flechas de navegación.
+    - **Logic**: Mejora en la lógica de "drag vs click" y manejo de eventos `stopPropagation`.
+- **`Pagination.astro`**: 
+    - **Feature**: Soporte para `postsPerPage` dinámico vía props y data-attributes.
 
 ## Next Steps (Pendientes Críticos)
 
@@ -81,8 +94,11 @@
 5. **Performance Audit**: Monitorear impacto del escaneo DOM (`scanElements`) en páginas con +1000 elementos.
 
 ### Mantenimiento
-6. **Image Optimization**: Verificar si páginas no-publicaciones necesitan actualización de queries para `mediaDetails`.
-7. **CSS Transitions**: Ajustar duración de fade si 0.5s resulta lento para usuarios.
+### Mantenimiento & Contenido
+6. **Limpieza Elementor**: Ejecutar plan de limpieza de contenido "sucio" de Elementor (Opción A: Revertir a bloques nativos).
+7. **Eventos**: Integrar Custom Post Type `event_listing` de WP Event Manager en WPGraphQL.
+8. **Image Optimization**: Verificar si páginas no-publicaciones necesitan actualización de queries para `mediaDetails`.
+9. **CSS Transitions**: Ajustar duración de fade si 0.5s resulta lento para usuarios.
 
 ## Log de Commits
 - `feat: implementation of 'Glass Breaker' easter egg with Zelda music`
@@ -91,6 +107,7 @@
 - `feat(easter-egg): integrate MIDI music with GBA synthesis`
 - `feat(easter-egg): add full mobile touch support`
 - `feat(perf): implement adaptive 3d rendering and long-press easter egg activation`
+- `fix(components): refactor interactive elements (dropdowns, accordion, slider, pagination)`
 
 ---
 
