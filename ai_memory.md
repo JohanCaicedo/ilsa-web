@@ -97,6 +97,22 @@
 - **`Pagination.astro`**: 
     - **Feature**: Soporte para `postsPerPage` dinámico vía props y data-attributes.
 
+### Session 26/01/2026 - Event Integration & Multimedia Expansion
+-   **`Actividades Page`**:
+    -   **Integration**: Conectado a WP Event Manager vía GraphQL.
+    -   **UX**: Implementado filtrado por año (SSR) y paginación dinámica.
+    -   **Design**: Hero Section con "Liquid Glass" y tarjetas centradas (`justify-center`).
+-   **`Multimedia Page`**:
+    -   **New**: Página `/multimedia` creada con estructura base y Hero Section consistente.
+    -   **Nav**: Añadida al menú principal y al Easter Egg (`GlassBreakerEngine` routes).
+-   **`Navbar.astro`**:
+    -   **Refactor**: Simplificación de estilos hover. Se eliminó animación compleja de texto.
+    -   **Interaction**: Nuevo efecto estándar: `scale-110` + cambio de color a Azul ILSA.
+    -   **Fix**: Eliminado `overflow-hidden` en Dropdowns para evitar cortes de texto (ej: "Multimedia").
+
+-   **`Routing Fix`**:
+    -   **Deleted**: `src/pages/publicaciones/[collection].astro` eliminado para resolver conflicto de rutas en el build. Ahora todas las colecciones usan archivos explícitos.
+
 ## Next Steps (Pendientes Críticos)
 
 ### Prioridad Alta (Próxima Sesión)
