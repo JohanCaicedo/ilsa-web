@@ -140,3 +140,6 @@ Cloudflare Free Tier tiene límites de memoria (128MB/256MB) para el proceso de 
 8. Update dropdown menu (Nosotros > historia, misión, visión, dirección, junta directiva, asamblea de socias y socios)
 9. Authors page in movil, improve speed load articles.
 10. (Coediciones, En Clave de Sur) dont show post.
+
+## Features to add
+1. Add a glow in the edge of pages by accion lines, glow effect, example: womnes purple glow,  social,territorio: green glow, 

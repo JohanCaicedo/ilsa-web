@@ -161,6 +161,25 @@
     - **Deep Linking**: Added IDs to sections for direct navigation.
     - **Styling**: Updated styling to match brand guidelines (`--ilsa-blue`).
   - **`Navbar.astro`**: Updated "Nosotros" dropdown with deep links (Historia, Misión, etc.).
+
 - **Data/Logic**:
   - **`collections.ts`**: Updated slugs for 'coediciones' and 'en-clave-de-sur' (added `-publicaciones` suffix) to fix "Empty Collections" bug.
   - **`src/lib/team.ts`**: Centralized team data structure.
+
+### Inventario de Componentes (Nuevos/Modificados)
+- **`TeamModal.astro`** (Nuevo):
+  - **Función**: Modal nativo (`<dialog>`) para mostrar detalles de miembros del equipo.
+  - **Liquid Glass**: Cumple 8/10. Usa `backdrop-blur-xl` y `bg-white/90` para el contenedor.
+  - **Interacción**: Trigger via `DirectorCard` + `data-team-id`. Cierre con click fuera o botón ESC.
+- **`DirectorCard.astro`** (Modificado):
+  - **Refactor**: Acepta `id` prop para binding con el modal. UI mejorada con bordes más visibles (`opacity-30`).
+
+### Decisiones de Diseño
+- **Native Dialogs**: Se optó por `<dialog>` nativo en lugar de librerías externas para `TeamModal` para maximizar rendimiento y accesibilidad sin hidratación pesada.
+- **Isolation by Attributes**: Para resolver conflictos entre sliders y paginación, se migró de selectores genéricos (`data-slider-*`) a específicos (`data-columnist-*`, `data-grid-*`), blindando los componentes contra interferencias globales.
+- **Type Safety**: Se forzó `type="button"` en todos los elementos interactivos (`SliderArrow`, `Pagination`) para prevenir comportamientos erráticos de formulario en navegadores móviles.
+
+### Pendientes Críticos (Next Steps)
+1.  **🚀 DEPLOYMENT**: Es CRÍTICO desplegar para que el fix de `collections.ts` (slugs) surta efecto y las páginas vacías se llenen.
+2.  **Monitorización**: Verificar en producción si el atributo `type="button"` resolvió definitivamente el "reset" de la paginación.
+3.  **Mobile Performance**: La optimización de carga en `AuthorPage` (Task #9) fue pospuesta y debe ser retomada.
