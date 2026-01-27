@@ -29,6 +29,14 @@ const aspectRatio = validW / validH;
 
 const finalHeight = TARGET_HEIGHT;
 const finalWidth = Math.round(TARGET_HEIGHT * aspectRatio);
+
+// Extract year from date string (format "YYYY-MM-DD" or similar expected, or check string inclusion)
+// Assuming date format is like "2025-01-01" or includes the year.
+const yearMatch = date.match(/\b20\d{2}\b/);
+const year = yearMatch ? parseInt(yearMatch[0]) : 0;
+// Optimize only if year is 2025 or greater (or if no year found, default to false to be safe?)
+// User request: "menos de los eventos de 2025 para abajo se complen" -> Optimize >= 2025.
+const shouldOptimize = year >= 2025;
 ---
 
 <a
@@ -41,6 +49,7 @@ const finalWidth = Math.round(TARGET_HEIGHT * aspectRatio);
       alt={title}
       width={finalWidth}
       height={finalHeight}
+      shouldOptimize={shouldOptimize}
       class="h-full w-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
     />
   </div>

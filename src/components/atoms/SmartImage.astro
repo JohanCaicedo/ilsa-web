@@ -9,6 +9,7 @@ interface Props {
     height?: number;
     class?: string;
     priority?: boolean;
+    shouldOptimize?: boolean;
 }
 
 const {
@@ -18,23 +19,44 @@ const {
     width = 800,
     height = 600,
     priority = false,
+    shouldOptimize = true,
     ...rest
 } = Astro.props;
 ---
 
-<Image
-    src={src}
-    alt={alt}
-    width={width}
-    height={height}
-    loading={priority ? "eager" : "lazy"}
-    decoding="async"
-    fetchpriority={priority ? "high" : "auto"}
-    class={cn(
-        "transition-opacity duration-700 ease-in-out opacity-0 data-[loaded=true]:opacity-100",
-        "translate-z-0 backface-hidden", // Safari Perf
-        className,
-    )}
-    onload="this.setAttribute('data-loaded', 'true')"
-    {...rest}
-/>
+{
+    shouldOptimize ? (
+        <Image
+            src={src}
+            alt={alt}
+            width={width}
+            height={height}
+            loading={priority ? "eager" : "lazy"}
+            decoding="async"
+            fetchpriority={priority ? "high" : "auto"}
+            class={cn(
+                "transition-opacity duration-700 ease-in-out opacity-0 data-[loaded=true]:opacity-100",
+                "translate-z-0 backface-hidden",
+                className,
+            )}
+            onload="this.setAttribute('data-loaded', 'true')"
+            {...rest}
+        />
+    ) : (
+        <img
+            src={src}
+            alt={alt}
+            width={width}
+            height={height}
+            loading={priority ? "eager" : "lazy"}
+            decoding="async"
+            class={cn(
+                "transition-opacity duration-700 ease-in-out opacity-0 data-[loaded=true]:opacity-100",
+                "translate-z-0 backface-hidden object-cover",
+                className,
+            )}
+            onload="this.setAttribute('data-loaded', 'true')"
+            {...rest}
+        />
+    )
+}
