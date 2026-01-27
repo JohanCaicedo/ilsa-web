@@ -11,9 +11,8 @@ export default defineConfig({
   adapter: cloudflare({
     imageService: 'compile',
     routes: {
-      strategy: "auto",
       include: ["/*"],
-      exclude: ["/publicaciones/*", "/nosotros/*", "/opinion/*", "/_astro/*", "/assets/*", "/fonts/*", "/icons/*", "/images/*"]
+      exclude: ["/actividades/*", "/publicaciones/*", "/nosotros/*", "/opinion/*", "/_astro/*", "/assets/*", "/fonts/*", "/icons/*", "/images/*"]
     }
   }),
   image: {
