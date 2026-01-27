@@ -165,7 +165,32 @@ query MasterQuery {
       }
     }
   }
+  }
 }
+
+### 6.1 Query de Eventos (Actividades)
+Usada para el calendario y listado de actividades (`/actividades`).
+
+```graphql
+query MasterEventsQuery {
+  events(first: 100) {
+    nodes {
+      id
+      title
+      slug
+      content
+      eventDate       # Campo custom (meta: _event_start_date)
+      eventLocation   # Campo custom (meta: _event_location)
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+        }
+      }
+    }
+  }
+}
+```
 
 ---
 *Generado automáticamente por Antigravity Agent - 2026-01-20*

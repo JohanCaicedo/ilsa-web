@@ -69,7 +69,22 @@
     - **Mobile UX**: Previene menú contextual y navegación accidental al mantener presionado.
     - **Easter Egg Activation**: Implementado **Long Press (2s)** en el logo.
     - **Mobile UX**: Previene menú contextual y navegación accidental al mantener presionado.
+    - **Mobile UX**: Previene menú contextual y navegación accidental al mantener presionado.
     - **Feedback**: Vibración háptica (200ms) al activar.
+
+### Session 26/01/2026 - Event Integration & Multimedia Expansion
+-   **`Actividades Page`**:
+    -   **Integration**: Conectado a WP Event Manager vía GraphQL.
+    -   **UX**: Implementado filtrado por año (SSR) y paginación dinámica.
+    -   **Design**: Hero Section con "Liquid Glass" y tarjetas centradas (`justify-center`).
+-   **`Multimedia Page`**:
+    -   **New**: Página `/multimedia` creada con estructura base y Hero Section consistente.
+    -   **Nav**: Añadida al menú principal y al Easter Egg (`GlassBreakerEngine` routes).
+-   **`Navbar.astro`**:
+    -   **Refactor**: Simplificación de estilos hover. Se eliminó animación compleja de texto.
+    -   **Interaction**: Nuevo efecto estándar: `scale-110` + cambio de color a Azul ILSA.
+    -   **Fix**: Eliminado `overflow-hidden` en Dropdowns para evitar cortes de texto (ej: "Multimedia").
+
 
 ### Session 26/01/2026 - Interactive Components Fixes & Robustness
 - **`NavDropdown.astro`**: 

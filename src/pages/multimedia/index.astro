@@ -1,0 +1,84 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import GradientText from "../../components/atoms/GradientText.astro";
+import LiquidContainer from "../../components/experimental/LiquidContainer.astro";
+
+export const prerender = true;
+---
+
+<Layout title="Multimedia - ILSA" width="wide">
+    <div
+        class="relative min-h-screen pb-32 overflow-hidden selection:bg-blue-100 selection:text-blue-900"
+    >
+        <!-- Light Liquid Background -->
+        <div class="fixed inset-0 z-0 h-screen w-full bg-slate-50">
+            <LiquidContainer
+                class="absolute inset-0 w-full h-full opacity-60 mix-blend-multiply"
+                intensity="medium"
+                use3D={true}
+                frosted={true}
+                clipContent={false}
+            />
+            <!-- Additional Ambient Gradients -->
+            <div
+                class="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-white to-transparent pointer-events-none"
+            >
+            </div>
+        </div>
+
+        <!-- Content Flow -->
+        <div class="relative z-10 pt-32 px-4 max-w-7xl mx-auto">
+            <!-- Hero -->
+            <div class="text-center mb-24 space-y-8">
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 bg-white/50 backdrop-blur-md text-sm text-slate-500 tracking-wider uppercase font-bold shadow-sm"
+                >
+                    <span
+                        class="w-2 h-2 rounded-full bg-[var(--ilsa-blue)] animate-pulse"
+                    ></span>
+                    Galería Digital
+                </div>
+
+                <GradientText
+                    text="Multimedia"
+                    size="text-5xl md:text-8xl text-center"
+                    weight="font-black"
+                    from="var(--ilsa-blue)"
+                    to="var(--ilsa-blue-dark)"
+                    class="justify-center block drop-shadow-sm tracking-tight pb-4"
+                />
+
+                <p
+                    class="text-lg md:text-2xl text-slate-600 max-w-3xl mx-auto text-balance leading-relaxed font-light"
+                >
+                    Explora nuestra colección audiovisual: <span
+                        class="text-[var(--ilsa-blue)] font-medium"
+                        >videos, documentales y podcasts</span
+                    > que narran las luchas y saberes desde los territorios.
+                </p>
+            </div>
+
+            <!-- Content Placeholder -->
+            <div
+                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 opacity-60"
+            >
+                <!-- Placeholders for future content -->
+                <div
+                    class="aspect-video rounded-2xl bg-white/50 border border-slate-200 flex items-center justify-center"
+                >
+                    <span class="text-slate-400 font-medium">Próximamente</span>
+                </div>
+                <div
+                    class="aspect-video rounded-2xl bg-white/50 border border-slate-200 flex items-center justify-center"
+                >
+                    <span class="text-slate-400 font-medium">Próximamente</span>
+                </div>
+                <div
+                    class="aspect-video rounded-2xl bg-white/50 border border-slate-200 flex items-center justify-center"
+                >
+                    <span class="text-slate-400 font-medium">Próximamente</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</Layout>

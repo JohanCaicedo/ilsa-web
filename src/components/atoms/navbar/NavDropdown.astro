@@ -21,7 +21,7 @@ const isLink = !!href;
         isLink ? (
             <a
                 href={href}
-                class="flex items-center gap-1 h-6 overflow-hidden relative group-hover/dropdown:text-[#4a7dbf] transition-colors duration-300 font-medium cursor-pointer focus:outline-none"
+                class="flex items-center gap-1 relative transition-all duration-300 hover:text-[#4e7cce] hover:scale-110 transform origin-center font-medium cursor-pointer focus:outline-none"
             >
                 <span class="relative">{text}</span>
                 <svg
@@ -40,7 +40,7 @@ const isLink = !!href;
                 </svg>
             </a>
         ) : (
-            <button class="flex items-center gap-1 h-6 overflow-hidden relative group-hover/dropdown:text-[#4a7dbf] transition-colors duration-300 font-medium cursor-default focus:outline-none">
+            <button class="flex items-center gap-1 relative transition-all duration-300 hover:text-[#4e7cce] hover:scale-110 transform origin-center font-medium cursor-default focus:outline-none">
                 <span class="relative">{text}</span>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

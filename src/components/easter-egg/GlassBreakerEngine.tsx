@@ -69,6 +69,7 @@ const SITE_ROUTES = [
     '/donaciones',
     '/contacto',
     '/actividades',
+    '/multimedia',
 ];
 
 class AudioController {

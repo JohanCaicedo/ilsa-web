@@ -1,12 +1,213 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { getEvents } from "../../lib/wp";
+import OpinionCard from "../../components/molecules/OpinionCard.astro";
+import Pagination from "../../components/molecules/Pagination.astro";
 
-export const prerender = true;
+import GradientText from "../../components/atoms/GradientText.astro";
+import LiquidContainer from "../../components/experimental/LiquidContainer.astro";
+
+// Switch to SSR to support dynamic query parameters (filtering)
+export const prerender = false;
+
+const allEvents = await getEvents();
+
+// 1. Extract Unique Years
+const years = [
+    ...new Set(
+        allEvents.map((e) => {
+            const date = new Date(e.eventDate || "");
+            return isNaN(date.getTime())
+                ? new Date().getFullYear()
+                : date.getFullYear();
+        }),
+    ),
+].sort((a, b) => b - a);
+
+// 2. Filter by Year (URL Param)
+const { searchParams } = Astro.url;
+// Default to the most recent year available, or current year if none
+const defaultYear = years.length > 0 ? years[0] : new Date().getFullYear();
+const paramYear = searchParams.get("year");
+const currentYear = paramYear ? parseInt(paramYear) : defaultYear;
+
+const filteredEvents = allEvents.filter((e) => {
+    const date = new Date(e.eventDate || "");
+    const year = isNaN(date.getTime())
+        ? new Date().getFullYear()
+        : date.getFullYear();
+    return year === currentYear;
+});
+
+// 3. Pagination Logic
+const postsPerPage = 9;
+const totalPages = Math.ceil(filteredEvents.length / postsPerPage);
+const gridId = "events-grid";
+const cardClass = "event-card";
 ---
 
-<Layout title="Actividades - ILSA" width="wide">
-    <div class="py-20 text-center">
-        <h1 class="text-4xl font-bold mb-6">Actividades</h1>
-        <p class="text-lg text-slate-600">Calendario y lista de actividades.</p>
-    </div>
-</Layout>
+<Layout title={`Actividades ${currentYear} - ILSA`} width="wide">
+    <div
+        class="relative pb-32 overflow-hidden selection:bg-blue-100 selection:text-blue-900"
+    >
+        <!-- Light Liquid Background -->
+        <div class="fixed inset-0 z-0 h-screen w-full bg-slate-50">
+            <LiquidContainer
+                class="absolute inset-0 w-full h-full opacity-60 mix-blend-multiply"
+                intensity="medium"
+                use3D={true}
+                frosted={true}
+                clipContent={false}
+            />
+            <!-- Additional Ambient Gradients -->
+            <div
+                class="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-white to-transparent pointer-events-none"
+            >
+            </div>
+        </div>
+
+        <!-- Content Flow -->
+        <div class="relative z-10 pt-32 px-4 max-w-7xl mx-auto">
+            <!-- Hero -->
+            <div class="text-center mb-16 space-y-8">
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 bg-white/50 backdrop-blur-md text-sm text-slate-500 tracking-wider uppercase font-bold shadow-sm"
+                >
+                    <span
+                        class="w-2 h-2 rounded-full bg-[var(--ilsa-blue)] animate-pulse"
+                    ></span>
+                    Agenda {currentYear}
+                </div>
+
+                <GradientText
+                    text="Actividades y Eventos"
+                    size="text-5xl md:text-8xl text-center"
+                    weight="font-black"
+                    from="var(--ilsa-blue)"
+                    to="var(--ilsa-blue-dark)"
+                    class="justify-center block drop-shadow-sm tracking-tight pb-4"
+                />
+
+                <p
+                    class="text-lg md:text-2xl text-slate-600 max-w-3xl mx-auto text-balance leading-relaxed font-light"
+                >
+                    Consulta nuestra agenda de <span
+                        class="text-[var(--ilsa-blue)] font-medium"
+                        >actividades</span
+                    >, foros y espacios de formación.
+                </p>
+
+                <!-- Year Filter -->
+                <div class="flex justify-center pt-8">
+                    <div class="relative inline-block text-left">
+                        <select
+                            class="appearance-none bg-white border border-slate-200 text-slate-700 py-3 px-6 pr-10 rounded-full shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent cursor-pointer font-bold text-lg transition-all"
+                            onchange="window.location.href = '?year=' + this.value"
+                        >
+                            {
+                                years.map((year) => (
+                                    <option
+                                        value={year}
+                                        selected={year === currentYear}
+                                    >
+                                        Año {year}
+                                    </option>
+                                ))
+                            }
+                            {
+                                years.length === 0 && (
+                                    <option value={new Date().getFullYear()}>
+                                        {new Date().getFullYear()}
+                                    </option>
+                                )
+                            }
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500"
+                        >
+                            <svg
+                                class="h-5 w-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container mx-auto px-4 pb-20">
+                {/* Top Pagination */}
+                {
+                    totalPages > 1 && (
+                        <Pagination
+                            totalPages={totalPages}
+                            gridId={gridId}
+                            cardClass={cardClass}
+                            postsPerPage={postsPerPage}
+                        />
+                    )
+                }
+
+                {
+                    filteredEvents.length > 0 ? (
+                        <div
+                            id={gridId}
+                            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center"
+                        >
+                            {filteredEvents.map((event, index) => (
+                                <div
+                                    class={`${cardClass} ${index >= postsPerPage ? "hidden" : "flex"} w-full justify-center`}
+                                >
+                                    <OpinionCard
+                                        title={event.title}
+                                        author={
+                                            event.eventLocation ||
+                                            "Lugar por confirmar"
+                                        }
+                                        date={event.eventDate || "Pendiente"}
+                                        image={
+                                            event.featuredImage?.node
+                                                ?.sourceUrl ||
+                                            "https://placehold.co/600x400/e2e8f0/475569?text=Evento"
+                                        }
+                                        uri={`/actividades/${event.slug}`}
+                                        width={600}
+                                        height={400}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div class="text-center py-20 bg-slate-50 rounded-2xl border border-slate-100">
+                            <p class="text-xl text-slate-500">
+                                No hay actividades programadas para el año{" "}
+                                {currentYear}.
+                            </p>
+                        </div>
+                    )
+                }
+
+                {/* Bottom Pagination */}
+                {
+                    totalPages > 1 && (
+                        <div class="mt-12">
+                            <Pagination
+                                totalPages={totalPages}
+                                gridId={gridId}
+                                cardClass={cardClass}
+                                postsPerPage={postsPerPage}
+                            />
+                        </div>
+                    )
+                }
+            </div>
+        </div>
+    </div></Layout
+>

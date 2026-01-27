@@ -10,16 +10,7 @@ const { href, text } = Astro.props;
 
 <a
     href={href}
-    class="relative overflow-hidden h-6 group hover:text-[#4a7dbf] transition-colors duration-300"
+    class="relative block transition-all duration-300 hover:text-[#4e7cce] hover:scale-110 transform origin-center font-medium"
 >
-    <span
-        class="block group-hover:-translate-y-full transition-transform duration-300"
-    >
-        {text}
-    </span>
-    <span
-        class="block absolute top-full left-0 group-hover:translate-y-[-100%] transition-transform duration-300 font-bold"
-    >
-        {text}
-    </span>
+    {text}
 </a>

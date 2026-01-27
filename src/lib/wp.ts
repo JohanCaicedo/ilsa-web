@@ -42,6 +42,21 @@ export interface CardPostNode {
   };
 }
 
+export interface EventNode {
+  id: string;
+  slug: string;
+  title: string;
+  content: string;
+  eventDate?: string;
+  eventLocation?: string;
+  featuredImage?: {
+    node: {
+      sourceUrl: string;
+      altText: string;
+    };
+  };
+}
+
 export interface PostNode {
   id: string;
   databaseId: number;
@@ -265,6 +280,32 @@ export async function fetchAllPosts(): Promise<MasterQueryResponse> {
       }
     }
   };
+}
+
+export const EVENTS_QUERY = `
+  query GetEvents {
+    events(first: 100) {
+      nodes {
+        id
+        title
+        slug
+        content
+        eventDate
+        eventLocation
+        featuredImage {
+          node {
+            sourceUrl
+            altText
+          }
+        }
+      }
+    }
+  }
+`;
+
+export async function getEvents(): Promise<EventNode[]> {
+  const data = await wpQuery<{ events: { nodes: EventNode[] } }>(EVENTS_QUERY);
+  return data?.events?.nodes || [];
 }
 
 /**
