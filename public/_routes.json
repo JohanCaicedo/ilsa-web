@@ -1,0 +1,19 @@
+{
+    "version": 1,
+    "include": [
+        "/*"
+    ],
+    "exclude": [
+        "/actividades/*",
+        "/publicaciones/*",
+        "/nosotros/*",
+        "/opinion/*",
+        "/_astro/*",
+        "/assets/*",
+        "/fonts/*",
+        "/icons/*",
+        "/images/*",
+        "/favicon.svg",
+        "/"
+    ]
+}

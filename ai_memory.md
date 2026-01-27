@@ -112,6 +112,9 @@
 
 -   **`Routing Fix`**:
     -   **Deleted**: `src/pages/publicaciones/[collection].astro` eliminado para resolver conflicto de rutas en el build. Ahora todas las colecciones usan archivos explícitos.
+-   **`Deployment Fixes`**:
+    -   **OOM Fix**: Implementada optimización condicional de imágenes (`shouldOptimize`). Solo se procesan imágenes de eventos `year >= 2025` durante el build. Las anteriores usan `<img>` nativo para ahorrar RAM en Cloudflare.
+    -   **Long URL Fix**: Creado `public/_routes.json` manual para forzar el uso de wildcards (`/actividades/*`) y evitar la generación automática de reglas detalladas que exceden el límite de 100 caracteres de Cloudflare. Se verificó que este archivo tiene precedencia sobre el adaptador.
 
 ## Next Steps (Pendientes Críticos)
 
