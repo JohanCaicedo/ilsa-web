@@ -8,7 +8,14 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://ilsa.org.co',
   output: 'server',
-  adapter: cloudflare({ imageService: 'compile' }),
+  adapter: cloudflare({
+    imageService: 'compile',
+    routes: {
+      strategy: "auto",
+      include: ["/*"],
+      exclude: ["/publicaciones/*", "/nosotros/*", "/opinion/*", "/_astro/*", "/assets/*", "/fonts/*", "/icons/*", "/images/*"]
+    }
+  }),
   image: {
     domains: ["ilsa.org.co", "api.ilsa.org.co"],
     remotePatterns: [{ protocol: "https" }],
