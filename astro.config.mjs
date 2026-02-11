@@ -9,7 +9,7 @@ export default defineConfig({
   site: 'https://ilsa.org.co',
   output: 'server',
   adapter: cloudflare({
-    imageService: 'compile',
+    imageService: 'passthrough',
     routes: {
       include: ["/*"],
       exclude: ["/actividades/*", "/publicaciones/*", "/nosotros/*", "/opinion/*", "/_astro/*", "/assets/*", "/fonts/*", "/icons/*", "/images/*"]
