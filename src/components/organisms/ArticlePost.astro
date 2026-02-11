@@ -1,6 +1,7 @@
 ---
 import ShareButtons from "../atoms/ShareButtons.astro";
 import SmartImage from "../atoms/SmartImage.astro";
+import { AudioPlayer } from "../molecules/AudioPlayer";
 
 interface Props {
   title: string;
@@ -30,6 +31,22 @@ const {
   url,
 } = Astro.props;
 
+// Logic for Audio Extraction
+let audioUrl: string | undefined = undefined;
+let cleanedContent = content;
+
+// Regex to match WP Audio Block: <figure class="wp-block-audio"><audio ... src="URL"></audio></figure>
+// We use a non-greedy capture for the src.
+const audioRegex =
+  /<figure class="wp-block-audio">.*?<audio.*?src="(.*?)".*?<\/audio>.*?<\/figure>/s;
+const match = content.match(audioRegex);
+
+if (match && match[1]) {
+  audioUrl = match[1];
+  // Remove the entire figure block from content to avoid duplication
+  cleanedContent = content.replace(match[0], "");
+}
+
 const formattedDate = new Date(date).toLocaleDateString("es-CO", {
   day: "numeric",
   month: "long",
@@ -56,219 +73,229 @@ const formattedDate = new Date(date).toLocaleDateString("es-CO", {
       class="main-title text-4xl md:text-5xl font-black leading-[1.1] text-foreground mb-6 uppercase tracking-tight text-balance"
     >
       {title}
+
+
+      <!-- Share Buttons Integration -->
+      <div class="flex justify-end">
+        <ShareButtons url={url} title={title} />
+      </div>
     </h1>
 
-    <!-- Share Buttons Integration -->
-    <div class="flex justify-end">
-      <ShareButtons url={url} title={title} />
-    </div>
-  </div>
-
-  {
-    authorName && (
-      <div class="author-section flex flex-col md:flex-row items-center md:items-start gap-6 mb-12 p-8 bg-secondary/50 rounded-3xl border border-transparent">
-        {authorImg && (
-          <SmartImage
-            class="w-20 h-20 rounded-full object-cover bg-muted shrink-0"
-            src={authorImg}
-            alt={authorName}
-            style={
-              authorSlug
-                ? `view-transition-name: author-photo-${authorSlug}`
-                : undefined
-            }
-          />
-        )}
-        <div class="flex flex-col justify-center text-center md:text-left">
-          <h4 class="text-lg font-bold text-foreground mb-1.5 uppercase tracking-tight">
-            {authorName}
-          </h4>
-          <p class="text-sm text-muted-foreground leading-relaxed mb-4">
-            {authorBio}
-          </p>
-
-          {twitterUrl && (
-            <a
-              href={twitterUrl}
-              class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-border rounded-full text-xs font-semibold text-foreground hover:-translate-y-px hover:shadow-sm hover:text-primary transition-all duration-200 self-center md:self-start"
-              target="_blank"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-                class="w-3.5 h-3.5 fill-current"
-              >
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-              </svg>
-              Seguir a {twitterHandle}
-            </a>
+    {
+      authorName && (
+        <div class="author-section flex flex-col md:flex-row items-center md:items-start gap-6 mb-12 p-8 bg-secondary/50 rounded-3xl border border-transparent">
+          {authorImg && (
+            <SmartImage
+              class="w-20 h-20 rounded-full object-cover bg-muted shrink-0"
+              src={authorImg}
+              alt={authorName}
+              style={
+                authorSlug
+                  ? `view-transition-name: author-photo-${authorSlug}`
+                  : undefined
+              }
+            />
           )}
-        </div>
-      </div>
-    )
-  }
+          <div class="flex flex-col justify-center text-center md:text-left">
+            <h4 class="text-lg font-bold text-foreground mb-1.5 uppercase tracking-tight">
+              {authorName}
+            </h4>
+            <p class="text-sm text-muted-foreground leading-relaxed mb-4">
+              {authorBio}
+            </p>
 
-  <!-- Content - User Custom CSS + Prose for fallbacks -->
-  <div
-    class="content-body max-w-none
+            {twitterUrl && (
+              <a
+                href={twitterUrl}
+                class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-border rounded-full text-xs font-semibold text-foreground hover:-translate-y-px hover:shadow-sm hover:text-primary transition-all duration-200 self-center md:self-start"
+                target="_blank"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  class="w-3.5 h-3.5 fill-current"
+                >
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+                Seguir a {twitterHandle}
+              </a>
+            )}
+          </div>
+        </div>
+      )
+    }
+
+    <!-- Audio Player Injection (Moved below Author Card) -->
+    {
+      audioUrl && (
+        <div class="mb-12" transition:persist="audio-player">
+          <AudioPlayer client:load src={audioUrl} title={title} />
+        </div>
+      )
+    }
+
+    <!-- Content - User Custom CSS + Prose for fallbacks -->
+    <div
+      class="content-body max-w-none
     [&_img]:rounded-2xl [&_img]:shadow-sm [&_img]:my-10
     [&_figure]:mx-0
     [&_blockquote]:border-l-4 [&_blockquote]:border-primary [&_blockquote]:pl-6 [&_blockquote]:py-2 [&_blockquote]:my-8 [&_blockquote]:text-lg [&_blockquote]:font-medium [&_blockquote]:text-gray-800 [&_blockquote]:leading-relaxed"
-    set:html={content}
-  />
-</article>
+      set:html={cleanedContent}
+    />
 
-<style>
-  /* --- User Provided CSS --- */
+    <style>
+      /* --- User Provided CSS --- */
 
-  /* Cuerpo del Texto */
-  .content-body {
-    font-size: 1.15rem;
-    line-height: 1.7;
-    color: #333;
-    text-align: justify;
-    font-family: "Inter", sans-serif;
-  }
+      /* Cuerpo del Texto */
+      .content-body {
+        font-size: 1.15rem;
+        line-height: 1.7;
+        color: #333;
+        text-align: justify;
+        font-family: "Inter", sans-serif;
+      }
 
-  /* Global formatting for content that might not be caught by specific selectors */
-  .content-body :global(p) {
-    margin-bottom: 24px;
-  }
+      /* Global formatting for content that might not be caught by specific selectors */
+      .content-body :global(p) {
+        margin-bottom: 24px;
+      }
 
-  .content-body :global(em) {
-    font-style: italic;
-    color: #000; /* Negro puro para resaltar cursivas */
-  }
+      .content-body :global(em) {
+        font-style: italic;
+        color: #000; /* Negro puro para resaltar cursivas */
+      }
 
-  .content-body :global(h2),
-  .content-body :global(h3) {
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: #111;
-    margin-top: 50px;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--ilsa-bg-light); /* mapped to ilsa-light-bg */
-    line-height: 1.3;
-    text-align: left;
-    text-wrap: balance;
-  }
+      .content-body :global(h2),
+      .content-body :global(h3) {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: #111;
+        margin-top: 50px;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--ilsa-bg-light); /* mapped to ilsa-light-bg */
+        line-height: 1.3;
+        text-align: left;
+        text-wrap: balance;
+      }
 
-  /* H2 specific if needed distinct from H3 in user css, but user only gave H3. 
+      /* H2 specific if needed distinct from H3 in user css, but user only gave H3. 
      I'll apply the same style to H2 for consistency or keep previous H2 style if better.
      User CSS said ".content-body h3". I will apply to both to be safe or just h3? 
      Let's apply to h3 as requested and keep h2 similar or use the same class. */
 
-  /* Superíndices de notas */
-  .content-body :global(sup) {
-    font-size: 0.75em;
-    line-height: 0;
-    position: relative;
-    vertical-align: baseline;
-    top: -0.5em;
-  }
+      /* Superíndices de notas */
+      .content-body :global(sup) {
+        font-size: 0.75em;
+        line-height: 0;
+        position: relative;
+        vertical-align: baseline;
+        top: -0.5em;
+      }
 
-  .content-body :global(sup a) {
-    font-weight: 700;
-    color: var(--primary);
-    padding: 0 2px;
-    text-decoration: none;
-  }
+      .content-body :global(sup a) {
+        font-weight: 700;
+        color: var(--primary);
+        padding: 0 2px;
+        text-decoration: none;
+      }
 
-  /* Sección Notas al Pie (WordPress specific class: .wp-block-footnotes) */
-  .content-body :global(.wp-block-footnotes) {
-    margin-top: 60px;
-    padding: 30px;
-    border-top: 1px solid #e0e0e0;
-    background-color: #fafafa;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    color: #555;
-    /* override previous generic styles */
-    border: none;
-    border-top: 1px solid #e0e0e0;
-  }
+      /* Sección Notas al Pie (WordPress specific class: .wp-block-footnotes) */
+      .content-body :global(.wp-block-footnotes) {
+        margin-top: 60px;
+        padding: 30px;
+        border-top: 1px solid #e0e0e0;
+        background-color: #fafafa;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        color: #555;
+        /* override previous generic styles */
+        border: none;
+        border-top: 1px solid #e0e0e0;
+      }
 
-  /* We need to ensure we target the H4 inside footsteps if it exists/is generated, usually it serves as title */
-  /* If WP doesn't generate H4, this selector does nothing, which is fine. */
-  .content-body :global(.wp-block-footnotes h4) {
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--ilsa-text-dark);
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
+      /* We need to ensure we target the H4 inside footsteps if it exists/is generated, usually it serves as title */
+      /* If WP doesn't generate H4, this selector does nothing, which is fine. */
+      .content-body :global(.wp-block-footnotes h4) {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--ilsa-text-dark);
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
 
-  .content-body :global(.wp-block-footnotes ol) {
-    list-style: none !important; /* Kill default markers to avoid duplicates */
-    padding-left: 0 !important;
-    margin: 0;
-    counter-reset: footnotes;
-  }
+      .content-body :global(.wp-block-footnotes ol) {
+        list-style: none !important; /* Kill default markers to avoid duplicates */
+        padding-left: 0 !important;
+        margin: 0;
+        counter-reset: footnotes;
+      }
 
-  .content-body :global(.wp-block-footnotes li) {
-    margin-bottom: 12px;
-    padding-left: 1.5em; /* Space for the custom number */
-    line-height: 1.6;
-    position: relative;
-    counter-increment: footnotes;
-  }
+      .content-body :global(.wp-block-footnotes li) {
+        margin-bottom: 12px;
+        padding-left: 1.5em; /* Space for the custom number */
+        line-height: 1.6;
+        position: relative;
+        counter-increment: footnotes;
+      }
 
-  .content-body :global(.wp-block-footnotes li::before) {
-    content: counter(footnotes) ". ";
-    position: absolute;
-    left: 0;
-    top: 0;
-    font-weight: 700;
-    color: var(--primary);
-  }
+      .content-body :global(.wp-block-footnotes li::before) {
+        content: counter(footnotes) ". ";
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-weight: 700;
+        color: var(--primary);
+      }
 
-  .content-body :global(.footnote-back) {
-    text-decoration: none;
-    margin-left: 5px;
-    font-size: 1.2em;
-  }
+      .content-body :global(.footnote-back) {
+        text-decoration: none;
+        margin-left: 5px;
+        font-size: 1.2em;
+      }
 
-  .content-body :global(.wp-block-footnotes li:target) {
-    background-color: #fff9c4;
-    transition: background-color 0.5s ease;
-    padding: 5px;
-    border-radius: 4px;
-  }
+      .content-body :global(.wp-block-footnotes li:target) {
+        background-color: #fff9c4;
+        transition: background-color 0.5s ease;
+        padding: 5px;
+        border-radius: 4px;
+      }
 
-  /* Custom tweaks - Links in body */
-  .content-body :global(a:not(.footnote-back):not(sup a)) {
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: 500;
-  }
-  .content-body :global(a:hover) {
-    text-decoration: underline;
-  }
+      /* Custom tweaks - Links in body */
+      .content-body :global(a:not(.footnote-back):not(sup a)) {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .content-body :global(a:hover) {
+        text-decoration: underline;
+      }
 
-  /* RESPONSIVE (Móvil) */
-  @media (max-width: 768px) {
-    /* Ajuste clave: Título más pequeño en celular */
-    .main-title {
-      font-size: 1.5rem;
-      line-height: 1.3;
-      word-wrap: break-word;
-      text-wrap: balance;
-    }
-    .author-section {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      border-left: none;
-      border-top: 5px solid var(--ilsa-blue);
-      border-radius: 8px;
-      padding: 20px;
-    }
-    .content-body {
-      font-size: 1.05rem;
-      text-align: left; /* Lectura más natural en móvil */
-      line-height: 1.7;
-    }
-  }
-</style>
+      /* RESPONSIVE (Móvil) */
+      @media (max-width: 768px) {
+        /* Ajuste clave: Título más pequeño en celular */
+        .main-title {
+          font-size: 1.5rem;
+          line-height: 1.3;
+          word-wrap: break-word;
+          text-wrap: balance;
+        }
+        .author-section {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          border-left: none;
+          border-top: 5px solid var(--ilsa-blue);
+          border-radius: 8px;
+          padding: 20px;
+        }
+        .content-body {
+          font-size: 1.05rem;
+          text-align: left; /* Lectura más natural en móvil */
+          line-height: 1.7;
+        }
+      }
+    </style>
+  </div>
+</article>

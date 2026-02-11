@@ -108,6 +108,7 @@ export interface PostNode {
 
 // Global Queries
 export const MASTER_QUERY = `
+  # Updated Cache v2
   query MasterQuery($first: Int = 100, $after: String = "") {
     posts(first: $first, after: $after) {
       nodes {

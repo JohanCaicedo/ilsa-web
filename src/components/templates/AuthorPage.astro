@@ -15,6 +15,7 @@ const author =
 
 const data = await wpQuery({
     query: `
+    # Cache buster v2
     query GetAuthorContent($category: String!) {
       posts(where: { categoryName: $category }, first: 100) {
         nodes {
