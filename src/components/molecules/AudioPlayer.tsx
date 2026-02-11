@@ -41,11 +41,18 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, title }) => {
             setProgress(0);
         };
 
+        // Reset state when src changes
+        setIsPlaying(false);
+        setProgress(0);
+        setCurrentTime(0);
+        // Duration will be updated by loadedmetadata
+
         audio.addEventListener("timeupdate", updateProgress);
         audio.addEventListener("loadedmetadata", setAudioDuration);
         audio.addEventListener("durationchange", setAudioDuration);
         audio.addEventListener("ended", onEnd);
 
+        // Trigger load if readyState is already enough (for hydration or cache)
         if (audio.readyState >= 1) {
             setAudioDuration();
         }
@@ -56,7 +63,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, title }) => {
             audio.removeEventListener("durationchange", setAudioDuration);
             audio.removeEventListener("ended", onEnd);
         };
-    }, []);
+    }, [src]);
 
     const togglePlay = () => {
         if (!audioRef.current) return;

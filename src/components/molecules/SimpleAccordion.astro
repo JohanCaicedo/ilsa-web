@@ -57,50 +57,44 @@ const id = `acc-${Math.random().toString(36).substr(2, 9)}`;
 </div>
 
 <script>
+    // Define the handler function separately so it doesn't get redefined on every page load
+    const handleAccordionClick = (e: Event) => {
+        const target = e.target as HTMLElement;
+        const trigger = target.closest(".accordion-trigger") as HTMLElement;
+
+        if (!trigger) return;
+
+        const item = trigger.closest(".accordion-item");
+        if (!item) return;
+
+        const isOpen = item.getAttribute("data-open") === "true";
+        const contentInner = item.querySelector(
+            ".accordion-content",
+        ) as HTMLElement;
+        const iconInner = item.querySelector(".icon-plus");
+
+        if (isOpen) {
+            // CLOSE
+            item.setAttribute("data-open", "false");
+            trigger.setAttribute("aria-expanded", "false");
+            trigger.classList.remove("active");
+            iconInner?.classList.remove("rotate-45");
+            if (contentInner) contentInner.style.maxHeight = "0px";
+        } else {
+            // OPEN
+            item.setAttribute("data-open", "true");
+            trigger.setAttribute("aria-expanded", "true");
+            trigger.classList.add("active");
+            iconInner?.classList.add("rotate-45");
+            if (contentInner)
+                contentInner.style.maxHeight = contentInner.scrollHeight + "px";
+        }
+    };
+
     function setupAccordions() {
-        // Use event delegation on document body to handle clicks for all accordions
-        // This persists through View Transitions (if scripts re-run) and cleans up automatically
-        const handleAccordionClick = (e: Event) => {
-            const target = e.target as HTMLElement;
-            const trigger = target.closest(".accordion-trigger") as HTMLElement;
-
-            if (!trigger) return;
-
-            const item = trigger.closest(".accordion-item");
-            if (!item) return;
-
-            const isOpen = item.getAttribute("data-open") === "true";
-            const contentInner = item.querySelector(
-                ".accordion-content",
-            ) as HTMLElement;
-            const iconInner = item.querySelector(".icon-plus");
-
-            if (isOpen) {
-                // CLOSE
-                item.setAttribute("data-open", "false");
-                trigger.setAttribute("aria-expanded", "false");
-                trigger.classList.remove("active");
-                iconInner?.classList.remove("rotate-45");
-                if (contentInner) contentInner.style.maxHeight = "0px";
-            } else {
-                // OPEN
-                item.setAttribute("data-open", "true");
-                trigger.setAttribute("aria-expanded", "true");
-                trigger.classList.add("active");
-                iconInner?.classList.add("rotate-45");
-                if (contentInner)
-                    contentInner.style.maxHeight =
-                        contentInner.scrollHeight + "px";
-            }
-        };
-
-        // Remove previous listener if strict mode/hot reload
-        document.removeEventListener("click", handleAccordionClick);
-        // Add new listener
-        document.addEventListener("click", handleAccordionClick);
-
-        // Initialize state (e.g. for server-rendered open items)
+        // Initialize state for elements present in DOM (e.g. server-rendered open items)
         document.querySelectorAll(".accordion-item").forEach((item) => {
+            // Only initialize if not already done (though for simple styling it's cheap to redo)
             if (item.getAttribute("data-open") === "true") {
                 const trigger = item.querySelector(".accordion-trigger");
                 const icon = item.querySelector(".icon-plus");
@@ -116,7 +110,17 @@ const id = `acc-${Math.random().toString(36).substr(2, 9)}`;
         });
     }
 
-    // Init
-    setupAccordions();
+    // Attach the event listener ONCE to the document (delegation)
+    // We check if it's already attached to avoid duplicates in dev/hot-reload
+    const win = window as any;
+    if (!win.hasAccordionListener) {
+        document.addEventListener("click", handleAccordionClick);
+        win.hasAccordionListener = true;
+    }
+
+    // Re-run setup on every navigation to handle new DOM elements
     document.addEventListener("astro:page-load", setupAccordions);
+
+    // Also run immediately in case the script loads after the event
+    setupAccordions();
 </script>

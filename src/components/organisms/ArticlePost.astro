@@ -36,10 +36,10 @@ let audioUrl: string | undefined = undefined;
 let cleanedContent = content;
 
 // Regex to match WP Audio Block: <figure class="wp-block-audio"><audio ... src="URL"></audio></figure>
-// We use a non-greedy capture for the src.
+// Robust regex to handle variations in attributes and spacing
 const audioRegex =
-  /<figure class="wp-block-audio">.*?<audio.*?src="(.*?)".*?<\/audio>.*?<\/figure>/s;
-const match = content.match(audioRegex);
+  /<figure[^>]*class=["']wp-block-audio["'][^>]*>.*?<audio[^>]*src=["'](.*?)["'].*?<\/audio>.*?<\/figure>/s;
+const match = await Promise.resolve(cleanedContent.match(audioRegex)); // Ensure async safety (though regular match is sync)
 
 if (match && match[1]) {
   audioUrl = match[1];
@@ -73,7 +73,6 @@ const formattedDate = new Date(date).toLocaleDateString("es-CO", {
       class="main-title text-4xl md:text-5xl font-black leading-[1.1] text-foreground mb-6 uppercase tracking-tight text-balance"
     >
       {title}
-
 
       <!-- Share Buttons Integration -->
       <div class="flex justify-end">

@@ -40,7 +40,6 @@ const {
 
 <script>
     function setupPagination() {
-        // Find all pagination buttons (using attribute selector to catch dynamic classes)
         const allTabs = document.querySelectorAll(
             "button[data-grid][data-card]",
         );
@@ -48,98 +47,88 @@ const {
         if (allTabs.length === 0) return;
 
         allTabs.forEach((tab) => {
-            // Clone node to remove old listeners (safety for view transitions)
-            const newTab = tab.cloneNode(true);
-            tab.parentNode?.replaceChild(newTab, tab);
-        });
+            // Check if listener is already attached to avoid duplicates in dev mode
+            if (tab.hasAttribute("data-pagination-initialized")) return;
 
-        // Re-query after cloning
-        const refreshedTabs = document.querySelectorAll(
-            "button[data-grid][data-card]",
-        );
-
-        refreshedTabs.forEach((tab) => {
-            tab.addEventListener("click", (e) => {
-                const target = e.currentTarget as HTMLButtonElement;
-                const gridId = target.dataset.grid;
-                const cardClass = target.dataset.card;
-                const page = parseInt(target.dataset.page || "0");
-                const container = target.closest(
-                    "div[data-posts-per-page]",
-                ) as HTMLElement;
-                const postsPerPage = parseInt(
-                    container?.dataset.postsPerPage || "12",
-                );
-
-                if (!gridId || !cardClass) return;
-
-                // Update ALL tabs for this specific grid (top and bottom pagination)
-                const gridTabs = document.querySelectorAll(
-                    `button[data-grid="${gridId}"]`,
-                );
-
-                gridTabs.forEach((t) => {
-                    t.classList.remove(
-                        "bg-[#375a9e]",
-                        "text-white",
-                        "shadow-lg",
-                        "scale-110",
-                    );
-                    t.classList.add("text-slate-400");
-
-                    // Sync active state visually across top/bottom
-                    if (t.getAttribute("data-page") === page.toString()) {
-                        t.classList.remove("text-slate-400");
-                        t.classList.add(
-                            "bg-[#375a9e]",
-                            "text-white",
-                            "shadow-lg",
-                            "scale-110",
-                        );
-                    }
-                });
-
-                // Filter logic
-                const posts = document.querySelectorAll(`.${cardClass}`);
-                const start = page * postsPerPage;
-                const end = start + postsPerPage;
-
-                posts.forEach((post, index) => {
-                    const el = post as HTMLElement;
-                    if (index >= start && index < end) {
-                        el.classList.remove("hidden");
-                        el.classList.add("flex");
-                        el.animate(
-                            [
-                                { opacity: 0, transform: "scale(0.95)" },
-                                { opacity: 1, transform: "scale(1)" },
-                            ],
-                            {
-                                duration: 400,
-                                easing: "cubic-bezier(0.16, 1, 0.3, 1)",
-                            },
-                        );
-                    } else {
-                        el.classList.add("hidden");
-                        el.classList.remove("flex");
-                    }
-                });
-
-                // Scroll to top of grid
-                const grid = document.getElementById(gridId);
-                if (grid) {
-                    const yOffset = -150;
-                    const y =
-                        grid.getBoundingClientRect().top +
-                        window.pageYOffset +
-                        yOffset;
-                    window.scrollTo({ top: y, behavior: "smooth" });
-                }
-            });
+            tab.addEventListener("click", handlePaginationClick);
+            tab.setAttribute("data-pagination-initialized", "true");
         });
     }
 
-    // Initialize
-    setupPagination();
+    function handlePaginationClick(e: Event) {
+        const target = e.currentTarget as HTMLButtonElement;
+        const gridId = target.dataset.grid;
+        const cardClass = target.dataset.card;
+        const page = parseInt(target.dataset.page || "0");
+        const container = target.closest(
+            "div[data-posts-per-page]",
+        ) as HTMLElement;
+        const postsPerPage = parseInt(container?.dataset.postsPerPage || "12");
+
+        if (!gridId || !cardClass) return;
+
+        // Update ALL tabs for this specific grid (top and bottom pagination)
+        const gridTabs = document.querySelectorAll(
+            `button[data-grid="${gridId}"]`,
+        );
+
+        gridTabs.forEach((t) => {
+            t.classList.remove(
+                "bg-[#375a9e]",
+                "text-white",
+                "shadow-lg",
+                "scale-110",
+            );
+            t.classList.add("text-slate-400");
+
+            // Sync active state visually across top/bottom
+            if (t.getAttribute("data-page") === page.toString()) {
+                t.classList.remove("text-slate-400");
+                t.classList.add(
+                    "bg-[#375a9e]",
+                    "text-white",
+                    "shadow-lg",
+                    "scale-110",
+                );
+            }
+        });
+
+        // Filter logic
+        const posts = document.querySelectorAll(`.${cardClass}`);
+        const start = page * postsPerPage;
+        const end = start + postsPerPage;
+
+        posts.forEach((post, index) => {
+            const el = post as HTMLElement;
+            if (index >= start && index < end) {
+                el.classList.remove("hidden");
+                el.classList.add("flex");
+                el.animate(
+                    [
+                        { opacity: 0, transform: "scale(0.95)" },
+                        { opacity: 1, transform: "scale(1)" },
+                    ],
+                    {
+                        duration: 400,
+                        easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+                    },
+                );
+            } else {
+                el.classList.add("hidden");
+                el.classList.remove("flex");
+            }
+        });
+
+        // Scroll to top of grid
+        const grid = document.getElementById(gridId);
+        if (grid) {
+            const yOffset = -150;
+            const y =
+                grid.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: y, behavior: "smooth" });
+        }
+    }
+
+    // Initialize on every page navigation
     document.addEventListener("astro:page-load", setupPagination);
 </script>
