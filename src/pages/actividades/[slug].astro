@@ -2,6 +2,8 @@
 import Layout from "../../layouts/Layout.astro";
 import { getEvents } from "../../lib/wp";
 import type { EventNode } from "../../lib/wp";
+import WPLoader from "../../components/molecules/WPLoader.astro";
+import ArticlePost from "../../components/organisms/ArticlePost.astro";
 
 export const prerender = true;
 
@@ -26,40 +28,15 @@ if (!event) {
 
 <Layout title={`${event.title} - ILSA`} width="narrow">
     <article class="py-20 max-w-3xl mx-auto px-4">
-        <header class="mb-12 text-center">
-            <div
-                class="inline-flex items-center gap-2 mb-4 text-blue-600 bg-blue-50 px-3 py-1 rounded-full text-sm font-medium"
-            >
-                <span>🗓️ {event.eventDate || "Próximamente"}</span>
-            </div>
-            {
-                event.eventLocation && (
-                    <div class="inline-flex items-center gap-2 mb-4 ml-2 text-slate-600 bg-slate-50 px-3 py-1 rounded-full text-sm font-medium">
-                        <span>📍 {event.eventLocation}</span>
-                    </div>
-                )
-            }
-            <h1
-                class="text-4xl md:text-5xl font-black mb-6 text-slate-900 leading-tight"
-            >
-                {event.title}
-            </h1>
-
-            {
-                event.featuredImage?.node?.sourceUrl && (
-                    <img
-                        src={event.featuredImage.node.sourceUrl}
-                        alt={event.featuredImage.node.altText || event.title}
-                        class="w-full h-auto rounded-2xl shadow-lg mt-8 mb-8"
-                    />
-                )
-            }
-        </header>
-
-        <div
-            class="prose prose-lg prose-slate mx-auto max-w-none prose-headings:font-bold prose-headings:text-slate-900 prose-a:text-blue-600 prose-img:rounded-xl"
-        >
-            <div set:html={event.content} />
-        </div>
+        <WPLoader type="article">
+            <ArticlePost
+                title={event.title}
+                content={event.content}
+                date={event.eventDate || ""}
+                section="Actividades"
+                url={Astro.url.href}
+                featuredImage={event.featuredImage?.node?.sourceUrl}
+            />
+        </WPLoader>
     </article>
 </Layout>

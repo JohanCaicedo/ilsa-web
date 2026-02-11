@@ -4,6 +4,7 @@ import { wpQuery } from "../../lib/wp";
 import OpinionCard from "../../components/molecules/OpinionCard.astro";
 import Pagination from "../../components/molecules/Pagination.astro";
 import SimpleAccordion from "../../components/molecules/SimpleAccordion.astro";
+import WPLoader from "../../components/molecules/WPLoader.astro";
 import GradientText from "../../components/atoms/GradientText.astro";
 
 export const prerender = true;
@@ -293,64 +294,67 @@ const formatDate = (dateString: string) => {
             Números Publicados
         </h3>
 
-        <Pagination
-            totalPages={totalPages}
-            gridId="revista-grid"
-            cardClass="revista-card"
-        />
-
-        <div
-            id="revista-grid"
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8 justify-items-center"
-        >
-            {
-                posts.length > 0 ? (
-                    posts.map((post: any, index: number) => {
-                        const img =
-                            post.featuredImage?.node?.sourceUrl ||
-                            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect fill='%23e5e7eb' width='400' height='400'/%3E%3C/svg%3E";
-
-                        return (
-                            <div
-                                class={`revista-card ${index >= postsPerPage ? "hidden" : "flex"} w-full justify-center fade-in`}
-                                data-index={index}
-                            >
-                                <OpinionCard
-                                    title={post.title}
-                                    author={COLLECTION_TITLE}
-                                    image={img}
-                                    date={formatDate(post.date)}
-                                    uri={post.uri}
-                                    width={
-                                        post.featuredImage?.node?.mediaDetails
-                                            ?.width
-                                    }
-                                    height={
-                                        post.featuredImage?.node?.mediaDetails
-                                            ?.height
-                                    }
-                                />
-                            </div>
-                        );
-                    })
-                ) : (
-                    <div class="col-span-full text-center py-20">
-                        <p class="text-xl text-slate-500">
-                            No se encontraron publicaciones en esta colección.
-                        </p>
-                    </div>
-                )
-            }
-        </div>
-
-        <!-- Pagination Bottom -->
-        <div class="mt-12">
+        <WPLoader type="card">
             <Pagination
                 totalPages={totalPages}
                 gridId="revista-grid"
                 cardClass="revista-card"
             />
-        </div>
+
+            <div
+                id="revista-grid"
+                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8 justify-items-center"
+            >
+                {
+                    posts.length > 0 ? (
+                        posts.map((post: any, index: number) => {
+                            const img =
+                                post.featuredImage?.node?.sourceUrl ||
+                                "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect fill='%23e5e7eb' width='400' height='400'/%3E%3C/svg%3E";
+
+                            return (
+                                <div
+                                    class={`revista-card ${index >= postsPerPage ? "hidden" : "flex"} w-full justify-center fade-in`}
+                                    data-index={index}
+                                >
+                                    <OpinionCard
+                                        title={post.title}
+                                        author={COLLECTION_TITLE}
+                                        image={img}
+                                        date={formatDate(post.date)}
+                                        uri={post.uri}
+                                        width={
+                                            post.featuredImage?.node
+                                                ?.mediaDetails?.width
+                                        }
+                                        height={
+                                            post.featuredImage?.node
+                                                ?.mediaDetails?.height
+                                        }
+                                    />
+                                </div>
+                            );
+                        })
+                    ) : (
+                        <div class="col-span-full text-center py-20">
+                            <p class="text-xl text-slate-500">
+                                No se encontraron publicaciones en esta
+                                colección.
+                            </p>
+                        </div>
+                    )
+                }
+            </div>
+
+            <!-- Pagination Bottom -->
+            <div class="mt-12">
+                <Pagination
+                    totalPages={totalPages}
+                    gridId="revista-grid"
+                    cardClass="revista-card"
+                />
+            </div>
+        </WPLoader>
     </main>
 </Layout>
 

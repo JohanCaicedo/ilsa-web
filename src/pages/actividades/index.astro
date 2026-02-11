@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import { getEvents } from "../../lib/wp";
 import OpinionCard from "../../components/molecules/OpinionCard.astro";
 import Pagination from "../../components/molecules/Pagination.astro";
+import WPLoader from "../../components/molecules/WPLoader.astro";
 
 import GradientText from "../../components/atoms/GradientText.astro";
 import LiquidContainer from "../../components/experimental/LiquidContainer.astro";
@@ -142,72 +143,76 @@ const cardClass = "event-card";
                 </div>
             </div>
 
-            <div class="container mx-auto px-4 pb-20">
-                {/* Top Pagination */}
-                {
-                    totalPages > 1 && (
-                        <Pagination
-                            totalPages={totalPages}
-                            gridId={gridId}
-                            cardClass={cardClass}
-                            postsPerPage={postsPerPage}
-                        />
-                    )
-                }
-
-                {
-                    filteredEvents.length > 0 ? (
-                        <div
-                            id={gridId}
-                            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center"
-                        >
-                            {filteredEvents.map((event, index) => (
-                                <div
-                                    class={`${cardClass} ${index >= postsPerPage ? "hidden" : "flex"} w-full justify-center`}
-                                >
-                                    <OpinionCard
-                                        title={event.title}
-                                        author={
-                                            event.eventLocation ||
-                                            "Lugar por confirmar"
-                                        }
-                                        date={event.eventDate || "Pendiente"}
-                                        image={
-                                            event.featuredImage?.node
-                                                ?.sourceUrl ||
-                                            "https://placehold.co/600x400/e2e8f0/475569?text=Evento"
-                                        }
-                                        uri={`/actividades/${event.slug}`}
-                                        width={600}
-                                        height={400}
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <div class="text-center py-20 bg-slate-50 rounded-2xl border border-slate-100">
-                            <p class="text-xl text-slate-500">
-                                No hay actividades programadas para el año{" "}
-                                {currentYear}.
-                            </p>
-                        </div>
-                    )
-                }
-
-                {/* Bottom Pagination */}
-                {
-                    totalPages > 1 && (
-                        <div class="mt-12">
+            <WPLoader type="card">
+                <div class="container mx-auto px-4 pb-20">
+                    {/* Top Pagination */}
+                    {
+                        totalPages > 1 && (
                             <Pagination
                                 totalPages={totalPages}
                                 gridId={gridId}
                                 cardClass={cardClass}
                                 postsPerPage={postsPerPage}
                             />
-                        </div>
-                    )
-                }
-            </div>
+                        )
+                    }
+
+                    {
+                        filteredEvents.length > 0 ? (
+                            <div
+                                id={gridId}
+                                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center"
+                            >
+                                {filteredEvents.map((event, index) => (
+                                    <div
+                                        class={`${cardClass} ${index >= postsPerPage ? "hidden" : "flex"} w-full justify-center`}
+                                    >
+                                        <OpinionCard
+                                            title={event.title}
+                                            author={
+                                                event.eventLocation ||
+                                                "Lugar por confirmar"
+                                            }
+                                            date={
+                                                event.eventDate || "Pendiente"
+                                            }
+                                            image={
+                                                event.featuredImage?.node
+                                                    ?.sourceUrl ||
+                                                "https://placehold.co/600x400/e2e8f0/475569?text=Evento"
+                                            }
+                                            uri={`/actividades/${event.slug}`}
+                                            width={600}
+                                            height={400}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div class="text-center py-20 bg-slate-50 rounded-2xl border border-slate-100">
+                                <p class="text-xl text-slate-500">
+                                    No hay actividades programadas para el año{" "}
+                                    {currentYear}.
+                                </p>
+                            </div>
+                        )
+                    }
+
+                    {/* Bottom Pagination */}
+                    {
+                        totalPages > 1 && (
+                            <div class="mt-12">
+                                <Pagination
+                                    totalPages={totalPages}
+                                    gridId={gridId}
+                                    cardClass={cardClass}
+                                    postsPerPage={postsPerPage}
+                                />
+                            </div>
+                        )
+                    }
+                </div>
+            </WPLoader>
         </div>
     </div></Layout
 >

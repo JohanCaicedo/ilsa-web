@@ -3,7 +3,9 @@ import Layout from "../../layouts/Layout.astro";
 import { wpQuery } from "../../lib/wp";
 import { authorsConfig, defaultAuthor } from "../../lib/authors";
 import SmartImage from "../atoms/SmartImage.astro";
+import AuthorCard from "../molecules/AuthorCard.astro";
 import Pagination from "../molecules/Pagination.astro";
+import WPLoader from "../molecules/WPLoader.astro";
 
 interface Props {
     slug: string;
@@ -15,13 +17,22 @@ const author =
 
 const data = await wpQuery({
     query: `
-    # Cache buster v2
+    # Cache buster v3 - Add featuredImage
     query GetAuthorContent($category: String!) {
       posts(where: { categoryName: $category }, first: 100) {
         nodes {
           title
           uri
           date
+          featuredImage {
+            node {
+              sourceUrl
+              mediaDetails {
+                width
+                height
+              }
+            }
+          }
         }
       }
     }
@@ -140,81 +151,80 @@ const breadcrumbItems = [
             </div>
         </div>
 
-        <Pagination
-            totalPages={totalPages}
-            gridId="posts-grid"
-            cardClass="post-card"
-            postsPerPage={postsPerPage}
-        />
+        <!-- Author's Posts Grid -->
+        <WPLoader type="card">
+            <div class="space-y-16">
+                <div class="flex items-center justify-between mb-8">
+                    <h3
+                        class="text-sm font-bold text-[#3d3d47]/40 uppercase tracking-[0.2em]"
+                    >
+                        Columnas Publicadas
+                    </h3>
+                    <div class="h-px flex-1 bg-[#3d3d47]/10 ml-6"></div>
+                </div>
 
-        <div
-            id="posts-grid"
-            class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6"
-        >
-            {
-                posts.map((post: any, index: number) => {
-                    const gradient =
-                        cardGradients[index % cardGradients.length];
-                    return (
-                        <a
-                            href={post.uri}
-                            class={`
-                    post-card relative flex flex-col h-80 p-8 rounded-[2.5rem] overflow-hidden group 
-                    transition-all duration-500 hover:scale-[1.05] hover:shadow-2xl hover:shadow-[#4E7CCE]/20
-                    border border-white/10 backdrop-blur-[2px]
-                    ${index >= postsPerPage ? "hidden" : "flex"}
-                `}
-                            data-index={index}
-                        >
-                            <div class="absolute inset-0 -z-20 bg-[#1e3a8a]" />
+                <Pagination
+                    totalPages={totalPages}
+                    gridId="author-grid"
+                    cardClass="author-card"
+                    postsPerPage={postsPerPage}
+                />
 
-                            <div
-                                class={`absolute inset-0 -z-10 bg-gradient-to-br ${gradient} to-transparent opacity-40 group-hover:opacity-60 transition-opacity`}
-                            />
+                <div
+                    id="author-grid"
+                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center"
+                >
+                    {
+                        posts.length > 0 ? (
+                            posts.map((post: any, index: number) => {
+                                const img =
+                                    post.featuredImage?.node?.sourceUrl ||
+                                    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect fill='%23e5e7eb' width='400' height='400'/%3E%3C/svg%3E";
 
-                            <div class="absolute inset-0 -z-10 bg-black/10 group-hover:bg-black/0 transition-colors" />
-
-                            <div class="flex justify-between items-start w-full relative z-10 mb-4">
-                                <span class="px-2.5 py-1 rounded-lg bg-black/30 text-[9px] font-black text-white uppercase tracking-[0.2em] border border-white/10 backdrop-blur-sm">
-                                    Opinión
-                                </span>
-                                <time class="text-[10px] font-bold text-white/80 uppercase tracking-tight">
-                                    {formatDate(post.date)}
-                                </time>
-                            </div>
-
-                            <div class="flex-1 flex items-center relative z-10">
-                                <h3
-                                    class={`${getTitleSizeClass(post.title)} font-bold text-white tracking-tight group-hover:text-blue-50 transition-colors drop-shadow-md`}
-                                >
-                                    {post.title}
-                                </h3>
-                            </div>
-
-                            <div class="flex justify-end w-full relative z-10">
-                                <div class="w-11 h-11 rounded-full bg-white/20 flex items-center justify-center text-white group-hover:bg-white group-hover:text-[#1e3a8a] transition-all duration-300 backdrop-blur-md border border-white/20 shadow-inner">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="22"
-                                        height="22"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="3"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
+                                return (
+                                    <div
+                                        class={`author-card ${index >= postsPerPage ? "hidden" : "flex"} w-full justify-center fade-in`}
+                                        data-index={index}
                                     >
-                                        <>
-                                            <path d="M5 12h14" />
-                                            <path d="m12 5 7 7-7 7" />
-                                        </>
-                                    </svg>
-                                </div>
+                                        <AuthorCard
+                                            title={post.title}
+                                            author={author.name}
+                                            authorImage={author.profileImage}
+                                            image={img}
+                                            date={formatDate(post.date)}
+                                            uri={post.uri}
+                                            width={
+                                                post.featuredImage?.node
+                                                    ?.mediaDetails?.width
+                                            }
+                                            height={
+                                                post.featuredImage?.node
+                                                    ?.mediaDetails?.height
+                                            }
+                                        />
+                                    </div>
+                                );
+                            })
+                        ) : (
+                            <div class="col-span-full text-center py-20">
+                                <p class="text-xl text-slate-500">
+                                    No se encontraron publicaciones de este
+                                    autor.
+                                </p>
                             </div>
-                        </a>
-                    );
-                })
-            }
-        </div>
+                        )
+                    }
+                </div>
+
+                <div class="mt-12 border-t border-[#3d3d47]/10 pt-8">
+                    <Pagination
+                        totalPages={totalPages}
+                        gridId="author-grid"
+                        cardClass="author-card"
+                        postsPerPage={postsPerPage}
+                    />
+                </div>
+            </div>
+        </WPLoader>
     </main>
 </Layout>

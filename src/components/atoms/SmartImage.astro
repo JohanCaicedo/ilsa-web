@@ -61,3 +61,18 @@ const {
         />
     )
 }
+
+<script>
+    function checkImages() {
+        const images = document.querySelectorAll('img[data-loaded!="true"]');
+        images.forEach((img) => {
+            if ((img as HTMLImageElement).complete) {
+                img.setAttribute("data-loaded", "true");
+            }
+        });
+    }
+
+    // Run on init and view transitions
+    document.addEventListener("astro:page-load", checkImages);
+    document.addEventListener("DOMContentLoaded", checkImages);
+</script>

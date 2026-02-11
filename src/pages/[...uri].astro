@@ -11,6 +11,7 @@ import ReadingProgress from "../components/atoms/ReadingProgress.astro";
 import { authorsConfig, defaultAuthor } from "../lib/authors";
 import { cn } from "../lib/utils";
 import { collectionsConfig } from "../lib/collections";
+import WPLoader from "../components/molecules/WPLoader.astro";
 
 export const prerender = true;
 
@@ -120,21 +121,24 @@ breadcrumbItems.push({
 >
   <ReadingProgress />
 
-  <div class="mx-auto max-w-3xl pt-4">
-    <ArticlePost
-      title={post.title}
-      content={post.content}
-      date={post.date}
-      section={categoryName}
-      authorName={authorData?.name}
-      authorImg={authorData?.avatarImage}
-      authorBio={authorData?.shortBio}
-      authorSlug={authorKey}
-      twitterUrl={authorData?.xUrl || ""}
-      twitterHandle={authorData?.xHandle || ""}
-      url={currentUrl}
-    />
-  </div>
+  <WPLoader type="article">
+    <div class="mx-auto max-w-3xl pt-4">
+      <ArticlePost
+        title={post.title}
+        content={post.content}
+        date={post.date}
+        section={categoryName}
+        authorName={authorData?.name}
+        authorImg={authorData?.avatarImage}
+        authorBio={authorData?.shortBio}
+        authorSlug={authorKey}
+        twitterUrl={authorData?.xUrl || ""}
+        twitterHandle={authorData?.xHandle || ""}
+        url={currentUrl}
+        featuredImage={post.featuredImage?.node?.sourceUrl}
+      />
+    </div>
+  </WPLoader>
 
   <div class="mt-20 border-t pt-10">
     <RelatedSlider posts={relatedPosts} />

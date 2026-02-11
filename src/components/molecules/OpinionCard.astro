@@ -41,41 +41,45 @@ const shouldOptimize = year >= 2025;
 
 <a
   href={uri}
-  class="group relative block h-[380px] w-[280px] shrink-0 overflow-hidden rounded-3xl bg-muted shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+  class="group relative block h-[380px] w-[280px] shrink-0 rounded-3xl bg-muted shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 isolate"
 >
-  <div class="absolute inset-0 h-full w-full overflow-hidden">
-    <SmartImage
-      src={image}
-      alt={title}
-      width={finalWidth}
-      height={finalHeight}
-      shouldOptimize={shouldOptimize}
-      class="h-full w-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
-    />
-  </div>
-
   <div
-    class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-80"
+    class="absolute inset-0 h-full w-full overflow-hidden rounded-3xl bg-slate-900"
   >
-  </div>
-
-  <div class="absolute bottom-0 left-0 flex w-full flex-col gap-3 p-6 z-10">
-    <div class="flex items-center">
-      <span
-        class="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[10px] font-bold tracking-wider text-white uppercase backdrop-blur-md transition-colors hover:bg-white/20"
-      >
-        {author}
-      </span>
+    <div class="absolute inset-0 h-full w-full">
+      <SmartImage
+        src={image}
+        alt={title}
+        width={finalWidth}
+        height={finalHeight}
+        shouldOptimize={shouldOptimize}
+        class="h-full w-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
+      />
     </div>
 
-    <h3
-      class="line-clamp-3 font-sans text-xl font-bold leading-tight text-white antialiased drop-shadow-sm"
+    <div
+      class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-80 pointer-events-none"
     >
-      {title}
-    </h3>
+    </div>
 
-    <span class="text-xs font-medium text-white/70">
-      {date}
-    </span>
+    <div class="absolute bottom-0 left-0 flex w-full flex-col gap-3 p-6 z-10">
+      <div class="flex items-center">
+        <span
+          class="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[10px] font-bold tracking-wider text-white uppercase backdrop-blur-md transition-colors hover:bg-white/20"
+        >
+          {author}
+        </span>
+      </div>
+
+      <h3
+        class="line-clamp-3 font-sans text-xl font-bold leading-tight text-white antialiased drop-shadow-sm"
+      >
+        {title}
+      </h3>
+
+      <span class="text-xs font-medium text-white/70">
+        {date}
+      </span>
+    </div>
   </div>
 </a>

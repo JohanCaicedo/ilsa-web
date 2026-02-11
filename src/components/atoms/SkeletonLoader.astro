@@ -1,0 +1,60 @@
+---
+interface Props {
+    type?: "article" | "card" | "text" | "author-header";
+    class?: string;
+}
+
+const { type = "article", class: className } = Astro.props;
+---
+
+<div class={`skeleton-loader ${className}`} aria-hidden="true">
+    {
+        type === "article" && (
+            <div class="space-y-8 animate-pulse">
+                {/* Title */}
+                <div class="h-12 bg-[var(--ilsa-blue-light)]/30 rounded-lg w-3/4 mx-auto" />
+                <div class="h-12 bg-[var(--ilsa-blue-light)]/30 rounded-lg w-1/2 mx-auto" />
+
+                {/* Meta */}
+                <div class="flex justify-center gap-4 mt-6">
+                    <div class="h-4 bg-[var(--ilsa-blue-light)]/30 rounded w-24" />
+                    <div class="h-4 bg-[var(--ilsa-blue-light)]/30 rounded w-24" />
+                </div>
+
+                {/* Image */}
+                <div class="w-full aspect-video bg-[var(--ilsa-blue-light)]/20 rounded-3xl mt-12" />
+
+                {/* Content */}
+                <div class="space-y-4 mt-12 max-w-none">
+                    <div class="h-4 bg-[var(--ilsa-blue-light)]/30 rounded w-full" />
+                    <div class="h-4 bg-[var(--ilsa-blue-light)]/30 rounded w-full" />
+                    <div class="h-4 bg-[var(--ilsa-blue-light)]/30 rounded w-5/6" />
+                    <div class="h-4 bg-[var(--ilsa-blue-light)]/30 rounded w-full" />
+                    <div class="h-4 bg-[var(--ilsa-blue-light)]/30 rounded w-4/5" />
+                </div>
+
+                <div class="space-y-4 mt-8 max-w-none">
+                    <div class="h-4 bg-[var(--ilsa-blue-light)]/30 rounded w-full" />
+                    <div class="h-4 bg-[var(--ilsa-blue-light)]/30 rounded w-full" />
+                    <div class="h-4 bg-[var(--ilsa-blue-light)]/30 rounded w-3/4" />
+                </div>
+            </div>
+        )
+    }
+
+    {
+        type === "card" && (
+            <div class="flex flex-col h-full space-y-4 animate-pulse p-6 rounded-3xl border border-[var(--ilsa-blue-light)]/20 bg-white/40">
+                <div class="h-48 bg-[var(--ilsa-blue-light)]/20 rounded-2xl w-full" />
+                <div class="space-y-2">
+                    <div class="h-6 bg-[var(--ilsa-blue-light)]/30 rounded w-3/4" />
+                    <div class="h-4 bg-[var(--ilsa-blue-light)]/30 rounded w-1/2" />
+                </div>
+            </div>
+        )
+    }
+</div>
+
+<style>
+    /* Custom shimmer animation if needed, otherwise animate-pulse works well */
+</style>

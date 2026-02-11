@@ -18,25 +18,108 @@ const {
     totalPages > 1 && (
         <div class="mb-12 flex justify-center">
             <div
-                class="inline-flex gap-3 p-2 bg-slate-50 rounded-full border border-slate-200 shadow-sm"
+                class="inline-flex gap-2 p-3 bg-white/40 backdrop-blur-md rounded-full border border-white/60 shadow-lg"
                 id={`tab-container-${gridId}`}
                 data-posts-per-page={postsPerPage}
             >
                 {[...Array(totalPages)].map((_, i) => (
                     <button
                         type="button"
-                        class={`tab-btn-${gridId} w-10 h-10 rounded-full flex items-center justify-center text-[11px] font-black transition-all ${i === 0 ? "bg-[#375a9e] text-white shadow-lg scale-110" : "text-slate-400 hover:text-[#4E7CCE]"}`}
+                        class={`pagination-btn tab-btn-${gridId} relative w-11 h-11 rounded-full flex items-center justify-center text-sm font-black transition-all duration-300 ease-out touch-action-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ilsa-blue)] focus-visible:ring-offset-2 ${
+                            i === 0
+                                ? "bg-gradient-to-br from-[var(--ilsa-blue)] to-[var(--ilsa-mujeres)] text-white shadow-lg scale-110"
+                                : "text-slate-500 hover:text-white hover:scale-105"
+                        }`}
                         data-page={i}
                         data-grid={gridId}
                         data-card={cardClass}
                     >
-                        {i + 1}
+                        <span class="relative z-10">{i + 1}</span>
+
+                        {/* Hover glow effect */}
+                        {i !== 0 && (
+                            <div class="absolute inset-0 rounded-full bg-gradient-to-br from-[var(--ilsa-blue)]/80 to-[var(--ilsa-mujeres)]/80 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                        )}
                     </button>
                 ))}
             </div>
         </div>
     )
 }
+
+<style>
+    .pagination-btn {
+        overflow: hidden;
+    }
+
+    .pagination-btn:not(.active-pagination)::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 9999px;
+        background: linear-gradient(
+            135deg,
+            var(--ilsa-blue),
+            var(--ilsa-mujeres)
+        );
+        opacity: 0;
+        transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .pagination-btn:not(.active-pagination):hover::before {
+        opacity: 1;
+    }
+
+    .pagination-btn:not(.active-pagination):hover {
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 8px 20px -4px rgba(34, 67, 149, 0.4);
+    }
+
+    .active-pagination {
+        animation: pageActivate 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes pageActivate {
+        0% {
+            transform: scale(0.9);
+            opacity: 0.7;
+        }
+        50% {
+            transform: scale(1.15);
+        }
+        100% {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+    }
+
+    /* Ripple effect on click */
+    .pagination-btn::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 9999px;
+        background: radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.6) 0%,
+            transparent 70%
+        );
+        opacity: 0;
+        transform: scale(0);
+        transition:
+            transform 0.5s ease-out,
+            opacity 0.5s ease-out;
+        pointer-events: none;
+    }
+
+    .pagination-btn:active::after {
+        transform: scale(1.5);
+        opacity: 1;
+        transition:
+            transform 0.3s ease-out,
+            opacity 0.1s ease-out;
+    }
+</style>
 
 <script>
     function setupPagination() {
@@ -74,26 +157,32 @@ const {
 
         gridTabs.forEach((t) => {
             t.classList.remove(
-                "bg-[#375a9e]",
+                "bg-gradient-to-br",
+                "from-[var(--ilsa-blue)]",
+                "to-[var(--ilsa-mujeres)]",
                 "text-white",
                 "shadow-lg",
                 "scale-110",
+                "active-pagination",
             );
-            t.classList.add("text-slate-400");
+            t.classList.add("text-slate-500");
 
             // Sync active state visually across top/bottom
             if (t.getAttribute("data-page") === page.toString()) {
-                t.classList.remove("text-slate-400");
+                t.classList.remove("text-slate-500");
                 t.classList.add(
-                    "bg-[#375a9e]",
+                    "bg-gradient-to-br",
+                    "from-[var(--ilsa-blue)]",
+                    "to-[var(--ilsa-mujeres)]",
                     "text-white",
                     "shadow-lg",
                     "scale-110",
+                    "active-pagination",
                 );
             }
         });
 
-        // Filter logic
+        // Filter logic with staggered animation
         const posts = document.querySelectorAll(`.${cardClass}`);
         const start = page * postsPerPage;
         const end = start + postsPerPage;
@@ -103,23 +192,37 @@ const {
             if (index >= start && index < end) {
                 el.classList.remove("hidden");
                 el.classList.add("flex");
-                el.animate(
-                    [
-                        { opacity: 0, transform: "scale(0.95)" },
-                        { opacity: 1, transform: "scale(1)" },
-                    ],
-                    {
-                        duration: 400,
-                        easing: "cubic-bezier(0.16, 1, 0.3, 1)",
-                    },
-                );
+
+                // Staggered animation for each card
+                const delay = (index - start) * 50; // 50ms stagger
+                setTimeout(() => {
+                    el.animate(
+                        [
+                            {
+                                opacity: 0,
+                                transform: "translateY(20px) scale(0.95)",
+                                filter: "blur(4px)",
+                            },
+                            {
+                                opacity: 1,
+                                transform: "translateY(0) scale(1)",
+                                filter: "blur(0px)",
+                            },
+                        ],
+                        {
+                            duration: 500,
+                            easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+                            fill: "forwards",
+                        },
+                    );
+                }, delay);
             } else {
                 el.classList.add("hidden");
                 el.classList.remove("flex");
             }
         });
 
-        // Scroll to top of grid
+        // Smooth scroll to top of grid with offset
         const grid = document.getElementById(gridId);
         if (grid) {
             const yOffset = -150;

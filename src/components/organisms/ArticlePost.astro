@@ -15,6 +15,7 @@ interface Props {
   twitterUrl?: string; // Optional
   twitterHandle?: string; // Optional
   url: string; // New prop for sharing
+  featuredImage?: string;
 }
 
 const {
@@ -29,6 +30,7 @@ const {
   twitterUrl,
   twitterHandle,
   url,
+  featuredImage,
 } = Astro.props;
 
 // Logic for Audio Extraction
@@ -124,23 +126,43 @@ const formattedDate = new Date(date).toLocaleDateString("es-CO", {
       )
     }
 
-    <!-- Audio Player Injection (Moved below Author Card) -->
+    <!-- Featured Image -->
     {
-      audioUrl && (
-        <div class="mb-12" transition:persist="audio-player">
-          <AudioPlayer client:load src={audioUrl} title={title} />
+      featuredImage && (
+        <div class="mb-12 relative group rounded-3xl overflow-hidden shadow-xl aspect-video bg-muted/20">
+          <SmartImage
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            src={featuredImage}
+            alt={title}
+            width={800}
+            height={450}
+            style="view-transition-name: hero-image"
+          />
+          <div class="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-3xl pointer-events-none" />
         </div>
       )
     }
 
-    <!-- Content - User Custom CSS + Prose for fallbacks -->
-    <div
-      class="content-body max-w-none
-    [&_img]:rounded-2xl [&_img]:shadow-sm [&_img]:my-10
-    [&_figure]:mx-0
-    [&_blockquote]:border-l-4 [&_blockquote]:border-primary [&_blockquote]:pl-6 [&_blockquote]:py-2 [&_blockquote]:my-8 [&_blockquote]:text-lg [&_blockquote]:font-medium [&_blockquote]:text-gray-800 [&_blockquote]:leading-relaxed"
-      set:html={cleanedContent}
-    />
+    <!-- Real Content (Now wrapped by WPLoader in parent) -->
+    <div id="article-content" class="h-full">
+      <!-- Audio Player Injection (Moved below Author Card) -->
+      {
+        audioUrl && (
+          <div class="mb-12" transition:persist="audio-player">
+            <AudioPlayer client:load src={audioUrl} title={title} />
+          </div>
+        )
+      }
+
+      <!-- Content - User Custom CSS + Prose for fallbacks -->
+      <div
+        class="content-body max-w-none
+        [&_img]:rounded-2xl [&_img]:shadow-sm [&_img]:my-10 [&_img]:w-full [&_img]:h-auto
+        [&_figure]:mx-0
+        [&_blockquote]:border-l-4 [&_blockquote]:border-primary [&_blockquote]:pl-6 [&_blockquote]:py-2 [&_blockquote]:my-8 [&_blockquote]:text-lg [&_blockquote]:font-medium [&_blockquote]:text-gray-800 [&_blockquote]:leading-relaxed"
+        set:html={cleanedContent}
+      />
+    </div>
 
     <style>
       /* --- User Provided CSS --- */

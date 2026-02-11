@@ -1,0 +1,64 @@
+---
+import SkeletonLoader from "../atoms/SkeletonLoader.astro";
+
+interface Props {
+    type?: "article" | "card" | "text" | "author-header";
+    class?: string;
+    minHeight?: string; // Allow overriding min-height
+}
+
+const {
+    type = "article",
+    class: className,
+    minHeight = "min-h-[50vh]",
+} = Astro.props;
+const uniqueId = `wp-loader-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<div class={`relative ${minHeight} ${className}`}>
+    <!-- Skeleton Overlay -->
+    <div
+        id={`${uniqueId}-skeleton`}
+        class="absolute inset-0 z-20 bg-[var(--ilsa-bg-light)] transition-opacity duration-700 ease-out"
+        aria-hidden="true"
+    >
+        <SkeletonLoader type={type} />
+    </div>
+
+    <!-- Real Content (Opacity 0 initially) -->
+    <div
+        id={`${uniqueId}-content`}
+        class="opacity-0 transition-opacity duration-700 ease-out h-full"
+    >
+        <slot />
+    </div>
+</div>
+
+<script define:vars={{ uniqueId }}>
+    // Encapsulated loader logic
+    function initLoader() {
+        const skeleton = document.getElementById(`${uniqueId}-skeleton`);
+        const content = document.getElementById(`${uniqueId}-content`);
+
+        if (skeleton && content) {
+            // Force delay to ensure visual stability and "smoothness"
+            // Using 1.5s as requested by user ("más o menos 2 segundos") to cover heavy WP loads
+            setTimeout(() => {
+                requestAnimationFrame(() => {
+                    skeleton.style.opacity = "0";
+                    content.style.opacity = "1";
+
+                    // Remove from DOM after transition
+                    setTimeout(() => {
+                        skeleton.style.display = "none";
+                    }, 700); // Match transition duration
+                });
+            }, 1500);
+        }
+    }
+
+    // Run on load and View Transitions
+    document.addEventListener("astro:page-load", initLoader);
+    // Immediate run fallback
+    initLoader();
+</script>

@@ -108,7 +108,7 @@ export interface PostNode {
 
 // Global Queries
 export const MASTER_QUERY = `
-  # Updated Cache v2
+  # Updated Cache v3 - Force Refresh for Images
   query MasterQuery($first: Int = 100, $after: String = "") {
     posts(first: $first, after: $after) {
       nodes {
