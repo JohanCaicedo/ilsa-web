@@ -7,7 +7,7 @@ interface Props {
     bio: string;
     xUrl?: string;
     linkedinUrl?: string;
-    id?: string; // Add ID for modal
+    id?: string;
     variant?: "primary" | "secondary" | "dark" | "frosted";
 }
 
@@ -22,74 +22,61 @@ const {
     variant = "dark",
 } = Astro.props;
 
-const variants = {
-    dark: {
-        container: "bg-[#183069]/70 border-white/20 text-gray-800",
-        blob: "from-[#4e7cce] via-[#565ba0] to-[#5e3b69]",
-        inner: "bg-[#183069]/80 border-white/10 shadow-inner",
-        name: "text-white",
-        roleBorder: "border-[#4e7cce]/30",
-        roleBg: "bg-[#4e7cce]/10",
-        roleText: "text-[#4e7cce]",
-        bio: "text-slate-300/90",
-        social: "text-slate-400 hover:text-white",
-    },
-    frosted: {
-        container:
-            "bg-white/70 border-white/60 text-slate-800 shadow-xl shadow-slate-200/50",
-        blob: "from-[#4e7cce]/30 via-[#565ba0]/30 to-[#5e3b69]/30",
-        inner: "bg-white/60 border-white/40 shadow-sm",
-        name: "text-slate-800",
-        roleBorder: "border-[#4e7cce]/20",
-        roleBg: "bg-blue-50/50",
-        roleText: "text-[#4e7cce]",
-        bio: "text-slate-600/90",
-        social: "text-slate-400 hover:text-[#4e7cce]",
-    },
+const styles = {
+    name: "text-white",
+    roleBorder: "border-white/30",
+    roleBg: "bg-white/10",
+    roleText: "text-white",
+    bio: "text-white/90",
+    social: "text-white/70 hover:text-white",
 };
-
-const styles = variants[variant as keyof typeof variants] || variants.dark;
 ---
 
-<div
-    class:list={[
-        "interactive-card relative w-80 h-[440px] rounded-xl p-px backdrop-blur-2xl overflow-hidden cursor-pointer group mx-auto transition-transform duration-300 hover:scale-105 border",
-        styles.container,
-    ]}
+<button
+    type="button"
+    class="interactive-gradient-card relative w-80 h-[440px] rounded-xl overflow-hidden group mx-auto transition-all duration-300 hover:scale-105 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent touch-action-manipulation"
     data-team-id={id}
+    aria-label={`Ver información de ${name}`}
 >
-    <!-- Gradient Blob -->
+    <!-- Interactive Radial Gradient Background -->
     <div
-        class:list={[
-            "gradient-blob pointer-events-none blur-3xl rounded-full w-60 h-60 absolute z-0 transition-opacity duration-500 opacity-0 bg-gradient-to-r",
-            styles.blob,
-        ]}
+        class="gradient-bg absolute inset-0 transition-all duration-75 ease-linear"
+        style="
+            --x: 50%;
+            --y: 50%;
+            --gradient-from: var(--ilsa-blue);
+            --gradient-to: var(--ilsa-mujeres);
+            background-image: radial-gradient(circle at var(--x) var(--y), var(--gradient-from), var(--gradient-to));
+        "
+    >
+    </div>
+
+    <!-- Blue gradient overlay for better text contrast -->
+    <div
+        class="absolute inset-0 bg-gradient-to-br from-[#1e3a8a]/40 via-[#4e7cce]/30 to-[#1e3a8a]/50 transition-opacity duration-300 group-hover:from-[#1e3a8a]/30 group-hover:via-[#4e7cce]/20 group-hover:to-[#1e3a8a]/40 pointer-events-none"
     >
     </div>
 
     <!-- Content -->
     <div
-        class:list={[
-            "relative z-10 p-6 h-full w-full rounded-[11px] flex flex-col items-center justify-between text-center border",
-            styles.inner,
-        ]}
+        class="relative z-10 p-6 h-full w-full flex flex-col items-center justify-between text-center"
     >
         <div class="flex flex-col items-center w-full">
             <div class="relative mb-4">
                 <div
-                    class="absolute -inset-1 bg-gradient-to-r from-[#4e7cce] to-[#5e3b69] rounded-full blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"
+                    class="absolute -inset-1 bg-white/20 rounded-full blur opacity-50 group-hover:opacity-75 transition duration-500"
                 >
                 </div>
                 <SmartImage
                     src={image}
                     alt={name}
-                    class="relative w-24 h-24 rounded-full shadow-md object-cover border-2 border-[#4e7cce]/30"
+                    class="relative w-24 h-24 rounded-full shadow-lg object-cover border-2 border-white/50 ring-2 ring-white/20"
                 />
             </div>
 
             <h2
                 class:list={[
-                    "text-xl font-extrabold mb-2 leading-tight min-h-[3.5rem] flex items-center justify-center line-clamp-2",
+                    "text-xl font-extrabold mb-2 leading-tight min-h-[3.5rem] flex items-center justify-center line-clamp-2 drop-shadow-lg",
                     styles.name,
                 ]}
             >
@@ -99,7 +86,7 @@ const styles = variants[variant as keyof typeof variants] || variants.dark;
             <div class="mb-4 h-8 flex items-center justify-center">
                 <span
                     class:list={[
-                        "inline-block px-3 py-1 rounded-full border text-[10px] font-bold uppercase tracking-wider backdrop-blur-sm truncate max-w-[200px]",
+                        "inline-block px-3 py-1 rounded-full border text-[10px] font-bold uppercase tracking-wider backdrop-blur-md truncate max-w-[200px] shadow-sm",
                         styles.roleBorder,
                         styles.roleBg,
                         styles.roleText,
@@ -111,7 +98,7 @@ const styles = variants[variant as keyof typeof variants] || variants.dark;
 
             <p
                 class:list={[
-                    "text-xs font-medium mb-4 px-1 leading-relaxed text-pretty line-clamp-4 min-h-[4rem]",
+                    "text-xs font-medium mb-4 px-1 leading-relaxed text-pretty line-clamp-4 min-h-[4rem] drop-shadow",
                     styles.bio,
                 ]}
             >
@@ -130,13 +117,16 @@ const styles = variants[variant as keyof typeof variants] || variants.dark;
                     <a
                         href={xUrl}
                         target="_blank"
-                        class="hover:-translate-y-0.5 transition-transform duration-300"
+                        rel="noopener noreferrer"
+                        class="hover:-translate-y-0.5 transition-transform duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded"
+                        aria-label={`X (Twitter) de ${name}`}
+                        onclick="event.stopPropagation()"
                     >
-                        <span class="sr-only">X (Twitter)</span>
                         <svg
                             class="w-6 h-6"
                             viewBox="0 0 24 24"
                             fill="currentColor"
+                            aria-hidden="true"
                         >
                             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                         </svg>
@@ -149,13 +139,16 @@ const styles = variants[variant as keyof typeof variants] || variants.dark;
                     <a
                         href={linkedinUrl}
                         target="_blank"
-                        class="hover:-translate-y-0.5 transition-transform duration-300"
+                        rel="noopener noreferrer"
+                        class="hover:-translate-y-0.5 transition-transform duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded"
+                        aria-label={`LinkedIn de ${name}`}
+                        onclick="event.stopPropagation()"
                     >
-                        <span class="sr-only">LinkedIn</span>
                         <svg
                             class="w-6 h-6"
                             fill="currentColor"
                             viewBox="0 0 24 24"
+                            aria-hidden="true"
                         >
                             <path
                                 fill-rule="evenodd"
@@ -169,36 +162,32 @@ const styles = variants[variant as keyof typeof variants] || variants.dark;
             }
         </div>
     </div>
-</div>
+</button>
 
 <script>
-    function setupCards() {
-        const cards = document.querySelectorAll(".interactive-card");
+    function setupInteractiveDirectorCards() {
+        const cards = document.querySelectorAll(".interactive-gradient-card");
 
         cards.forEach((card) => {
-            const blob = card.querySelector(".gradient-blob") as HTMLElement;
-            if (!blob) return;
+            const gradientBg = card.querySelector(
+                ".gradient-bg",
+            ) as HTMLElement;
+            if (!gradientBg) return;
 
-            card.addEventListener("mousemove", (e: Event) => {
-                const mouseEvent = e as MouseEvent;
+            const handleMouseMove = (e: Event) => {
+                if (!(e instanceof MouseEvent)) return;
                 const rect = card.getBoundingClientRect();
-                const x = mouseEvent.clientX - rect.left;
-                const y = mouseEvent.clientY - rect.top;
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
 
-                blob.style.left = `${x - 120}px`;
-                blob.style.top = `${y - 120}px`;
-            });
+                gradientBg.style.setProperty("--x", `${x}px`);
+                gradientBg.style.setProperty("--y", `${y}px`);
+            };
 
-            card.addEventListener("mouseenter", () => {
-                blob.style.opacity = "1";
-            });
-
-            card.addEventListener("mouseleave", () => {
-                blob.style.opacity = "0";
-            });
+            card.addEventListener("mousemove", handleMouseMove);
         });
     }
 
-    setupCards();
-    document.addEventListener("astro:page-load", setupCards);
+    setupInteractiveDirectorCards();
+    document.addEventListener("astro:page-load", setupInteractiveDirectorCards);
 </script>

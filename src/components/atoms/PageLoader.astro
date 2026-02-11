@@ -1,20 +1,53 @@
 ---
+import SkeletonLoader from "../atoms/SkeletonLoader.astro";
 
+interface Props {
+    type?: "article" | "card" | "grid";
+}
+
+const { type = "article" } = Astro.props;
 ---
 
+<!-- Full-page overlay that covers content but not navbar/footer -->
 <div
     id="page-loader"
-    class="fixed inset-0 z-40 flex items-center justify-center bg-transparent opacity-0 pointer-events-none transition-opacity duration-300"
+    class="fixed top-24 left-0 right-0 bottom-0 z-20 bg-[var(--ilsa-bg-light)] opacity-0 pointer-events-none transition-opacity duration-500"
     aria-hidden="true"
 >
-    <div
-        class="relative flex flex-col items-center gap-4 p-6 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 shadow-xl"
-    >
-        <!-- Spinner -->
-        <div
-            class="w-10 h-10 rounded-full border-4 border-white/30 border-t-[var(--ilsa-blue)] animate-spin"
-        >
-        </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 h-full">
+        {
+            type === "article" && (
+                <div class="max-w-2xl mx-auto">
+                    <SkeletonLoader type="article" />
+                </div>
+            )
+        }
+
+        {
+            type === "card" && (
+                <div class="space-y-8">
+                    <div class="h-12 bg-[var(--ilsa-blue-light)]/30 rounded-lg w-64 animate-pulse" />
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {[...Array(6)].map(() => (
+                            <SkeletonLoader type="card" />
+                        ))}
+                    </div>
+                </div>
+            )
+        }
+
+        {
+            type === "grid" && (
+                <div class="space-y-8">
+                    <div class="h-16 bg-[var(--ilsa-blue-light)]/30 rounded-lg w-80 animate-pulse" />
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {[...Array(8)].map(() => (
+                            <div class="h-32 bg-[var(--ilsa-blue-light)]/20 rounded-2xl animate-pulse" />
+                        ))}
+                    </div>
+                </div>
+            )
+        }
     </div>
 </div>
 
@@ -27,14 +60,16 @@
             // Clear any pending hide timeouts
             clearTimeout(timeoutId);
             loader.classList.remove("opacity-0", "pointer-events-none");
+            loader.classList.add("opacity-100");
             loader.setAttribute("aria-hidden", "false");
         }
     }
 
     function hideLoader() {
         if (loader) {
-            // Small delay to ensure smooth transition prevents flickering on fast loads
+            // Delay to ensure smooth transition
             timeoutId = setTimeout(() => {
+                loader.classList.remove("opacity-100");
                 loader.classList.add("opacity-0", "pointer-events-none");
                 loader.setAttribute("aria-hidden", "true");
             }, 300) as unknown as number;
@@ -44,11 +79,6 @@
     // Astro View Transitions Events
     document.addEventListener("astro:before-preparation", () => {
         showLoader();
-    });
-
-    document.addEventListener("astro:after-swap", () => {
-        // Keep loader visible for a moment if needed, or hide immediately
-        // If we want to mask the painting, we can wait for page-load
     });
 
     document.addEventListener("astro:page-load", () => {
