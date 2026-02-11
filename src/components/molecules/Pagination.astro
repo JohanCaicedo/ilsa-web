@@ -131,4 +131,7 @@ const {
 
     // Initialize on every page navigation
     document.addEventListener("astro:page-load", setupPagination);
+
+    // Immediate init for safety
+    setupPagination();
 </script>
