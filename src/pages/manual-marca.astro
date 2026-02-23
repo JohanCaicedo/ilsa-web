@@ -1,0 +1,625 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { ArrowDownToLine, CheckCircle2, XCircle } from "lucide-react";
+import Button from "../components/Button.astro";
+import GradientText from "../components/atoms/GradientText.astro";
+
+const title = "Manual de Identidad Visual | ILSA";
+const description =
+    "Explora las directrices oficiales de uso de la marca ILSA, paleta de colores, tipografía y mejores prácticas para mantener la coherencia visual institucional.";
+---
+
+<Layout
+    title={title}
+    seo={{ title, metaDesc: description, opengraphDescription: description }}
+    width="wide"
+>
+    <div class="relative w-full overflow-hidden mb-32">
+        <!-- Hero Section -->
+        <section
+            class="relative pt-32 pb-24 md:pt-40 md:pb-32 px-4 flex flex-col items-center justify-center min-h-[50vh]"
+        >
+            <div class="absolute inset-0 pointer-events-none overflow-hidden">
+                <div
+                    class="absolute top-1/4 left-1/4 w-96 h-96 bg-[#4e7cce]/10 rounded-full blur-[100px] animate-pulse-slow"
+                >
+                </div>
+                <div
+                    class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#93a2c1]/10 rounded-full blur-[100px] animate-pulse-slow"
+                    style="animation-delay: 2s;"
+                >
+                </div>
+            </div>
+
+            <div class="relative z-10 max-w-4xl mx-auto text-center">
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 backdrop-blur-md border border-white/60 shadow-lg text-[#4e7cce] font-medium text-sm mb-8 tracking-wide"
+                >
+                    <span
+                        class="w-2 h-2 rounded-full bg-[#4e7cce] animate-pulse"
+                    ></span>
+                    VERSIÓN 2025
+                </div>
+
+                <div class="text-center w-full flex flex-col items-center">
+                    <h1
+                        class="text-center text-5xl md:text-7xl font-bold tracking-tight text-[#3d3d47] mb-8 leading-tight"
+                    >
+                        Manual de <br />
+                        <GradientText
+                            as="span"
+                            text="Identidad Visual"
+                            size="text-5xl md:text-7xl"
+                            class="tracking-tight leading-tight"
+                        />
+                    </h1>
+                </div>
+
+                <p
+                    class="text-lg md:text-xl text-[#3d3d47]/70 font-light max-w-3xl mx-auto leading-relaxed mb-12"
+                >
+                    Comprende los fundamentos de nuestra esencia visual. Este
+                    conjunto de pautas asegura que ILSA se presente de manera
+                    unificada y poderosa frente al mundo.
+                </p>
+
+                <div
+                    class="flex flex-col sm:flex-row items-center justify-center gap-6"
+                >
+                    <Button
+                        variant="primary"
+                        size="lg"
+                        href="https://api.ilsa.org.co/wp-content/uploads/2026/02/ILSA-Kit-de-marca.zip"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        download
+                        class="shadow-xl shadow-[#183069]/20 transition-all duration-300 gap-2 px-8 py-4 text-base"
+                    >
+                        <ArrowDownToLine size={20} />
+                        Descargar Kit de Marca
+                    </Button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contenedor Principal / Liquid Glass general -->
+        <div class="max-w-6xl mx-auto px-4 relative z-10" id="usos">
+            <div
+                class="bg-white/50 backdrop-blur-3xl border border-white/60 shadow-2xl shadow-slate-200/50 rounded-[3rem] p-8 md:p-16 space-y-32"
+            >
+                <!-- 1. El Logotipo (Isotipo y Siglas) -->
+                <section>
+                    <div class="text-center mb-16">
+                        <h2
+                            class="text-center text-4xl font-bold text-[#3d3d47] mb-4"
+                        >
+                            El Logotipo
+                        </h2>
+                        <div
+                            class="w-24 h-1 bg-gradient-to-r from-[#4e7cce] to-[#93a2c1] mx-auto rounded-full"
+                        >
+                        </div>
+                    </div>
+
+                    <div class="space-y-16">
+                        <!-- Mapamundi -->
+                        <div class="grid md:grid-cols-2 gap-8 items-center">
+                            <div>
+                                <h3
+                                    class="text-2xl font-bold text-[#4e7cce] mb-3"
+                                >
+                                    Isotipo: Mapamundi
+                                </h3>
+                                <p class="text-[#3d3d47]/80 leading-relaxed">
+                                    La construcción del mapamundi se basa en la
+                                    simplicidad, legibilidad y singularidad. Se
+                                    utilizó la proporción áurea como base para
+                                    su composición, garantizando la armonía de
+                                    este elemento gráfico. El tamaño máximo del
+                                    mapamundi sirvió como módulo para establecer
+                                    las proporciones de los demás elementos
+                                    gráficos.
+                                </p>
+                            </div>
+                            <div
+                                class="bg-[#f9f9f9] rounded-3xl p-8 flex justify-center items-center shadow-inner border border-white/80"
+                            >
+                                <img
+                                    src="/images/ILSA-LOGO-Mapamundi.png"
+                                    alt="Isotipo Mapamundi"
+                                    class="w-full max-w-xs drop-shadow-xl rounded-xl"
+                                />
+                            </div>
+                        </div>
+
+                        <!-- Siglas -->
+                        <div class="grid md:grid-cols-2 gap-8 items-center">
+                            <div class="md:order-2">
+                                <h3
+                                    class="text-2xl font-bold text-[#4e7cce] mb-3"
+                                >
+                                    Las Siglas
+                                </h3>
+                                <p class="text-[#3d3d47]/80 leading-relaxed">
+                                    Para la reestructuración de las siglas ILSA
+                                    se buscó armonizar la forma de las letras.
+                                    Se establecieron directrices de diseño y se
+                                    solucionaron problemas de kerning y peso de
+                                    letra, cohesionando los dos elementos del
+                                    imagotipo.
+                                </p>
+                            </div>
+                            <div
+                                class="bg-[#f9f9f9] rounded-3xl p-8 flex justify-center items-center shadow-inner border border-white/80 md:order-1"
+                            >
+                                <img
+                                    src="/images/ILSA-LOGO-Siglas.png"
+                                    alt="Tipografía Siglas"
+                                    class="w-full max-w-xs drop-shadow-xl rounded-xl"
+                                />
+                            </div>
+                        </div>
+
+                        <!-- Combined -->
+                        <div class="pt-8 border-t border-black/5">
+                            <div class="text-center mb-8">
+                                <h3
+                                    class="text-center text-2xl font-bold text-[#3d3d47] mb-2"
+                                >
+                                    Imagotipo Completo
+                                </h3>
+                                <p class="text-[#3d3d47]/70">
+                                    La unión equilibrada del isotipo y las
+                                    siglas.
+                                </p>
+                            </div>
+                            <div
+                                class="bg-[#f9f9f9] rounded-3xl p-12 flex justify-center items-center shadow-inner border border-white/80"
+                            >
+                                <img
+                                    src="/images/ILSA-LOGO-20.png"
+                                    alt="ILSA Logotipo Oficial Completo"
+                                    class="w-full max-w-md drop-shadow-xl rounded-xl"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. Paleta de Colores -->
+                <section>
+                    <div class="text-center mb-16">
+                        <h2
+                            class="text-center text-4xl font-bold text-[#3d3d47] mb-4"
+                        >
+                            Paleta de Colores
+                        </h2>
+                        <div
+                            class="w-24 h-1 bg-gradient-to-r from-[#4e7cce] to-[#93a2c1] mx-auto rounded-full"
+                        >
+                        </div>
+                        <p class="text-[#3d3d47]/70 mt-6 max-w-2xl mx-auto">
+                            Nuestra paleta se divide en colores institucionales
+                            principales y sub-categorías de ejes clave (Derecho,
+                            Mujeres), con versiones monocromáticas y en
+                            negativo.
+                        </p>
+                    </div>
+
+                    <div
+                        class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6"
+                    >
+                        <!-- Institucional -->
+                        <div
+                            class="group relative rounded-2xl overflow-hidden shadow-lg h-64 border border-black/5"
+                        >
+                            <div
+                                class="absolute inset-0 bg-[#4e7cce] transition-transform duration-500 group-hover:scale-110"
+                            >
+                            </div>
+                            <div
+                                class="absolute inset-x-0 bottom-0 bg-white/90 backdrop-blur p-4"
+                            >
+                                <p
+                                    class="text-xs font-bold text-[#3d3d47] uppercase tracking-wider mb-1"
+                                >
+                                    Institucional
+                                </p>
+                                <p
+                                    class="text-[#4e7cce] font-mono font-bold text-lg"
+                                >
+                                    #4E7CCE
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Derecho -->
+                        <div
+                            class="group relative rounded-2xl overflow-hidden shadow-lg h-64 border border-black/5"
+                        >
+                            <div
+                                class="absolute inset-0 bg-[#93a2c1] transition-transform duration-500 group-hover:scale-110"
+                            >
+                            </div>
+                            <div
+                                class="absolute inset-x-0 bottom-0 bg-white/90 backdrop-blur p-4"
+                            >
+                                <p
+                                    class="text-xs font-bold text-[#3d3d47] uppercase tracking-wider mb-1"
+                                >
+                                    Derecho
+                                </p>
+                                <p
+                                    class="text-[#93a2c1] font-mono font-bold text-lg"
+                                >
+                                    #93A2C1
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Mujeres 1 -->
+                        <div
+                            class="group relative rounded-2xl overflow-hidden shadow-lg h-64 border border-black/5"
+                        >
+                            <div
+                                class="absolute inset-0 bg-[#5e3b69] transition-transform duration-500 group-hover:scale-110"
+                            >
+                            </div>
+                            <div
+                                class="absolute inset-x-0 bottom-0 bg-white/90 backdrop-blur p-4"
+                            >
+                                <p
+                                    class="text-xs font-bold text-[#3d3d47] uppercase tracking-wider mb-1"
+                                >
+                                    Mujeres
+                                </p>
+                                <p
+                                    class="text-[#5e3b69] font-mono font-bold text-lg"
+                                >
+                                    #5E3B69
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Mujeres 2 -->
+                        <div
+                            class="group relative rounded-2xl overflow-hidden shadow-lg h-64 border border-black/5"
+                        >
+                            <div
+                                class="absolute inset-0 bg-[#af9cb5] transition-transform duration-500 group-hover:scale-110"
+                            >
+                            </div>
+                            <div
+                                class="absolute inset-x-0 bottom-0 bg-white/90 backdrop-blur p-4"
+                            >
+                                <p
+                                    class="text-xs font-bold text-[#3d3d47] uppercase tracking-wider mb-1"
+                                >
+                                    Mujeres Claro
+                                </p>
+                                <p
+                                    class="text-[#af9cb5] font-mono font-bold text-lg"
+                                >
+                                    #AF9CB5
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Monocromo/Gris -->
+                        <div
+                            class="group relative rounded-2xl overflow-hidden shadow-lg h-64 border border-black/5"
+                        >
+                            <div
+                                class="absolute inset-0 bg-[#686868] transition-transform duration-500 group-hover:scale-110"
+                            >
+                            </div>
+                            <div
+                                class="absolute inset-x-0 bottom-0 bg-white/90 backdrop-blur p-4"
+                            >
+                                <p
+                                    class="text-xs font-bold text-[#3d3d47] uppercase tracking-wider mb-1"
+                                >
+                                    Monocromo
+                                </p>
+                                <p
+                                    class="text-[#686868] font-mono font-bold text-lg"
+                                >
+                                    #686868
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. Tipografía -->
+                <section>
+                    <div class="text-center mb-16">
+                        <h2
+                            class="text-center text-4xl font-bold text-[#3d3d47] mb-4"
+                        >
+                            Tipografía
+                        </h2>
+                        <div
+                            class="w-24 h-1 bg-gradient-to-r from-[#4e7cce] to-[#93a2c1] mx-auto rounded-full"
+                        >
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-[#f9f9f9] rounded-3xl p-8 md:p-16 shadow-inner border border-white/80 overflow-hidden relative"
+                    >
+                        <!-- Decorative large letter -->
+                        <div
+                            class="absolute -right-10 -bottom-20 text-[300px] font-bold text-[#4e7cce]/5 pointer-events-none select-none"
+                            style="line-height:1;"
+                        >
+                            Aa
+                        </div>
+
+                        <div class="relative z-10">
+                            <div
+                                class="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-black/10 pb-8"
+                            >
+                                <div>
+                                    <p
+                                        class="text-[#4e7cce] font-bold text-sm tracking-widest uppercase mb-2"
+                                    >
+                                        Familia Sans Serif
+                                    </p>
+                                    <h3
+                                        class="text-5xl md:text-7xl font-bold text-[#3d3d47] mb-0"
+                                        style="font-family: 'Inter', system-ui, sans-serif;"
+                                    >
+                                        Specter
+                                    </h3>
+                                </div>
+                                <p
+                                    class="text-[#3d3d47]/70 text-right mt-4 md:mt-0"
+                                >
+                                    Light, Regular, Medium,<br />Bold, Black,
+                                    Ultra
+                                </p>
+                            </div>
+
+                            <div class="space-y-6">
+                                <p
+                                    class="text-4xl md:text-5xl text-[#3d3d47] break-all font-light"
+                                    style="font-family: 'Inter', system-ui, sans-serif;"
+                                >
+                                    Aa Bb Cc Dd Ee Ff Gg Hh
+                                </p>
+                                <p
+                                    class="text-4xl md:text-5xl text-[#3d3d47] break-all font-bold"
+                                    style="font-family: 'Inter', system-ui, sans-serif;"
+                                >
+                                    Ii Jj Kk Ll Mm Nn Ññ Oo
+                                </p>
+                                <p
+                                    class="text-4xl md:text-5xl text-[#3d3d47] break-all font-black"
+                                    style="font-family: 'Inter', system-ui, sans-serif;"
+                                >
+                                    Pp Qq Rr Ss Tt Uu Vv Ww
+                                </p>
+                                <p
+                                    class="text-2xl text-[#3d3d47]/60 break-all pt-4 border-t border-black/5"
+                                >
+                                    0 1 2 3 4 5 6 7 8 9
+                                    .,;:!?¿¡"\'()[]&#123;&#125;-_/@#$%&amp;*+=&lt;&gt;|~
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. Usos de la Marca -->
+                <section>
+                    <div class="text-center mb-16">
+                        <h2
+                            class="text-center text-4xl font-bold text-[#3d3d47] mb-4"
+                        >
+                            Evite estos usos
+                        </h2>
+                        <div
+                            class="w-24 h-1 bg-gradient-to-r from-[#4e7cce] to-[#93a2c1] mx-auto rounded-full"
+                        >
+                        </div>
+                        <p class="text-[#3d3d47]/70 mt-6 max-w-2xl mx-auto">
+                            Para garantizar la consistencia y la fuerza visual,
+                            evite alterar de manera no oficial la estructura, el
+                            color o las proporciones del imagotipo.
+                        </p>
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <!-- Incorrecto 1: Transiciones -->
+                        <div
+                            class="bg-[#f7f7f7] rounded-3xl p-6 border border-red-500/20 shadow-sm relative group overflow-hidden flex flex-col items-center text-center"
+                        >
+                            <img
+                                src="/images/ILSA-LOGO-Uso_incorrecto-TRANSICIONES-DE-COLOR.png"
+                                alt="Transiciones de color"
+                                class="w-full aspect-square object-contain rounded-2xl mb-4 drop-shadow-sm"
+                            />
+                            <h4
+                                class="text-center text-lg font-bold text-[#3d3d47] mb-2"
+                            >
+                                Transiciones de Color
+                            </h4>
+                            <p class="text-[#3d3d47]/70 text-sm">
+                                No modifique los colores institucionales.
+                            </p>
+                        </div>
+
+                        <!-- Incorrecto 2: Degradados -->
+                        <div
+                            class="bg-[#f7f7f7] rounded-3xl p-6 border border-red-500/20 shadow-sm relative group overflow-hidden flex flex-col items-center text-center"
+                        >
+                            <img
+                                src="/images/ILSA-LOGO-Uso_incorrecto-DEGRADADOS.png"
+                                alt="Degradados"
+                                class="w-full aspect-square object-contain rounded-2xl mb-4 drop-shadow-sm"
+                            />
+                            <h4
+                                class="text-center text-lg font-bold text-[#3d3d47] mb-2"
+                            >
+                                Degradados
+                            </h4>
+                            <p class="text-[#3d3d47]/70 text-sm">
+                                Utilice siempre colores sólidos.
+                            </p>
+                        </div>
+
+                        <!-- Incorrecto 3: Eliminar -->
+                        <div
+                            class="bg-[#f7f7f7] rounded-3xl p-6 border border-red-500/20 shadow-sm relative group overflow-hidden flex flex-col items-center text-center"
+                        >
+                            <img
+                                src="/images/ILSA-LOGO-Uso_incorrecto-ELIMINAR-ELEMENTOS.png"
+                                alt="Eliminar Elementos"
+                                class="w-full aspect-square object-contain rounded-2xl mb-4 drop-shadow-sm"
+                            />
+                            <h4
+                                class="text-center text-lg font-bold text-[#3d3d47] mb-2"
+                            >
+                                Eliminar Elementos
+                            </h4>
+                            <p class="text-[#3d3d47]/70 text-sm">
+                                El isotipo y tipografía son un bloque único
+                                indisoluble.
+                            </p>
+                        </div>
+
+                        <!-- Incorrecto 4: Deformar -->
+                        <div
+                            class="bg-[#f7f7f7] rounded-3xl p-6 border border-red-500/20 shadow-sm relative group overflow-hidden flex flex-col items-center text-center"
+                        >
+                            <img
+                                src="/images/ILSA-LOGO-Uso_incorrecto-DEFORMACIONES .png"
+                                alt="Deformaciones"
+                                class="w-full aspect-square object-contain rounded-2xl mb-4 drop-shadow-sm"
+                            />
+                            <h4
+                                class="text-center text-lg font-bold text-[#3d3d47] mb-2"
+                            >
+                                Deformaciones
+                            </h4>
+                            <p class="text-[#3d3d47]/70 text-sm">
+                                Escale el logotipo siempre de manera
+                                proporcional.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5. Casos de Uso (Optional based on images from manual) -->
+                <section>
+                    <div class="text-center mb-16">
+                        <h2
+                            class="text-center text-4xl font-bold text-[#3d3d47] mb-4"
+                        >
+                            Casos de Uso
+                        </h2>
+                        <div
+                            class="w-24 h-1 bg-gradient-to-r from-[#4e7cce] to-[#93a2c1] mx-auto rounded-full"
+                        >
+                        </div>
+                        <p class="text-[#3d3d47]/70 mt-6 max-w-2xl mx-auto">
+                            Aplicaciones visuales del sistema en contexto real.
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div
+                            class="rounded-3xl overflow-hidden shadow-lg border border-black/5 aspect-square bg-white flex items-center justify-center p-0"
+                        >
+                            <img
+                                src="/images/Casos_de_uso (1).webp"
+                                alt="Caso de uso de la marca 1"
+                                class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                                loading="lazy"
+                            />
+                        </div>
+                        <div
+                            class="rounded-3xl overflow-hidden shadow-lg border border-black/5 aspect-square bg-white flex items-center justify-center p-0"
+                        >
+                            <img
+                                src="/images/Casos_de_uso (2).webp"
+                                alt="Caso de uso de la marca 2"
+                                class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                                loading="lazy"
+                            />
+                        </div>
+                        <div
+                            class="rounded-3xl overflow-hidden shadow-lg border border-black/5 aspect-square bg-white flex items-center justify-center p-0"
+                        >
+                            <img
+                                src="/images/Casos_de_uso (3).webp"
+                                alt="Caso de uso de la marca 3"
+                                class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                                loading="lazy"
+                            />
+                        </div>
+                        <div
+                            class="rounded-3xl overflow-hidden shadow-lg border border-black/5 aspect-square bg-white flex items-center justify-center p-0"
+                        >
+                            <img
+                                src="/images/Casos_de_uso (4).webp"
+                                alt="Caso de uso de la marca 4"
+                                class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                                loading="lazy"
+                            />
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Botón Final de Descarga -->
+            <div class="mt-16 text-center" id="descarga">
+                <div
+                    class="bg-gradient-to-br from-[#183069] to-[#4e7cce] rounded-[3rem] p-12 md:p-20 shadow-2xl relative overflow-hidden"
+                >
+                    <!-- Decor -->
+                    <div
+                        class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-[60px]"
+                    >
+                    </div>
+                    <div
+                        class="absolute bottom-0 left-0 w-64 h-64 bg-[#25468f]/40 rounded-full blur-[60px]"
+                    >
+                    </div>
+
+                    <div class="relative z-10 max-w-2xl mx-auto">
+                        <h2
+                            class="text-center text-3xl md:text-5xl font-bold text-white mb-6"
+                        >
+                            Kit de Identidad Institucional
+                        </h2>
+                        <p class="text-blue-100 text-lg mb-10">
+                            Descargue el manual completo en formato PDF y los
+                            activos oficiales vectoriales (SVG, PNG) para
+                            utilizarlos en los canales de comunicación
+                            correspondientes.
+                        </p>
+
+                        <div
+                            class="flex flex-col sm:flex-row justify-center gap-4"
+                        >
+                            <Button
+                                variant="secondary"
+                                size="lg"
+                                href="https://api.ilsa.org.co/wp-content/uploads/2026/02/ILSA-Kit-de-marca.zip"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                download
+                                class="gap-3 font-bold hover:-translate-y-1 transition-all"
+                            >
+                                <ArrowDownToLine size={24} />
+                                Descargar Kit Institucional
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</Layout>

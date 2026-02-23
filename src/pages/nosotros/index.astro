@@ -4,6 +4,8 @@ import AccordionItem from "../../components/atoms/AccordionItem.astro";
 import DirectorCard from "../../components/molecules/DirectorCard.astro";
 import TeamModal from "../../components/molecules/TeamModal.astro";
 import Breadcrumbs from "../../components/atoms/Breadcrumbs.astro";
+import Button from "../../components/Button.astro";
+import GradientText from "../../components/atoms/GradientText.astro";
 import { wpQuery } from "../../lib/wp";
 import { teamData, boardData } from "../../lib/team";
 import type { SeoData } from "../../lib/seo";
@@ -505,6 +507,89 @@ const seoData: SeoData = data?.page?.seo;
                             </div>
                         ))
                     }
+                </div>
+            </section>
+
+            <!-- MANUAL DE MARCA CTA SECTION -->
+            <section
+                class="max-w-7xl mx-auto mb-24 relative overflow-hidden rounded-[2.5rem] bg-white/50 backdrop-blur-3xl border border-white/60 shadow-xl shadow-slate-200/50 p-8 md:p-12 lg:p-16 flex flex-col md:flex-row items-center gap-8 md:gap-16"
+            >
+                <!-- Background decor -->
+                <div
+                    class="absolute -top-32 -right-32 w-64 h-64 bg-[#4e7cce]/20 rounded-full blur-[80px] pointer-events-none"
+                >
+                </div>
+                <div
+                    class="absolute -bottom-32 -left-32 w-64 h-64 bg-[#183069]/20 rounded-full blur-[80px] pointer-events-none"
+                >
+                </div>
+
+                <div class="w-full md:w-1/2 relative z-10">
+                    <p
+                        class="text-[#4e7cce] font-bold text-sm tracking-widest uppercase mb-2"
+                    >
+                        Marca Corporativa
+                    </p>
+                    <GradientText
+                        as="h2"
+                        text="Identidad Visual"
+                        size="text-3xl md:text-5xl"
+                        class="mb-6"
+                    />
+                    <p
+                        class="text-[#3d3d47]/70 text-base md:text-lg leading-relaxed mb-8"
+                    >
+                        Nuestra identidad gráfica refleja la evolución, la
+                        experiencia y los valores fundamentales de ILSA. Explora
+                        nuestro manual para conocer las directrices de uso de
+                        nuestras marcas, tipografía corporativa y paleta de
+                        colores.
+                    </p>
+                    <Button
+                        variant="primary"
+                        size="lg"
+                        href="/manual-marca"
+                        class="gap-2 group"
+                    >
+                        Ver Manual de Identidad
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5 transform group-hover:translate-x-1 transition-transform"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                        >
+                            <path
+                                fill-rule="evenodd"
+                                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </Button>
+                </div>
+
+                <div class="w-full md:w-1/2 relative z-10 flex justify-center">
+                    <div
+                        class="relative w-full max-w-sm aspect-square bg-[#f9f9f9] rounded-2xl p-8 shadow-inner border border-gray-100 flex items-center justify-center transform hover:scale-105 transition-transform duration-500"
+                    >
+                        <img
+                            src="/images/ILSA-LOGO-20.png"
+                            alt="ILSA Logotipo"
+                            class="w-full h-auto object-contain drop-shadow-md rounded-xl"
+                        />
+
+                        <!-- Floating elements -->
+                        <div
+                            class="absolute -top-4 -right-4 w-12 h-12 bg-[#4e7cce] rounded-lg shadow-lg flex items-center justify-center animate-bounce"
+                            style="animation-duration: 3s;"
+                        >
+                            <span class="text-white font-bold text-xs">Aa</span>
+                        </div>
+                        <div
+                            class="absolute -bottom-4 -left-4 w-16 h-12 bg-[#93a2c1] rounded-lg shadow-lg flex items-center justify-center animate-bounce"
+                            style="animation-duration: 4s; animation-delay: 1s;"
+                        >
+                            <div class="w-8 h-4 bg-[#5e3b69]/40 rounded"></div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>

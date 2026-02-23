@@ -35,7 +35,7 @@ const {
 
 // Logic for Audio Extraction
 let audioUrl: string | undefined = undefined;
-let cleanedContent = content;
+let cleanedContent = content || "";
 
 // Regex to match WP Audio Block: <figure class="wp-block-audio"><audio ... src="URL"></audio></figure>
 // Robust regex to handle variations in attributes and spacing
