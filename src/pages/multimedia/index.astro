@@ -1,84 +1,731 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import GradientText from "../../components/atoms/GradientText.astro";
-import LiquidContainer from "../../components/experimental/LiquidContainer.astro";
+import YoutubeEmbed from "../../components/atoms/YoutubeEmbed.astro";
+import SpotifyEmbed from "../../components/atoms/SpotifyEmbed.astro";
+import FacebookEmbed from "../../components/atoms/FacebookEmbed.astro";
 
 export const prerender = true;
+
+// ==========================================
+// ✏️ VARIABLES DE CONTENIDO Y ENLACES
+// ==========================================
+const links = {
+    // 1. Nuestro canal de YouTube
+    canalYoutube: "https://www.youtube.com/channel/UCqJ1XD5qN4lMubTNQDkOtUA",
+    youtubePrincipalVideo1: "kAMFoZHvBy4",
+    youtubePrincipalVideo2: "s4q46Np55oU",
+
+    // 2. Celebrating International Development Week
+    internationalDevWeekVideo:
+        "https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/watch/?v=1003408128511993&show_text=0",
+
+    // 3. Narrativas Feministas
+    narrativasImgPortada:
+        "https://dummyimage.com/400x600/cbd5e1/475569.jpg&text=Portada",
+    narrativasImgBanner:
+        "https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2F100009416632558%2Fvideos%2F950913573380756%2F&show_text=false&width=560&t=0",
+
+    // 4. Día Internacional de las Juezas
+    juezasImgIzq:
+        "https://dummyimage.com/400x550/c084fc/ffffff.jpg&text=Juezas+Izq",
+    juezasImgDer:
+        "https://dummyimage.com/400x550/a855f7/ffffff.jpg&text=Juezas+Der",
+
+    // 5. Eugenii B. Pashukanis
+    pashukanisEnlaceDescarga: "https://ilsa.org.co",
+    pashukanisImg1:
+        "https://dummyimage.com/300x450/7f1d1d/ffffff.jpg&text=Libro",
+    pashukanisImg2:
+        "https://dummyimage.com/300x450/1e3a8a/ffffff.jpg&text=Libro",
+    pashukanisImg3:
+        "https://dummyimage.com/300x450/4c1d95/ffffff.jpg&text=Libro",
+    pashukanisImg4:
+        "https://dummyimage.com/300x450/422006/ffffff.jpg&text=Libro",
+
+    // 6. El reconocimiento a la labor de las mujeres
+    reconocimientoImg1:
+        "http://api.ilsa.org.co/wp-content/uploads/2024/12/Buscadoras_1.webp",
+    reconocimientoImg2:
+        "http://api.ilsa.org.co/wp-content/uploads/2024/12/Buscadoras_2.webp",
+    reconocimientoImg3:
+        "http://api.ilsa.org.co/wp-content/uploads/2024/12/Buscadoras_3.webp",
+    reconocimientoImg4:
+        "http://api.ilsa.org.co/wp-content/uploads/2024/12/Buscadoras_5.webp",
+    reconocimientoImg5:
+        "http://api.ilsa.org.co/wp-content/uploads/2024/12/Buscadoras_4.webp",
+
+    // 7. Spotify Podcast
+    spotifyPodcastEmbed:
+        "https://open.spotify.com/embed/show/1QUNFi8S1z16xZpU4ZIpSa?utm_source=generator",
+    spotifySuscripcionBtn:
+        "https://open.spotify.com/show/4xOOb4tTz7A2B0a90E5P1Y",
+
+    // 8. Últimos Eventos Virtuales
+    eventosVirtualesVideo1: "hyVOmt4kjx8",
+    eventosVirtualesVideo2: "hHkd2q5SFzU",
+
+    // 9. Poderosas
+    poderosasVideo1: "RHhZQQ8o67A",
+    poderosasVideo2: "vxvdDpIH0Ak",
+
+    // 10. Participación ciudadana
+    ciudadanaVideo1: "lWbaweFx894",
+    ciudadanaVideo2: "vbbo0f3rzYs",
+
+    // 11. Nuestra voz en...
+    vozVideo1: "cPudY3heG1s",
+    vozVideo2: "IHPeYCRL804",
+};
+
+// ==========================================
+// 🧩 DATA ARRAYS PARA ITERACIÓN
+// ==========================================
+const avGallery = [
+    {
+        title: "Últimos eventos",
+        theme: "blue",
+        bgClass: "bg-[#4e7cce]/10 text-[#4e7cce] group-hover:bg-[#4e7cce]",
+        shadowClass: "shadow-[#4e7cce]/5",
+        videos: [links.eventosVirtualesVideo1, links.eventosVirtualesVideo2],
+        icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>',
+    },
+    {
+        title: "Poderosas",
+        theme: "purple",
+        bgClass: "bg-[#5e3b69]/10 text-[#5e3b69] group-hover:bg-[#5e3b69]",
+        shadowClass: "shadow-[#5e3b69]/5",
+        videos: [links.poderosasVideo1, links.poderosasVideo2],
+        icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>',
+    },
+    {
+        title: "Participación ciudadana",
+        theme: "orange",
+        bgClass: "bg-[#e9b384]/10 text-[#e9b384] group-hover:bg-[#e9b384]",
+        shadowClass: "shadow-[#e9b384]/5",
+        videos: [links.ciudadanaVideo1, links.ciudadanaVideo2],
+        icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>',
+    },
+    {
+        title: "Nuestra voz en…",
+        theme: "red",
+        bgClass: "bg-red-100 text-red-500 group-hover:bg-red-500",
+        shadowClass: "shadow-red-900/5",
+        videos: [links.vozVideo1, links.vozVideo2],
+        icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>',
+    },
+];
 ---
 
 <Layout title="Multimedia - ILSA" width="wide">
-    <div
-        class="relative min-h-screen pb-32 overflow-hidden selection:bg-blue-100 selection:text-blue-900"
-    >
-        <!-- Light Liquid Background -->
-        <div class="fixed inset-0 z-0 h-screen w-full bg-slate-50">
-            <LiquidContainer
-                class="absolute inset-0 w-full h-full opacity-60 mix-blend-multiply"
-                intensity="medium"
-                use3D={true}
-                frosted={true}
-                clipContent={false}
-            />
-            <!-- Additional Ambient Gradients -->
+    <div class="relative min-h-screen text-[#3d3d47] overflow-hidden font-sans">
+        <!-- Global Atmosphere Gradients (ILSA Standard) -->
+        <div class="fixed top-0 left-0 w-full h-full pointer-events-none z-0">
+            <!-- Noise Overlay -->
             <div
-                class="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-white to-transparent pointer-events-none"
+                class="absolute inset-0 z-20 opacity-[0.03] mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"
+            >
+            </div>
+            <!-- Blur circles -->
+            <div
+                class="absolute top-[-20%] right-[-10%] w-[50%] h-[50%] bg-[#4e7cce]/10 rounded-full blur-[120px]"
+            >
+            </div>
+            <div
+                class="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#5e3b69]/10 rounded-full blur-[120px]"
             >
             </div>
         </div>
 
-        <!-- Content Flow -->
-        <div class="relative z-10 pt-32 px-4 max-w-7xl mx-auto">
-            <!-- Hero -->
-            <div class="text-center mb-24 space-y-8">
+        <div
+            class="relative z-10 pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto flex flex-col gap-12 md:gap-16"
+        >
+            <!-- 1. Canal de YouTube / Hero -->
+            <section
+                class="max-w-5xl mx-auto w-full flex flex-col items-center text-center pt-8"
+            >
+                <!-- Badge -->
                 <div
-                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 bg-white/50 backdrop-blur-md text-sm text-slate-500 tracking-wider uppercase font-bold shadow-sm"
+                    class="inline-flex items-center justify-center gap-3 px-5 py-2.5 rounded-full bg-white/60 backdrop-blur-md border border-[#4e7cce]/30 shadow-sm mb-12"
+                >
+                    <span class="relative flex h-2.5 w-2.5">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4e7cce] opacity-30"
+                        ></span>
+                        <span
+                            class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#4e7cce]"
+                        >
+                        </span>
+                    </span>
+                    <span
+                        class="text-xs font-bold text-[#4e7cce] uppercase tracking-[0.2em]"
+                    >
+                        Archivo Audiovisual
+                    </span>
+                </div>
+
+                <!-- Headline -->
+                <h1
+                    class="text-5xl text-center md:text-8xl font-black text-[#3d3d47] mb-8 tracking-tighter leading-[0.95] drop-shadow-sm text-balance"
+                >
+                    Explora nuestra <br />
+                    <span
+                        class="bg-clip-text text-transparent bg-gradient-to-r from-[#4e7cce] to-[#5e3b69]"
+                        >Multimedia</span
+                    >
+                </h1>
+
+                <!-- Lead -->
+                <p
+                    class="text-xl md:text-2xl text-[#3d3d47]/70 max-w-2xl mx-auto leading-relaxed text-balance font-medium mb-12"
+                >
+                    Videos, conferencias, conversatorios y podcasts de ILSA
+                    sobre el derecho y la justicia social.
+                </p>
+
+                <!-- Call to action -->
+                <a
+                    href={links.canalYoutube}
+                    target="_blank"
+                    class="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white border border-[#ff0000]/20 shadow-xl shadow-[#ff0000]/10 text-[#4e7cce] font-bold text-sm tracking-widest uppercase transition-all duration-300 group hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#ff0000]/20 mb-16 focus-visible:ring-4 focus-visible:ring-[#ff0000]/50 focus-visible:outline-none"
+                >
+                    <span class="text-[#3d3d47]">Suscribirse a YouTube</span>
+                    <svg
+                        class="h-6 w-6 fill-current text-[#ff0000] transform group-hover:scale-110 transition-transform"
+                        viewBox="0 0 24 24"
+                        ><path
+                            d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"
+                        ></path></svg
+                    >
+                </a>
+
+                <!-- Featured Videos -->
+                <div
+                    class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl mx-auto"
+                >
+                    <YoutubeEmbed
+                        videoId={links.youtubePrincipalVideo1}
+                        class="shadow-2xl shadow-[#4e7cce]/10 rounded-[2rem]"
+                    />
+                    <YoutubeEmbed
+                        videoId={links.youtubePrincipalVideo2}
+                        class="shadow-2xl shadow-[#4e7cce]/10 rounded-[2rem]"
+                    />
+                </div>
+            </section>
+
+            <!-- Divider -->
+            <div
+                class="w-full h-px bg-gradient-to-r from-transparent via-[#3d3d47]/10 to-transparent my-12"
+            >
+            </div>
+
+            <!-- 2. Celebrating Dev Week -->
+            <section class="w-full max-w-7xl mx-auto pt-4 pb-8 relative">
+                <div
+                    class="absolute inset-0 bg-gradient-to-b from-[#4e7cce]/5 to-transparent rounded-[4rem] -z-10 pointer-events-none transform -skew-y-2 origin-bottom-left"
+                >
+                </div>
+                <div class="text-center mb-12 relative z-10">
+                    <span
+                        class="inline-block py-1 px-4 rounded-full bg-white/60 border border-[#4e7cce]/20 text-[#4e7cce] text-xs font-bold tracking-[0.2em] uppercase shadow-sm mb-6"
+                        >Destacado Mundial</span
+                    >
+                    <h2
+                        class="text-3xl md:text-4xl lg:text-5xl font-black text-[#3d3d47] tracking-tighter text-balance"
+                    >
+                        Celebrating International <br /><span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-[#4e7cce] to-indigo-600"
+                            >Development Week!</span
+                        >
+                    </h2>
+                </div>
+                <div
+                    class="w-full max-w-5xl mx-auto rounded-[3rem] overflow-hidden shadow-2xl shadow-[#4e7cce]/20 border border-white/60 bg-white/40 p-3 md:p-4 backdrop-blur-2xl relative group"
+                >
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+                    >
+                    </div>
+                    <FacebookEmbed
+                        src={links.internationalDevWeekVideo}
+                        class="rounded-[2.5rem] shadow-inner"
+                    />
+                </div>
+            </section>
+
+            <!-- 3. Narrativas Feministas -->
+            <section class="max-w-7xl mx-auto w-full pt-8 pb-8 relative z-10">
+                <div
+                    class="flex flex-col md:flex-row items-center justify-between gap-6 mb-16 px-4 md:px-8"
+                >
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="h-16 w-1.5 bg-gradient-to-b from-[#5e3b69] to-[#e9b384] rounded-full"
+                        >
+                        </div>
+                        <h3
+                            class="text-3xl md:text-4xl lg:text-5xl font-black text-[#3d3d47] tracking-tighter leading-none"
+                        >
+                            Narrativas <br />Feministas
+                        </h3>
+                    </div>
+                    <div
+                        class="px-8 py-3 rounded-full bg-[#5e3b69]/10 border border-[#5e3b69]/20 backdrop-blur-md"
+                    >
+                        <span
+                            class="text-[#5e3b69] font-bold text-lg md:text-xl tracking-wide"
+                            >Feria del Libro 2024</span
+                        >
+                    </div>
+                </div>
+
+                <div
+                    class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch px-2 md:px-0"
+                >
+                    <div class="lg:col-span-5 relative group">
+                        <!-- Decorative glow -->
+                        <div
+                            class="absolute inset-0 bg-[#e9b384]/20 blur-[60px] rounded-full mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                        >
+                        </div>
+
+                        <div
+                            class="h-full rounded-[3rem] overflow-hidden shadow-2xl shadow-purple-900/10 relative bg-white/20 backdrop-blur-3xl border border-white/80 p-3 transform transition-transform duration-700 group-hover:scale-[1.03] group-hover:-rotate-1"
+                        >
+                            <img
+                                src="http://api.ilsa.org.co/wp-content/uploads/2024/04/Imagen-de-WhatsApp-2024-04-22-a-las-22.40.16_3e43a328.jpg"
+                                alt="Portada narrativa"
+                                width="500"
+                                height="800"
+                                class="w-full h-full object-cover rounded-[2.5rem]"
+                                loading="lazy"
+                            />
+                        </div>
+                    </div>
+                    <div
+                        class="lg:col-span-7 h-full flex flex-col justify-center relative"
+                    >
+                        <!-- Background offset layer -->
+                        <div
+                            class="absolute inset-y-8 -inset-x-8 bg-gradient-to-l from-white/40 to-transparent rounded-[3rem] backdrop-blur-sm -z-10 hidden lg:block"
+                        >
+                        </div>
+
+                        <div
+                            class="w-full rounded-[3rem] overflow-hidden shadow-2xl shadow-[#4e7cce]/15 relative bg-white/60 backdrop-blur-2xl border border-white/80 p-3 transform transition-transform duration-700 hover:scale-[1.02] hover:rotate-1"
+                        >
+                            <FacebookEmbed
+                                src={links.narrativasImgBanner}
+                                class="rounded-[2.5rem]"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. Día Internacional de las Juezas (Carousel Edit) -->
+            <section
+                class="max-w-7xl mx-auto w-full pt-12 pb-8 relative overflow-hidden"
+            >
+                <!-- Liquid background -->
+                <div
+                    class="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-bl from-[#4e7cce]/10 to-transparent rounded-full blur-[100px] pointer-events-none -z-10 translate-x-1/3 -translate-y-1/3"
+                >
+                </div>
+
+                <div
+                    class="flex flex-col lg:flex-row justify-between items-end gap-12 px-6 md:px-12 mb-16 relative z-10"
+                >
+                    <div class="max-w-2xl relative">
+                        <span
+                            class="absolute -top-12 -left-10 text-[12rem] text-[#4e7cce] opacity-[0.05] font-serif leading-none select-none"
+                            >"</span
+                        >
+                        <h3
+                            class="text-3xl md:text-4xl lg:text-5xl font-black text-[#3d3d47] mb-8 leading-[1.05] tracking-tighter"
+                        >
+                            Día Internacional <br /><span
+                                class="text-transparent bg-clip-text bg-gradient-to-r from-[#4e7cce] to-indigo-600"
+                                >de las Juezas</span
+                            >
+                        </h3>
+                        <p
+                            class="text-lg md:text-xl text-[#3d3d47]/70 leading-relaxed font-medium"
+                        >
+                            El 28 de abril de 2021 la Asamblea General de las
+                            Naciones Unidas decidió, mediante la Resolución
+                            75/274, proclamar el 10 de marzo de cada año como
+                            Día Internacional de las Juezas. Desde ILSA nos
+                            sumamos a este reconocimiento y a la exigencia por
+                            la igualdad de género y el poder de las mujeres en
+                            el sistema judicial.
+                        </p>
+                    </div>
+                    <div
+                        class="hidden lg:flex items-center gap-4 text-[#3d3d47]/40 font-bold uppercase tracking-widest text-sm"
+                    >
+                        <span>Desliza para explorar</span>
+                        <svg
+                            class="w-6 h-6 animate-pulse"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg
+                        >
+                    </div>
+                </div>
+
+                <!-- Scrollable Carousel Container -->
+                <div
+                    class="w-full overflow-x-auto pb-12 pt-4 px-4 md:px-12 hide-scrollbar snap-x snap-mandatory relative z-20"
+                >
+                    <div class="flex gap-8 w-max items-center">
+                        {
+                            [
+                                "https://api.ilsa.org.co/wp-content/uploads/2025/03/10-M-Dia-de-las-Juezas.png",
+                                "https://api.ilsa.org.co/wp-content/uploads/2025/03/10-M_Mesa-de-trabajo-1-copy-2.png",
+                                "https://api.ilsa.org.co/wp-content/uploads/2025/03/10-M_Mesa-de-trabajo-1-copy-3.png",
+                                "https://api.ilsa.org.co/wp-content/uploads/2025/03/10-M_Mesa-de-trabajo-1-copy-4.png",
+                                "https://api.ilsa.org.co/wp-content/uploads/2025/03/10-M_Mesa-de-trabajo-1-copy-5.png",
+                                "https://api.ilsa.org.co/wp-content/uploads/2025/03/10-M_Mesa-de-trabajo-1-copy-6.png",
+                                "https://api.ilsa.org.co/wp-content/uploads/2025/03/10-M_Mesa-de-trabajo-1-copy-7.png",
+                                "https://api.ilsa.org.co/wp-content/uploads/2025/03/10-M_Mesa-de-trabajo-1-copy.png",
+                            ].map((src) => (
+                                <div class="snap-center shrink-0 w-[280px] md:w-[400px] rounded-[2.5rem] bg-white/40 p-3 shadow-2xl shadow-[#4e7cce]/10 border border-white/80 group backdrop-blur-xl transform transition-transform duration-500 hover:-translate-y-4 hover:shadow-[#4e7cce]/20">
+                                    <img
+                                        src={src}
+                                        alt="Dia de las juezas slide"
+                                        width="400"
+                                        height="400"
+                                        class="w-full h-auto rounded-[2rem] transform group-hover:scale-[1.03] transition-transform duration-700"
+                                        loading="lazy"
+                                    />
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+                <style>
+                    /* Custom Scrollbar for Carousel */
+                    .hide-scrollbar::-webkit-scrollbar {
+                        height: 8px;
+                    }
+                    .hide-scrollbar::-webkit-scrollbar-track {
+                        background: rgba(255, 255, 255, 0.2);
+                        border-radius: 10px;
+                        margin: 0 2rem;
+                    }
+                    .hide-scrollbar::-webkit-scrollbar-thumb {
+                        background: linear-gradient(90deg, #4e7cce, #5e3b69);
+                        border-radius: 10px;
+                        border: 2px solid rgba(255, 255, 255, 0.5);
+                    }
+                    .hide-scrollbar:hover::-webkit-scrollbar-thumb {
+                        background: linear-gradient(90deg, #3b5f9e, #472d50);
+                    }
+                </style>
+            </section>
+
+            <!-- 5. Eugenii B. Pashukanis -->
+            <section class="max-w-7xl mx-auto w-full pt-8 pb-12 relative">
+                <!-- Liquid background -->
+                <div
+                    class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-[#5e3b69]/10 to-transparent rounded-full blur-[100px] pointer-events-none -z-10 -translate-x-1/2 translate-y-1/2"
+                >
+                </div>
+
+                <div
+                    class="flex flex-col md:flex-row items-center justify-between bg-white/40 backdrop-blur-2xl border border-white/60 shadow-xl shadow-[#5e3b69]/5 rounded-[3rem] p-8 md:p-12 mb-12 relative z-10 mx-4 md:mx-8"
+                >
+                    <h3
+                        class="text-3xl md:text-4xl lg:text-5xl font-black text-[#3d3d47] leading-[1.05] tracking-tighter w-full md:w-1/2 mb-6 md:mb-0"
+                    >
+                        Evgeni B. <br /><span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-[#5e3b69] to-[#e9b384]"
+                            >Pashukanis</span
+                        >
+                        <span class="text-[#3d3d47]/30 text-3xl">133 años</span>
+                    </h3>
+                    <div
+                        class="w-full md:w-1/2 md:pl-12 border-l-0 md:border-l-2 border-[#3d3d47]/10"
+                    >
+                        <p
+                            class="text-lg md:text-xl text-[#3d3d47]/70 leading-relaxed font-medium"
+                        >
+                            Para celebrar los 133 años del nacimiento de Evgeni
+                            B. Pashukanis compartimos la traducción realizada
+                            por ILSA de su obra <strong class="text-[#5e3b69]"
+                                >La Teoría General del Derecho y el Marxismo.</strong
+                            >
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Scrollable Carousel Container -->
+                <div
+                    class="w-full overflow-x-auto pb-12 pt-4 px-4 md:px-12 hide-scrollbar snap-x snap-mandatory relative z-20"
+                >
+                    <div class="flex gap-8 w-max items-center">
+                        {
+                            [
+                                "http://api.ilsa.org.co/wp-content/uploads/2024/01/PashukanisHB133-01.png",
+                                "http://api.ilsa.org.co/wp-content/uploads/2024/01/PashukanisHB133-02.png",
+                                "http://api.ilsa.org.co/wp-content/uploads/2024/01/PashukanisHB133-03.png",
+                                "http://api.ilsa.org.co/wp-content/uploads/2024/01/PashukanisHB133-04.png",
+                                "http://api.ilsa.org.co/wp-content/uploads/2024/01/PashukanisHB133-05.png",
+                            ].map((src) => (
+                                <div class="snap-center shrink-0 w-[300px] md:w-[480px] rounded-[2.5rem] bg-white/40 p-3 shadow-2xl shadow-[#5e3b69]/10 border border-white/80 group backdrop-blur-xl transform transition-transform duration-500 hover:-translate-y-4 hover:shadow-[#5e3b69]/20">
+                                    <img
+                                        src={src}
+                                        alt="Pashukanis Slide"
+                                        width="480"
+                                        height="480"
+                                        class="w-full h-auto rounded-[2rem] transform group-hover:scale-[1.03] transition-transform duration-700 shadow-inner"
+                                        loading="lazy"
+                                    />
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+            </section>
+
+            <!-- Divider -->
+            <div
+                class="w-full h-px bg-gradient-to-r from-transparent via-[#3d3d47]/10 to-transparent my-12"
+            >
+            </div>
+
+            <!-- 6. El reconocimiento a la labor de las mujeres... -->
+            <section class="max-w-7xl mx-auto w-full pt-12 relative">
+                <!-- Ambient Glow -->
+                <div
+                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-[#4e7cce]/10 rounded-full blur-[100px] pointer-events-none z-0"
+                >
+                </div>
+
+                <div
+                    class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-white/40 p-10 md:p-16 rounded-[3rem] backdrop-blur-3xl border border-white/60 shadow-2xl shadow-[#4e7cce]/5 overflow-hidden"
+                >
+                    <div class="lg:col-span-5 flex flex-col justify-center">
+                        <div
+                            class="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/80 border border-[#4e7cce]/20 shadow-sm mb-8 w-max"
+                        >
+                            <span class="relative flex h-2.5 w-2.5">
+                                <span
+                                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4e7cce] opacity-30"
+                                ></span>
+                                <span
+                                    class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#4e7cce]"
+                                ></span>
+                            </span>
+                            <span
+                                class="text-xs font-bold text-[#4e7cce] uppercase tracking-[0.2em]"
+                                >Memoria Viva</span
+                            >
+                        </div>
+                        <h3
+                            class="text-3xl md:text-4xl lg:text-5xl font-black text-[#3d3d47] mb-8 leading-[1.05] tracking-tighter text-balance"
+                        >
+                            El reconocimiento a la labor de las mujeres <br
+                            /><span
+                                class="bg-clip-text text-transparent bg-gradient-to-r from-[#4e7cce] to-[#5e3b69]"
+                                >buscadoras</span
+                            >
+                        </h3>
+                        <p
+                            class="text-lg text-[#3d3d47]/70 leading-relaxed font-medium"
+                        >
+                            Víctimas de desaparición forzada. Un homenaje visual
+                            a su resistencia, organización y lucha inalcanzable
+                            por la verdad y la justicia.
+                        </p>
+                    </div>
+
+                    <div
+                        class="lg:col-span-7 relative h-[400px] md:h-[600px] w-full mt-12 lg:mt-0 block"
+                    >
+                        <!-- Masonry/Scattered Image Composition -->
+                        {
+                            [
+                                {
+                                    src: links.reconocimientoImg1,
+                                    classes:
+                                        "absolute top-0 right-0 w-[45%] rounded-3xl overflow-hidden shadow-2xl shadow-[#4e7cce]/20 border-4 border-white rotate-3 hover:rotate-0 transform hover:scale-105 hover:z-50 transition-all duration-500 z-10 cursor-pointer",
+                                },
+                                {
+                                    src: links.reconocimientoImg2,
+                                    classes:
+                                        "absolute top-[20%] right-[35%] w-[40%] rounded-3xl overflow-hidden shadow-2xl shadow-[#5e3b69]/20 border-4 border-white -rotate-6 hover:rotate-0 transform hover:scale-105 hover:z-50 transition-all duration-500 z-20 cursor-pointer",
+                                },
+                                {
+                                    src: links.reconocimientoImg3,
+                                    classes:
+                                        "absolute bottom-[10%] right-[10%] w-[35%] rounded-3xl overflow-hidden shadow-2xl shadow-red-900/20 border-4 border-white rotate-6 hover:rotate-0 transform hover:scale-105 hover:z-50 transition-all duration-500 z-30 cursor-pointer",
+                                },
+                                {
+                                    src: links.reconocimientoImg4,
+                                    classes:
+                                        "absolute bottom-0 right-[45%] w-[38%] rounded-3xl overflow-hidden shadow-2xl shadow-yellow-900/20 border-4 border-white -rotate-3 hover:rotate-0 transform hover:scale-105 hover:z-50 transition-all duration-500 z-40 cursor-pointer",
+                                },
+                                {
+                                    src: links.reconocimientoImg5,
+                                    classes:
+                                        "absolute top-[40%] left-0 w-[42%] rounded-3xl overflow-hidden shadow-2xl shadow-green-900/20 border-4 border-white rotate-2 hover:rotate-0 transform hover:scale-105 hover:z-50 transition-all duration-500 z-50 cursor-pointer",
+                                },
+                            ].map((img) => (
+                                <div class={img.classes}>
+                                    <img
+                                        src={img.src}
+                                        alt="Buscadoras"
+                                        width="400"
+                                        height="400"
+                                        class="w-full h-auto"
+                                        loading="lazy"
+                                    />
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. Spotify Podcast -->
+            <section class="max-w-7xl mx-auto w-full pt-12">
+                <!-- Bold Asymmetrical Glass Container -->
+                <div
+                    class="relative overflow-hidden rounded-[3rem] bg-gradient-to-br from-white/70 to-slate-50/30 backdrop-blur-3xl border border-white/60 shadow-2xl shadow-[#1DB954]/10 p-8 md:p-16 flex flex-col md:flex-row items-center gap-12 group"
+                >
+                    <!-- Generative Background Accents -->
+                    <div
+                        class="absolute -top-32 -right-32 w-[40rem] h-[40rem] bg-[#1DB954]/10 rounded-full blur-[120px] pointer-events-none transition-transform duration-1000 group-hover:scale-110"
+                    >
+                    </div>
+                    <div
+                        class="absolute -bottom-32 -left-32 w-[30rem] h-[30rem] bg-[#4e7cce]/10 rounded-full blur-[100px] pointer-events-none transition-transform duration-1000 group-hover:scale-110"
+                    >
+                    </div>
+
+                    <div
+                        class="relative z-10 w-full md:w-5/12 flex flex-col items-center md:items-start text-center md:text-left"
+                    >
+                        <div
+                            class="flex items-center gap-3 mb-8 px-5 py-2.5 rounded-full bg-white/80 border border-[#1DB954]/20 shadow-sm"
+                        >
+                            <span
+                                class="w-3 h-3 rounded-full bg-[#1DB954] shadow-[0_0_10px_#1DB954] animate-pulse"
+                            ></span>
+                            <span
+                                class="text-sm font-bold text-[#1DB954] uppercase tracking-widest"
+                                >En Spotify</span
+                            >
+                        </div>
+                        <h3
+                            class="text-3xl md:text-4xl lg:text-5xl font-black text-[#3d3d47] mb-6 tracking-tighter leading-[0.9]"
+                        >
+                            Escucha <br /> nuestro <span
+                                class="bg-clip-text text-transparent bg-gradient-to-r from-[#1DB954] to-emerald-700"
+                                >podcast</span
+                            >
+                        </h3>
+                        <p
+                            class="text-[#3d3d47]/70 text-lg md:text-xl leading-relaxed mb-10 text-balance font-medium"
+                        >
+                            Aprende sobre derechos de la naturaleza, procesos
+                            emancipadores y soberanía, de la voz de las
+                            lideresas comunitarias.
+                        </p>
+                        <a
+                            href={links.spotifySuscripcionBtn}
+                            target="_blank"
+                            class="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#1DB954] text-white font-bold tracking-widest text-sm uppercase hover:bg-[#1ed760] hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#1DB954]/40 transition-all duration-300 shadow-xl shadow-[#1DB954]/20 focus-visible:ring-4 focus-visible:ring-green-500/50 focus-visible:outline-none"
+                        >
+                            Seguir a ILSA
+                            <svg
+                                class="w-5 h-5 fill-current"
+                                viewBox="0 0 24 24"
+                                ><path
+                                    d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.3 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.24 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.239.54-.959.72-1.56.3z"
+                                ></path></svg
+                            >
+                        </a>
+                    </div>
+                    <div class="relative z-10 w-full md:w-7/12">
+                        <div
+                            class="w-full shadow-2xl rounded-3xl ring-8 ring-white/50 transform transition-transform duration-700 hover:scale-[1.02] hover:-rotate-1 bg-white"
+                        >
+                            <SpotifyEmbed src={links.spotifyPodcastEmbed} />
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 8. Galería de vídeos / Eventos -->
+            <section class="max-w-7xl mx-auto w-full pt-16">
+                <div
+                    class="flex flex-col items-center mb-16 text-center relative z-10"
                 >
                     <span
-                        class="w-2 h-2 rounded-full bg-[var(--ilsa-blue)] animate-pulse"
-                    ></span>
-                    Galería Digital
+                        class="text-[#e9b384] font-bold tracking-[0.3em] uppercase mb-4 opacity-80 text-sm"
+                        >Catálogo Completo</span
+                    >
+                    <h3
+                        class="text-3xl md:text-4xl lg:text-5xl font-black text-[#3d3d47] mb-6 tracking-tighter"
+                    >
+                        Galería <span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-[#4e7cce] to-[#5e3b69]"
+                            >Audiovisual</span
+                        >
+                    </h3>
+                    <p
+                        class="text-lg md:text-xl text-[#3d3d47]/60 max-w-2xl text-balance font-medium"
+                    >
+                        Explora nuestras jornadas, talleres, charlas y foros
+                        virtuales organizados temáticamente.
+                    </p>
                 </div>
 
-                <GradientText
-                    text="Multimedia"
-                    size="text-5xl md:text-8xl text-center"
-                    weight="font-black"
-                    from="var(--ilsa-blue)"
-                    to="var(--ilsa-blue-dark)"
-                    class="justify-center block drop-shadow-sm tracking-tight pb-4"
-                />
-
-                <p
-                    class="text-lg md:text-2xl text-slate-600 max-w-3xl mx-auto text-balance leading-relaxed font-light"
-                >
-                    Explora nuestra colección audiovisual: <span
-                        class="text-[var(--ilsa-blue)] font-medium"
-                        >videos, documentales y podcasts</span
-                    > que narran las luchas y saberes desde los territorios.
-                </p>
-            </div>
-
-            <!-- Content Placeholder -->
-            <div
-                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 opacity-60"
-            >
-                <!-- Placeholders for future content -->
                 <div
-                    class="aspect-video rounded-2xl bg-white/50 border border-slate-200 flex items-center justify-center"
+                    class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 relative z-10"
                 >
-                    <span class="text-slate-400 font-medium">Próximamente</span>
+                    {
+                        avGallery.map((block) => (
+                            <div
+                                class={`flex flex-col gap-6 bg-white/40 p-8 rounded-[2.5rem] border border-white/60 shadow-xl ${block.shadowClass} backdrop-blur-3xl hover:bg-white/60 transition-colors duration-500 group`}
+                            >
+                                <div class="flex items-center gap-4 mb-2">
+                                    <div
+                                        class={`w-14 h-14 rounded-2xl flex items-center justify-center group-hover:text-white transition-colors duration-500 shadow-inner ${block.bgClass}`}
+                                    >
+                                        <svg
+                                            class="w-7 h-7"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                            set:html={block.icon}
+                                        />
+                                    </div>
+                                    <h3 class="text-2xl md:text-3xl font-black text-[#3d3d47] tracking-tight leading-none">
+                                        {block.title}
+                                    </h3>
+                                </div>
+                                <div class="grid grid-cols-1 gap-6">
+                                    {block.videos.map((vid) => (
+                                        <YoutubeEmbed
+                                            videoId={vid}
+                                            class="shadow-lg border-2 border-transparent hover:border-white/50 transition-colors rounded-[2rem]"
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        ))
+                    }
                 </div>
-                <div
-                    class="aspect-video rounded-2xl bg-white/50 border border-slate-200 flex items-center justify-center"
-                >
-                    <span class="text-slate-400 font-medium">Próximamente</span>
-                </div>
-                <div
-                    class="aspect-video rounded-2xl bg-white/50 border border-slate-200 flex items-center justify-center"
-                >
-                    <span class="text-slate-400 font-medium">Próximamente</span>
-                </div>
-            </div>
+            </section>
         </div>
     </div>
 </Layout>

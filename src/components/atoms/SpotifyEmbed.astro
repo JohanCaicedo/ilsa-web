@@ -1,0 +1,25 @@
+---
+interface Props {
+    src: string;
+    class?: string;
+    height?: string;
+}
+
+const { src, class: className = "", height = "232" } = Astro.props;
+---
+
+<div
+    class={`w-full overflow-hidden rounded-3xl bg-slate-100 shadow-md border border-white/20 relative ${className}`}
+>
+    <iframe
+        src={src}
+        width="100%"
+        height={height}
+        style="border-radius:12px; border:none;"
+        allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+        class="block"
+    >
+    </iframe>
+</div>

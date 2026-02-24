@@ -1,0 +1,30 @@
+---
+interface Props {
+    videoId: string;
+    class?: string;
+    autoplay?: boolean;
+}
+
+const { videoId, class: className = "", autoplay = false } = Astro.props;
+const srcUrl = `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1${autoplay ? "&autoplay=1&mute=1" : ""}`;
+---
+
+<div
+    class={`aspect-video w-full overflow-hidden rounded-3xl bg-slate-900 shadow-xl border border-white/20 relative group ${className}`}
+>
+    <iframe
+        class="absolute inset-0 w-full h-full border-0 transition-transform duration-500 scale-100 group-hover:scale-105 pointer-events-auto"
+        src={srcUrl}
+        title="YouTube video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        loading="lazy"
+    >
+    </iframe>
+
+    <!-- Subtle glass glare overlay -->
+    <div
+        class="pointer-events-none absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+    >
+    </div>
+</div>
