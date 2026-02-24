@@ -221,6 +221,72 @@ export const CARD_QUERY = `
   }
 `;
 
+export const SINGLE_POST_QUERY = `
+  query GetPostByURI($uri: ID!) {
+    post(id: $uri, idType: URI) {
+      id
+      databaseId
+      slug
+      uri
+      title
+      date
+      modified
+      excerpt
+      content
+      categories {
+        nodes {
+          name
+          slug
+          termTaxonomyId
+        }
+      }
+      tags {
+        nodes {
+          name
+          slug
+        }
+      }
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+          caption
+          mediaDetails {
+            width
+            height
+          }
+        }
+      }
+      author {
+        node {
+          name
+          firstName
+          lastName
+          avatar {
+            url
+          }
+        }
+      }
+      seo {
+        title
+        metaDesc
+        canonical
+        opengraphTitle
+        opengraphDescription
+        opengraphImage {
+          sourceUrl
+        }
+        twitterTitle
+        twitterDescription
+        twitterImage {
+          sourceUrl
+        }
+        readingTime
+      }
+    }
+  }
+`;
+
 const API_URL = import.meta.env.WORDPRESS_API_URL || "https://api.ilsa.org.co/graphql";
 
 // Helper Functions
@@ -281,6 +347,42 @@ export async function fetchAllPosts(): Promise<MasterQueryResponse> {
       }
     }
   };
+}
+
+export async function fetchPostByURI(uri: string): Promise<PostNode | null> {
+  const data = await wpQuery<{ post: PostNode }>({
+    query: SINGLE_POST_QUERY,
+    variables: { uri }
+  });
+
+  return data?.post || null;
+}
+
+export async function getRelatedPosts(categorySlug: string | undefined, currentUri: string): Promise<any[]> {
+  // Leverage the cards query to fetch brief related posts quickly
+  const fetchCount = 20;
+  const data = await wpQuery<{ posts: { nodes: CardPostNode[] } }>({
+    query: CARD_QUERY,
+    variables: {
+      first: fetchCount,
+      categoryName: categorySlug || ""
+    }
+  });
+
+  const allNodes = data?.posts?.nodes || [];
+
+  return allNodes
+    .filter((p) => p.uri !== currentUri)
+    .filter((p) => {
+      if (!categorySlug) return true;
+      return p.categories.nodes.some((c) => c.slug === categorySlug);
+    })
+    .slice(0, 10)
+    .map((p) => ({
+      ...p,
+      content: "",
+      image: p.featuredImage?.node?.sourceUrl || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect fill='%23e5e7eb' width='400' height='400'/%3E%3C/svg%3E",
+    }));
 }
 
 export const EVENTS_QUERY = `

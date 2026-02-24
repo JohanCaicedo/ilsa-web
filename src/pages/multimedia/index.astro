@@ -4,7 +4,13 @@ import YoutubeEmbed from "../../components/atoms/YoutubeEmbed.astro";
 import SpotifyEmbed from "../../components/atoms/SpotifyEmbed.astro";
 import FacebookEmbed from "../../components/atoms/FacebookEmbed.astro";
 
-export const prerender = true;
+export const prerender = false;
+
+// Cloudflare Edge Caching (ISR): Serve from Edge cache for 1 hr, revalidate in background for 1 day
+Astro.response.headers.set(
+    "Cache-Control",
+    "public, s-maxage=3600, stale-while-revalidate=86400",
+);
 
 // ==========================================
 // ✏️ VARIABLES DE CONTENIDO Y ENLACES

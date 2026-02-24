@@ -1,9 +1,5 @@
 ---
-import {
-  fetchAllPosts, // Import new function
-  type MasterQueryResponse,
-  type PostNode,
-} from "../lib/wp";
+import { fetchPostByURI, getRelatedPosts, type PostNode } from "../lib/wp";
 import Layout from "../layouts/Layout.astro";
 import ArticlePost from "../components/organisms/ArticlePost.astro";
 import RelatedSlider from "../components/organisms/RelatedSlider.astro";
@@ -13,58 +9,32 @@ import { cn } from "../lib/utils";
 import { collectionsConfig } from "../lib/collections";
 import WPLoader from "../components/molecules/WPLoader.astro";
 
-export const prerender = true;
+// Enable Server-Side Rendering (SSR) for real-time WordPress dynamic content
+export const prerender = false;
 
-export async function getStaticPaths() {
-  const data: MasterQueryResponse = await fetchAllPosts(); // Use Fetch All
-  const allPosts = data.posts.nodes;
+// Cloudflare Edge Caching (ISR): Serve from Edge cache for 1 hr, revalidate in background for 1 day
+Astro.response.headers.set(
+  "Cache-Control",
+  "public, s-maxage=3600, stale-while-revalidate=86400",
+);
 
-  return allPosts.map((post) => {
-    // Logic moved from component to getStaticPaths
-    const primaryCategory = post.categories?.nodes[0];
-    const categorySlug = primaryCategory?.slug;
-
-    // Filter posts that share at least one category, prioritize same category
-    const relatedPosts = allPosts
-      .filter((p) => p.uri !== post.uri) // Exclude current
-      .filter((p) => {
-        if (!categorySlug) return true; // If current has no cat, show any recent
-        return p.categories.nodes.some((c) => c.slug === categorySlug);
-      })
-      .slice(0, 10)
-      .map((p) => ({
-        ...p,
-        // Strip heavy content for related posts to save build size
-        content: "",
-        image:
-          p.featuredImage?.node?.sourceUrl ||
-          "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect fill='%23e5e7eb' width='400' height='400'/%3E%3C/svg%3E",
-      }));
-
-    return {
-      params: {
-        uri: post.uri === "/" ? undefined : post.uri.replace(/^\/|\/$/g, ""),
-      },
-      props: {
-        post,
-        relatedPosts, // Pass computed related posts instead of allPosts
-      },
-    };
-  });
-}
-
-interface Props {
-  post: PostNode;
-  relatedPosts: any[]; // Update props interface
-}
-
-const { post, relatedPosts } = Astro.props;
+const { uri } = Astro.params;
 const currentUrl = Astro.url.href;
 
-// 1. Identify Category
+// 1. Fetch Post dynamically
+const postUri = uri ? `/${uri}/` : "/";
+const post = await fetchPostByURI(postUri);
+
+if (!post) {
+  return Astro.redirect("/404");
+}
+
+// 2. Fetch Related Posts (max 10) dynamically based on primary category
 const primaryCategory = post.categories?.nodes[0];
 const categorySlug = primaryCategory?.slug;
 const categoryName = primaryCategory?.name || "Actualidad";
+
+const relatedPosts = await getRelatedPosts(categorySlug, postUri);
 
 // 2. Author Logic (Only for Opinion)
 const isOpinion = post.categories?.nodes.some((c) => c.slug === "opinion");
@@ -111,6 +81,8 @@ breadcrumbItems.push({
   label: post.title,
   href: Astro.url.pathname,
 });
+const isActividades =
+  post.categories?.nodes.some((c) => c.slug === "actividades") || false;
 ---
 
 <Layout
@@ -135,7 +107,9 @@ breadcrumbItems.push({
         twitterUrl={authorData?.xUrl || ""}
         twitterHandle={authorData?.xHandle || ""}
         url={currentUrl}
-        featuredImage={post.featuredImage?.node?.sourceUrl}
+        featuredImage={isActividades
+          ? post.featuredImage?.node?.sourceUrl
+          : undefined}
       />
     </div>
   </WPLoader>

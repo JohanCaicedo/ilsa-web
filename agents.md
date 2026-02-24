@@ -30,8 +30,9 @@ Antes de crear UI, verifica si puedes usar o extender estos archivos:
 - `badge.tsx`, `button.tsx`, `card.tsx`, `navigation-menu.tsx`.
 
 ## 3. Reglas de Oro de Programación
-1. **Datos**: Toda consulta a WP debe usar `wpQuery` de `src/lib/wp.ts`. Nunca uses fetch directo.
-2. **Autores**: Usa el mapeo de `src/lib/authors.ts`. No asumas la data de WP como única fuente para columnistas.
+1. **Edge Caching (ISR)**: Rutas que extraigan datos del CMS (`[...uri].astro`, `/opinion`, `/multimedia`) NO DEBEN usar `getStaticPaths`. En su lugar, usa `export const prerender = false;` e inyecta la cabecera HTTP \`Astro.response.headers.set('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');\` para que Cloudflare Pages guarde el HTML y lo revalide dinámicamente en el background.
+2. **Datos**: Toda consulta a WP debe usar `wpQuery` de `src/lib/wp.ts`. Nunca uses fetch directo.
+3. **Autores**: Usa el mapeo de `src/lib/authors.ts`. No asumas la data de WP como única fuente para columnistas.
 3. **Diseño (Liquid Glass)**: Sigue el sistema de refracción. Usa `backdrop-blur-md`, `bg-white/10` y `border-white/20`. Consulta `Liquid glass.docx` para la física del vidrio.
 4. **Layout**: Usa `Layout.astro`. Respeta las props `title` y `width` ("narrow" | "wide") para el ancho del contenedor.
 5. **Utilidades**: Usa `cn` de `src/lib/utils.ts` para combinar clases de Tailwind.

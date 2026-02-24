@@ -15,7 +15,7 @@ export default defineConfig({
     imageService: 'passthrough',
     routes: {
       include: ["/*"],
-      exclude: ["/actividades/*", "/publicaciones/*", "/nosotros/*", "/opinion/*", "/_astro/*", "/assets/*", "/fonts/*", "/icons/*", "/images/*"]
+      exclude: ["/actividades/*", "/publicaciones/*", "/nosotros/*", "/_astro/*", "/assets/*", "/fonts/*", "/icons/*", "/images/*"]
     }
   }),
   image: {
