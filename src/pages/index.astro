@@ -24,8 +24,16 @@ const [newsPosts, opinionPosts, legalActionsPosts] = await Promise.all([
 
 <Layout
 	title="ILSA - Instituto Latinoamericano para una Sociedad y un Derecho Alternativos"
+	seo={{
+		metaDesc:
+			"Explora las últimas noticias, investigaciones, columnas de opinión y acciones jurídicas de ILSA. Promovemos una visión crítica del derecho y la transformación social en América Latina.",
+	}}
 	width="wide"
 >
+	<h1 class="sr-only">
+		ILSA - Instituto Latinoamericano para una Sociedad y un Derecho
+		Alternativos
+	</h1>
 	<Navbar />
 
 	<!-- HERO SECTION -->

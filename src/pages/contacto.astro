@@ -4,15 +4,22 @@ import Layout from "../layouts/Layout.astro";
 export const prerender = true;
 ---
 
-<Layout title="Contacto - ILSA" width="wide">
+<Layout
+    title="Contacto ILSA | Teléfono, Ubicación y Correo Electrónico"
+    seo={{
+        metaDesc:
+            "Ponte en contacto con el Instituto Latinoamericano para una Sociedad y un Derecho Alternativos. Encuentra nuestra dirección en Bogotá y canales autorizados.",
+    }}
+    width="wide"
+>
     <div class="py-12 md:py-20 font-[sans-serif] relative">
         <div class="max-w-6xl mx-auto px-6">
             <div class="text-center mb-16">
-                <h2
+                <h1
                     class="text-center text-4xl md:text-5xl font-black text-slate-900 tracking-tight"
                 >
                     Contáctanos
-                </h2>
+                </h1>
                 <p
                     class="text-center text-lg text-slate-600 mt-4 max-w-2xl mx-auto"
                 >

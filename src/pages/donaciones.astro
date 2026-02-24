@@ -6,13 +6,24 @@ import LiquidContainer from "../components/experimental/LiquidContainer.astro";
 export const prerender = true;
 ---
 
-<Layout title="Apoya a ILSA - Donaciones" width="narrow">
+<Layout
+    title="Apoya a ILSA - Donaciones"
+    seo={{
+        metaDesc:
+            "Haz tu donación a ILSA y contribuye a la construcción de un derecho alternativo y una sociedad más justa en América Latina. Conoce cómo donar vía Ko-fi.",
+    }}
+    width="narrow"
+>
     <div class="relative text-center py-16 sm:py-24 px-4">
+        <h1 class="sr-only">
+            Donaciones a ILSA - Apóyanos para transformar realidades
+        </h1>
         <LiquidContainer frosted={true} class="max-w-3xl mx-auto rounded-3xl">
             <div class="p-10 md:p-16">
                 <!-- Header -->
                 <div class="mb-12">
                     <GradientText
+                        as="h2"
                         text="Tu apoyo transforma realidades"
                         size="text-4xl md:text-5xl text-center"
                         weight="font-black"
