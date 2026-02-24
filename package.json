@@ -2,12 +2,12 @@
   "name": "ilsa-web",
   "type": "module",
   "version": "0.0.1",
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "npx wrangler pages dev dist",
-    "astro": "astro"
-  },
+"scripts": {
+  "dev": "astro dev",
+  "build": "astro build",
+  "preview": "bunx wrangler pages dev dist",
+  "astro": "astro"
+},
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.5",
     "@astrojs/mdx": "^4.3.13",
