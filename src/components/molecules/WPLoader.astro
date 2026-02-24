@@ -15,11 +15,15 @@ const {
 const uniqueId = `wp-loader-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
-<div class={`relative ${minHeight} ${className}`}>
+<div
+    class={`relative ${minHeight} ${className}`}
+    data-wp-loader="true"
+    data-loaded="false"
+>
     <!-- Skeleton Overlay -->
     <div
-        id={`${uniqueId}-skeleton`}
-        class="absolute inset-0 z-20 bg-[var(--ilsa-bg-light)] transition-opacity duration-700 ease-out"
+        data-loader-skeleton
+        class="absolute inset-0 z-10 bg-[var(--ilsa-bg-light)] transition-opacity duration-700 ease-out"
         aria-hidden="true"
     >
         <SkeletonLoader type={type} />
@@ -27,38 +31,45 @@ const uniqueId = `wp-loader-${Math.random().toString(36).substr(2, 9)}`;
 
     <!-- Real Content (Opacity 0 initially) -->
     <div
-        id={`${uniqueId}-content`}
-        class="opacity-0 transition-opacity duration-700 ease-out h-full"
+        data-loader-content
+        class="opacity-0 transition-opacity duration-700 ease-out h-full w-full"
     >
         <slot />
     </div>
 </div>
 
-<script define:vars={{ uniqueId }}>
-    // Encapsulated loader logic
-    function initLoader() {
-        const skeleton = document.getElementById(`${uniqueId}-skeleton`);
-        const content = document.getElementById(`${uniqueId}-content`);
+<script>
+    // Usar clases en lugar de IDs únicos pesados, y delegación de eventos para View Transitions
+    function initLoaders() {
+        const loaders = document.querySelectorAll('[data-wp-loader="true"]');
 
-        if (skeleton && content) {
-            // Force delay to ensure visual stability and "smoothness"
-            // Using 1.5s as requested by user ("más o menos 2 segundos") to cover heavy WP loads
-            setTimeout(() => {
-                requestAnimationFrame(() => {
-                    skeleton.style.opacity = "0";
-                    content.style.opacity = "1";
+        loaders.forEach((loader) => {
+            // Check if already initialized to prevent double-fading
+            if (loader.getAttribute("data-loaded") === "true") return;
 
-                    // Remove from DOM after transition
-                    setTimeout(() => {
-                        skeleton.style.display = "none";
-                    }, 700); // Match transition duration
-                });
-            }, 1500);
-        }
+            const skeleton = loader.querySelector("[data-loader-skeleton]");
+            const content = loader.querySelector("[data-loader-content]");
+
+            if (skeleton && content) {
+                // Force delay to ensure visual stability and "smoothness", same 1.5s
+                setTimeout(() => {
+                    requestAnimationFrame(() => {
+                        (skeleton as HTMLElement).style.opacity = "0";
+                        (content as HTMLElement).style.opacity = "1";
+                        loader.setAttribute("data-loaded", "true");
+
+                        // Remove skeleton from DOM flow after transition
+                        setTimeout(() => {
+                            (skeleton as HTMLElement).style.display = "none";
+                        }, 700); // Match transition duration
+                    });
+                }, 1500);
+            }
+        });
     }
 
-    // Run on load and View Transitions
-    document.addEventListener("astro:page-load", initLoader);
-    // Immediate run fallback
-    initLoader();
+    // Run on initial load and View Transitions
+    document.addEventListener("astro:page-load", initLoaders);
+    // Immediate run fallback for first paint
+    initLoaders();
 </script>

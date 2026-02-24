@@ -27,10 +27,12 @@ const breadcrumbItems = [{ label: "Opinión", href: "/opinion" }];
 // Fetch SEO and Post Data (Fetch ALL posts now)
 const data: MasterQueryResponse = await fetchAllPosts();
 
-// Filter opinion articles (assuming category slug is 'opinion') and limit to 20
+// Filter opinion articles (matching 'opinion' or 'opiniones') and limit to 20
 const opinionArticles = (
     data?.posts?.nodes?.filter((post: PostNode) =>
-        post.categories.nodes.some((cat) => cat.slug === "opinion"),
+        post.categories.nodes.some(
+            (cat) => cat.slug === "opinion" || cat.slug === "opiniones",
+        ),
     ) || []
 ).slice(0, 20);
 
