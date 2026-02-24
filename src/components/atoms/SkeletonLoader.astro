@@ -1,54 +1,120 @@
 ---
 interface Props {
-    type?: "article" | "card" | "text" | "author-header";
+    type?: "article" | "card" | "text" | "author-header" | "author-card";
     class?: string;
 }
 
-const { type = "article", class: className } = Astro.props;
+const { type = "article", class: className = "" } = Astro.props;
+
+// Variables for card skeletons to repeat them
+const skeletonCards = Array(4).fill(0);
 ---
 
-<div class={`skeleton-loader ${className}`} aria-hidden="true">
+<div class={`skeleton-loader w-full ${className}`} aria-hidden="true">
+    {/* ===== ARTICLE SKELETON ===== */}
     {
         type === "article" && (
-            <div class="space-y-8 animate-pulse">
-                {/* Title */}
-                <div class="h-12 bg-[var(--ilsa-blue-light)]/30 rounded-lg w-3/4 mx-auto" />
-                <div class="h-12 bg-[var(--ilsa-blue-light)]/30 rounded-lg w-1/2 mx-auto" />
-
-                {/* Meta */}
-                <div class="flex justify-center gap-4 mt-6">
-                    <div class="h-4 bg-[var(--ilsa-blue-light)]/30 rounded w-24" />
-                    <div class="h-4 bg-[var(--ilsa-blue-light)]/30 rounded w-24" />
+            <div class="max-w-3xl mx-auto space-y-8 animate-pulse pt-4">
+                {/* Meta Base */}
+                <div class="flex items-center justify-between pb-5 border-b border-slate-200 mb-8 w-full">
+                    <div class="h-6 bg-slate-200 rounded-full w-24" />
+                    <div class="h-4 bg-slate-200 rounded w-32" />
                 </div>
 
-                {/* Image */}
-                <div class="w-full aspect-video bg-[var(--ilsa-blue-light)]/20 rounded-3xl mt-12" />
-
-                {/* Content */}
-                <div class="space-y-4 mt-12 max-w-none">
-                    <div class="h-4 bg-[var(--ilsa-blue-light)]/30 rounded w-full" />
-                    <div class="h-4 bg-[var(--ilsa-blue-light)]/30 rounded w-full" />
-                    <div class="h-4 bg-[var(--ilsa-blue-light)]/30 rounded w-5/6" />
-                    <div class="h-4 bg-[var(--ilsa-blue-light)]/30 rounded w-full" />
-                    <div class="h-4 bg-[var(--ilsa-blue-light)]/30 rounded w-4/5" />
+                {/* Main Title (3 lines typical) */}
+                <div class="space-y-3 mb-6 w-full">
+                    <div class="h-10 md:h-14 bg-slate-200 rounded-lg w-full" />
+                    <div class="h-10 md:h-14 bg-slate-200 rounded-lg w-4/5" />
+                    <div class="flex justify-end mt-4"><div class="h-8 w-32 bg-slate-200 rounded-full"></div></div>
                 </div>
 
-                <div class="space-y-4 mt-8 max-w-none">
-                    <div class="h-4 bg-[var(--ilsa-blue-light)]/30 rounded w-full" />
-                    <div class="h-4 bg-[var(--ilsa-blue-light)]/30 rounded w-full" />
-                    <div class="h-4 bg-[var(--ilsa-blue-light)]/30 rounded w-3/4" />
+                {/* Author Section */}
+                <div class="flex flex-col md:flex-row items-center md:items-start gap-6 mb-12 p-8 bg-slate-100 rounded-3xl w-full">
+                    <div class="w-20 h-20 rounded-full bg-slate-300 shrink-0" />
+                    <div class="flex flex-col justify-center text-center md:text-left w-full space-y-3 mt-2 md:mt-0">
+                        <div class="h-6 bg-slate-300 rounded w-48 mx-auto md:mx-0" />
+                        <div class="h-4 bg-slate-200 rounded w-full" />
+                        <div class="h-4 bg-slate-200 rounded w-5/6 mx-auto md:mx-0" />
+                        <div class="h-8 bg-white rounded-full w-32 mx-auto md:mx-0 mt-4 border border-slate-200" />
+                    </div>
+                </div>
+
+                {/* Featured Image */}
+                <div class="w-full aspect-video bg-slate-200 rounded-3xl mb-12 shadow-sm" />
+
+                {/* Content Body */}
+                <div class="space-y-4 max-w-none w-full">
+                    <div class="h-4 bg-slate-200 rounded w-full" />
+                    <div class="h-4 bg-slate-200 rounded w-full" />
+                    <div class="h-4 bg-slate-200 rounded w-11/12" />
+                    <div class="h-4 bg-slate-200 rounded w-full" />
+                    <div class="h-4 bg-slate-200 rounded w-4/5" />
+                </div>
+                
+                <div class="space-y-4 max-w-none mt-8 w-full">
+                    <div class="h-4 bg-slate-200 rounded w-full" />
+                    <div class="h-4 bg-slate-200 rounded w-10/12" />
+                    <div class="h-4 bg-slate-200 rounded w-3/4" />
                 </div>
             </div>
         )
     }
 
+    {/* ===== OPINION CARD SKELETON (Row of Multiple) ===== */}
     {
         type === "card" && (
-            <div class="flex flex-col h-full space-y-4 animate-pulse p-6 rounded-3xl border border-[var(--ilsa-blue-light)]/20 bg-white/40">
-                <div class="h-48 bg-[var(--ilsa-blue-light)]/20 rounded-2xl w-full" />
-                <div class="space-y-2">
-                    <div class="h-6 bg-[var(--ilsa-blue-light)]/30 rounded w-3/4" />
-                    <div class="h-4 bg-[var(--ilsa-blue-light)]/30 rounded w-1/2" />
+            <div class="w-full">
+                <!-- Title Placeholder for sliders (matches Latest Articles structure) -->
+                <div class="hidden sm:block text-center mb-12">
+                    <div class="h-4 w-40 bg-slate-200 rounded-full mx-auto animate-pulse"></div>
+                </div>
+                <!-- Row of Skeletons matches OpinionCard design (h-380 w-280) -->
+                <div class="flex w-full gap-6 overflow-hidden pt-4 pb-8 justify-center lg:justify-start">
+                    {skeletonCards.map((_, i) => (
+                        <div class={`flex flex-col h-[380px] w-[280px] space-y-4 animate-pulse p-6 rounded-3xl bg-slate-800 justify-end shrink-0 shadow-md ${i > 0 ? "hidden sm:flex" : ""} ${i > 1 ? "md:flex hidden" : ""} ${i > 2 ? "lg:flex hidden" : ""}`}>
+                            <div class="flex items-center">
+                                <span class="h-6 w-20 bg-white/20 rounded-full backdrop-blur-md"></span>
+                            </div>
+                            <div class="space-y-3 w-full mt-3">
+                                <div class="h-6 bg-white/30 rounded w-full"></div>
+                                <div class="h-6 bg-white/30 rounded w-5/6"></div>
+                                <div class="h-6 bg-white/30 rounded w-2/3"></div>
+                            </div>
+                            <div class="h-4 bg-white/20 rounded w-1/3 mt-4"></div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        )
+    }
+
+    {/* ===== AUTHOR CARD SKELETON (Grid of Multiple) ===== */}
+    {
+        type === "author-card" && (
+            <div class="w-full">
+                <!-- Title Placeholder (Matches "Columnas Publicadas" + divider) -->
+                <div class="flex items-center justify-between mb-8 animate-pulse">
+                    <div class="h-4 w-48 bg-slate-200 rounded-full"></div>
+                    <div class="h-px flex-1 bg-slate-200 ml-6"></div>
+                </div>
+                <!-- Pagination placeholder space -->
+                <div class="w-full h-10 mb-8 max-w-sm mx-auto bg-slate-100 rounded-full animate-pulse"></div>
+                <!-- Grid of Skeletons matches AuthorCard design (h-320 w-320) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center w-full">
+                    {skeletonCards.slice(0, 3).map(() => (
+                        <div class="flex flex-col h-[320px] w-[320px] p-8 rounded-3xl bg-[#4a7dbf]/10 animate-pulse shrink-0 justify-between mx-auto shadow-lg border border-[#4a7dbf]/5">
+                            <div class="h-4 bg-[#4a7dbf]/30 rounded w-1/3"></div>
+                            <div class="flex-1 flex flex-col justify-center space-y-3 w-full">
+                                <div class="h-7 bg-[#4a7dbf]/40 rounded w-full"></div>
+                                <div class="h-7 bg-[#4a7dbf]/40 rounded w-4/5"></div>
+                                <div class="h-7 bg-[#4a7dbf]/40 rounded w-3/4"></div>
+                            </div>
+                            <div class="flex justify-between items-end w-full">
+                                <div class="h-3 bg-[#4a7dbf]/30 rounded w-1/4"></div>
+                                <div class="h-5 w-5 bg-[#4a7dbf]/30 rounded-full"></div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
         )
@@ -56,5 +122,7 @@ const { type = "article", class: className } = Astro.props;
 </div>
 
 <style>
-    /* Custom shimmer animation if needed, otherwise animate-pulse works well */
+    .skeleton-loader {
+        pointer-events: none;
+    }
 </style>
