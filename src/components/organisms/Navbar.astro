@@ -13,6 +13,11 @@ import { authorsConfig } from "../../lib/authors";
 
 const navStructure = [
     {
+        type: "link",
+        text: "Multimedia",
+        href: "/multimedia",
+    },
+    {
         type: "dropdown",
         text: "Nosotros",
         href: "/nosotros",
@@ -62,19 +67,9 @@ const navStructure = [
             href: `/publicaciones/${slug}`,
         })),
     },
-    {
-        type: "link",
-        text: "Multimedia",
-        href: "/multimedia",
-    },
 ];
 ---
 
-<!-- 
-    Navbar "Liquid Glass"
-    Hemos reemplazado los estilos hardcoded de backdrop por el componente LiquidContainer
-    que maneja la física de refracción y el spotlight.
--->
 <div class="fixed top-0 left-0 right-0 z-[60] p-4">
     <LiquidContainer
         intensity="medium"
