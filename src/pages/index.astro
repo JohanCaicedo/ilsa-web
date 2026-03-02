@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Navbar from "../components/organisms/Navbar.astro";
 import HomeHero from "../components/organisms/HomeHero.astro";
 import HomeNews from "../components/organisms/HomeNews.astro";
 import InstagramCTA from "../components/organisms/InstagramCTA.astro";
@@ -34,7 +33,6 @@ const [newsPosts, opinionPosts, legalActionsPosts] = await Promise.all([
 		ILSA - Instituto Latinoamericano para una Sociedad y un Derecho
 		Alternativos
 	</h1>
-	<Navbar />
 
 	<!-- HERO SECTION -->
 	<HomeHero slides={heroSlidesConfig} class="mb-4 md:mb-8" />
