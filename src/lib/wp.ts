@@ -443,48 +443,66 @@ export async function wpQuery<T = any>(options: string | WpQueryOptions): Promis
   // Return Cache Hit
   if (cachedData) return cachedData;
 
-  // Network Fetch (No Timestamp)
-  const url = API_URL;
+  // Network Fetch with Retry and Timeout
+  const maxRetries = 2;
+  const timeoutMs = 15000; // 15 seconds max per request
 
-  try {
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query,
-        variables,
-      }),
-    });
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
-    if (!res.ok) {
-      const errorText = await res.text();
-      console.error(`Error de red (${res.status}):`, errorText);
-      throw new Error(`Petición fallida: ${res.statusText}`);
-    }
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query,
+          variables,
+        }),
+        signal: controller.signal,
+      });
 
-    const { data, errors } = await res.json();
+      clearTimeout(timeoutId);
 
-    if (errors) {
-      console.error('Error GraphQL:', JSON.stringify(errors, null, 2));
-      throw new Error('La API de WordPress devolvió errores.');
-    }
-
-    // Write Cache (Only in SSR/Node)
-    if (isSSR && data) {
-      try {
-        const { writeCache } = await import('./wp-cache');
-        writeCache(query, variables, data);
-      } catch (e) {
-        // Ignore write errors
+      if (!res.ok) {
+        const errorText = await res.text();
+        throw new Error(`Petición fallida (${res.status}): ${errorText}`);
       }
+
+      const { data, errors } = await res.json();
+
+      if (errors) {
+        console.error('Error GraphQL:', JSON.stringify(errors, null, 2));
+        throw new Error('La API de WordPress devolvió errores.');
+      }
+
+      // Write Cache (Only in SSR/Node)
+      if (isSSR && data) {
+        try {
+          const { writeCache } = await import('./wp-cache');
+          writeCache(query, variables, data);
+        } catch (e) {
+          // Ignore write errors
+        }
+      }
+
+      return data;
+    } catch (error: any) {
+      const isAbortError = error.name === "AbortError";
+      console.error(`[wpQuery] Intento ${attempt + 1} fallido:`, isAbortError ? "Timeout de respuesta" : error.message);
+
+      if (attempt === maxRetries) {
+        console.error('[wpQuery] Todos los intentos fallaron.');
+        throw error;
+      }
+
+      // Exponential backoff: 1s, 2s, 4s...
+      const backoffMs = Math.pow(2, attempt) * 1000 + Math.random() * 500;
+      await new Promise(resolve => setTimeout(resolve, backoffMs));
     }
-
-    return data;
-
-  } catch (error) {
-    console.error('Fallo en wpQuery:', error);
-    throw error;
   }
+
+  throw new Error("Falló wpQuery después de múltiples reintentos.");
 }

@@ -7,7 +7,6 @@ import ReadingProgress from "../components/atoms/ReadingProgress.astro";
 import { authorsConfig, defaultAuthor } from "../lib/authors";
 import { cn } from "../lib/utils";
 import { collectionsConfig } from "../lib/collections";
-import WPLoader from "../components/molecules/WPLoader.astro";
 
 // Enable Server-Side Rendering (SSR) for real-time WordPress dynamic content
 export const prerender = false;
@@ -93,27 +92,24 @@ const isActividades =
 >
   <ReadingProgress />
 
-  <WPLoader type="article">
-    <div class="mx-auto max-w-3xl pt-4">
-      <ArticlePost
-        title={post.title}
-        content={post.content}
-        date={post.date}
-        section={categoryName}
-        authorName={authorData?.name}
-        authorImg={authorData?.avatarImage}
-        authorBio={authorData?.shortBio}
-        authorSlug={authorKey}
-        twitterUrl={authorData?.xUrl || ""}
-        twitterHandle={authorData?.xHandle || ""}
-        url={currentUrl}
-        featuredImage={isActividades
-          ? post.featuredImage?.node?.sourceUrl
-          : undefined}
-      />
-    </div>
-  </WPLoader>
-
+  <div class="mx-auto max-w-3xl pt-4">
+    <ArticlePost
+      title={post.title}
+      content={post.content}
+      date={post.date}
+      section={categoryName}
+      authorName={authorData?.name}
+      authorImg={authorData?.avatarImage}
+      authorBio={authorData?.shortBio}
+      authorSlug={authorKey}
+      twitterUrl={authorData?.xUrl || ""}
+      twitterHandle={authorData?.xHandle || ""}
+      url={currentUrl}
+      featuredImage={isActividades
+        ? post.featuredImage?.node?.sourceUrl
+        : undefined}
+    />
+  </div>
   <div class="mt-20 border-t pt-10">
     <RelatedSlider posts={relatedPosts} />
   </div>

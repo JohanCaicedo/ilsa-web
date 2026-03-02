@@ -51,10 +51,11 @@ const uniqueId = `wp-loader-${Math.random().toString(36).substr(2, 9)}`;
             const content = loader.querySelector("[data-loader-content]");
 
             if (skeleton && content) {
-                // Force delay to ensure visual stability and "smoothness", same 1.5s
+                // Reduced delay to 300ms to avoid locking the UI while keeping the fade effect
                 setTimeout(() => {
                     requestAnimationFrame(() => {
                         (skeleton as HTMLElement).style.opacity = "0";
+                        // Content fades in
                         (content as HTMLElement).style.opacity = "1";
                         loader.setAttribute("data-loaded", "true");
 
@@ -63,7 +64,7 @@ const uniqueId = `wp-loader-${Math.random().toString(36).substr(2, 9)}`;
                             (skeleton as HTMLElement).style.display = "none";
                         }, 700); // Match transition duration
                     });
-                }, 1500);
+                }, 300);
             }
         });
     }

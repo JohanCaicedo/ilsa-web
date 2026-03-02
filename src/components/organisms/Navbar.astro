@@ -195,9 +195,18 @@ const navStructure = [
                         </a>
                     ) : (
                         <div class="flex flex-col gap-2">
-                            <span class="block py-1 text-xs font-black uppercase tracking-widest text-[#4a7dbf]/60 mt-2">
-                                {item.text}
-                            </span>
+                            {item.href ? (
+                                <a
+                                    href={item.href}
+                                    class="block py-1 text-xs font-black uppercase tracking-widest text-[#4a7dbf] hover:text-[#375a9e] mt-2 underline decoration-2 underline-offset-4"
+                                >
+                                    {item.text}
+                                </a>
+                            ) : (
+                                <span class="block py-1 text-xs font-black uppercase tracking-widest text-[#4a7dbf]/60 mt-2">
+                                    {item.text}
+                                </span>
+                            )}
                             {item.items?.map((sub) => (
                                 <a
                                     class="block py-1 text-base text-slate-600 hover:text-[#4a7dbf]"
