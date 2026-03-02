@@ -21,9 +21,10 @@ const isLink = !!href;
         isLink ? (
             <a
                 href={href}
-                class="flex items-center gap-1 relative transition-all duration-300 hover:text-[#4e7cce] hover:scale-110 transform origin-center font-medium cursor-pointer focus:outline-none"
+                data-dropdown-link
+                class="flex items-center gap-1 relative transition-all duration-300 hover:text-[#4e7cce] hover:scale-110 transform origin-center font-medium cursor-pointer focus:outline-none z-10"
             >
-                <span class="relative">{text}</span>
+                <span class="relative pointer-events-none">{text}</span>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -34,13 +35,13 @@ const isLink = !!href;
                     stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="w-3 h-3 transition-transform duration-300 group-hover/dropdown:rotate-180"
+                    class="w-3 h-3 transition-transform duration-300 group-hover/dropdown:rotate-180 pointer-events-none"
                 >
                     <path d="m6 9 6 6 6-6" />
                 </svg>
             </a>
         ) : (
-            <button class="flex items-center gap-1 relative transition-all duration-300 hover:text-[#4e7cce] hover:scale-110 transform origin-center font-medium cursor-default focus:outline-none">
+            <button class="flex items-center gap-1 relative transition-all duration-300 hover:text-[#4e7cce] hover:scale-110 transform origin-center font-medium cursor-default focus:outline-none z-10">
                 <span class="relative">{text}</span>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -84,3 +85,18 @@ const isLink = !!href;
         </LiquidContainer>
     </div>
 </div>
+
+<script>
+    // Enforce desktop link clicks over complex CSS hovering zones
+    document.addEventListener("astro:page-load", () => {
+        const topLinks = document.querySelectorAll("[data-dropdown-link]");
+        topLinks.forEach((link) => {
+            link.addEventListener("click", (e) => {
+                const href = link.getAttribute("href");
+                if (href) {
+                    window.location.href = href;
+                }
+            });
+        });
+    });
+</script>

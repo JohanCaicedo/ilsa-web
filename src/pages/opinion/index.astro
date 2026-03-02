@@ -20,7 +20,7 @@ import {
 import type { SeoData } from "../../lib/seo";
 import WPLoader from "../../components/molecules/WPLoader.astro";
 
-export const prerender = false;
+export const prerender = true;
 
 // Cloudflare Edge Caching (ISR): Serve from Edge cache for 1 hr, revalidate in background for 1 day
 Astro.response.headers.set(
