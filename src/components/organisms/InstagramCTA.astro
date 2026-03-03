@@ -6,20 +6,43 @@ import Button from "../Button.astro";
 <section class="w-full px-6 mb-24">
     <div class="max-w-[1400px] mx-auto">
         <div
+            id="social-cta-card"
             class={cn(
+                "social-cta-card",
                 "relative flex flex-col items-center justify-center text-center p-10 md:p-16 rounded-3xl overflow-hidden",
-                "bg-gradient-to-br from-[#5E3B69] to-[#380B60]", // Using ILSA Purple base
-                "shadow-2xl shadow-[#5E3B69]/30",
+                "shadow-2xl",
             )}
         >
+            <!-- Gradient layers (stacked, opacity-controlled for smooth transitions) -->
+            <div
+                class="gradient-layer gradient-default absolute inset-0 z-0 opacity-100"
+            >
+            </div>
+            <div
+                class="gradient-layer gradient-instagram absolute inset-0 z-0 opacity-0"
+            >
+            </div>
+            <div
+                class="gradient-layer gradient-facebook absolute inset-0 z-0 opacity-0"
+            >
+            </div>
+            <div
+                class="gradient-layer gradient-twitter absolute inset-0 z-0 opacity-0"
+            >
+            </div>
+            <div
+                class="gradient-layer gradient-youtube absolute inset-0 z-0 opacity-0"
+            >
+            </div>
+
             <!-- Background Decoration -->
-            <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 z-[1]">
                 <div
                     class="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"
                 >
                 </div>
                 <div
-                    class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#4E7CCE]/20 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2"
+                    class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-white/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2"
                 >
                 </div>
             </div>
@@ -48,31 +71,229 @@ import Button from "../Button.astro";
                     publicaciones especiales directamente en tu feed.
                 </p>
 
-                <!-- CTA Button -->
-                <Button
-                    href="https://instagram.com/ilsacolombia"
-                    class="bg-white text-[#5E3B69] hover:bg-white/90 border-transparent px-8 py-6 text-base shadow-xl flex items-center gap-2"
+                <!-- CTA Buttons -->
+                <div
+                    class="flex flex-wrap items-center justify-center gap-4 mb-2"
                 >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="lucide lucide-instagram"
-                        ><rect width="20" height="20" x="2" y="2" rx="5" ry="5"
-                        ></rect><path
-                            d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
-                        ></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"
-                        ></line></svg
+                    <Button
+                        href="https://instagram.com/ilsacolombia"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-social="instagram"
+                        class="social-btn bg-white/10 text-white hover:bg-white/20 border-white/20 px-8 py-6 text-base backdrop-blur-md shadow-xl flex items-center gap-2 transition-transform duration-300 hover:scale-105"
                     >
-                    Seguir en Instagram
-                </Button>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-instagram"
+                            ><rect
+                                width="20"
+                                height="20"
+                                x="2"
+                                y="2"
+                                rx="5"
+                                ry="5"></rect><path
+                                d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
+                            ></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"
+                            ></line></svg
+                        >
+                        Instagram
+                    </Button>
+
+                    <Button
+                        href="https://www.facebook.com/ILSA.Colombia/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-social="facebook"
+                        class="social-btn bg-white/10 text-white hover:bg-white/20 border-white/20 px-8 py-6 text-base backdrop-blur-md shadow-xl flex items-center gap-2 transition-transform duration-300 hover:scale-105"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-facebook"
+                            ><path
+                                d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
+                            ></path></svg
+                        >
+                        Facebook
+                    </Button>
+
+                    <Button
+                        href="https://x.com/ilsacolombia"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-social="twitter"
+                        class="social-btn bg-white/10 text-white hover:bg-white/20 border-white/20 px-8 py-6 text-base backdrop-blur-md shadow-xl flex items-center gap-2 transition-transform duration-300 hover:scale-105"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-twitter"
+                            ><path
+                                d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"
+                            ></path></svg
+                        >
+                        X (Twitter)
+                    </Button>
+
+                    <Button
+                        href="https://www.youtube.com/channel/UCqJ1XD5qN4lMubTNQDkOtUA"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-social="youtube"
+                        class="social-btn bg-white/10 text-white hover:bg-white/20 border-white/20 px-8 py-6 text-base backdrop-blur-md shadow-xl flex items-center gap-2 transition-transform duration-300 hover:scale-105"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-youtube"
+                            ><path
+                                d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 2-2h15a2 2 0 0 1 2 2 24.12 24.12 0 0 1 0 10 2 2 0 0 1-2 2h-15a2 2 0 0 1-2-2z"
+                            ></path><path d="m10 15 5-3-5-3z"></path></svg
+                        >
+                        YouTube
+                    </Button>
+                </div>
             </div>
         </div>
     </div>
 </section>
+
+<style>
+    /* Base gradient layers — each one is a full-bleed background that fades in/out */
+    .gradient-layer {
+        transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none;
+    }
+
+    /* Default ILSA purple */
+    .gradient-default {
+        background: linear-gradient(135deg, #5e3b69 0%, #380b60 100%);
+    }
+
+    /* Instagram warm gradient */
+    .gradient-instagram {
+        background: linear-gradient(
+            135deg,
+            #833ab4 0%,
+            #c13584 40%,
+            #e1306c 60%,
+            #f77737 100%
+        );
+    }
+
+    /* Facebook blue */
+    .gradient-facebook {
+        background: linear-gradient(135deg, #1877f2 0%, #0c5dc7 100%);
+    }
+
+    /* X / Twitter dark */
+    .gradient-twitter {
+        background: linear-gradient(135deg, #2b2b2b 0%, #0f0f0f 100%);
+    }
+
+    /* YouTube red */
+    .gradient-youtube {
+        background: linear-gradient(135deg, #ff0000 0%, #b20000 100%);
+    }
+
+    /* Shadow color transitions */
+    .social-cta-card {
+        transition: box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 25px 50px -12px rgba(94, 59, 105, 0.35);
+    }
+
+    .social-cta-card[data-active="instagram"] {
+        box-shadow: 0 25px 50px -12px rgba(193, 53, 132, 0.4);
+    }
+    .social-cta-card[data-active="facebook"] {
+        box-shadow: 0 25px 50px -12px rgba(24, 119, 242, 0.4);
+    }
+    .social-cta-card[data-active="twitter"] {
+        box-shadow: 0 25px 50px -12px rgba(15, 15, 15, 0.5);
+    }
+    .social-cta-card[data-active="youtube"] {
+        box-shadow: 0 25px 50px -12px rgba(255, 0, 0, 0.4);
+    }
+</style>
+
+<script>
+    function initSocialCTA() {
+        const card = document.getElementById("social-cta-card");
+        if (!card) return;
+
+        const buttons = card.querySelectorAll<HTMLElement>(".social-btn");
+        const layers = {
+            default: card.querySelector<HTMLElement>(".gradient-default"),
+            instagram: card.querySelector<HTMLElement>(".gradient-instagram"),
+            facebook: card.querySelector<HTMLElement>(".gradient-facebook"),
+            twitter: card.querySelector<HTMLElement>(".gradient-twitter"),
+            youtube: card.querySelector<HTMLElement>(".gradient-youtube"),
+        };
+
+        function activateGradient(social: string | null) {
+            // Fade all layers
+            Object.entries(layers).forEach(([key, layer]) => {
+                if (!layer) return;
+                if (social && key === social) {
+                    layer.style.opacity = "1";
+                } else if (!social && key === "default") {
+                    layer.style.opacity = "1";
+                } else {
+                    layer.style.opacity = "0";
+                }
+            });
+
+            // Update shadow via data attribute
+            if (social) {
+                card!.setAttribute("data-active", social);
+            } else {
+                card!.removeAttribute("data-active");
+            }
+        }
+
+        buttons.forEach((btn) => {
+            const social = btn.getAttribute("data-social");
+
+            btn.addEventListener("mouseenter", () => {
+                activateGradient(social);
+            });
+
+            btn.addEventListener("mouseleave", () => {
+                activateGradient(null);
+            });
+        });
+    }
+
+    // Run on initial load and on Astro view transitions
+    initSocialCTA();
+    document.addEventListener("astro:after-swap", initSocialCTA);
+</script>
