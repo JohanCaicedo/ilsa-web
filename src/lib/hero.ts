@@ -10,6 +10,14 @@ export interface HeroSlideData {
 
 export const heroSlidesConfig: HeroSlideData[] = [
     {
+        title: "<span class='text-[0.7em] leading-tight'>Dificultades y Desafíos<br/>de la Reforma Rural Integral</span>",
+        excerpt: "Revive el diálogo histórico entre el Gobierno Nacional, el movimiento social y la academia en el marco de la ICARRD+20 en Cartagena.",
+        image: "/images/hero-home/Dificultades y Desafíos.webp",
+        link: "/noticias/especiales/cartagena",
+        badge: "Evento",
+        ctaText: "Ver resumen y galería"
+    },
+    {
         title: "Dossiê",
         excerpt: "Pesquisas em advocacia popular na America Latina",
         image: "/images/hero-home/cover_issue_3245_pt_BR.webp",

@@ -6,38 +6,33 @@ export interface Ally {
 
 export const allies: Ally[] = [
     {
-        name: "CCFD-Terre Solidaire",
-        logo: "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/companyLogo/slack.svg", // Placeholder
+        name: "Asociación Freytter Elkartea",
+        logo: "/images/logos-web/Asociación Freytter Elkartea.png",
         url: "#"
     },
     {
-        name: "Diakonia",
-        logo: "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/companyLogo/framer.svg", // Placeholder
+        name: "CCFD Terre Solidaire",
+        logo: "/images/logos-web/CCFD Terra Solidaire-logo-white.png",
         url: "#"
     },
     {
-        name: "Both ENDS",
-        logo: "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/companyLogo/netflix.svg", // Placeholder
+        name: "CLACSO",
+        logo: "/images/logos-web/Logo-CLACSO-PDS_1_N.svg",
         url: "#"
     },
     {
-        name: "HEKS / EPER",
-        logo: "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/companyLogo/google.svg", // Placeholder
+        name: "FIDH",
+        logo: "/images/logos-web/Logo_FIDH_Francais.svg",
         url: "#"
     },
     {
         name: "Misereor",
-        logo: "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/companyLogo/linkedin.svg", // Placeholder
+        logo: "/images/logos-web/Misereor.svg",
         url: "#"
     },
     {
-        name: "Ford Foundation",
-        logo: "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/companyLogo/instagram.svg", // Placeholder
-        url: "#"
-    },
-    {
-        name: "Open Society",
-        logo: "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/companyLogo/facebook.svg", // Placeholder
+        name: "Alongside Hope",
+        logo: "/images/logos-web/alongside-hope-en-horiz-colour-no-margin-1.svg",
         url: "#"
     }
 ];
