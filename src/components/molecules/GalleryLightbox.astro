@@ -1,0 +1,204 @@
+---
+// src/components/molecules/GalleryLightbox.astro
+---
+
+<div id="custom-gallery-wrapper">
+    <slot />
+</div>
+
+<!-- LIGHTBOX MODAL -->
+<div
+    id="lightbox"
+    class="fixed inset-0 z-[200] hidden items-center justify-center"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Visor de imagen"
+>
+    <!-- Backdrop (Light) -->
+    <div
+        id="lightbox-backdrop"
+        class="absolute inset-0 bg-white/90 backdrop-blur-2xl"
+    >
+    </div>
+
+    <!-- Counter -->
+    <div
+        id="lightbox-counter"
+        class="absolute top-6 left-6 z-10 bg-slate-100 backdrop-blur-md text-slate-700 text-sm font-bold px-4 py-2 rounded-full border border-slate-200 shadow-sm transition-opacity"
+    >
+        1 / X
+    </div>
+
+    <!-- Prev Button -->
+    <button
+        id="lightbox-prev"
+        type="button"
+        class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-slate-100 backdrop-blur-md text-slate-700 rounded-full p-4 transition-all duration-300 hover:scale-110 border border-slate-200 shadow-md"
+        aria-label="Foto anterior"
+    >
+        <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            viewBox="0 0 24 24"
+            ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 19l-7-7 7-7"></path></svg
+        >
+    </button>
+
+    <!-- Next Button -->
+    <button
+        id="lightbox-next"
+        type="button"
+        class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-slate-100 backdrop-blur-md text-slate-700 rounded-full p-4 transition-all duration-300 hover:scale-110 border border-slate-200 shadow-md"
+        aria-label="Foto siguiente"
+    >
+        <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            viewBox="0 0 24 24"
+            ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 5l7 7-7 7"></path></svg
+        >
+    </button>
+
+    <!-- Image Container -->
+    <div
+        class="relative z-[1] flex items-center justify-center w-full h-full p-8 md:p-16"
+    >
+        <img
+            id="lightbox-img"
+            src=""
+            alt=""
+            class="max-w-full max-h-full object-contain rounded-2xl shadow-2xl transition-opacity duration-300"
+        />
+    </div>
+
+    <!-- Bottom Toast (Close) -->
+    <div
+        class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex items-center shadow-2xl rounded-full overflow-hidden border border-slate-200/80 bg-white/80 backdrop-blur-xl text-slate-800 transition-transform hover:scale-105 duration-300"
+    >
+        <button
+            id="lightbox-close"
+            type="button"
+            class="flex items-center justify-center hover:bg-slate-200/80 transition-colors px-5 py-4 border-r border-slate-200/80 text-slate-700 cursor-pointer"
+            aria-label="Cerrar visor"
+        >
+            <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                viewBox="0 0 24 24"
+                ><path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18L18 6M6 6l12 12"></path></svg
+            >
+        </button>
+        <div class="px-6 py-4 text-sm font-medium tracking-wide">
+            Usa <kbd
+                class="px-2.5 py-1.5 mx-1.5 bg-slate-100 rounded-md font-mono text-xs border border-slate-200 shadow-sm"
+                >Esc</kbd
+            > para cerrar
+        </div>
+    </div>
+</div>
+
+<style>
+    #lightbox.active {
+        display: flex;
+    }
+    #lightbox-img.switching {
+        opacity: 0;
+    }
+</style>
+
+<script>
+    document.addEventListener("astro:page-load", () => {
+        const lightbox = document.getElementById("lightbox");
+        const lightboxImg = document.getElementById(
+            "lightbox-img",
+        ) as HTMLImageElement | null;
+        const lightboxCounter = document.getElementById("lightbox-counter");
+        const closeBtn = document.getElementById("lightbox-close");
+        const prevBtn = document.getElementById("lightbox-prev");
+        const nextBtn = document.getElementById("lightbox-next");
+        const backdrop = document.getElementById("lightbox-backdrop");
+
+        // Find ALL .gallery-thumb elements inside the wrapper
+        const wrapper = document.getElementById("custom-gallery-wrapper");
+        if (!wrapper) return;
+        const thumbs = wrapper.querySelectorAll(".gallery-thumb");
+        const totalImages = thumbs.length;
+
+        if (!lightbox || !lightboxImg || !lightboxCounter || totalImages === 0)
+            return;
+
+        let currentIndex = 0;
+
+        function getImageSrc(index: number) {
+            const thumb = thumbs[index];
+            const img = thumb?.querySelector("img");
+            return img ? img.src : "";
+        }
+
+        function getImageAlt(index: number) {
+            const thumb = thumbs[index];
+            const img = thumb?.querySelector("img");
+            return img ? img.alt : "";
+        }
+
+        function showImage(index: number) {
+            currentIndex = ((index % totalImages) + totalImages) % totalImages;
+            lightboxImg!.classList.add("switching");
+            setTimeout(() => {
+                lightboxImg!.src = getImageSrc(currentIndex);
+                lightboxImg!.alt = getImageAlt(currentIndex);
+                lightboxCounter!.textContent = `${currentIndex + 1} / ${totalImages}`;
+                lightboxImg!.classList.remove("switching");
+            }, 150);
+        }
+
+        function open(index: number) {
+            currentIndex = index;
+            lightboxImg!.src = getImageSrc(currentIndex);
+            lightboxImg!.alt = getImageAlt(currentIndex);
+            lightboxCounter!.textContent = `${currentIndex + 1} / ${totalImages}`;
+            lightbox!.classList.add("active");
+            document.body.style.overflow = "hidden";
+        }
+
+        function close() {
+            lightbox!.classList.remove("active");
+            document.body.style.overflow = "";
+        }
+
+        // Click handlers
+        thumbs.forEach((thumb, idx) => {
+            thumb.addEventListener("click", () => {
+                open(idx);
+            });
+        });
+
+        closeBtn?.addEventListener("click", close);
+        backdrop?.addEventListener("click", close);
+        prevBtn?.addEventListener("click", () => showImage(currentIndex - 1));
+        nextBtn?.addEventListener("click", () => showImage(currentIndex + 1));
+
+        // Keyboard
+        document.addEventListener("keydown", (e) => {
+            if (!lightbox!.classList.contains("active")) return;
+            if (e.key === "Escape") close();
+            if (e.key === "ArrowLeft") showImage(currentIndex - 1);
+            if (e.key === "ArrowRight") showImage(currentIndex + 1);
+        });
+    });
+</script>

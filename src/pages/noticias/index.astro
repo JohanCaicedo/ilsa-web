@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { getPostsByCategory } from "../../lib/wp";
+import { getUnifiedTimeline } from "../../lib/unifiedContent";
 import AuthorCard from "../../components/molecules/AuthorCard.astro";
 import Pagination from "../../components/molecules/Pagination.astro";
 import WPLoader from "../../components/molecules/WPLoader.astro";
@@ -18,7 +19,10 @@ Astro.response.headers.set(
 );
 
 // Fetch news posts dynamically
-const allNews = await getPostsByCategory("noticias", 100);
+const wpNews = await getPostsByCategory("noticias", 100);
+
+// Combine WP posts with any registered manual/local pages
+const allNews = getUnifiedTimeline(wpNews, "noticias");
 
 // Pagination Logic
 const postsPerPage = 9;
@@ -111,13 +115,13 @@ const cardClass = "news-card";
                                 {allNews.map((post, index) => (
                                     <div
                                         class={`${cardClass} ${index >= postsPerPage ? "hidden" : "flex"} w-full justify-center transform transition-transform duration-500 hover:-translate-y-2 group`}
+                                        data-is-local={
+                                            post.isLocal ? "true" : "false"
+                                        }
                                     >
                                         <AuthorCard
                                             title={post.title}
-                                            author={
-                                                post.author?.node?.name ||
-                                                "ILSA"
-                                            }
+                                            author={post.author}
                                             authorImage=""
                                             date={new Date(
                                                 post.date,
@@ -126,10 +130,7 @@ const cardClass = "news-card";
                                                 month: "short",
                                                 year: "numeric",
                                             })}
-                                            image={
-                                                post.featuredImage?.node
-                                                    ?.sourceUrl || ""
-                                            }
+                                            image={post.image}
                                             uri={post.uri}
                                         />
                                     </div>
