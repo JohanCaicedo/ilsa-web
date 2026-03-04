@@ -246,37 +246,48 @@ const navStructure = [
 </div>
 
 <script>
-    document.addEventListener("astro:page-load", () => {
-        const menuToggle = document.getElementById("menuToggle");
-        const mobileMenu = document.getElementById("mobileMenu");
+    // Event Delegation for Mobile Menu
+    // We bind to the document ONCE to survive Astro's View Transitions and to avoid adding repeated listeners
+    // to the persistent #menuToggle button when navigating between pages.
 
-        if (menuToggle && mobileMenu) {
-            menuToggle.addEventListener("click", () => {
-                // Toggle logic
+    // Flag to ensure we only register the global listener once.
+    if (!(window as any).hasNavbarListenerRegistered) {
+        document.addEventListener("click", (e) => {
+            const isMenuToggle = !!(e.target as Element).closest("#menuToggle");
+
+            // Re-fetch mobileMenu dynamically so we always grab the active DOM's menu
+            // and not a detached phantom node from the previous route.
+            const mobileMenu = document.getElementById("mobileMenu");
+
+            if (!mobileMenu) return;
+
+            // 1. If clicking the hamburger icon
+            if (isMenuToggle) {
                 if (mobileMenu.classList.contains("hidden")) {
                     mobileMenu.classList.remove("hidden");
                     mobileMenu.classList.add("flex");
-                    // Prevent body scroll
-                    document.body.style.overflow = "hidden";
+                    document.body.style.overflow = "hidden"; // Prevent background scroll
                 } else {
                     mobileMenu.classList.add("hidden");
                     mobileMenu.classList.remove("flex");
-                    // Restore body scroll
-                    document.body.style.overflow = "";
+                    document.body.style.overflow = ""; // Restore background scroll
                 }
-            });
+                return;
+            }
 
-            // Close menu when clicking navigation links
-            const mobileLinks = mobileMenu.querySelectorAll("a");
-            mobileLinks.forEach((link) => {
-                link.addEventListener("click", () => {
-                    mobileMenu.classList.add("hidden");
-                    mobileMenu.classList.remove("flex");
-                    document.body.style.overflow = "";
-                });
-            });
-        }
-    });
+            // 2. If clicking anywhere inside the mobile menu link area (close the menu)
+            const isMobileLink = !!(e.target as Element).closest(
+                "#mobileMenu a",
+            );
+            if (isMobileLink && !mobileMenu.classList.contains("hidden")) {
+                mobileMenu.classList.add("hidden");
+                mobileMenu.classList.remove("flex");
+                document.body.style.overflow = "";
+            }
+        });
+
+        (window as any).hasNavbarListenerRegistered = true;
+    }
 
     // Long Press Easter Egg Activation (Mobile & Desktop)
     document.addEventListener("astro:page-load", () => {

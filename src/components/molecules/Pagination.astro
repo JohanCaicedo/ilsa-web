@@ -139,16 +139,6 @@ const {
 </style>
 
 <script>
-    function setupPagination() {
-        // Use event delegation on document to capture all pagination clicks
-        // This avoids missing listeners on View Transitions or dynamical components updates
-        document.addEventListener("click", handlePaginationClick);
-    }
-
-    function cleanupPagination() {
-        document.removeEventListener("click", handlePaginationClick);
-    }
-
     function handlePaginationClick(e: Event) {
         const target = e.target as HTMLElement;
         const button = target.closest(
@@ -235,10 +225,10 @@ const {
         }
     }
 
-    // Initialize on every page navigation and cleanup before swap
-    document.addEventListener("astro:page-load", setupPagination);
-    document.addEventListener("astro:before-swap", cleanupPagination);
-
-    // Immediate init for safety
-    setupPagination();
+    // Global Event Delegation for Pagination
+    // We bind to the document ONCE to survive Astro's View Transitions and to avoid adding repeated listeners
+    if (!(window as any).hasPaginationListenerRegistered) {
+        document.addEventListener("click", handlePaginationClick);
+        (window as any).hasPaginationListenerRegistered = true;
+    }
 </script>
