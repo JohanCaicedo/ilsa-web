@@ -301,7 +301,7 @@ const navStructure = [
 
             pressTimer = window.setTimeout(() => {
                 // Success!
-                console.log("Long Press detected! Activating Easter Egg...");
+                // console.log("Long Press detected! Activating Easter Egg...");
 
                 // Haptic Feedback (Vibration)
                 if (window.navigator && window.navigator.vibrate) {
@@ -342,7 +342,7 @@ const navStructure = [
         logo.addEventListener("mouseleave", cancelPress);
         logo.addEventListener("touchend", cancelPress);
         logo.addEventListener("touchcancel", cancelPress);
-        logo.addEventListener("touchmove", cancelPress); // Cancel if user scrolls
+        logo.addEventListener("touchmove", cancelPress, { passive: true }); // Cancel if user scrolls
 
         // Prevent Context Menu on Mobile (allows holding the image without popup)
         logo.addEventListener("contextmenu", (e) => {

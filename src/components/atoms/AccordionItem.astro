@@ -99,12 +99,12 @@ const styles = variants[variant];
                 if (!isExpanded) {
                     btn.setAttribute("aria-expanded", "true");
                     content.style.maxHeight = content.scrollHeight + "px";
-                    icon.innerHTML = "-"; // Or rotate
+                    icon.textContent = "-"; // Or rotate
                     btn.classList.add("text-[#4e7cce]");
                 } else {
                     btn.setAttribute("aria-expanded", "false");
                     content.style.maxHeight = "0px";
-                    icon.innerHTML = "+";
+                    icon.textContent = "+";
                     btn.classList.remove("text-[#4e7cce]");
                 }
             });

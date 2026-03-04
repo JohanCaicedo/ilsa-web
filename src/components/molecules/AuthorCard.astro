@@ -100,6 +100,10 @@ const CARD_SIZE = 320;
 
 <script>
     function setupInteractiveCardGradient() {
+        // Only apply interactive hover tracking on devices that support hover (e.g., mice)
+        // This is crucial for performance on iOS/Mobile Safari
+        if (!window.matchMedia("(hover: hover)").matches) return;
+
         const cards = document.querySelectorAll(".interactive-gradient-card");
 
         cards.forEach((el) => {
@@ -109,12 +113,15 @@ const CARD_SIZE = 320;
             if (!cardElement) return;
 
             const handleMouseMove = (e: MouseEvent) => {
-                const rect = cardElement.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
+                // Throttle with requestAnimationFrame for better performance
+                requestAnimationFrame(() => {
+                    const rect = cardElement.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
 
-                element.style.setProperty("--x", `${x}px`);
-                element.style.setProperty("--y", `${y}px`);
+                    element.style.setProperty("--x", `${x}px`);
+                    element.style.setProperty("--y", `${y}px`);
+                });
             };
 
             cardElement.addEventListener("mousemove", handleMouseMove);

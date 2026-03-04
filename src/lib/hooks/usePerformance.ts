@@ -51,7 +51,7 @@ export function usePerformance(): PerformanceConfig {
         setConfig({ tier, shouldRender3D, pixelRatio });
 
         if (process.env.NODE_ENV === 'development') {
-            console.log(`[Liquid3D] Performance Tier detected: ${tier}`, { logicalProcessors, deviceMemory, isMobile });
+            // console.log(`[Liquid3D] Performance Tier detected: ${tier}`, { logicalProcessors, deviceMemory, isMobile });
         }
 
     }, []);

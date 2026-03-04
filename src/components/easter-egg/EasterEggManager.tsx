@@ -51,7 +51,7 @@ export const EasterEggManager: React.FC = () => {
             const newSequence = [...inputSequence, key];
 
             // Debug log (remove in final prod if desired, but useful now)
-            console.log('Easter Egg Input:', key, newSequence.slice(-10));
+            // console.log('Easter Egg Input:', key, newSequence.slice(-10));
 
             // Normalize target code
             const targetCode = KONAMI_CODE.map(k => k.toLowerCase());
@@ -65,7 +65,7 @@ export const EasterEggManager: React.FC = () => {
 
             // Check match
             if (JSON.stringify(newSequence) === JSON.stringify(targetCode)) {
-                console.log('Konami Code Activated!');
+                // console.log('Konami Code Activated!');
                 setIsVisible(true);
                 localStorage.setItem('glass_breaker_active', 'true');
                 document.body.style.overflow = 'hidden';
@@ -78,11 +78,11 @@ export const EasterEggManager: React.FC = () => {
                 ('ontouchstart' in window);
 
             if (isMobile) {
-                console.log('Easter Egg disabled on mobile for now.');
+                // console.log('Easter Egg disabled on mobile for now.');
                 return;
             }
 
-            console.log('Easter Egg event received!');
+            // console.log('Easter Egg event received!');
             setIsVisible(true);
             localStorage.setItem('glass_breaker_active', 'true');
             document.body.style.overflow = 'hidden';

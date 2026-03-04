@@ -74,7 +74,13 @@ const { posts } = Astro.props;
 </section>
 
 <script>
+  let abortController: AbortController | null = null;
+
   function setupColumnistSliders() {
+    if (abortController) abortController.abort();
+    abortController = new AbortController();
+    const signal = abortController.signal;
+
     const containers = document.querySelectorAll(
       '[data-slider-type="columnist"]',
     );
@@ -189,8 +195,11 @@ const { posts } = Astro.props;
         { capture: true },
       );
 
-      track.addEventListener("scroll", updateProgress, { passive: true });
-      window.addEventListener("resize", updateProgress);
+      track.addEventListener("scroll", updateProgress, {
+        passive: true,
+        signal,
+      });
+      window.addEventListener("resize", updateProgress, { signal });
 
       // Initial calculation
       requestAnimationFrame(updateProgress);

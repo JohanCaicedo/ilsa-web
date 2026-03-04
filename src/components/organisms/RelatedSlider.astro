@@ -61,7 +61,13 @@ const { posts } = Astro.props;
 </section>
 
 <script>
+  let abortController: AbortController | null = null;
+
   function setupSliders() {
+    if (abortController) abortController.abort();
+    abortController = new AbortController();
+    const signal = abortController.signal;
+
     const containers = document.querySelectorAll(
       '[data-slider-type="related"]',
     );
@@ -144,8 +150,11 @@ const { posts } = Astro.props;
         }
       };
 
-      track.addEventListener("scroll", updateProgress);
-      window.addEventListener("resize", updateProgress);
+      track.addEventListener("scroll", updateProgress, {
+        passive: true,
+        signal,
+      });
+      window.addEventListener("resize", updateProgress, { signal });
       setTimeout(updateProgress, 100);
 
       // 3. Arrow Logic

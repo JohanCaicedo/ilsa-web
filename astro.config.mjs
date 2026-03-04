@@ -32,7 +32,7 @@ export default defineConfig({
         output: {
           banner: `
             if (typeof globalThis.MessageChannel === 'undefined') {
-              console.log('Polyfilling MessageChannel for React 19 (Banner)');
+              // console.log('Polyfilling MessageChannel for React 19 (Banner)');
               class MessagePortPolyfill extends EventTarget {
                 constructor() { super(); this.otherPort = null; this.onmessage = null; }
                 postMessage(message) {

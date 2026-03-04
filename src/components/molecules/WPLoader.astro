@@ -12,65 +12,52 @@ const {
     class: className,
     minHeight = "min-h-[50vh]",
 } = Astro.props;
-const uniqueId = `wp-loader-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
-<div
-    class={`relative ${minHeight} ${className}`}
-    data-wp-loader="true"
-    data-loaded="false"
->
+<div class={`wp-loader-container relative ${minHeight} ${className}`}>
     <!-- Skeleton Overlay -->
     <div
-        data-loader-skeleton
-        class="absolute inset-0 z-10 bg-[var(--ilsa-bg-light)] transition-opacity duration-700 ease-out"
+        class="wp-loader-skeleton absolute inset-0 z-10 bg-[var(--ilsa-bg-light)]"
         aria-hidden="true"
     >
         <SkeletonLoader type={type} />
     </div>
 
-    <!-- Real Content (Opacity 0 initially) -->
-    <div
-        data-loader-content
-        class="opacity-0 transition-opacity duration-700 ease-out h-full w-full"
-    >
+    <!-- Real Content -->
+    <div class="wp-loader-content opacity-0 h-full w-full">
         <slot />
     </div>
 </div>
 
-<script>
-    // Usar clases en lugar de IDs únicos pesados, y delegación de eventos para View Transitions
-    function initLoaders() {
-        const loaders = document.querySelectorAll('[data-wp-loader="true"]');
-
-        loaders.forEach((loader) => {
-            // Check if already initialized to prevent double-fading
-            if (loader.getAttribute("data-loaded") === "true") return;
-
-            const skeleton = loader.querySelector("[data-loader-skeleton]");
-            const content = loader.querySelector("[data-loader-content]");
-
-            if (skeleton && content) {
-                // Reduced delay to 300ms to avoid locking the UI while keeping the fade effect
-                setTimeout(() => {
-                    requestAnimationFrame(() => {
-                        (skeleton as HTMLElement).style.opacity = "0";
-                        // Content fades in
-                        (content as HTMLElement).style.opacity = "1";
-                        loader.setAttribute("data-loaded", "true");
-
-                        // Remove skeleton from DOM flow after transition
-                        setTimeout(() => {
-                            (skeleton as HTMLElement).style.display = "none";
-                        }, 700); // Match transition duration
-                    });
-                }, 300);
-            }
-        });
+<style>
+    /* CSS-only animation for reliable loading without JS blocking */
+    .wp-loader-skeleton {
+        animation: fadeOutSkeleton 0.7s ease-out 0.3s forwards;
     }
 
-    // Run on initial load and View Transitions
-    document.addEventListener("astro:page-load", initLoaders);
-    // Immediate run fallback for first paint
-    initLoaders();
-</script>
+    .wp-loader-content {
+        animation: fadeInContent 0.7s ease-out 0.3s forwards;
+    }
+
+    @keyframes fadeOutSkeleton {
+        from {
+            opacity: 1;
+            visibility: visible;
+        }
+        to {
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
+
+    @keyframes fadeInContent {
+        from {
+            opacity: 0;
+            visibility: hidden;
+        }
+        to {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+</style>

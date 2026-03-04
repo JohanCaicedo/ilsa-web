@@ -2,7 +2,7 @@
 // This is required for Cloudflare Workers/Pages Functions in some configurations.
 
 if (typeof globalThis.MessageChannel === 'undefined') {
-    console.log('Polyfilling MessageChannel for React 19');
+    // console.log('Polyfilling MessageChannel for React 19');
 
     class MessagePortPolyfill extends EventTarget {
         otherPort: MessagePortPolyfill | null = null;

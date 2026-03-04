@@ -320,7 +320,7 @@ export async function fetchAllPosts(): Promise<MasterQueryResponse> {
   let endCursor = "";
 
   while (hasNextPage) {
-    console.log(`Fetching posts... (cursor: ${endCursor})`);
+    // console.log(`Fetching posts... (cursor: ${endCursor})`);
 
     const data = await wpQuery<MasterQueryResponse>({
       query: MASTER_QUERY,

@@ -534,7 +534,7 @@ export const GlassBreakerEngine: React.FC<Props> = ({ onExit }) => {
         window.addEventListener('touchmove', handleTouchMove, { passive: false });
         window.addEventListener('keydown', handleInput);
         window.addEventListener('click', handleInput);
-        window.addEventListener('touchstart', handleInput);
+        window.addEventListener('touchstart', handleInput, { passive: true });
 
         const loop = () => {
             const ctx = canvas.getContext('2d');
