@@ -78,6 +78,20 @@ const breadcrumbItems = [
     width="wide"
     breadcrumbs={breadcrumbItems}
 >
+    <!-- Author Structured Data (JSON-LD) -->
+    <script
+        is:inline
+        type="application/ld+json"
+        set:html={JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            name: author.name,
+            image: author.profileImage,
+            description: author.fullBio,
+            url: `https://ilsa.org.co/opinion/${slug}`,
+            sameAs: author.xUrl ? [author.xUrl] : [],
+        })}
+    />
     <main class="pt-24 pb-20 px-4 md:px-8 max-w-[1400px] mx-auto">
         <div class="w-full mb-20 relative flex justify-center">
             <div

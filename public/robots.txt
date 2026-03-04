@@ -1,0 +1,11 @@
+# /robots.txt
+User-agent: *
+Allow: /
+
+# Block admin/private API areas (if applicable)
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+
+# Point search engines to the auto-generated sitemap
+Sitemap: https://ilsa.org.co/sitemap-index.xml

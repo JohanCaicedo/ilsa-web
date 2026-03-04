@@ -78,6 +78,16 @@ const containerClass = width === "narrow" ? "max-w-4xl" : "max-w-[1400px]";
         </script>
 
         <!-- Primary Meta Tags -->
+        {
+            seo?.noindex || seo?.nofollow ? (
+                <meta
+                    name="robots"
+                    content={`${seo.noindex ? "noindex" : "index"}, ${seo.nofollow ? "nofollow" : "follow"}`}
+                />
+            ) : (
+                <meta name="robots" content="index, follow" />
+            )
+        }
         <title>{finalTitle}</title>
         <meta name="title" content={finalTitle} />
         <meta name="description" content={metaDescription} />
@@ -102,6 +112,52 @@ const containerClass = width === "narrow" ? "max-w-4xl" : "max-w-[1400px]";
             property="twitter:image"
             content={seo?.twitterImage?.sourceUrl || ogImage}
         />
+
+        <!-- Global Structured Data (JSON-LD) -->
+        <script
+            is:inline
+            type="application/ld+json"
+            set:html={JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                name: "ILSA - Instituto Latinoamericano para una Sociedad y un Derecho Alternativos",
+                url: "https://ilsa.org.co",
+                logo: "https://api.ilsa.org.co/wp-content/uploads/2023/05/cropped-ILSA-Azul-Favicon-45-anos.png",
+                sameAs: [
+                    "https://www.facebook.com/ILSA-Instituto-Latinoamericano-para-una-Sociedad-y-un-Derecho-Alternativos-108740529188099/",
+                    "https://twitter.com/ILSABogota",
+                    "https://www.youtube.com/user/ILSAComunicacion",
+                    "https://www.instagram.com/ilsa_bogota/",
+                ],
+            })}
+        />
+
+        {
+            computedBreadcrumbs.length > 0 && (
+                <script
+                    is:inline
+                    type="application/ld+json"
+                    set:html={JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "BreadcrumbList",
+                        itemListElement: [
+                            {
+                                "@type": "ListItem",
+                                position: 1,
+                                name: "Home",
+                                item: "https://ilsa.org.co/",
+                            },
+                            ...computedBreadcrumbs.map((crumb, index) => ({
+                                "@type": "ListItem",
+                                position: index + 2,
+                                name: crumb.label,
+                                item: `https://ilsa.org.co${crumb.href}`,
+                            })),
+                        ],
+                    })}
+                />
+            )
+        }
 
         <ClientRouter />
     </head>

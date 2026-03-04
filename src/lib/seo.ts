@@ -13,6 +13,8 @@ export interface SeoData {
         sourceUrl: string;
     };
     readingTime?: number;
+    noindex?: boolean;
+    nofollow?: boolean;
 }
 
 export const defaultSeo: SeoData = {
