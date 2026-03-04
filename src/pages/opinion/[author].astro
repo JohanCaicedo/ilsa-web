@@ -1,0 +1,18 @@
+---
+import AuthorPage from "../../components/templates/AuthorPage.astro";
+import { authorsConfig } from "../../lib/authors";
+
+export const prerender = true;
+
+export function getStaticPaths() {
+    // Convertimos las llaves del diccionario de autores a las rutas dinámicas
+    // que Astro va a generar para cada archivo individual mágicamente.
+    return Object.keys(authorsConfig).map((authorSlug) => ({
+        params: { author: authorSlug },
+    }));
+}
+
+const { author } = Astro.params;
+---
+
+<AuthorPage slug={author} />
