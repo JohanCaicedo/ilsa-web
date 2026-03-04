@@ -298,6 +298,19 @@ html.is-ios * {
 
 /* Specific component iOS downgrades (Transferred from index.astro) */
 html.is-ios .bg-noise-layer {
-  /* Mix-blend-mode freezes WebKit on mobiles, so we override it with a flat soft opacity instead */
-  opacity: 0.05 !important;
+  display: block;
+  opacity: 0.15 !important;
+}
+
+/* ==============================================================
+ * 🍎 STRICT WEBKIT BLUR ACCELERATION
+ * Prevents iOS Safari from dropping frames when animating large
+ * CSS filter: blur() spheres. Forces dedicated memory layers.
+ * ============================================================== */
+.webkit-blur-fix {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
 }

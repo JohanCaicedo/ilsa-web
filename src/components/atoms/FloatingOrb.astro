@@ -26,17 +26,18 @@ const uniqueId = `orb-${crypto.randomUUID()}`;
     class={`fixed inset-0 pointer-events-none overflow-hidden z-[-1] select-none ${className}`}
 >
     <!-- Removed fixed opacity-60 class to allow dynamic control via script/style -->
+    <!-- Restored: Original CSS Blur with forced GPU hardware acceleration -->
     <div
         id={uniqueId}
-        class="absolute rounded-full"
+        class="absolute rounded-full blur-[80px] webkit-blur-fix"
         style={`
-        width: calc(${size} * 1.5);
-        height: calc(${size} * 1.5);
-        background: radial-gradient(circle closest-side, ${color}, transparent);
+        width: ${size};
+        height: ${size};
+        background-color: ${color};
         /* Initial position center */
         left: 50%;
         top: 50%;
-        transform: translate(-50%, -50%);
+        transform: translate3d(-50%, -50%, 0);
         opacity: 0.6; /* Start at max opacity */
     `}
         data-speed={speed}
