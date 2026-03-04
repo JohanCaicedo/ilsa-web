@@ -215,19 +215,6 @@ const columnists = Object.values(authorsConfig);
                 animation: enter 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
                 animation-delay: 400ms;
             }
-
-            /* iOS GPU Optimizations */
-            html.is-ios .bg-noise-layer {
-                display: none; /* Mix-blend-mode freezes WebKit on mobiles */
-            }
-
-            html.is-ios .heavy-blur-orb {
-                filter: blur(
-                    40px
-                ) !important; /* Cap blur to prevent massive GPU repaints */
-                animation: none !important; /* Static on iOS to save CPU */
-                opacity: 0.2;
-            }
         </style>
     </div>
 </Layout>
