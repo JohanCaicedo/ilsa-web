@@ -64,7 +64,9 @@ const {
 
 <script>
     function checkImages() {
-        const images = document.querySelectorAll('img[data-loaded!="true"]');
+        const images = document.querySelectorAll(
+            'img:not([data-loaded="true"])',
+        );
         images.forEach((img) => {
             if ((img as HTMLImageElement).complete) {
                 img.setAttribute("data-loaded", "true");

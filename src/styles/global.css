@@ -298,14 +298,6 @@ html.is-ios * {
 
 /* Specific component iOS downgrades (Transferred from index.astro) */
 html.is-ios .bg-noise-layer {
-  display: none;
-  /* Mix-blend-mode freezes WebKit on mobiles */
-}
-
-html.is-ios .heavy-blur-orb {
-  filter: blur(40px) !important;
-  /* Cap blur to prevent massive GPU repaints */
-  animation: none !important;
-  /* Static on iOS to save CPU */
-  opacity: 0.2;
+  /* Mix-blend-mode freezes WebKit on mobiles, so we override it with a flat soft opacity instead */
+  opacity: 0.05 !important;
 }

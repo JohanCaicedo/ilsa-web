@@ -18,27 +18,29 @@ const {
     totalPages > 1 && (
         <div class="mb-12 flex justify-center">
             <div
-                class="inline-flex gap-2 p-3 bg-white/40 backdrop-blur-md rounded-full border border-white/60 shadow-lg"
+                class="inline-flex gap-2 p-3 bg-white/40 backdrop-blur-md rounded-full border border-white/60 shadow-lg relative z-20"
                 id={`tab-container-${gridId}`}
                 data-posts-per-page={postsPerPage}
             >
                 {[...Array(totalPages)].map((_, i) => (
                     <button
                         type="button"
-                        class={`pagination-btn tab-btn-${gridId} relative w-11 h-11 rounded-full flex items-center justify-center text-sm font-black transition-all duration-300 ease-out touch-action-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ilsa-blue)] focus-visible:ring-offset-2 ${
+                        class={`pagination-btn tab-btn-${gridId} relative w-11 h-11 rounded-full flex items-center justify-center text-sm font-black transition-all duration-300 ease-out touch-manipulation cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ilsa-blue)] focus-visible:ring-offset-2 ${
                             i === 0
-                                ? "bg-gradient-to-br from-[var(--ilsa-blue)] to-[var(--ilsa-mujeres)] text-white shadow-lg scale-110"
-                                : "text-slate-500 hover:text-white hover:scale-105"
+                                ? "bg-gradient-to-br from-[var(--ilsa-blue)] to-[var(--ilsa-mujeres)] text-white shadow-lg scale-110 active-pagination"
+                                : "text-slate-500 md:hover:text-white md:hover:scale-105"
                         }`}
                         data-page={i}
                         data-grid={gridId}
                         data-card={cardClass}
                     >
-                        <span class="relative z-10">{i + 1}</span>
+                        <span class="relative z-10 pointer-events-none">
+                            {i + 1}
+                        </span>
 
                         {/* Hover glow effect */}
                         {i !== 0 && (
-                            <div class="absolute inset-0 rounded-full bg-gradient-to-br from-[var(--ilsa-blue)]/80 to-[var(--ilsa-mujeres)]/80 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                            <div class="absolute inset-0 rounded-full bg-gradient-to-br from-[var(--ilsa-blue)]/80 to-[var(--ilsa-mujeres)]/80 opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none" />
                         )}
                     </button>
                 ))}
@@ -66,13 +68,15 @@ const {
         transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .pagination-btn:not(.active-pagination):hover::before {
-        opacity: 1;
-    }
+    @media (hover: hover) {
+        .pagination-btn:not(.active-pagination):hover::before {
+            opacity: 1;
+        }
 
-    .pagination-btn:not(.active-pagination):hover {
-        transform: translateY(-2px) scale(1.05);
-        box-shadow: 0 8px 20px -4px rgba(34, 67, 149, 0.4);
+        .pagination-btn:not(.active-pagination):hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 20px -4px rgba(34, 67, 149, 0.4);
+        }
     }
 
     .active-pagination {
