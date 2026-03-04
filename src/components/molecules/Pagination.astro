@@ -138,7 +138,7 @@ const {
     }
 </style>
 
-<script is:inline data-astro-rerun>
+<script>
     function handlePaginationClick(e: Event) {
         const target = e.target as HTMLElement;
         const button = target.closest(
@@ -226,17 +226,11 @@ const {
     }
 
     // Global Event Delegation for Pagination
-    // We bind to the document AND listen to Astro's View Transitions to ensure
-    // the listener survives and correctly targets newly swapped DOM elements,
-    // especially on dynamic routes like /opinion/[author]
-    function setupPagination() {
-        if (!(window as any).hasPaginationListenerRegistered) {
-            document.addEventListener("click", handlePaginationClick);
-            (window as any).hasPaginationListenerRegistered = true;
-        }
+    // The click listener is on `document`, which persists across View Transitions.
+    // This means it works on ALL pages (opinion/index, opinion/[author], noticias, etc.)
+    // without needing `is:inline` or `data-astro-rerun`.
+    if (!(window as any).__paginationReady) {
+        document.addEventListener("click", handlePaginationClick);
+        (window as any).__paginationReady = true;
     }
-
-    // Initialize on first load and re-initialize after View Transitions
-    setupPagination();
-    document.addEventListener("astro:page-load", setupPagination);
 </script>
