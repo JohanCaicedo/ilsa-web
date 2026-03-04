@@ -59,6 +59,24 @@ const containerClass = width === "narrow" ? "max-w-4xl" : "max-w-[1400px]";
         <link rel="preconnect" href="https://api.ilsa.org.co" />
         <link rel="dns-prefetch" href="https://api.ilsa.org.co" />
 
+        <!-- iOS Global GPU Safeguard Sniffer -->
+        <!-- Runs before CSS paints to prevent FOUC (Flash of unstyled content) or GPU hangups -->
+        <script is:inline>
+            if (typeof window !== "undefined") {
+                const isIOS =
+                    /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+                    (navigator.platform === "MacIntel" &&
+                        navigator.maxTouchPoints > 1); // iPadOS 13+
+                const isMobileKit =
+                    /AppleWebKit/.test(navigator.userAgent) &&
+                    /Mobile/.test(navigator.userAgent);
+
+                if (isIOS || isMobileKit) {
+                    document.documentElement.classList.add("is-ios");
+                }
+            }
+        </script>
+
         <!-- Primary Meta Tags -->
         <title>{finalTitle}</title>
         <meta name="title" content={finalTitle} />

@@ -42,23 +42,6 @@ const columnists = Object.values(authorsConfig);
 
 <Layout seo={seoData} breadcrumbs={breadcrumbItems}>
     <div class="relative min-h-screen text-[#3d3d47] overflow-hidden font-sans">
-        <!-- iOS sniffer script: Eliminates heavy GPU load on iPhones/iPads -->
-        <script is:inline>
-            if (typeof window !== "undefined") {
-                const isIOS =
-                    /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-                    (navigator.platform === "MacIntel" &&
-                        navigator.maxTouchPoints > 1); // iPadOS 13+
-                const isMobileKit =
-                    /AppleWebKit/.test(navigator.userAgent) &&
-                    /Mobile/.test(navigator.userAgent);
-
-                if (isIOS || isMobileKit) {
-                    document.documentElement.classList.add("is-ios");
-                }
-            }
-        </script>
-
         <!-- Global Atmosphere Gradients (Liquid Glass Base) -->
         <div class="fixed top-0 left-0 w-full h-full pointer-events-none z-0">
             <!-- Noise Overlay -->

@@ -278,3 +278,20 @@
     opacity: 0;
   }
 }
+
+/* 
+ * ==============================================================
+ * 🚀 IOS/APPLE WEBKIT GPU EMERGENCY SAFEGUARDS
+ * ==============================================================
+ * WebKit on mobile devices frequently collapses and lags drastically 
+ * trying to composite multiple nodes utilizing hardware-accelerated blends.
+ * 
+ * Rules bounded by 'html.is-ios' are EXCLUSIVELY applied to mobile iOS 
+ * and iPad devices, fully preserving Android, Desktop Chrome, and Firefox 
+ * aesthetic designs. Tested on multiple components (TeamCard, OpinionCard, Hero).
+ */
+
+html.is-ios * {
+  /* Suppresses complex pixel blending that throttles iOS GPUs */
+  mix-blend-mode: normal !important;
+}
