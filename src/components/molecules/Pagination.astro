@@ -231,18 +231,8 @@ const {
         };
     }
 
-    function initPagination() {
-        document.removeEventListener("click", window.handlePaginationClick);
-        document.addEventListener("click", window.handlePaginationClick);
-    }
-
-    // Astro View Transitions Support
-    document.addEventListener("astro:page-load", initPagination);
-
-    // Initial load support
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", initPagination);
-    } else {
-        initPagination();
-    }
+    // Se ejecuta de inmediato para soportar SSR, SSG y Astro View Transitions (data-astro-rerun)
+    // El evento 'click' en 'document' persiste, pero lo limpiamos y volvemos a registrar por seguridad en recargas
+    document.removeEventListener("click", window.handlePaginationClick);
+    document.addEventListener("click", window.handlePaginationClick);
 </script>
