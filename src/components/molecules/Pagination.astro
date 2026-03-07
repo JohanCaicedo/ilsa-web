@@ -16,7 +16,7 @@ const {
 
 {
     totalPages > 1 && (
-        <div class="mb-12 flex justify-center">
+        <div class="mb-12 flex justify-center relative z-40">
             <div
                 class="inline-flex gap-2 p-3 bg-white/40 backdrop-blur-md rounded-full border border-white/60 shadow-lg"
                 id={`tab-container-${gridId}`}
@@ -149,11 +149,14 @@ const {
 
         const gridId = button.dataset.grid;
         const cardClass = button.dataset.card;
-        const page = parseInt(button.dataset.page || "0");
+        const page = parseInt(button.dataset.page || "0", 10);
         const container = button.closest(
             "div[data-posts-per-page]",
         ) as HTMLElement;
-        const postsPerPage = parseInt(container?.dataset.postsPerPage || "12");
+        const postsPerPage = parseInt(
+            container?.dataset.postsPerPage || "12",
+            10,
+        );
 
         if (!gridId || !cardClass) return;
 
@@ -190,7 +193,10 @@ const {
         });
 
         // Filter logic with staggered CSS animation
-        const posts = document.querySelectorAll(`.${cardClass}`);
+        const grid = document.getElementById(gridId);
+        if (!grid) return;
+
+        const posts = grid.querySelectorAll(`.${cardClass}`);
         const start = page * postsPerPage;
         const end = start + postsPerPage;
 
@@ -216,21 +222,26 @@ const {
         });
 
         // Smooth scroll to top of grid with offset
-        const grid = document.getElementById(gridId);
         if (grid) {
-            const yOffset = -150;
+            const yOffset = -200;
             const y =
                 grid.getBoundingClientRect().top + window.pageYOffset + yOffset;
             window.scrollTo({ top: y, behavior: "smooth" });
         }
     }
 
-    // Global Event Delegation for Pagination
-    // The click listener is on `document`, which persists across View Transitions.
-    // This means it works on ALL pages (opinion/index, opinion/[author], noticias, etc.)
-    // without needing `is:inline` or `data-astro-rerun`.
-    if (!(window as any).__paginationReady) {
+    // Modern Astro View Transitions initialization
+    function setupPagination() {
+        document.removeEventListener("click", handlePaginationClick);
         document.addEventListener("click", handlePaginationClick);
-        (window as any).__paginationReady = true;
+    }
+
+    document.addEventListener("astro:page-load", setupPagination);
+
+    // Fallback for initial generic load
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", setupPagination);
+    } else {
+        setupPagination();
     }
 </script>

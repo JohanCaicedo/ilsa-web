@@ -17,7 +17,7 @@ const {
 <div class={`wp-loader-container relative ${minHeight} ${className}`}>
     <!-- Skeleton Overlay -->
     <div
-        class="wp-loader-skeleton absolute inset-0 z-10 bg-[var(--ilsa-bg-light)]"
+        class="wp-loader-skeleton absolute inset-0 z-10 bg-[var(--ilsa-bg-light)] pointer-events-none"
         aria-hidden="true"
     >
         <SkeletonLoader type={type} />
