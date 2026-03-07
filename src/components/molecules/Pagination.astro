@@ -138,49 +138,33 @@ const {
     }
 </style>
 
-<script>
-    function handlePaginationClick(e: Event) {
-        const target = e.target as HTMLElement;
-        const button = target.closest(
-            ".pagination-btn",
-        ) as HTMLButtonElement | null;
+<script is:inline data-astro-rerun>
+    // Se define la función en el scope global para evitar multi-registros con is:inline
+    if (typeof window.handlePaginationClick === "undefined") {
+        window.handlePaginationClick = function (e) {
+            const target = e.target;
+            const button = target.closest(".pagination-btn");
 
-        if (!button) return;
+            if (!button) return;
 
-        const gridId = button.dataset.grid;
-        const cardClass = button.dataset.card;
-        const page = parseInt(button.dataset.page || "0", 10);
-        const container = button.closest(
-            "div[data-posts-per-page]",
-        ) as HTMLElement;
-        const postsPerPage = parseInt(
-            container?.dataset.postsPerPage || "12",
-            10,
-        );
-
-        if (!gridId || !cardClass) return;
-
-        // Update ALL tabs for this specific grid (top and bottom pagination)
-        const gridTabs = document.querySelectorAll(
-            `button[data-grid="${gridId}"]`,
-        );
-
-        gridTabs.forEach((t) => {
-            t.classList.remove(
-                "bg-gradient-to-br",
-                "from-[var(--ilsa-blue)]",
-                "to-[var(--ilsa-mujeres)]",
-                "text-white",
-                "shadow-lg",
-                "scale-110",
-                "active-pagination",
+            const gridId = button.dataset.grid;
+            const cardClass = button.dataset.card;
+            const page = parseInt(button.dataset.page || "0", 10);
+            const container = button.closest("div[data-posts-per-page]");
+            const postsPerPage = parseInt(
+                container?.dataset.postsPerPage || "12",
+                10,
             );
-            t.classList.add("text-slate-500");
 
-            // Sync active state visually across top/bottom
-            if (t.getAttribute("data-page") === page.toString()) {
-                t.classList.remove("text-slate-500");
-                t.classList.add(
+            if (!gridId || !cardClass) return;
+
+            // Update ALL tabs for this specific grid (top and bottom pagination)
+            const gridTabs = document.querySelectorAll(
+                `button[data-grid="${gridId}"]`,
+            );
+
+            gridTabs.forEach((t) => {
+                t.classList.remove(
                     "bg-gradient-to-br",
                     "from-[var(--ilsa-blue)]",
                     "to-[var(--ilsa-mujeres)]",
@@ -189,59 +173,76 @@ const {
                     "scale-110",
                     "active-pagination",
                 );
+                t.classList.add("text-slate-500");
+
+                // Sync active state visually across top/bottom
+                if (t.getAttribute("data-page") === page.toString()) {
+                    t.classList.remove("text-slate-500");
+                    t.classList.add(
+                        "bg-gradient-to-br",
+                        "from-[var(--ilsa-blue)]",
+                        "to-[var(--ilsa-mujeres)]",
+                        "text-white",
+                        "shadow-lg",
+                        "scale-110",
+                        "active-pagination",
+                    );
+                }
+            });
+
+            // Filter logic with staggered CSS animation
+            const grid = document.getElementById(gridId);
+            if (!grid) return;
+
+            const posts = grid.querySelectorAll(`.${cardClass}`);
+            const start = page * postsPerPage;
+            const end = start + postsPerPage;
+
+            posts.forEach((post, index) => {
+                const el = post;
+
+                // Remove previous animation class to reset
+                el.classList.remove("card-enter");
+
+                if (index >= start && index < end) {
+                    el.classList.remove("hidden");
+                    el.classList.add("flex");
+
+                    // Staggered CSS animation for each card
+                    const delay = (index - start) * 50; // 50ms stagger
+                    setTimeout(() => {
+                        el.classList.add("card-enter");
+                    }, delay);
+                } else {
+                    el.classList.add("hidden");
+                    el.classList.remove("flex");
+                }
+            });
+
+            // Smooth scroll to top of grid with offset
+            if (grid) {
+                const yOffset = -200;
+                const y =
+                    grid.getBoundingClientRect().top +
+                    window.pageYOffset +
+                    yOffset;
+                window.scrollTo({ top: y, behavior: "smooth" });
             }
-        });
-
-        // Filter logic with staggered CSS animation
-        const grid = document.getElementById(gridId);
-        if (!grid) return;
-
-        const posts = grid.querySelectorAll(`.${cardClass}`);
-        const start = page * postsPerPage;
-        const end = start + postsPerPage;
-
-        posts.forEach((post, index) => {
-            const el = post as HTMLElement;
-
-            // Remove previous animation class to reset
-            el.classList.remove("card-enter");
-
-            if (index >= start && index < end) {
-                el.classList.remove("hidden");
-                el.classList.add("flex");
-
-                // Staggered CSS animation for each card
-                const delay = (index - start) * 50; // 50ms stagger
-                setTimeout(() => {
-                    el.classList.add("card-enter");
-                }, delay);
-            } else {
-                el.classList.add("hidden");
-                el.classList.remove("flex");
-            }
-        });
-
-        // Smooth scroll to top of grid with offset
-        if (grid) {
-            const yOffset = -200;
-            const y =
-                grid.getBoundingClientRect().top + window.pageYOffset + yOffset;
-            window.scrollTo({ top: y, behavior: "smooth" });
-        }
+        };
     }
 
-    // Modern Astro View Transitions initialization
-    function setupPagination() {
-        document.removeEventListener("click", handlePaginationClick);
-        document.addEventListener("click", handlePaginationClick);
+    function initPagination() {
+        document.removeEventListener("click", window.handlePaginationClick);
+        document.addEventListener("click", window.handlePaginationClick);
     }
 
-    document.addEventListener("astro:page-load", setupPagination);
+    // Astro View Transitions Support
+    document.addEventListener("astro:page-load", initPagination);
 
-    // Fallback for initial generic load
+    // Initial load support
     if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", setupPagination);
+        document.addEventListener("DOMContentLoaded", initPagination);
     } else {
-        setupPagination();
+        initPagination();
     }
 </script>
