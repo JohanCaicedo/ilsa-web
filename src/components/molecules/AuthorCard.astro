@@ -28,16 +28,36 @@ const {
 
 <a
     href={uri}
-    class="group relative block w-full max-w-[380px] rounded-2xl glass-panel p-6 transition-transform transition-shadow duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_12px_40px_-8px_var(--glass-shadow)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ilsa-blue)] focus-visible:ring-offset-2 touch-action-manipulation"
+    class="author-glass-card group relative block w-full max-w-[380px] rounded-3xl border border-white/20 bg-white/10 backdrop-blur-3xl p-6 touch-action-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ilsa-blue)] focus-visible:ring-offset-2 overflow-hidden"
+    style="perspective: 1000px;"
 >
-    <!-- Accent bar (left edge) -->
+    <!-- Frosty Glow: top edge refraction -->
     <div
-        class="absolute left-0 top-6 bottom-6 w-[3px] rounded-full bg-[var(--ilsa-blue)] opacity-40 group-hover:opacity-100 transition-opacity duration-300"
+        class="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-white/20 to-transparent pointer-events-none rounded-t-3xl"
+    >
+    </div>
+
+    <!-- Shimmer sweep on hover -->
+    <div
+        class="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/30 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out pointer-events-none rounded-3xl"
+    >
+    </div>
+
+    <!-- Inner glass highlight (inset border simulation) -->
+    <div
+        class="absolute inset-[1px] rounded-3xl border border-white/10 pointer-events-none"
+    >
+    </div>
+
+    <!-- Accent bar (left edge) with gradient -->
+    <div
+        class="absolute left-0 top-6 bottom-6 w-[3px] rounded-full opacity-50 group-hover:opacity-100 transition-opacity duration-300"
+        style="background: linear-gradient(180deg, var(--ilsa-blue), var(--ilsa-blue-dark));"
     >
     </div>
 
     <!-- Content -->
-    <div class="pl-4 flex flex-col gap-4">
+    <div class="relative z-10 pl-4 flex flex-col gap-4">
         <!-- Author tag -->
         <span
             class="text-[11px] font-bold tracking-[0.15em] text-[var(--ilsa-blue)] uppercase"
@@ -64,7 +84,7 @@ const {
 
         <!-- Footer: Date + Read arrow -->
         <div
-            class="flex items-center justify-between pt-2 border-t border-[var(--glass-border)]"
+            class="flex items-center justify-between pt-3 border-t border-white/30"
         >
             <time
                 class="text-[11px] font-semibold text-[var(--ilsa-text-gray)]/60 tracking-wide uppercase"
@@ -94,3 +114,25 @@ const {
         </div>
     </div>
 </a>
+
+<style>
+    .author-glass-card {
+        box-shadow:
+            0 8px 32px 0 var(--glass-shadow),
+            inset 0 0 0 1px var(--glass-highlight);
+        transition:
+            transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+            box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+            border-color 0.3s ease;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+    .author-glass-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(255, 255, 255, 0.4);
+        box-shadow:
+            0 16px 48px -8px var(--glass-shadow),
+            inset 0 0 0 1px var(--glass-highlight),
+            0 0 60px -15px rgba(74, 125, 191, 0.1);
+    }
+</style>
