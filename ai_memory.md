@@ -116,6 +116,17 @@
     -   **OOM Fix**: Implementada optimización condicional de imágenes (`shouldOptimize`). Solo se procesan imágenes de eventos `year >= 2025` durante el build. Las anteriores usan `<img>` nativo para ahorrar RAM en Cloudflare.
     -   **Long URL Fix**: Creado `public/_routes.json` manual para forzar el uso de wildcards (`/actividades/*`) y evitar la generación automática de reglas detalladas que exceden el límite de 100 caracteres de Cloudflare. Se verificó que este archivo tiene precedencia sobre el adaptador.
 
+### Session 10/03/2026 - AuthorCard Liquid Glass Rewrite
+- **`AuthorCard.astro`**:
+    - **Full Rewrite**: Componente completamente reescrito. Abandonado el esquema de gradiente radial sólido a favor de la estética **Liquid Glass** del proyecto.
+    - **Estructura de Capas**: (1) Imagen de fondo a sangre completa con `SmartImage` y scale-on-hover, (2) Overlay cinematográfico `from-black/90 via-black/50`, (3) Refracción Frosty en borde superior con `from-white/15`, (4) Contenido editorial sobre glass.
+    - **Panel Frosty para Excerpt**: Nuevo campo `excerpt` renderizado dentro de un panel de cristal esmerilado (`bg-white/8 backdrop-blur-2xl border-white/15`) que refuerza la identidad Liquid Glass.
+    - **Badge de Autor**: Pill con `bg-white/10 backdrop-blur-xl border-white/20` en vez de texto plano.
+    - **Animaciones**: Cubic-bezier personalizado para sombras y transforms. Indicador "Leer →" revelado desde la izquierda on-hover. Brillo inferior como línea de acento (`via-white/30`).
+    - **Dimensiones**: Cambió de `320x320` a `w-full max-w-[360px] h-[460px]` para aprovechar mejor la grilla responsiva.
+- **`AuthorPage.astro`**:
+    - **Data**: Modificada query `GetAuthorContent` sumando el campo `excerpt`. Normalización con `.replace` de etiquetas HTML devueltas por WPGraphQL.
+
 ## Next Steps (Pendientes Críticos)
 
 ### Prioridad Alta (Próxima Sesión)
@@ -142,6 +153,8 @@
 - `feat(easter-egg): add full mobile touch support`
 - `feat(perf): implement adaptive 3d rendering and long-press easter egg activation`
 - `fix(components): refactor interactive elements (dropdowns, accordion, slider, pagination)`
+- `feat(ui): redesign AuthorCard with premium Liquid Glass aesthetic and excerpt support`
+- `refactor(ui): apply Vercel web-design-guidelines to AuthorCard transitions and spatial composition`
 
 ---
 

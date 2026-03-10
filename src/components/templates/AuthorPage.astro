@@ -24,6 +24,7 @@ const data = await wpQuery({
           title
           uri
           date
+          excerpt
           featuredImage {
             node {
               sourceUrl
@@ -208,6 +209,12 @@ const breadcrumbItems = [
                                             image={img}
                                             date={formatDate(post.date)}
                                             uri={post.uri}
+                                            excerpt={
+                                                post.excerpt?.replace(
+                                                    /<\/?[^>]+(>|$)/g,
+                                                    "",
+                                                ) || ""
+                                            }
                                             width={
                                                 post.featuredImage?.node
                                                     ?.mediaDetails?.width
