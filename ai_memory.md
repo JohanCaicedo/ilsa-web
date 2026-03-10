@@ -124,8 +124,12 @@
     - **Badge de Autor**: Pill con `bg-white/10 backdrop-blur-xl border-white/20` en vez de texto plano.
     - **Animaciones**: Cubic-bezier personalizado para sombras y transforms. Indicador "Leer →" revelado desde la izquierda on-hover. Brillo inferior como línea de acento (`via-white/30`).
     - **Dimensiones**: Cambió de `320x320` a `w-full max-w-[360px] h-[460px]` para aprovechar mejor la grilla responsiva.
-- **`AuthorPage.astro`**:
-    - **Data**: Modificada query `GetAuthorContent` sumando el campo `excerpt`. Normalización con `.replace` de etiquetas HTML devueltas por WPGraphQL.
+- **`ArticlePost.astro` (Nuevos Estilos)**:
+    - **Soporte PDF Premium**: Se implementó una transformación total para el bloque de WordPress `.wp-block-file`. Ahora, cuando el usuario sube un PDF desde Gutenberg, se renderiza automáticamente como una **Resource Card** con estética Liquid Glass.
+    - **Visualizador Interactivo**: Se integró un script vanilla JS que detecta enlaces PDF en bloques de archivos. Inyecta dinámicamente un botón "Ver PDF" que despliega un visor integrado (`iframe`) con estilos de cristal y animaciones suaves. Incluye lógica de lazy-loading y fallback para móviles.
+    - **Diseño**: Fondo `rgba(255,255,255,0.4)` con `backdrop-blur(12px)`, sombras tintadas, icono de documento dinámico mediante máscara SVG de Heroicons y botón de descarga coherente con la paleta de ILSA.
+    - **Alineación de Texto**: Se corrigió un problema donde las alineaciones de WordPress (Gutenberg y Clásico) no se respetaban. Se añadieron reglas `!important` para `.has-text-align-*` y estilos inline de alineación.
+    - **Tipografía y Prosa**: Se restauraron estilos para `ul/ol/li`, `table`, `hr` y elementos `code` que eran eliminados por el reset de Tailwind CSS.
 
 ## Next Steps (Pendientes Críticos)
 
