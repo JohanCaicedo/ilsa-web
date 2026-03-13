@@ -10,6 +10,42 @@ import { wpQuery } from "../../lib/wp";
 import { teamData, boardData } from "../../lib/team";
 import type { SeoData } from "../../lib/seo";
 
+const heroImages = [
+    "/images/gallery/Nosotros (5).webp",
+    "/images/gallery/Nosotros (6).webp",
+    "/images/gallery/Nosotros (7).webp",
+    "/images/gallery/Nosotros (12).webp",
+    "/images/gallery/Nosotros (14).webp"
+];
+
+const geoImages = [
+    "/images/gallery/HomeGalery (1).webp",
+    "/images/gallery/Nosotros (1).webp",
+    "/images/gallery/Nosotros (8).webp",
+    "/images/gallery/Nosotros (15).webp"
+];
+
+const missionImages = [
+    "/images/gallery/HomeGalery (2).webp",
+    "/images/gallery/Nosotros (2).webp",
+    "/images/gallery/Nosotros (9).webp",
+    "/images/gallery/HomeGalery (6).webp"
+];
+
+const visionImages = [
+    "/images/gallery/HomeGalery (3).webp",
+    "/images/gallery/Nosotros (3).webp",
+    "/images/gallery/Nosotros (10).webp",
+    "/images/gallery/Nosotros (13).webp"
+];
+
+const camposImages = [
+    "/images/gallery/HomeGalery (4).webp",
+    "/images/gallery/HomeGalery (5).webp",
+    "/images/gallery/Nosotros (4).webp",
+    "/images/gallery/Nosotros (11).webp"
+];
+
 export const prerender = true;
 
 const breadcrumbItems = [{ label: "Nosotros", href: "/nosotros" }];
@@ -100,19 +136,22 @@ const seoData: SeoData = data?.page?.seo;
                 </p>
 
                 <!-- Hero Image -->
-                <div
-                    class="relative w-full h-[400px] md:h-[500px] mb-16 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-blue-900/10 group"
+                <auto-slider
+                    class="relative block w-full h-[400px] md:h-[500px] mb-16 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-blue-900/10 group"
                 >
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-[#183069]/40 to-transparent z-10"
+                        class="absolute inset-0 bg-gradient-to-t from-[#183069]/60 to-[#4e7cce]/20 mix-blend-multiply z-10 pointer-events-none"
                     >
                     </div>
-                    <img
-                        src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1600&auto=format&fit=crop"
-                        alt="Territorio y Naturaleza"
-                        class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000"
-                    />
-                </div>
+                    {heroImages.map((src, index) => (
+                        <img
+                            src={src}
+                            alt="Territorio y Naturaleza"
+                            class={`absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 ${index === 0 ? 'opacity-100' : 'opacity-0'}`}
+                            data-slider-image
+                        />
+                    ))}
+                </auto-slider>
 
                 <!-- Feature Grid -->
                 <div class="grid md:grid-cols-3 gap-8 w-full text-left">
@@ -219,19 +258,24 @@ const seoData: SeoData = data?.page?.seo;
                 </h2>
 
                 <!-- Geo Visual -->
-                <div
-                    class="relative w-full h-[350px] rounded-3xl overflow-hidden shadow-lg border border-white/50 mb-10 group"
+                <auto-slider
+                    class="relative block w-full h-[350px] rounded-3xl overflow-hidden shadow-lg border border-white/50 mb-10 group"
                 >
                     <div
-                        class="absolute inset-0 bg-[#4e7cce]/10 z-10 mix-blend-multiply"
+                        class="absolute inset-0 bg-[#4e7cce]/30 z-10 mix-blend-multiply pointer-events-none"
                     >
                     </div>
-                    <img
-                        src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1000&auto=format&fit=crop"
-                        alt="Mapa Latinoamérica"
-                        class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
-                    />
-                </div>
+                    <div class="absolute inset-0 opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+                        {geoImages.map((src, index) => (
+                            <img
+                                src={src}
+                                alt="Ubicación Geográfica"
+                                class={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${index === 0 ? 'opacity-100' : 'opacity-0'}`}
+                                data-slider-image
+                            />
+                        ))}
+                    </div>
+                </auto-slider>
 
                 <p class="text-[#3d3d47]/70 italic max-w-2xl mx-auto">
                     Meta (Ariari), Cauca (Pacífico), Boyacá (Páramo de Pisba),
@@ -277,34 +321,40 @@ const seoData: SeoData = data?.page?.seo;
                 </div>
 
                 <!-- Mission Image -->
-                <div
-                    class="order-1 md:order-2 w-full h-[450px] rounded-[2.5rem] overflow-hidden shadow-xl shadow-blue-900/10 relative group"
+                <auto-slider
+                    class="order-1 md:order-2 block w-full h-[450px] rounded-[2.5rem] overflow-hidden shadow-xl shadow-blue-900/10 relative group"
                 >
                     <div
-                        class="absolute inset-0 bg-gradient-to-tr from-[#4e7cce]/20 to-transparent z-10"
+                        class="absolute inset-0 bg-gradient-to-tr from-[#4e7cce]/40 to-[#4e7cce]/10 mix-blend-multiply z-10 pointer-events-none"
                     >
                     </div>
-                    <img
-                        src="https://images.unsplash.com/photo-1582213782179-e0d71db5a483?q=80&w=800&auto=format&fit=crop"
-                        alt="Comunidad y Unión"
-                        class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                    />
-                </div>
+                    {missionImages.map((src, index) => (
+                        <img
+                            src={src}
+                            alt="Comunidad y Unión"
+                            class={`absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 ${index === 0 ? 'opacity-100' : 'opacity-0'}`}
+                            data-slider-image
+                        />
+                    ))}
+                </auto-slider>
 
                 <!-- Vision Image -->
-                <div
-                    class="w-full h-[450px] rounded-[2.5rem] overflow-hidden shadow-xl shadow-purple-900/10 relative group"
+                <auto-slider
+                    class="block w-full h-[450px] rounded-[2.5rem] overflow-hidden shadow-xl shadow-purple-900/10 relative group"
                 >
                     <div
-                        class="absolute inset-0 bg-gradient-to-bl from-[#5e3b69]/20 to-transparent z-10"
+                        class="absolute inset-0 bg-gradient-to-bl from-[#5e3b69]/40 to-[#4e7cce]/20 mix-blend-multiply z-10 pointer-events-none"
                     >
                     </div>
-                    <img
-                        src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=800&auto=format&fit=crop"
-                        alt="Horizonte y Naturaleza"
-                        class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                    />
-                </div>
+                    {visionImages.map((src, index) => (
+                        <img
+                            src={src}
+                            alt="Horizonte y Naturaleza"
+                            class={`absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 ${index === 0 ? 'opacity-100' : 'opacity-0'}`}
+                            data-slider-image
+                        />
+                    ))}
+                </auto-slider>
 
                 <!-- Vision Content -->
                 <div>
@@ -345,21 +395,23 @@ const seoData: SeoData = data?.page?.seo;
                 <div
                     class="flex flex-col md:flex-row items-center gap-12 lg:gap-16 p-6 md:p-12 rounded-[2.5rem] bg-white/50 backdrop-blur-3xl border border-white/60 shadow-xl shadow-slate-200/50"
                 >
-                    <!-- Left: Image -->
                     <div class="w-full md:w-5/12 shrink-0">
-                        <div
-                            class="relative group rounded-2xl overflow-hidden shadow-2xl shadow-blue-900/10"
+                        <auto-slider
+                            class="relative block group rounded-2xl overflow-hidden shadow-2xl shadow-blue-900/10 aspect-square md:aspect-[4/5]"
                         >
                             <div
-                                class="absolute inset-0 bg-[#4e7cce]/10 group-hover:bg-transparent transition-colors duration-500 z-10"
+                                class="absolute inset-0 bg-[#4e7cce]/30 mix-blend-multiply group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none"
                             >
                             </div>
-                            <img
-                                src="https://images.unsplash.com/photo-1555212697-194d092e3b8f?q=80&w=830&h=844&auto=format&fit=crop"
-                                alt="Campos de Acción ILSA"
-                                class="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700"
-                            />
-                        </div>
+                            {camposImages.map((src, index) => (
+                                <img
+                                    src={src}
+                                    alt="Campos de Acción ILSA"
+                                    class={`absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 ${index === 0 ? 'opacity-100' : 'opacity-0'}`}
+                                    data-slider-image
+                                />
+                            ))}
+                        </auto-slider>
                     </div>
 
                     <!-- Right: Content -->
@@ -599,3 +651,225 @@ const seoData: SeoData = data?.page?.seo;
         <TeamModal />
     </div>
 </Layout>
+
+                                    al desarrollo y conflictos socioambientales (territorialidades
+                                    del capital).
+                                </p>
+                            </AccordionItem>
+                            <AccordionItem
+                                variant="light"
+                                title="Perspectivas críticas sobre DDHH"
+                            >
+                                <p
+                                    class="mb-4 text-[#3d3d47] text-sm leading-relaxed"
+                                >
+                                    <strong>Enfoque:</strong> Políticas públicas inclusivas,
+                                    participación incidente y nuevos paradigmas jurídicos.
+                                </p>
+                            </AccordionItem>
+                            <AccordionItem
+                                variant="light"
+                                title="Género y derechos de las mujeres"
+                            >
+                                <p
+                                    class="mb-4 text-[#3d3d47] text-sm leading-relaxed"
+                                >
+                                    <strong>Enfoque:</strong> Acceso a la justicia,
+                                    economía del cuidado y participación política
+                                    de las mujeres.
+                                </p>
+                            </AccordionItem>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TEAM SECTION -->
+            <section class="mb-32">
+                <div class="text-center mb-16">
+                    <h2
+                        class="text-4xl font-bold text-[#3d3d47] mb-4"
+                        id="direccion-equipo"
+                    >
+                        Nuestro Equipo
+                    </h2>
+                    <div class="w-16 h-1 bg-[#4e7cce] mx-auto rounded-full">
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-8">
+                    {
+                        teamData.map((member) => (
+                            <DirectorCard
+                                variant="frosted"
+                                name={member.name}
+                                role={member.role}
+                                image={member.image}
+                                bio={member.bio}
+                                xUrl={member.xUrl}
+                                id={member.id}
+                            />
+                        ))
+                    }
+                </div>
+            </section>
+
+            <!-- BOARD SECTION -->
+            <section class="max-w-7xl mx-auto mb-24">
+                <h2
+                    class="text-3xl font-bold text-center text-[#3d3d47] mb-12"
+                    id="junta-directiva"
+                >
+                    Junta Directiva
+                </h2>
+
+                <div
+                    class="flex flex-col md:flex-row gap-6 md:gap-4 md:h-[450px] w-full"
+                >
+                    {
+                        boardData.map((member) => (
+                            <div
+                                class="interactive-card relative group flex-grow transition-all duration-500 md:hover:grow-[3] rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl cursor-pointer aspect-square md:aspect-auto"
+                                data-team-id={member.id}
+                            >
+                                <img
+                                    class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
+                                    src={member.image}
+                                    alt={member.name}
+                                />
+                                <div class="absolute inset-0 bg-gradient-to-t from-[#183069] via-[#183069]/40 to-transparent opacity-90 transition-opacity duration-300" />
+                                <div class="absolute inset-0 flex flex-col justify-end p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                    <p class="text-[#efefef] font-bold text-xs tracking-widest uppercase mb-1 opacity-80 group-hover:opacity-100">
+                                        {member.role}
+                                    </p>
+                                    <h3 class="text-xl md:text-2xl font-bold text-white mb-2 leading-tight">
+                                        {member.name}
+                                    </h3>
+                                    <div class="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100">
+                                        <p class="text-slate-300 text-sm mt-2">
+                                            {member.bio}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+            </section>
+
+            <!-- MANUAL DE MARCA CTA SECTION -->
+            <section
+                class="max-w-7xl mx-auto mb-24 relative overflow-hidden rounded-[2.5rem] bg-white/50 backdrop-blur-3xl border border-white/60 shadow-xl shadow-slate-200/50 p-8 md:p-12 lg:p-16 flex flex-col md:flex-row items-center gap-8 md:gap-16"
+            >
+                <!-- Background decor -->
+                <div
+                    class="absolute -top-32 -right-32 w-64 h-64 bg-[#4e7cce]/20 rounded-full blur-[80px] pointer-events-none"
+                >
+                </div>
+                <div
+                    class="absolute -bottom-32 -left-32 w-64 h-64 bg-[#183069]/20 rounded-full blur-[80px] pointer-events-none"
+                >
+                </div>
+
+                <div class="w-full md:w-1/2 relative z-10">
+                    <p
+                        class="text-[#4e7cce] font-bold text-sm tracking-widest uppercase mb-2"
+                    >
+                        Marca Corporativa
+                    </p>
+                    <GradientText
+                        as="h2"
+                        text="Identidad Visual"
+                        size="text-3xl md:text-5xl"
+                        class="mb-6"
+                    />
+                    <p
+                        class="text-[#3d3d47]/70 text-base md:text-lg leading-relaxed mb-8"
+                    >
+                        Nuestra identidad gráfica refleja la evolución, la
+                        experiencia y los valores fundamentales de ILSA. Explora
+                        nuestro manual para conocer las directrices de uso de
+                        nuestras marcas, tipografía corporativa y paleta de
+                        colores.
+                    </p>
+                    <Button
+                        variant="primary"
+                        size="lg"
+                        href="/manual-marca"
+                        class="gap-2 group"
+                    >
+                        Ver Manual de Identidad
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5 transform group-hover:translate-x-1 transition-transform"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                        >
+                            <path
+                                fill-rule="evenodd"
+                                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </Button>
+                </div>
+
+                <div class="w-full md:w-1/2 relative z-10 flex justify-center">
+                    <div
+                        class="relative w-full max-w-sm aspect-square bg-[#f9f9f9] rounded-2xl p-8 shadow-inner border border-gray-100 flex items-center justify-center transform hover:scale-105 transition-transform duration-500"
+                    >
+                        <img
+                            src="/images/ILSA-LOGO-20.png"
+                            alt="ILSA Logotipo"
+                            class="w-full h-auto object-contain drop-shadow-md rounded-xl"
+                        />
+
+                        <div
+                            class="absolute -top-4 -right-4 w-12 h-12 bg-white rounded-lg shadow-lg flex items-center justify-center animate-bounce border border-gray-100 overflow-hidden p-1"
+                            style="animation-duration: 3s;"
+                        >
+                            <img
+                                src="/ILSA-M.svg"
+                                alt="ILSA-M"
+                                class="w-full h-full object-contain"
+                            />
+                        </div>
+                        <div
+                            class="absolute -bottom-4 -left-4 w-16 h-12 bg-[#93a2c1] rounded-lg shadow-lg flex items-center justify-center animate-bounce"
+                            style="animation-duration: 4s; animation-delay: 1s;"
+                        >
+                            <div class="w-8 h-4 bg-[#5e3b69]/40 rounded"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <TeamModal />
+    </div>
+</Layout>
+
+<script>
+    class AutoSlider extends HTMLElement {
+        connectedCallback() {
+            const imgs = this.querySelectorAll('img[data-slider-image]');
+            if (imgs.length <= 1) return;
+            let currentIndex = 0;
+            
+            const nextSlide = () => {
+                const prev = imgs[currentIndex];
+                prev.classList.remove('opacity-100');
+                prev.classList.add('opacity-0');
+                
+                currentIndex = (currentIndex + 1) % imgs.length;
+                
+                const next = imgs[currentIndex];
+                next.classList.remove('opacity-0');
+                next.classList.add('opacity-100');
+                
+                setTimeout(nextSlide, 4000 + (Math.random() * 3000));
+            };
+
+            setTimeout(nextSlide, 4000 + (Math.random() * 3000));
+        }
+    }
+    customElements.define('auto-slider', AutoSlider);
+</script>
