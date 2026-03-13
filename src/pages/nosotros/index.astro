@@ -477,12 +477,12 @@ const seoData: SeoData = data?.page?.seo;
                 </h2>
 
                 <div
-                    class="flex flex-col md:flex-row gap-4 h-[600px] md:h-[450px] w-full"
+                    class="flex flex-col md:flex-row gap-6 md:gap-4 md:h-[450px] w-full"
                 >
                     {
                         boardData.map((member) => (
                             <div
-                                class="interactive-card relative group flex-grow transition-all duration-500 md:hover:grow-[3] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl cursor-pointer"
+                                class="interactive-card relative group flex-grow transition-all duration-500 md:hover:grow-[3] rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl cursor-pointer aspect-square md:aspect-auto"
                                 data-team-id={member.id}
                             >
                                 <img

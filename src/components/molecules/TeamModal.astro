@@ -7,92 +7,110 @@ const allMembers = [...teamData, ...boardData];
 
 <dialog
     id="team-modal"
-    class="backdrop:bg-black/40 backdrop:backdrop-blur-sm bg-transparent p-0 m-auto max-w-4xl w-[90%] md:w-[800px] h-fit rounded-[2.5rem] shadow-2xl focus:outline-none open:animate-in open:fade-in open:zoom-in-95 open:duration-300"
+    class="backdrop:bg-black/50 backdrop:backdrop-blur-sm bg-transparent p-0 m-auto w-[96%] max-w-5xl h-[85vh] md:h-[600px] rounded-[2rem] shadow-2xl focus:outline-none open:animate-in open:fade-in open:zoom-in-95 open:duration-300 overflow-hidden"
 >
+    <!-- Contenedor principal sin md:items-start para permitir alinear el hijo al centro -->
     <div
-        class="relative bg-white/90 backdrop-blur-2xl rounded-[2.5rem] border border-white/60 overflow-hidden shadow-[0_8px_32px_0_rgba(78,124,206,0.2)] md:grid md:grid-cols-2 md:items-stretch"
+        class="relative bg-white border border-white/60 w-full h-full flex flex-col md:flex-row shadow-[0_8px_32px_0_rgba(78,124,206,0.2)]"
     >
         <!-- Close Button -->
         <button
             id="close-modal"
-            class="absolute top-4 right-4 z-50 p-2 rounded-full bg-white/50 hover:bg-white text-slate-800 hover:text-red-500 transition-colors cursor-pointer border border-white/40 shadow-sm"
+            class="absolute top-4 right-4 z-50 p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-red-500 transition-colors shadow-sm focus:outline-none"
             aria-label="Cerrar modal"
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
+                width="20"
+                height="20"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2"
+                stroke-width="2.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 ><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg
             >
         </button>
 
-        <!-- Left: Image Section -->
-        <div class="relative h-64 md:h-auto min-h-full w-full overflow-hidden">
-            <div
-                class="absolute inset-0 bg-[#183069]/10 mix-blend-multiply z-10"
-            >
-            </div>
-            <!-- Dynamic Image -->
-            <img
-                id="modal-image"
-                src=""
-                alt=""
-                class="w-full h-full object-cover object-center"
-            />
-            <div
-                class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-[#183069]/80 to-transparent z-20"
-            >
-            </div>
+        <!-- Left: Image Section (Aumentado 20% y centrado) -->
+        <div class="relative w-full md:w-[380px] lg:w-[460px] md:h-full shrink-0 bg-slate-50 border-b md:border-b-0 md:border-r border-slate-100/50 pt-16 pb-10 px-8 md:p-8 flex items-center justify-center overflow-hidden">
+             <!-- Se limita el tamaño máximo en móvil para asegurar proporciones perfectas en los bordes, en desktop se mantiene intacto -->
+             <div class="w-full max-w-[220px] sm:max-w-[260px] md:max-w-none md:w-full aspect-square md:max-h-full rounded-[2rem] overflow-hidden shadow-lg border border-slate-200/50 relative group flex-shrink-0">
+                <div class="absolute inset-0 bg-[#183069]/5 mix-blend-multiply z-10 transition-colors group-hover:bg-transparent"></div>
+                <img
+                    id="modal-image"
+                    src=""
+                    alt=""
+                    class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
+                />
+             </div>
         </div>
 
         <!-- Right: Content Section -->
-        <div class="p-8 md:p-12 flex flex-col justify-center relative">
+        <div class="flex-1 min-w-0 p-6 md:p-10 flex flex-col relative w-full h-full overflow-hidden">
             <!-- Background Decoration -->
             <div
-                class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#4e7cce]/20 to-transparent rounded-full blur-3xl -z-10 translate-x-1/2 -translate-y-1/2"
+                class="absolute -top-24 -right-24 w-72 h-72 bg-gradient-to-br from-[#4e7cce]/10 to-transparent rounded-full blur-3xl -z-10 pointer-events-none"
             >
             </div>
 
-            <div class="mb-6">
+            <!-- Header (Fixed) -->
+            <div class="shrink-0 mb-5 pr-8">
                 <span
                     id="modal-role"
-                    class="inline-block px-3 py-1 rounded-full bg-[#4e7cce]/10 text-[#4e7cce] text-xs font-bold uppercase tracking-widest border border-[#4e7cce]/20 mb-3"
+                    class="inline-block px-3 py-1 rounded-full bg-blue-50 text-[#4e7cce] text-[11px] font-bold uppercase tracking-widest border border-blue-100/50 mb-3"
                 >
                     Cargo
                 </span>
                 <h2
                     id="modal-name"
-                    class="text-3xl md:text-4xl font-extrabold text-[#3d3d47] leading-tight"
+                    class="text-3xl md:text-4xl font-bold text-[#2a2a33] leading-tight"
                 >
                     Nombre
                 </h2>
             </div>
 
-            <div class="space-y-4">
+            <!-- Scrollable Description -->
+            <div class="flex-1 overflow-y-auto pr-4 my-2 custom-scrollbar min-h-0">
                 <p
                     id="modal-description"
-                    class="text-slate-600 leading-relaxed text-lg font-medium"
+                    class="text-slate-600 leading-[1.8] text-base whitespace-pre-line"
                 >
-                    Descripción completa.
+                    Descripción.
                 </p>
             </div>
 
-            <!-- Social Links Container (Visible if links exist) -->
+            <!-- Footer / Social (Fixed) -->
             <div
                 id="modal-socials"
-                class="mt-8 flex gap-4 pt-6 border-t border-slate-200/50"
+                class="shrink-0 mt-6 pt-5 border-t border-slate-100 flex gap-4"
             >
                 <!-- Injected via JS -->
             </div>
         </div>
     </div>
 </dialog>
+
+<style>
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+    }
+    .custom-scrollbar {
+        scrollbar-width: thin;
+        scrollbar-color: #cbd5e1 transparent;
+    }
+</style>
 
 <script define:vars={{ allMembers }}>
     // We pass the data from server to client safely
