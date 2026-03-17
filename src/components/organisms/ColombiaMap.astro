@@ -6,13 +6,16 @@ const { viewBox, locations } = colombiaMapData;
 
 // Configuración de los departamentos activos
 const activeRegions: Record<string, { desc: string; href?: string }> = {
-    met: { desc: "Ariari" },
-    cau: { desc: "Pacífico" },
+    met: { desc: "Región del Ariari" },
+    cau: { desc: "Costa Pacífica nariñense y caucana" },
     boy: { desc: "Páramo de Pisba" },
-    ant: { desc: "Urabá" },
-    san: { desc: "Vélez" },
-    nar: { desc: "La Cocha" },
-    sap: { desc: "Archipiélago" },
+    ant: { desc: "Región de Urabá" },
+    san: { desc: "Provincia de Vélez" },
+    nar: { desc: "Laguna de La Cocha" },
+    sap: { desc: "Archipiélago de San Andrés y Providencia" },
+    ama: { desc: "Leticia y cuenca amazónica" },
+    bol: { desc: "Montes de María · Carmen de Bolívar, María la Baja" },
+    suc: { desc: "Montes de María · departamento del Sucre" },
 };
 ---
 
@@ -33,7 +36,7 @@ const activeRegions: Record<string, { desc: string; href?: string }> = {
                         data-name={loc.name}
                         data-desc={isActive ? isActive.desc : ""}
                         class={`
-                            stroke-white stroke-[1px] transition-all duration-300
+                            stroke-white stroke-[1px] transition-colors duration-300 motion-reduce:transition-none
                             ${
                                 isActive
                                     ? "fill-[#4E7CCE]/70 hover:fill-[#4E7CCE] hover:stroke-2 cursor-pointer col-map-active"

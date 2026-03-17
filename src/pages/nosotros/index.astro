@@ -80,7 +80,7 @@ const seoData: SeoData = data?.page?.seo;
 ---
 
 <Layout seo={seoData} breadcrumbs={breadcrumbItems}>
-    <div class="relative min-h-screen text-[#3d3d47] overflow-hidden font-sans">
+    <div class="relative min-h-screen text-[#3d3d47] overflow-hidden overflow-x-hidden font-sans">
         <!-- Global Atmosphere Gradients (Cool & Clean) -->
         <div class="fixed top-0 left-0 w-full h-full pointer-events-none z-0">
             <!-- Enhanced Blue/Coolness -->
@@ -106,7 +106,7 @@ const seoData: SeoData = data?.page?.seo;
                 >
                     <span class="relative flex h-3 w-3">
                         <span
-                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4e7cce] opacity-75"
+                            class="motion-safe:animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4e7cce] opacity-75"
                         ></span>
                         <span
                             class="relative inline-flex rounded-full h-3 w-3 bg-[#4e7cce]"
@@ -121,7 +121,7 @@ const seoData: SeoData = data?.page?.seo;
 
                 <!-- Headline -->
                 <h1
-                    class="text-5xl md:text-6xl lg:text-7xl font-bold text-center text-[#3d3d47] mb-8 tracking-tight leading-[1.1]"
+                    class="text-5xl md:text-6xl lg:text-7xl font-bold text-center text-[#3d3d47] mb-8 tracking-tight leading-[1.1] text-balance"
                 >
                     Justicia Social y <br class="hidden md:block" />
                     <span class="text-[#4e7cce]">Derecho Alternativo</span>
@@ -148,8 +148,12 @@ const seoData: SeoData = data?.page?.seo;
                         <img
                             src={src}
                             alt="Territorio y Naturaleza"
+                            width="1200"
+                            height="500"
                             class={`absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 ${index === 0 ? 'opacity-100' : 'opacity-0'}`}
                             data-slider-image
+                            fetchpriority={index === 0 ? 'high' : 'auto'}
+                            loading={index === 0 ? 'eager' : 'lazy'}
                         />
                     ))}
                 </auto-slider>
@@ -253,20 +257,25 @@ const seoData: SeoData = data?.page?.seo;
             </div>
 
             <!-- GEO PRESENCE -->
-            <section class="max-w-6xl mx-auto mb-24 text-center">
+            <section class="max-w-7xl mx-auto mb-24 text-center">
                 <h2 class="text-3xl font-bold text-[#3d3d47] mb-8">
                     Presencia Geográfica
                 </h2>
 
-                <div class="flex flex-col gap-12 items-center mb-10 w-full">
-                    <!-- Interactive Map -->
-                    <div class="w-full max-w-5xl flex justify-center">
+                <div class="flex flex-col items-center gap-8">
+                    <!-- Mapa + texto (centrado, 2/3 del ancho) -->
+                    <div class="w-full md:w-2/3 flex flex-col gap-4">
                         <ColombiaMap />
+                        <p class="text-[#3d3d47]/70 italic text-sm leading-relaxed">
+                            Meta (Ariari) · Cauca (Costa Pacífica) · Boyacá (Páramo de Pisba) ·
+                            Antioquia (Urabá) · Santander (Provincia de Vélez) · Nariño (Laguna de La Cocha) ·
+                            Amazonas (Leticia) · Bolívar y Sucre (Montes de María) · San Andrés y Providencia.
+                        </p>
                     </div>
 
-                    <!-- Geo Visual -->
+                    <!-- Carrusel debajo, ancho completo -->
                     <auto-slider
-                        class="relative block w-full max-w-4xl h-[400px] md:h-[500px] rounded-3xl overflow-hidden shadow-lg border border-white/50 group"
+                        class="relative block w-full h-[280px] md:h-[350px] rounded-3xl overflow-hidden shadow-lg border border-white/50 group"
                     >
                         <div
                             class="absolute inset-0 bg-[#4e7cce]/30 z-10 mix-blend-multiply pointer-events-none"
@@ -276,20 +285,17 @@ const seoData: SeoData = data?.page?.seo;
                             {geoImages.map((src, index) => (
                                 <img
                                     src={src}
-                                    alt="Ubicación Geográfica"
+                                    alt="Ubicación Geográfica ILSA"
+                                    width="1200"
+                                    height="500"
                                     class={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${index === 0 ? 'opacity-100' : 'opacity-0'}`}
                                     data-slider-image
+                                    loading="lazy"
                                 />
                             ))}
                         </div>
                     </auto-slider>
                 </div>
-
-                <p class="text-[#3d3d47]/70 italic max-w-2xl mx-auto">
-                    Meta (Ariari), Cauca (Pacífico), Boyacá (Páramo de Pisba),
-                    Antioquia (Urabá), Santander (Vélez), Nariño (La Cocha), San
-                    Andrés y Providencia.
-                </p>
             </section>
 
             <!-- MISSION / VISION -->
@@ -339,9 +345,12 @@ const seoData: SeoData = data?.page?.seo;
                     {missionImages.map((src, index) => (
                         <img
                             src={src}
-                            alt="Comunidad y Unión"
+                            alt="Trabajo comunitario de ILSA con movimientos sociales"
+                            width="800"
+                            height="450"
                             class={`absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 ${index === 0 ? 'opacity-100' : 'opacity-0'}`}
                             data-slider-image
+                            loading="lazy"
                         />
                     ))}
                 </auto-slider>
@@ -357,9 +366,12 @@ const seoData: SeoData = data?.page?.seo;
                     {visionImages.map((src, index) => (
                         <img
                             src={src}
-                            alt="Horizonte y Naturaleza"
+                            alt="Territorios y comunidades que defiende ILSA"
+                            width="800"
+                            height="450"
                             class={`absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 ${index === 0 ? 'opacity-100' : 'opacity-0'}`}
                             data-slider-image
+                            loading="lazy"
                         />
                     ))}
                 </auto-slider>
@@ -414,9 +426,12 @@ const seoData: SeoData = data?.page?.seo;
                             {camposImages.map((src, index) => (
                                 <img
                                     src={src}
-                                    alt="Campos de Acción ILSA"
+                                    alt="Campos de acción e intervención territorial de ILSA"
+                                    width="800"
+                                    height="900"
                                     class={`absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 ${index === 0 ? 'opacity-100' : 'opacity-0'}`}
                                     data-slider-image
+                                    loading="lazy"
                                 />
                             ))}
                         </auto-slider>
@@ -542,13 +557,18 @@ const seoData: SeoData = data?.page?.seo;
                     {
                         boardData.map((member) => (
                             <div
-                                class="interactive-card relative group flex-grow transition-all duration-500 md:hover:grow-[3] rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl cursor-pointer aspect-square md:aspect-auto"
+                                class="interactive-card relative group flex-grow transition-all duration-500 md:hover:grow-[3] rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl cursor-pointer aspect-square md:aspect-auto focus-visible:ring-2 focus-visible:ring-[#4e7cce] focus-visible:ring-offset-2 outline-none"
                                 data-team-id={member.id}
+                                tabindex="0"
+                                role="button"
                             >
                                 <img
                                     class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
                                     src={member.image}
                                     alt={member.name}
+                                    width="400"
+                                    height="450"
+                                    loading="lazy"
                                 />
                                 <div class="absolute inset-0 bg-gradient-to-t from-[#183069] via-[#183069]/40 to-transparent opacity-90 transition-opacity duration-300" />
                                 <div class="absolute inset-0 flex flex-col justify-end p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
@@ -634,21 +654,25 @@ const seoData: SeoData = data?.page?.seo;
                         <img
                             src="/images/ILSA-LOGO-20.png"
                             alt="ILSA Logotipo"
+                            width="400"
+                            height="400"
                             class="w-full h-auto object-contain drop-shadow-md rounded-xl"
                         />
 
                         <div
-                            class="absolute -top-4 -right-4 w-12 h-12 bg-white rounded-lg shadow-lg flex items-center justify-center animate-bounce border border-gray-100 overflow-hidden p-1"
+                            class="absolute -top-4 -right-4 w-12 h-12 bg-white rounded-lg shadow-lg flex items-center justify-center motion-safe:animate-bounce border border-gray-100 overflow-hidden p-1"
                             style="animation-duration: 3s;"
                         >
                             <img
                                 src="/ILSA-M.svg"
-                                alt="ILSA-M"
+                                alt="ILSA monograma"
+                                width="48"
+                                height="48"
                                 class="w-full h-full object-contain"
                             />
                         </div>
                         <div
-                            class="absolute -bottom-4 -left-4 w-16 h-12 bg-[#93a2c1] rounded-lg shadow-lg flex items-center justify-center animate-bounce"
+                            class="absolute -bottom-4 -left-4 w-16 h-12 bg-[#93a2c1] rounded-lg shadow-lg flex items-center justify-center motion-safe:animate-bounce"
                             style="animation-duration: 4s; animation-delay: 1s;"
                         >
                             <div class="w-8 h-4 bg-[#5e3b69]/40 rounded"></div>
