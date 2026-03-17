@@ -1,0 +1,142 @@
+---
+// d:\.dev\ilsa-web\src\components\organisms\ColombiaMap.astro
+import colombiaMapData from "@svg-maps/colombia";
+
+const { viewBox, locations } = colombiaMapData;
+
+// Configuración de los departamentos activos
+const activeRegions: Record<string, { desc: string; href?: string }> = {
+    met: { desc: "Ariari" },
+    cau: { desc: "Pacífico" },
+    boy: { desc: "Páramo de Pisba" },
+    ant: { desc: "Urabá" },
+    san: { desc: "Vélez" },
+    nar: { desc: "La Cocha" },
+    sap: { desc: "Archipiélago" },
+};
+---
+
+<div class="relative w-full flex items-center justify-center col-map-container">
+    <svg
+        viewBox={viewBox}
+        class="w-full h-auto max-h-[650px] filter drop-shadow-md py-4"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        {
+            locations.map((loc: any) => {
+                const isActive = activeRegions[loc.id];
+
+                return (
+                    <path
+                        id={loc.id}
+                        d={loc.path}
+                        data-name={loc.name}
+                        data-desc={isActive ? isActive.desc : ""}
+                        class={`
+                            stroke-white stroke-[1px] transition-all duration-300
+                            ${
+                                isActive
+                                    ? "fill-[#4E7CCE]/70 hover:fill-[#4E7CCE] hover:stroke-2 cursor-pointer col-map-active"
+                                    : "fill-slate-300/40 pointer-events-none"
+                            }
+                        `}
+                    />
+                );
+            })
+        }
+    </svg>
+
+    <!-- Tooltip Liquid Glass Flotante -->
+    <div
+        id="colombia-map-tooltip"
+        class="absolute pointer-events-none opacity-0 z-50 transform -translate-x-1/2 -translate-y-[120%] 
+               bg-white/80 backdrop-blur-xl border border-white/60 shadow-[0_8px_32px_0_rgba(74,125,191,0.15)] 
+               rounded-2xl px-5 py-4 min-w-[200px] transition-opacity duration-300"
+    >
+        <div class="flex flex-col gap-1">
+            <span
+                id="tooltip-dept-name"
+                class="text-[#183069] font-bold text-lg leading-tight"
+            ></span>
+            <div class="h-px bg-gradient-to-r from-[#4E7CCE]/30 instantly to-transparent my-1"></div>
+            <span
+                id="tooltip-dept-desc"
+                class="text-[#3d3d47]/80 text-sm font-medium"
+            ></span>
+        </div>
+        
+        <!-- Flecha inferior del tooltip -->
+        <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-4 h-4 
+                    bg-white/80 backdrop-blur-xl border-b border-r border-white/60 rotate-45"></div>
+    </div>
+</div>
+
+<script>
+    // Inicializar evento al cargar la página / transición de Astro
+    function initColombiaMap() {
+        const container = document.querySelector(".col-map-container");
+        const tooltip = document.getElementById("colombia-map-tooltip");
+        const nameEl = document.getElementById("tooltip-dept-name");
+        const descEl = document.getElementById("tooltip-dept-desc");
+        const activePaths = document.querySelectorAll(".col-map-active");
+
+        if (!container || !tooltip || activePaths.length === 0) return;
+
+        activePaths.forEach((path) => {
+            // MouseEnter: Mostrar tooltip
+            path.addEventListener("mouseenter", (e) => {
+                const target = e.target as SVGPathElement;
+                const name = target.getAttribute("data-name") || "";
+                const desc = target.getAttribute("data-desc") || "";
+
+                if (nameEl && descEl) {
+                    nameEl.textContent = name;
+                    descEl.textContent = desc;
+                }
+
+                tooltip.classList.remove("opacity-0");
+                tooltip.classList.add("opacity-100");
+                
+                // Mover tooltip al frente para evitar que se superponga detrás del SVG
+                tooltip.style.zIndex = "50";
+            });
+
+            // MouseMove: Actualizar posición
+            path.addEventListener("mousemove", (e) => {
+                const mouseEvent = e as MouseEvent;
+                // Calculamos la posición relativa al contenedor
+                const rect = container.getBoundingClientRect();
+                const x = mouseEvent.clientX - rect.left;
+                const y = mouseEvent.clientY - rect.top;
+
+                tooltip.style.left = `${x}px`;
+                tooltip.style.top = `${y}px`;
+            });
+
+            // MouseLeave: Ocultar tooltip
+            path.addEventListener("mouseleave", () => {
+                tooltip.classList.remove("opacity-100");
+                tooltip.classList.add("opacity-0");
+            });
+            
+            // Click: Comportamiento futuro (navegación)
+            path.addEventListener("click", (e) => {
+               const target = e.target as SVGPathElement;
+               const name = target.getAttribute("data-name") || "";
+               console.log("Clic en el departamento: ", name);
+               // Lógica futura de href
+               // window.location.href = `/presencia/${target.id}`; 
+            });
+        });
+    }
+
+    // Asegurar que corre en Astro View Transitions
+    document.addEventListener("astro:page-load", initColombiaMap);
+    
+    // Y en la carga local normal
+    if (document.readyState === "complete") {
+        initColombiaMap();
+    } else {
+        window.addEventListener("DOMContentLoaded", initColombiaMap);
+    }
+</script>
