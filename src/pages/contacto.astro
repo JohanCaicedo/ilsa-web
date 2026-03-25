@@ -29,6 +29,7 @@ export const prerender = true;
                 <p class="text-center text-slate-600 mt-4 max-w-2xl mx-auto">
                     Estamos aquí para ayudarte.
                 </p>
+                <div id="kofi-button-container" class="mt-8 flex justify-center"></div>
             </div>
 
             <div
@@ -327,4 +328,16 @@ export const prerender = true;
             </div>
         </div>
     </div>
+
+    <!-- Ko-fi Widget Integration (Astro ViewTransitions Compatible) -->
+    <script is:inline type="text/javascript" src="https://storage.ko-fi.com/cdn/widget/Widget_2.js"></script>
+    <script is:inline type="text/javascript">
+        document.addEventListener("astro:page-load", () => {
+            const container = document.getElementById("kofi-button-container");
+            if (container && typeof kofiwidget2 !== "undefined") {
+                kofiwidget2.init("Apóyanos con una donación", "#72a4f2", "A0A01SZAHC");
+                container.innerHTML = kofiwidget2.getHTML();
+            }
+        });
+    </script>
 </Layout>
