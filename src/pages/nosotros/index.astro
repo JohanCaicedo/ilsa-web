@@ -8,7 +8,7 @@ import Breadcrumbs from "../../components/atoms/Breadcrumbs.astro";
 import Button from "../../components/Button.astro";
 import GradientText from "../../components/atoms/GradientText.astro";
 import { wpQuery } from "../../lib/wp";
-import { teamData, boardData } from "../../lib/team";
+import { teamData, boardData, assemblyData } from "../../lib/team";
 import type { SeoData } from "../../lib/seo";
 
 const heroImages = [
@@ -258,7 +258,7 @@ const seoData: SeoData = data?.page?.seo;
 
             <!-- GEO PRESENCE -->
             <section class="max-w-7xl mx-auto mb-24 text-center">
-                <h2 class="text-3xl font-bold text-[#3d3d47] mb-8">
+                <h2 class="text-3xl font-bold text-[#3d3d47] mb-8 text-center">
                     Presencia Geográfica
                 </h2>
 
@@ -512,81 +512,129 @@ const seoData: SeoData = data?.page?.seo;
                 </div>
             </section>
 
-            <!-- TEAM SECTION -->
-            <section class="mb-32">
-                <div class="text-center mb-16">
-                    <h2
-                        class="text-4xl font-bold text-[#3d3d47] mb-4"
-                        id="direccion-equipo"
-                    >
-                        Nuestro Equipo
+            <!-- DIRECCION EJECUTIVA SECTION -->
+            <section class="max-w-7xl mx-auto mb-24">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold text-center text-[#3d3d47] mb-4 mx-auto" id="direccion-ejecutiva">
+                        Dirección Ejecutiva
                     </h2>
-                    <div class="w-16 h-1 bg-[#4e7cce] mx-auto rounded-full">
-                    </div>
+                    <div class="w-16 h-1 bg-[#4e7cce] mx-auto rounded-full"></div>
                 </div>
 
-                <div class="flex flex-wrap justify-center gap-8">
-                    {
-                        teamData.map((member) => (
-                            <DirectorCard
-                                variant="frosted"
-                                name={member.name}
-                                role={member.role}
-                                image={member.image}
-                                bio={member.bio}
-                                xUrl={member.xUrl}
-                                id={member.id}
-                            />
-                        ))
-                    }
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                    {teamData.map((member, index) => (
+                        <div
+                            class={`interactive-card relative group rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl cursor-pointer h-[400px] md:h-[450px] w-full focus-visible:ring-2 focus-visible:ring-[#4e7cce] focus-visible:ring-offset-2 outline-none ${index === 0 ? 'ring-2 ring-white/40 shadow-[#4e7cce]/20' : ''}`}
+                            data-team-id={member.id} tabindex="0" role="button"
+                        >
+                            <img class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110" src={member.image} alt={member.name} width="400" height="450" loading="lazy" />
+                            
+                            {/* Insignia elegante "Liquid Glass" exclusiva para la Dirección Ejecutiva */}
+                            {index === 0 && (
+                                <div class="absolute top-4 right-4 z-20 bg-white/20 backdrop-blur-md border border-white/40 rounded-full p-2.5 shadow-lg group-hover:bg-white/30 transition-colors duration-300 pointer-events-none text-white">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="drop-shadow-md">
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                    </svg>
+                                </div>
+                            )}
+
+                            <div class={`absolute inset-0 bg-gradient-to-t opacity-90 transition-opacity duration-300 ${index === 0 ? 'from-[#0b1b42] via-[#102352]/50 to-transparent' : 'from-[#183069] via-[#183069]/40 to-transparent'}`}></div>
+                            <div class="absolute inset-0 flex flex-col justify-end p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                <p class={`font-bold text-xs tracking-widest uppercase mb-1 opacity-80 group-hover:opacity-100 text-center shrink-0 ${index === 0 ? 'text-[#a1c4ff]' : 'text-[#efefef]'}`}>{member.role}</p>
+                                <div class="h-14 md:h-16 flex items-center justify-center w-full mb-2 shrink-0">
+                                    <h3 class={`font-bold text-center text-white leading-tight drop-shadow-md ${member.name.length > 20 ? 'text-lg md:text-xl' : 'text-xl md:text-2xl'}`}>{member.name}</h3>
+                                </div>
+                                <div class="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100 text-center">
+                                    <p class="text-slate-300 text-sm mt-2">{member.bio || ""}</p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </section>
 
             <!-- BOARD SECTION -->
             <section class="max-w-7xl mx-auto mb-24">
-                <h2
-                    class="text-3xl font-bold text-center text-[#3d3d47] mb-12"
-                    id="junta-directiva"
-                >
-                    Junta Directiva
-                </h2>
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-center text-[#3d3d47] mb-4 mx-auto" id="junta-directiva">
+                        Junta Directiva de ILSA
+                    </h2>
+                    <div class="w-16 h-1 bg-[#4e7cce] mx-auto rounded-full"></div>
+                </div>
 
-                <div
-                    class="flex flex-col md:flex-row gap-6 md:gap-4 md:h-[450px] w-full"
-                >
-                    {
-                        boardData.map((member) => (
-                            <div
-                                class="interactive-card relative group flex-grow transition-all duration-500 md:hover:grow-[3] rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl cursor-pointer aspect-square md:aspect-auto focus-visible:ring-2 focus-visible:ring-[#4e7cce] focus-visible:ring-offset-2 outline-none"
-                                data-team-id={member.id}
-                                tabindex="0"
-                                role="button"
-                            >
-                                <img
-                                    class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
-                                    src={member.image}
-                                    alt={member.name}
-                                    width="400"
-                                    height="450"
-                                    loading="lazy"
-                                />
-                                <div class="absolute inset-0 bg-gradient-to-t from-[#183069] via-[#183069]/40 to-transparent opacity-90 transition-opacity duration-300" />
-                                <div class="absolute inset-0 flex flex-col justify-end p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                    <p class="text-[#efefef] font-bold text-xs tracking-widest uppercase mb-1 opacity-80 group-hover:opacity-100">
-                                        {member.role}
-                                    </p>
-                                    <h3 class="text-xl md:text-2xl font-bold text-white mb-2 leading-tight">
-                                        {member.name}
-                                    </h3>
-                                    <div class="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100">
-                                        <p class="text-slate-300 text-sm mt-2">
-                                            {member.bio}
-                                        </p>
-                                    </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                    {boardData.map((member) => (
+                        <div
+                            class="interactive-card relative group rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl cursor-pointer h-[400px] md:h-[450px] w-full focus-visible:ring-2 focus-visible:ring-[#4e7cce] focus-visible:ring-offset-2 outline-none"
+                            data-team-id={member.id} tabindex="0" role="button"
+                        >
+                            <img class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110" src={member.image} alt={member.name} width="400" height="450" loading="lazy" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#183069] via-[#183069]/40 to-transparent opacity-90 transition-opacity duration-300"></div>
+                            <div class="absolute inset-0 flex flex-col justify-end p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                <p class="text-[#efefef] font-bold text-xs tracking-widest uppercase mb-1 opacity-80 group-hover:opacity-100 text-center shrink-0">{member.role}</p>
+                                <div class="h-14 md:h-16 flex items-center justify-center w-full mb-2 shrink-0">
+                                    <h3 class={`font-bold text-center text-white leading-tight drop-shadow-md ${member.name.length > 20 ? 'text-lg md:text-xl' : 'text-xl md:text-2xl'}`}>{member.name}</h3>
+                                </div>
+                                <div class="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100 text-center">
+                                    <p class="text-slate-300 text-sm mt-2">{member.bio || ""}</p>
                                 </div>
                             </div>
-                        ))
-                    }
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            <!-- ASAMBLEA SECTION -->
+            <section class="max-w-7xl mx-auto mb-24">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-center text-[#3d3d47] mb-4 mx-auto" id="asamblea">
+                        Integrantes de la Asamblea de Socias y Socios de ILSA
+                    </h2>
+                    <div class="w-16 h-1 bg-[#4e7cce] mx-auto rounded-full mb-8"></div>
+                    <p class="text-[#3d3d47]/70 text-center text-base max-w-2xl mx-auto mb-8 text-balance">
+                        Órgano máximo de dirección y decisión, integrado por personas comprometidas con la misión institucional y la defensa de los derechos.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                    {assemblyData.map((member) => (
+                        <div class="flex items-center gap-4 bg-white/50 backdrop-blur-xl border border-white/60 p-4 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300">
+                            <img src={member.image} alt={member.name} width="48" height="48" class="w-12 h-12 rounded-full object-cover shadow-inner" loading="lazy" />
+                            <div>
+                                <h3 class="text-sm font-bold text-center text-[#3d3d47] leading-tight mb-1">{member.name}</h3>
+                                <p class="text-[10px] text-center text-[#4e7cce] font-bold uppercase tracking-wider">{member.role}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            <!-- EQUIPO DE TRABAJO SECTION -->
+            <section class="mb-32 max-w-7xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold text-center text-[#3d3d47] mb-4 mx-auto" id="equipo-trabajo">
+                        Equipo de Trabajo
+                    </h2>
+                    <div class="w-16 h-1 bg-[#4e7cce] mx-auto rounded-full"></div>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+                    {[
+                        { title: "Investigadores", icon: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253", desc: "Equipo de investigadores" },
+                        { title: "Administración", icon: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z", desc: "Equipo administrativo y contable" },
+                        { title: "Comunicaciones", icon: "M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z", desc: "Equipo de comunicaciones" },
+                        { title: "Acompañamiento", icon: "M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z", desc: "Voluntarios, pasantes y practicantes" }
+                    ].map(dept => (
+                        <div class="p-8 rounded-[2rem] bg-white/50 backdrop-blur-3xl border border-white/60 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col items-center justify-center text-center group cursor-default h-full">
+                            <div class="mx-auto w-14 h-14 rounded-2xl bg-[#4e7cce]/10 text-[#4e7cce] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={dept.icon} />
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-[#3d3d47] mb-2 w-full text-center">{dept.title}</h3>
+                            <p class="text-[#3d3d47]/70 text-sm leading-relaxed w-full text-center">{dept.desc}</p>
+                        </div>
+                    ))}
                 </div>
             </section>
 
@@ -629,7 +677,7 @@ const seoData: SeoData = data?.page?.seo;
                     <Button
                         variant="primary"
                         size="lg"
-                        href="/manual-marca"
+                        href="/nosotros/manual-marca"
                         class="gap-2 group"
                     >
                         Ver Manual de Identidad

@@ -45,6 +45,20 @@
 
 ## Refactorizaciones y Cambios
 
+### Session 30/03/2026 - Reestructuración de Organigrama y Ajustes Visuales
+- **`src/pages/nosotros/index.astro`**:
+    - **Reestructuración Visual**: Se consolidó el diseño estricto de las tarjetas interactivas de Dirección Ejecutiva y Junta Directiva empleando CSS Grid clásico (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-5`) para garantizar identidad absoluta de tamaño (anchura y altura de 450px) para todas sin importar en qué fila estén.
+    - **UI/UX Refinada**: Eliminación de efectos "accordion" horizontales indeseados. Ahora emplean un zoom sutil (`scale-110`) y aparición en overlay desde abajo.
+    - **Centrado Absoluto**: Se aplicó flexbox vertical (`items-center justify-center`) en las tarjetas de "Equipo de Trabajo" asegurando el centrado perfecto de cada título y descripción.
+    - **Gesto de Autoridad**: Se inyectó una distinción elegante a la tarjeta del Director Ejecutivo (insignia flotante Liquid Glass, ring iluminado y gradiente índigo profundo) sin alterar su tamaño de grilla.
+    - **Rutas**: Actualización del botón de llamada a la acción hacia `/nosotros/manual-marca`.
+- **`src/lib/team.ts`**:
+    - **Actualización de Data**: Se actualizó rigurosamente el rol, `bio` y `fullDescription` de Freddy Ordóñez para evidenciar su rol institucional como Director Ejecutivo desde agosto de 2025.
+- **`src/pages/nosotros/manual-marca.astro`**:
+    - **Move Component**: Se reubicó exitosamente el archivo a `src/pages/nosotros/manual-marca.astro`.
+    - **Vite SSR Fix**: Se ajustaron las declaraciones relativas (`../../`) de Layouts y Components para reparar la compilación del renderizador.
+
+
 ### Session 26/01/2026 - Easter Egg Overhaul
 - **`GlassBreakerEngine.tsx`**:
     - **Visual**: Cambio de bloques azules a dorados. Implementación de rotación de pelota con transformaciones Canvas.
@@ -200,3 +214,11 @@
 1.  **🚀 DEPLOYMENT**: Es CRÍTICO desplegar para que el fix de `collections.ts` (slugs) surta efecto y las páginas vacías se llenen.
 2.  **Monitorización**: Verificar en producción si el atributo `type="button"` resolvió definitivamente el "reset" de la paginación.
 3.  **Mobile Performance**: La optimización de carga en `AuthorPage` (Task #9) fue pospuesta y debe ser retomada.
+
+### Session 30/03/2026 - Restructuración Organigrama "Nosotros"
+- **`team.ts`**:
+    - **Refactor**: Se hicieron opcionales las props `bio` y `fullDescription` en `TeamMember`.
+    - **New**: Se animó la creación de `assemblyData` con 14 asambleístas y se vincularon fotos de perfil faltantes.
+- **`nosotros/index.astro`**:
+    - **Layout**: Reescritura completa y reordenamiento de los equipos en formato Organigrama descendente (Niveles 1 a 4). Incorporación de componentes compactos en cristal para Asambleístas (Avatar + Nombre colegiado) y módulos visuales expandidos para grupos como "Investigadores" y "Comunicaciones".
+

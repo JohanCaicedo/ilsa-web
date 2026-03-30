@@ -3,22 +3,32 @@ export interface TeamMember {
     name: string;
     role: string;
     image: string;
-    bio: string; // Short bio for card
-    fullDescription: string; // Long bio for modal
+    bio?: string; // Short bio for card
+    fullDescription?: string; // Long bio for modal
     xUrl?: string;
 }
 
 export const teamData: TeamMember[] = [
     {
         id: "freddy-ordonez-gomez",
-        name: "Freddy Ordóñez Gómez",
+        name: "Freddy Ordóñez",
         role: "Director Ejecutivo",
         image: "https://api.ilsa.org.co/wp-content/uploads/2022/08/Freddy-Recorte-scaled.jpg.webp",
-        bio: "Investigador y presidente de ILSA. Integrante del Centro de Pensamiento Amazonias (CEPAM).",
-        fullDescription: `Investigador y actual presidente del Instituto Latinoamericano para una Sociedad y un Derecho Alternativos (ILSA). Es antropólogo de la Universidad del Cauca y Magíster en Ciencia Política de la Universidad de los Andes.
-        
-        Su trabajo se ha centrado en el estudio de los conflictos socioambientales, los derechos de los pueblos indígenas y las políticas extractivas en la región amazónica. Integrante activo del Centro de Pensamiento Amazonias (CEPAM), desde donde promueve la defensa territorial y la autonomía de las comunidades locales.`,
+        bio: "Abogado y Magíster en Derecho, docente e investigador. Director ejecutivo de ILSA desde agosto de 2025.",
+        fullDescription: "Abogado, Especialista en Epistemologías del Sur, Magister en Derecho con profundización en Derechos Humanos y DIH, y estudiante del doctorado en Derecho de la Universidad Libre. Investigador desde 2007 del Instituto Latinoamericano para una Sociedad y un Derecho Alternativos (ILSA), presidente de su junta directiva entre 2017 y julio de 2025, y su Director ejecutivo desde agosto de 2025. Integrante del grupo de investigación Historia, Ambiente y Política; del grupo de trabajo de Clacso Pensamientos jurídicos críticos y conflictos sociopolíticos; y del Centro de Pensamiento Amazonía, CEPAM. Es profesor de la maestría en Derechos Humanos y Gobernanza de la Universidad Cooperativa de Colombia (Pasto) y docente ocasional del pregrado en Derecho de la Universidad Nacional de Colombia y de posgrado en la Universidad Autónoma de Colombia. Es columnista de Ámbito Jurídico y de la revista Raya.",
         xUrl: "https://x.com/freddy_ordonez",
+    },
+    {
+        id: "santiago-ariza",
+        name: "Santiago Ariza",
+        role: "Equipo de Dirección",
+        image: "/person_place_holder.webp",
+    },
+    {
+        id: "juanita-villamil",
+        name: "Juanita Villamil",
+        role: "Equipo de Dirección",
+        image: "/person_place_holder.webp",
     },
     {
         id: "annette-pearson",
@@ -67,7 +77,7 @@ export const boardData: TeamMember[] = [
         id: "cristina-luna-calpa",
         name: "Cristina Luna Calpa",
         role: "Presidenta",
-        image: "/person_place_holder.webp",
+        image: "/images/perfiles/Cristina Luna Calpa.webp",
         bio: "Liderazgo estratégico y representación institucional.",
         fullDescription: "Abogada y activista con una destacada trayectoria en la defensa de los derechos territoriales.",
     },
@@ -75,7 +85,7 @@ export const boardData: TeamMember[] = [
         id: "ismael-diaz-barbosa",
         name: "Ismael Díaz Barbosa",
         role: "Vicepresidente",
-        image: "/person_place_holder.webp",
+        image: "/images/perfiles/Ismael Díaz Barbosa.webp",
         bio: "Apoyo a la dirección y coordinación política.",
         fullDescription: "Líder social con experiencia en procesos organizativos campesinos.",
     },
@@ -83,7 +93,7 @@ export const boardData: TeamMember[] = [
         id: "edwin-de-los-rios",
         name: "Edwin de los Ríos Jaramillo",
         role: "Secretario",
-        image: "/person_place_holder.webp",
+        image: "/images/perfiles/Edwin de los Ríos Jaramillo.webp",
         bio: "Gestión administrativa y actas institucionales.",
         fullDescription: "Administrador con enfoque en gestión de entidades sin ánimo de lucro.",
     },
@@ -91,7 +101,7 @@ export const boardData: TeamMember[] = [
         id: "maria-eugenia-ramirez",
         name: "Maria Eugenia Ramírez Brisneda",
         role: "Vocal",
-        image: "/images/perfiles/Maria-E-Foto.webp",
+        image: "/images/perfiles/Maria Eugenia Ramírez Brisneda.webp",
         bio: "Activista feminista y defensora de los derechos humanos.",
         fullDescription: `Activista Feminista, con una trayectoria de más de 50 años en defensa de los derechos humanos y los derechos de las mujeres. Maestra, licenciada en Ciencias Sociales con énfasis en Historia de la Universidad Pedagógica Nacional, con estudios sobre Derecho Internacional de Derechos Humanos y DIH en el Instituto Rene Cassin, Estrasburgo (Francia), Becaria del Instituto Interamericano de Derechos Humanos, Mujeres y conﬂictos armados, género y políticas públicas, entre otros muchos. Con 30 años vinculada al Instituto Latinoamericano para una Sociedad y un Derecho Alternativos –ILSA, como investigadora en el campo de derecho humanos y derechos de las mujeres y directora ejecutiva (2019- agosto 2025).
 
@@ -105,8 +115,95 @@ Fue reconocida el año 2013 por su trabajo en defensa de los derechos humanos y 
         id: "julio-gaitan-bohorquez",
         name: "Julio Gaitán Bohórquez",
         role: "Vocal",
-        image: "/images/perfiles/Julio-Gaitán-1.webp",
+        image: "/images/perfiles/Julio Gaitán Bohórquez.webp",
         bio: "Director del ISUR y profesor de derecho constitucional.",
         fullDescription: "Julio Gaitán Bohórquez es director del Centro de Internet y Sociedad de la Universidad del Rosario -ISUR- y Profesor Titular del Área de derecho constitucional. Fue director del Programa de Doctorado en Derecho. Abogado de la Universidad del Rosario, Magíster en Derecho Público de la Universidad Autónoma de Barcelona y Doctor por la Universidad de Lecce – Italia. Ha sido investigador visitante en el Instituto Max Planck de Frankfurt, en la Universidad de California en Berkeley y en American University, y profesor en la Universidad Autónoma de Barcelona y en la Universidad Andina Simón Bolívar, de Quito. Fue Magistrado Auxiliar y Conjuez de la Corte Constitucional Colombiana y actualmente es Conjuez en la Jurisdicción Especial para la Paz. Coordinó el Área de Memoria Histórica del Centro Internacional para la Justicia Transicional en Colombia.",
+    },
+];
+
+export const assemblyData: TeamMember[] = [
+    {
+        id: "aiden-jose-salgado",
+        name: "Aiden José Salgado Cassiani",
+        role: "Asamblea de Socios",
+        image: "/person_place_holder.webp",
+    },
+    {
+        id: "alba-nubia-rengifo",
+        name: "Alba Nubia Rengifo",
+        role: "Asamblea de Socios",
+        image: "/person_place_holder.webp",
+    },
+    {
+        id: "angel-libardo-herreno",
+        name: "Ángel Libardo Herreño",
+        role: "Asamblea de Socios",
+        image: "/images/perfiles/Libardo.webp",
+    },
+    {
+        id: "cesar-osorio-sanchez",
+        name: "César Osorio Sánchez",
+        role: "Asamblea de Socios",
+        image: "/images/perfiles/César Osorio Sánchez.webp",
+    },
+    {
+        id: "cristina-luna-calpa",
+        name: "Cristina Alejandra Luna Calpa",
+        role: "Asamblea de Socios",
+        image: "/images/perfiles/Cristina Luna Calpa.webp",
+    },
+    {
+        id: "edwin-de-los-rios",
+        name: "Edwin De los Ríos",
+        role: "Asamblea de Socios",
+        image: "/images/perfiles/Edwin de los Ríos Jaramillo.webp",
+    },
+    {
+        id: "freddy-ordonez-gomez",
+        name: "Freddy Ordóñez Gómez",
+        role: "Asamblea de Socios",
+        image: "https://api.ilsa.org.co/wp-content/uploads/2022/08/Freddy-Recorte-scaled.jpg.webp",
+    },
+    {
+        id: "gloria-patricia-lopera",
+        name: "Gloria Patricia Lopera Mesa",
+        role: "Asamblea de Socios",
+        image: "/person_place_holder.webp",
+    },
+    {
+        id: "ismael-diaz",
+        name: "Ismael Díaz",
+        role: "Asamblea de Socios",
+        image: "/images/perfiles/Ismael Díaz Barbosa.webp",
+    },
+    {
+        id: "julio-gaitan-bohorquez",
+        name: "Julio Gaitán Bohórquez",
+        role: "Asamblea de Socios",
+        image: "/images/perfiles/Julio Gaitán Bohórquez.webp",
+    },
+    {
+        id: "luciana-bercovich",
+        name: "Luciana Bercovich",
+        role: "Asamblea de Socios",
+        image: "/person_place_holder.webp",
+    },
+    {
+        id: "luis-alberto-tumina",
+        name: "Luis Alberto Tumiñá Ussa",
+        role: "Asamblea de Socios",
+        image: "/person_place_holder.webp",
+    },
+    {
+        id: "maria-eugenia-ramirez",
+        name: "María Eugenia Ramírez Brisneda",
+        role: "Asamblea de Socios",
+        image: "/images/perfiles/Maria Eugenia Ramírez Brisneda.webp",
+    },
+    {
+        id: "raymundo-espinoza",
+        name: "Raymundo Espinoza Hernández",
+        role: "Asamblea de Socios",
+        image: "/person_place_holder.webp",
     },
 ];
