@@ -531,9 +531,16 @@ const seoData: SeoData = data?.page?.seo;
                             
                             {/* Insignia elegante "Liquid Glass" exclusiva para la Dirección Ejecutiva */}
                             {index === 0 && (
-                                <div class="absolute top-4 right-4 z-20 bg-white/20 backdrop-blur-md border border-white/40 rounded-full p-2.5 shadow-lg group-hover:bg-white/30 transition-colors duration-300 pointer-events-none text-white">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="drop-shadow-md">
-                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                <div class="absolute top-4 right-4 z-20 bg-white/20 backdrop-blur-md border border-white/40 rounded-full p-2.5 shadow-lg group-hover:bg-white/30 transition-colors duration-300 pointer-events-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" class="drop-shadow-[0_0_8px_rgba(250,204,21,0.6)]">
+                                        <defs>
+                                            <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stop-color="#FEF08A" />
+                                                <stop offset="40%" stop-color="#F59E0B" />
+                                                <stop offset="100%" stop-color="#A16207" />
+                                            </linearGradient>
+                                        </defs>
+                                        <polygon fill="url(#gold-grad)" stroke="#FEF08A" stroke-width="1.5" stroke-linejoin="round" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                                     </svg>
                                 </div>
                             )}
@@ -563,15 +570,32 @@ const seoData: SeoData = data?.page?.seo;
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                    {boardData.map((member) => (
+                    {boardData.map((member, index) => (
                         <div
-                            class="interactive-card relative group rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl cursor-pointer h-[400px] md:h-[450px] w-full focus-visible:ring-2 focus-visible:ring-[#4e7cce] focus-visible:ring-offset-2 outline-none"
+                            class={`interactive-card relative group rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl cursor-pointer h-[400px] md:h-[450px] w-full focus-visible:ring-2 focus-visible:ring-[#4e7cce] focus-visible:ring-offset-2 outline-none ${index === 0 ? 'ring-2 ring-white/40 shadow-[#4e7cce]/20' : ''}`}
                             data-team-id={member.id} tabindex="0" role="button"
                         >
                             <img class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110" src={member.image} alt={member.name} width="400" height="450" loading="lazy" />
-                            <div class="absolute inset-0 bg-gradient-to-t from-[#183069] via-[#183069]/40 to-transparent opacity-90 transition-opacity duration-300"></div>
+                            
+                            {/* Insignia elegante "Liquid Glass" exclusiva para la Presidencia */}
+                            {index === 0 && (
+                                <div class="absolute top-4 right-4 z-20 bg-white/20 backdrop-blur-md border border-white/40 rounded-full p-2.5 shadow-lg group-hover:bg-white/30 transition-colors duration-300 pointer-events-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" class="drop-shadow-[0_0_8px_rgba(250,204,21,0.6)]">
+                                        <defs>
+                                            <linearGradient id="gold-grad-board" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stop-color="#FEF08A" />
+                                                <stop offset="40%" stop-color="#F59E0B" />
+                                                <stop offset="100%" stop-color="#A16207" />
+                                            </linearGradient>
+                                        </defs>
+                                        <polygon fill="url(#gold-grad-board)" stroke="#FEF08A" stroke-width="1.5" stroke-linejoin="round" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                    </svg>
+                                </div>
+                            )}
+
+                            <div class={`absolute inset-0 bg-gradient-to-t opacity-90 transition-opacity duration-300 ${index === 0 ? 'from-[#0b1b42] via-[#102352]/50 to-transparent' : 'from-[#183069] via-[#183069]/40 to-transparent'}`}></div>
                             <div class="absolute inset-0 flex flex-col justify-end p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                <p class="text-[#efefef] font-bold text-xs tracking-widest uppercase mb-1 opacity-80 group-hover:opacity-100 text-center shrink-0">{member.role}</p>
+                                <p class={`font-bold text-xs tracking-widest uppercase mb-1 opacity-80 group-hover:opacity-100 text-center shrink-0 ${index === 0 ? 'text-[#a1c4ff]' : 'text-[#efefef]'}`}>{member.role}</p>
                                 <div class="h-14 md:h-16 flex items-center justify-center w-full mb-2 shrink-0">
                                     <h3 class={`font-bold text-center text-white leading-tight drop-shadow-md ${member.name.length > 20 ? 'text-lg md:text-xl' : 'text-xl md:text-2xl'}`}>{member.name}</h3>
                                 </div>
