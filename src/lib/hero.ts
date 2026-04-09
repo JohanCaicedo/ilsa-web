@@ -10,6 +10,14 @@ export interface HeroSlideData {
 
 export const heroSlidesConfig: HeroSlideData[] = [
     {
+        title: "9 de abril",
+        excerpt: "Memoria, justicia y compromiso con las víctimas",
+        image: "/images/hero-home/Home-9A.jpg",
+        link: "https://ilsa.org.co/2026/04/dia-nacional-victimas-colombia/",
+        badge: "Especial",
+        ctaText: "Leer más"
+    },
+    {
         title: "<span class='text-[0.7em] leading-tight'>Dificultades y Desafíos<br/>de la Reforma Rural Integral</span>",
         excerpt: "Revive el diálogo histórico entre el Gobierno Nacional, el movimiento social y la academia en el marco de la ICARRD+20 en Cartagena.",
         image: "/images/hero-home/Dificultades y Desafíos.webp",
