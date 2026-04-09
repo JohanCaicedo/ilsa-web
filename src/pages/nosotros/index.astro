@@ -756,30 +756,30 @@ const seoData: SeoData = data?.page?.seo;
         </div>
         <TeamModal />
     </div>
-</Layout>
-<script>
-    class AutoSlider extends HTMLElement {
-        connectedCallback() {
-            const imgs = this.querySelectorAll('img[data-slider-image]');
-            if (imgs.length <= 1) return;
-            let currentIndex = 0;
-            
-            const nextSlide = () => {
-                const prev = imgs[currentIndex];
-                prev.classList.remove('opacity-100');
-                prev.classList.add('opacity-0');
+    <script>
+        class AutoSlider extends HTMLElement {
+            connectedCallback() {
+                const imgs = this.querySelectorAll('img[data-slider-image]');
+                if (imgs.length <= 1) return;
+                let currentIndex = 0;
                 
-                currentIndex = (currentIndex + 1) % imgs.length;
-                
-                const next = imgs[currentIndex];
-                next.classList.remove('opacity-0');
-                next.classList.add('opacity-100');
-                
-                setTimeout(nextSlide, 4000 + (Math.random() * 3000));
-            };
+                const nextSlide = () => {
+                    const prev = imgs[currentIndex];
+                    prev.classList.remove('opacity-100');
+                    prev.classList.add('opacity-0');
+                    
+                    currentIndex = (currentIndex + 1) % imgs.length;
+                    
+                    const next = imgs[currentIndex];
+                    next.classList.remove('opacity-0');
+                    next.classList.add('opacity-100');
+                    
+                    setTimeout(nextSlide, 4000 + (Math.random() * 3000));
+                };
 
-            setTimeout(nextSlide, 4000 + (Math.random() * 3000));
+                setTimeout(nextSlide, 4000 + (Math.random() * 3000));
+            }
         }
-    }
-    customElements.define('auto-slider', AutoSlider);
-</script>
+        customElements.define('auto-slider', AutoSlider);
+    </script>
+</Layout>

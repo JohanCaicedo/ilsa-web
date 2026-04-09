@@ -189,47 +189,46 @@ export const prerender = true;
             </div>
         </LiquidContainer>
     </div>
-</Layout>
+    <script is:inline>
+        document.addEventListener("astro:page-load", () => {
+            // Load Ko-fi widget script
+            if (typeof kofiWidgetOverlay === "undefined") {
+                const script = document.createElement("script");
+                script.src = "https://storage.ko-fi.com/cdn/scripts/overlay-widget.js";
+                script.async = true;
+                document.head.appendChild(script);
 
-<script is:inline>
-    document.addEventListener("astro:page-load", () => {
-        // Load Ko-fi widget script
-        if (typeof kofiWidgetOverlay === "undefined") {
-            const script = document.createElement("script");
-            script.src = "https://storage.ko-fi.com/cdn/scripts/overlay-widget.js";
-            script.async = true;
-            document.head.appendChild(script);
+                script.onload = () => {
+                    kofiWidgetOverlay.draw("ilsacolombia", {
+                        type: "floating-chat",
+                        "floating-chat.donateButton.text": "Apoyar",
+                        "floating-chat.donateButton.background-color": "#4a7dbf",
+                        "floating-chat.donateButton.text-color": "#ffffff",
+                    });
+                };
+            }
 
-            script.onload = () => {
-                kofiWidgetOverlay.draw("ilsacolombia", {
-                    type: "floating-chat",
-                    "floating-chat.donateButton.text": "Apoyar",
-                    "floating-chat.donateButton.background-color": "#4a7dbf",
-                    "floating-chat.donateButton.text-color": "#ffffff",
-                });
-            };
-        }
-
-        // Trigger Ko-fi widget on button click
-        const triggerBtn = document.getElementById("kofi-trigger");
-        if (triggerBtn) {
-            triggerBtn.addEventListener("click", () => {
-                if (typeof kofiWidgetOverlay !== "undefined") {
-                    // Simulate clicking the Ko-fi floating button
-                    const kofiButton = document.querySelector('a[href*="ko-fi.com"]');
-                    if (kofiButton) {
-                        kofiButton.click();
+            // Trigger Ko-fi widget on button click
+            const triggerBtn = document.getElementById("kofi-trigger");
+            if (triggerBtn) {
+                triggerBtn.addEventListener("click", () => {
+                    if (typeof kofiWidgetOverlay !== "undefined") {
+                        // Simulate clicking the Ko-fi floating button
+                        const kofiButton = document.querySelector('a[href*="ko-fi.com"]');
+                        if (kofiButton) {
+                            kofiButton.click();
+                        } else {
+                            window.open("https://ko-fi.com/ilsacolombia", "_blank");
+                        }
                     } else {
+                        // Fallback: direct link
                         window.open("https://ko-fi.com/ilsacolombia", "_blank");
                     }
-                } else {
-                    // Fallback: direct link
-                    window.open("https://ko-fi.com/ilsacolombia", "_blank");
-                }
-            });
-        }
-    });
-</script>
+                });
+            }
+        });
+    </script>
+</Layout>
 
 <style>
     .glass-donation-box {
