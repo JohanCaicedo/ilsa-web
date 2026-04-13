@@ -8,26 +8,27 @@
     </div>
 
     <!-- LIGHTBOX MODAL -->
-    <div
+    <dialog
         id="lightbox"
-        class="fixed inset-0 z-[200] hidden items-center justify-center"
-        role="dialog"
-        aria-modal="true"
+        class="fixed inset-0 z-[200] m-0 w-[100vw] h-[100vh] max-w-none max-h-none p-0 bg-transparent items-center justify-center border-none backdrop:bg-transparent"
         aria-label="Visor de imagen"
     >
         <!-- Backdrop (Light) -->
         <div
             id="lightbox-backdrop"
-            class="absolute inset-0 bg-white/90 backdrop-blur-2xl"
+            class="absolute inset-0 bg-white/90 backdrop-blur-2xl -z-10"
         >
         </div>
 
-        <!-- Counter -->
-        <div
-            id="lightbox-counter"
-            class="absolute top-6 left-6 z-10 bg-slate-100 backdrop-blur-md text-slate-700 text-sm font-bold px-4 py-2 rounded-full border border-slate-200 shadow-sm transition-opacity"
-        >
-            1 / X
+        <!-- Top Bar Controls -->
+        <div class="absolute top-0 left-0 right-0 z-20 flex justify-between items-center p-6">
+            <!-- Counter -->
+            <div
+                id="lightbox-counter"
+                class="bg-slate-100 backdrop-blur-md text-slate-700 text-sm font-bold px-4 py-2 rounded-full border border-slate-200 shadow-sm transition-opacity"
+            >
+                1 / X
+            </div>
         </div>
 
         <!-- Prev Button -->
@@ -72,7 +73,7 @@
 
         <!-- Image Container -->
         <div
-            class="relative z-[1] flex items-center justify-center w-full h-full p-8 md:p-16"
+            class="relative z-[1] flex items-center justify-center w-full h-full p-12 md:p-24"
         >
             <img
                 id="lightbox-img"
@@ -111,11 +112,11 @@
                 > para cerrar
             </div>
         </div>
-    </div>
+    </dialog>
 </gallery-lightbox>
 
 <style>
-    #lightbox.active {
+    #lightbox[open] {
         display: flex;
     }
     #lightbox-img.switching {
@@ -124,99 +125,132 @@
 </style>
 
 <script>
+    import type { GalleryImage } from "../../lib/galleries";
+
     class GalleryLightboxElement extends HTMLElement {
         connectedCallback() {
-            const lightbox = this.querySelector(
-                "#lightbox",
-            ) as HTMLElement | null;
-            const lightboxImg = this.querySelector(
-                "#lightbox-img",
-            ) as HTMLImageElement | null;
-            const lightboxCounter = this.querySelector(
-                "#lightbox-counter",
-            ) as HTMLElement | null;
+            const lightbox = this.querySelector("#lightbox") as HTMLDialogElement | null;
+            const lightboxImg = this.querySelector("#lightbox-img") as HTMLImageElement | null;
+            const lightboxCounter = this.querySelector("#lightbox-counter") as HTMLElement | null;
             const closeBtn = this.querySelector("#lightbox-close");
             const prevBtn = this.querySelector("#lightbox-prev");
             const nextBtn = this.querySelector("#lightbox-next");
             const backdrop = this.querySelector("#lightbox-backdrop");
             const wrapper = this.querySelector("#custom-gallery-wrapper");
 
-            if (!wrapper || !lightbox || !lightboxImg || !lightboxCounter)
-                return;
-
-            const thumbs = wrapper.querySelectorAll(".gallery-thumb");
-            const totalImages = thumbs.length;
-
-            if (totalImages === 0) return;
+            if (!lightbox || !lightboxImg || !lightboxCounter) return;
 
             let currentIndex = 0;
+            let dynamicImages: GalleryImage[] = [];
+
+            const isDynamicMode = () => dynamicImages.length > 0;
+
+            const getTotalImages = () => {
+                if (isDynamicMode()) return dynamicImages.length;
+                if (!wrapper) return 0;
+                return wrapper.querySelectorAll(".gallery-thumb").length;
+            };
 
             const getImageSrc = (index: number) => {
-                const thumb = thumbs[index];
+                if (isDynamicMode()) return dynamicImages[index]?.src || "";
+                if (!wrapper) return "";
+                const thumb = wrapper.querySelectorAll(".gallery-thumb")[index];
                 const img = thumb?.querySelector("img");
                 return img ? img.src : "";
             };
 
             const getImageAlt = (index: number) => {
-                const thumb = thumbs[index];
+                if (isDynamicMode()) return dynamicImages[index]?.alt || "";
+                if (!wrapper) return "";
+                const thumb = wrapper.querySelectorAll(".gallery-thumb")[index];
                 const img = thumb?.querySelector("img");
                 return img ? img.alt : "";
             };
 
             const showImage = (index: number) => {
-                currentIndex =
-                    ((index % totalImages) + totalImages) % totalImages;
+                const total = getTotalImages();
+                if (total === 0) return;
+                
+                currentIndex = ((index % total) + total) % total;
                 lightboxImg.classList.add("switching");
+                
                 setTimeout(() => {
                     lightboxImg.src = getImageSrc(currentIndex);
                     lightboxImg.alt = getImageAlt(currentIndex);
-                    lightboxCounter.textContent = `${currentIndex + 1} / ${totalImages}`;
+                    lightboxCounter.textContent = `${currentIndex + 1} / ${total}`;
                     lightboxImg.classList.remove("switching");
                 }, 150);
             };
 
-            const open = (index: number) => {
+            const open = (index: number, images?: GalleryImage[]) => {
+                if (images && Array.isArray(images)) {
+                    dynamicImages = images;
+                } else {
+                    dynamicImages = []; // fallback to wrapper mode if no images provided
+                }
+                
+                const total = getTotalImages();
+                if (total === 0) return;
+
                 currentIndex = index;
                 lightboxImg.src = getImageSrc(currentIndex);
                 lightboxImg.alt = getImageAlt(currentIndex);
-                lightboxCounter.textContent = `${currentIndex + 1} / ${totalImages}`;
-                lightbox.classList.add("active");
-                document.body.style.overflow = "hidden";
+                lightboxCounter.textContent = `${currentIndex + 1} / ${total}`;
+                
+                lightbox.showModal();
+                // Previene scroll pero no sobrescribe comportamiento previo (como el del album modal)
+                document.documentElement.style.overflow = "hidden";
             };
 
             const close = () => {
-                lightbox.classList.remove("active");
-                document.body.style.overflow = "";
+                lightbox.close();
+                // Si el body ya estaba hidden por otro modal (ej. AlbumModal), no deberíamos resetearlo.
+                // En este caso simple reseteamos a "" que es el default, el CSS :has(dialog[open]) de AlbumModal seguirá activo si ese está abierto.
+                document.documentElement.style.overflow = "";
             };
 
-            // Event Listeners
-            thumbs.forEach((thumb, idx) => {
-                thumb.addEventListener("click", () => open(idx));
-            });
+            // Event Listeners for Wrapper mode (Legacy)
+            if (wrapper) {
+                const thumbs = wrapper.querySelectorAll(".gallery-thumb");
+                thumbs.forEach((thumb, idx) => {
+                    thumb.addEventListener("click", () => open(idx));
+                });
+            }
+
+            // Event Listener for Dynamic Mode 
+            // Esto permite que AlbumManager u otros componentes activen el lightbox pasando la data
+            window.addEventListener('open-lightbox', ((e: CustomEvent<{images: GalleryImage[], startIndex: number}>) => {
+                if (e.detail && Array.isArray(e.detail.images)) {
+                    open(e.detail.startIndex || 0, e.detail.images);
+                }
+            }) as EventListener);
 
             closeBtn?.addEventListener("click", close);
             backdrop?.addEventListener("click", close);
-            prevBtn?.addEventListener("click", () =>
-                showImage(currentIndex - 1),
-            );
-            nextBtn?.addEventListener("click", () =>
-                showImage(currentIndex + 1),
-            );
+            prevBtn?.addEventListener("click", () => showImage(currentIndex - 1));
+            nextBtn?.addEventListener("click", () => showImage(currentIndex + 1));
 
             // Esc key handler specifically scoped to bound checks
             this.handleKeydown = (e: KeyboardEvent) => {
-                if (!lightbox.classList.contains("active")) return;
-                if (e.key === "Escape") close();
+                if (!lightbox.hasAttribute("open")) return;
+                
+                // Evitamos que otras cosas también se cierren por el press de esc (ej. el dialog nativo)
+                // al procesar el primer Esc y detener la propagación. Pero si es el dialog nativo, él escucha primero. 
+                // En este caso lightbox de imagen siempre está "por encima" de cualquier dialog porque tiene z-index 200.
+                if (e.key === "Escape") {
+                    e.stopPropagation();
+                    close();
+                }
                 if (e.key === "ArrowLeft") showImage(currentIndex - 1);
                 if (e.key === "ArrowRight") showImage(currentIndex + 1);
             };
 
-            document.addEventListener("keydown", this.handleKeydown);
+            document.addEventListener("keydown", this.handleKeydown, { capture: true });
         }
 
         disconnectedCallback() {
             if (this.handleKeydown) {
-                document.removeEventListener("keydown", this.handleKeydown);
+                document.removeEventListener("keydown", this.handleKeydown, { capture: true });
             }
         }
 

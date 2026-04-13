@@ -1,0 +1,43 @@
+---
+// src/components/organisms/GallerySection.astro
+import { galleryData } from "../../lib/galleries";
+import GalleryFolderCard from "../molecules/GalleryFolderCard.astro";
+
+interface Props {
+    categoryId: string;
+}
+
+const { categoryId } = Astro.props;
+
+const category = galleryData.find(c => c.id === categoryId);
+
+if (!category) {
+    console.warn(`GallerySection: No category found with id '${categoryId}'`);
+}
+
+---
+
+{category && (
+    <section class="w-full py-8">
+        {(category.title || category.description) && (
+            <div class="mb-8 text-center md:text-left">
+                {category.title && <h2 class="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight">{category.title}</h2>}
+                {category.description && (
+                    <p class="text-slate-500 mt-2 max-w-3xl">{category.description}</p>
+                )}
+            </div>
+        )}
+
+        {category.albums.length > 0 ? (
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {category.albums.map(album => (
+                    <GalleryFolderCard album={album} />
+                ))}
+            </div>
+        ) : (
+            <div class="py-12 text-center bg-slate-50 rounded-2xl border border-slate-100">
+                <p class="text-slate-500 text-sm">No hay álbumes en esta categoría por el momento.</p>
+            </div>
+        )}
+    </section>
+)}

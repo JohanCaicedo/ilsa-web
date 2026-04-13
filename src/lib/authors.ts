@@ -11,8 +11,8 @@ export interface AuthorProfile {
 export const authorsConfig: Record<string, AuthorProfile> = {
   "freddy-ordonez-gomez": {
     name: "Freddy Ordóñez Gómez",
-    profileImage: "https://api.ilsa.org.co/wp-content/uploads/2022/08/Freddy-Recorte-scaled.jpg.webp", // PON TU URL AQUÍ
-    avatarImage: "https://api.ilsa.org.co/wp-content/uploads/2022/08/Freddy-Recorte-scaled.jpg.webp",    // PON TU URL AQUÍ
+    profileImage: "https://api.ilsa.org.co/wp-content/uploads/2022/08/Freddy-Recorte-scaled.jpg.webp",
+    avatarImage: "https://api.ilsa.org.co/wp-content/uploads/2022/08/Freddy-Recorte-scaled.jpg.webp",
     shortBio: "Investigador y director ejecutivo de ILSA. Integrante del Centro de Pensamiento Amazonias (CEPAM)",
     fullBio: "Colombia. Abogado, Especialista en Epistemologías del Sur, Magister en Derecho con profundización en Derechos Humanos y DIH, y estudiante del doctorado en Derecho de la Universidad Libre. Investigador desde 2007 del Instituto Latinoamericano para una Sociedad y un Derecho Alternativos (ILSA), presidente de su junta directiva entre 2017 y julio de 2025, y su Director ejecutivo desde agosto de 2025. Integrante del grupo de investigación Historia, Ambiente y Política; del grupo de trabajo de Clacso Pensamientos jurídicos críticos y conflictos sociopolíticos; y del Centro de Pensamiento Amazonía, CEPAM. Es profesor de la maestría en Derechos Humanos y Gobernanza de la Universidad Cooperativa de Colombia (Pasto) y docente ocasional del pregrado en Derecho de la Universidad Nacional de Colombia y de posgrado en la Universidad Autónoma de Colombia. Es columnista de Ámbito Jurídico y de la revista Raya.",
     xUrl: "https://x.com/freddy_ordonez",

@@ -1,0 +1,206 @@
+---
+// src/components/organisms/AlbumViewerModal.astro
+---
+
+<album-viewer-modal>
+    <dialog 
+        id="album-modal" 
+        class="w-[95vw] h-[90vh] md:w-[85vw] md:h-[85vh] max-w-7xl m-auto p-0 bg-white/60 backdrop-blur-3xl border border-white/60 shadow-[0_8px_32px_0_rgba(74,125,191,0.2)] rounded-[2rem] md:rounded-[3rem] open:flex flex-col overflow-hidden backdrop:bg-slate-900/40 backdrop:backdrop-blur-md"
+    >
+        <!-- Modal Header -->
+        <div class="sticky top-0 z-20 w-full bg-white/30 backdrop-blur-3xl border-b border-white/50 shadow-sm px-6 md:px-10 py-6 flex items-center justify-between">
+            <div class="flex flex-col gap-1">
+                <h2 id="album-modal-title" class="text-2xl md:text-3xl lg:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#4e7cce] to-[#5e3b69] tracking-tight">Cargando Álbum...</h2>
+                <div class="flex items-center gap-3 text-sm text-slate-500 font-medium">
+                    <span id="album-modal-count" class="flex items-center gap-1"></span>
+                    <span id="album-modal-location" class="hidden md:flex items-center gap-1 before:content-[''] before:block before:w-1 before:h-1 before:bg-slate-300 before:rounded-full before:mr-2"></span>
+                    <span id="album-modal-date" class="hidden md:flex items-center gap-1 before:content-[''] before:block before:w-1 before:h-1 before:bg-slate-300 before:rounded-full before:mr-2"></span>
+                </div>
+            </div>
+            
+            <button 
+                id="close-album-modal"
+                type="button"
+                class="flex items-center justify-center w-12 h-12 shrink-0 rounded-full bg-white/60 hover:bg-white text-[#4e7cce] border border-white/60 hover:border-white shadow-sm transition-all duration-300 hover:scale-105"
+                aria-label="Cerrar álbum"
+            >
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+
+        <!-- Images Grid Container -->
+        <div class="flex-1 overflow-y-auto px-6 md:px-10 py-8 w-full custom-scrollbar">
+            <!-- The JS logic injects the images here -->
+            <div 
+                id="album-modal-grid" 
+                class="columns-2 md:columns-3 lg:columns-4 lg:max-w-7xl mx-auto gap-4 space-y-4"
+            >
+                <!-- Injected image skeleton -->
+            </div>
+        </div>
+    </dialog>
+</album-viewer-modal>
+
+<script>
+    import type { GalleryAlbum, GalleryImage } from "../../lib/galleries";
+
+    class AlbumViewerModalElement extends HTMLElement {
+        modal: HTMLDialogElement | null = null;
+        grid: HTMLElement | null = null;
+        titleEl: HTMLElement | null = null;
+        countEl: HTMLElement | null = null;
+        locationEl: HTMLElement | null = null;
+        dateEl: HTMLElement | null = null;
+        closeBtn: HTMLButtonElement | null = null;
+        
+        currentImages: GalleryImage[] = [];
+        handleAlbumClickBound: (e: MouseEvent) => void;
+
+        constructor() {
+            super();
+            this.handleAlbumClickBound = this.handleGlobalClick.bind(this);
+        }
+
+        connectedCallback() {
+            console.log("[AlbumModal] Component initialized");
+            this.modal = this.querySelector("#album-modal") as HTMLDialogElement | null;
+            this.grid = this.querySelector("#album-modal-grid");
+            this.titleEl = this.querySelector("#album-modal-title");
+            this.countEl = this.querySelector("#album-modal-count");
+            this.locationEl = this.querySelector("#album-modal-location");
+            this.dateEl = this.querySelector("#album-modal-date");
+            this.closeBtn = this.querySelector("#close-album-modal");
+
+            if (!this.modal) {
+                console.error("[AlbumModal] Modal element not found");
+                return;
+            }
+
+            // Bind global click listener for triggers
+            document.addEventListener("click", this.handleAlbumClickBound);
+
+            // Close button
+            this.closeBtn?.addEventListener("click", () => this.closeModal());
+            
+            // Native open backdrop click
+            this.modal.addEventListener('click', (e) => {
+                if (e.target === this.modal) {
+                    this.closeModal();
+                }
+            });
+        }
+
+        disconnectedCallback() {
+            document.removeEventListener("click", this.handleAlbumClickBound);
+        }
+
+        handleGlobalClick(e: MouseEvent) {
+            const target = e.target as HTMLElement;
+            const trigger = target.closest(".gallery-folder-trigger");
+            
+            if (trigger) {
+                console.log("[AlbumModal] Trigger clicked", trigger);
+                const dataScript = trigger.querySelector(".album-data");
+                if (!dataScript || !dataScript.textContent) {
+                    console.error("[AlbumModal] No .album-data script found inside trigger");
+                    return;
+                }
+
+                try {
+                    const album: GalleryAlbum = JSON.parse(dataScript.textContent);
+                    this.populateModal(album);
+                    this.openModal();
+                } catch (err) {
+                    console.error("[AlbumModal] Error parsing album JSON:", err);
+                }
+            }
+        }
+
+        populateModal(album: GalleryAlbum) {
+            if (!this.titleEl || !this.grid || !this.countEl || !this.locationEl || !this.dateEl) {
+                console.error("[AlbumModal] Missing internal elements to populate");
+                return;
+            }
+
+            this.titleEl.textContent = album.title;
+            this.countEl.textContent = `${album.images.length} fotos`;
+            
+            if (album.location) {
+                this.locationEl.textContent = album.location;
+                this.locationEl.classList.remove("hidden");
+                this.locationEl.classList.add("flex");
+            } else {
+                this.locationEl.classList.add("hidden");
+            }
+
+            if (album.date) {
+                this.dateEl.textContent = album.date;
+                this.dateEl.classList.remove("hidden");
+            } else {
+                this.dateEl.classList.add("hidden");
+            }
+
+            this.currentImages = album.images;
+
+            const html = album.images.map((img, index) => {
+                return `
+                    <div class="break-inside-avoid relative group rounded-2xl overflow-hidden shadow-md hover:shadow-xl border border-white/50 ring-1 ring-black/5 transition-all duration-300">
+                        <img 
+                            src="${img.src}" 
+                            alt="${img.alt || `Imagen ${index + 1}`}"
+                            loading="lazy"
+                            class="w-full h-auto cursor-pointer opacity-0 transition-all duration-500 hover:scale-105"
+                            onload="this.classList.remove('opacity-0')"
+                            onclick="window.dispatchEvent(new CustomEvent('open-lightbox', { detail: { images: window._currentAlbumImages, startIndex: ${index} } }))"
+                        />
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors pointer-events-none"></div>
+                    </div>
+                `;
+            }).join('');
+
+            (window as any)._currentAlbumImages = this.currentImages;
+            this.grid.innerHTML = html;
+            console.log("[AlbumModal] Populated grid with", album.images.length, "images");
+        }
+
+        openModal() {
+            if (!this.modal) return;
+            this.modal.showModal();
+            document.documentElement.style.overflow = "hidden";
+        }
+
+        closeModal() {
+            if (!this.modal) return;
+            this.modal.close();
+            document.documentElement.style.overflow = "";
+            if (this.grid) this.grid.innerHTML = "";
+        }
+    }
+
+    if (!customElements.get("album-viewer-modal")) {
+        customElements.define("album-viewer-modal", AlbumViewerModalElement);
+    }
+</script>
+
+<style>
+    /* Prevent body scroll when dialog is native-open */
+    body:has(dialog[open]) {
+        overflow: hidden;
+    }
+    
+    /* Reveal animation for dialog */
+    dialog[open] {
+        animation: fade-in 0.3s ease-out forwards;
+    }
+    
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+            transform: scale(0.98);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+</style>

@@ -2,6 +2,13 @@
 
 ## Inventario de Componentes (Nuevos)
 
+### Modular Gallery System (Nuevo)
+- **`src/lib/galleries.ts`**: 🆕 Base de datos de imágenes (Categorías -> Álbumes -> Fotos).
+- **`GalleryFolderCard.astro`**: 🆕 Molécula "Carpeta" 2x2. Estética Liquid Glass. Almacena data en `<script type="application/json">` para despliegue perezoso.
+- **`AlbumViewerModal.astro`**: 🆕 Organismo tipo `<dialog>`. Se inyectan imágenes dinámicamente vía vanilla JS para evitar saturación del DOM inicial en páginas con muchas galerías.
+- **`GalleryLightbox.astro`** (Modificado): Integrado soporte para invocación global delegada vía `CustomEvent('open-lightbox')`. Adicionado botón dedicado para forzar "Descargar" evadiendo limitantes CORS/href simple vía fetch.
+- **`GallerySection.astro`**: 🆕 Contenedor inyectable. Recibe `categoryId` y mapea asíncronamente las folders de `galleries.ts`.
+
 ### Navigation UX (Nuevo)
 - **`PageLoader.astro`**: 🆕 **Full Screen Transition Mask**.
     - **Función**: Intercepta eventos de Astro View Transitions (`before-preparation`) para mostrar un overlay inmediato al hacer clic en un enlace.
@@ -44,6 +51,17 @@
     - Tamaño: 247KB, 8994 líneas.
 
 ## Refactorizaciones y Cambios
+
+### Session 13/04/2026 - Sistema Modular de Galerías y Automatización Multimedia
+- **Arquitectura de Galerías**:
+    - Se construyó e implementó el **Sistema Modular de Galerías** para centralizar la gestión de lotes fotográficos.
+    - Diseño ajustado al patrón **Liquid Glass** de ILSA, desde las previsualizaciones 2x2 (`GalleryFolderCard.astro`), pasando por el modal de listado como "Tarjeta Flotante" inmersiva con fuerte blur y bordes de cristal (`AlbumViewerModal.astro`), hasta el Lightbox nativo a nivel \`<dialog>\`.
+    - **SEO y Performance**: Para que la página indexe de inmediato sin importar si la galería tiene 100 fotografías, se implementaron inyecciones diferidas de JS y las colecciones se transmiten codificadas en \`<script type="application/json">\`.
+- **Automatización de Ingesta Node.js**:
+    - Se escribieron e integraron scripts auxiliares (como \`rename_galleries.cjs\`) capaces de procesar masivamente volúmenes enteros desde el sistema de archivos del usuario.
+    - El script es inteligente: acorta nombres enormes de subdirectorios a slugs eficientes (e.g. \`visita-chita-julio\`), renombra y numera la totalidad del material fotográfico interno y mapea estructuradamente al archivo padre \`src/lib/galleries.ts\` para autocompletar la BD.
+- **Refinamientos Visuales**:
+    - Limpieza de títulos genéricos. La ruta \`/multimedia\` fue estilizada, reteniendo de forma minimalista toda la carga visual en el contenido de evento con el gran heading "Galería Fotográfica" que cuenta con gradientes propios del manual de marca de ILSA.
 
 ### Session 30/03/2026 - Reestructuración de Organigrama y Ajustes Visuales
 - **`src/pages/nosotros/index.astro`**:

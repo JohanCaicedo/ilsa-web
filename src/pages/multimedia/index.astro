@@ -3,6 +3,9 @@ import Layout from "../../layouts/Layout.astro";
 import YoutubeEmbed from "../../components/atoms/YoutubeEmbed.astro";
 import SpotifyEmbed from "../../components/atoms/SpotifyEmbed.astro";
 import FacebookEmbed from "../../components/atoms/FacebookEmbed.astro";
+import GallerySection from "../../components/organisms/GallerySection.astro";
+import AlbumViewerModal from "../../components/organisms/AlbumViewerModal.astro";
+import GalleryLightbox from "../../components/molecules/GalleryLightbox.astro";
 
 export const prerender = false;
 
@@ -741,6 +744,23 @@ const avGallery = [
                     }
                 </div>
             </section>
+            </section>
+
+            <!-- 9. Galería Fotográfica Modular -->
+            <section class="max-w-7xl mx-auto w-full pt-16 border-t border-slate-200/20 mt-16 pb-16 relative z-10">
+                <div class="flex flex-col items-center mb-8 text-center">
+                    <h3 class="text-3xl md:text-4xl lg:text-5xl font-black text-[#3d3d47] tracking-tighter">
+                        Galería <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#4e7cce] to-[#5e3b69]">Fotográfica</span>
+                    </h3>
+                </div>
+                
+                <!-- We pass the id of the category we want to render -->
+                <GallerySection categoryId="eventos-recientes" />
+            </section>
         </div>
     </div>
+    
+    <!-- We deploy the Modals here so they are available in the DOM -->
+    <AlbumViewerModal />
+    <GalleryLightbox />
 </Layout>
