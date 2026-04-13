@@ -20,8 +20,8 @@ export const authorsConfig: Record<string, AuthorProfile> = {
   },
   "boaventura-de-sousa-santos": {
     name: "Boaventura de Sousa Santos",
-    profileImage: "https://api.ilsa.org.co/wp-content/uploads/2021/11/boaventura.jpg", // PON TU URL AQUÍ
-    avatarImage: "https://ilsa.org.co/wp-content/uploads/revslider/slider-4/boaventura-300x290.jpg.webp",    // PON TU URL AQUÍ
+    profileImage: "/images/perfiles/autores/boaventura.webp",
+    avatarImage: "/images/perfiles/autores/boaventura.webp",
     shortBio: "Académico portugués. Doctor en sociología, catedrático de la Facultad de Economía y director del Centro de Estudios Sociales de la Universidad de Coímbra. Profesor distinguido de la Universidad de Wisconsin-Madison.",
     fullBio: "Boaventura de Sousa Santos es catedrático emérito de Sociología y director del Centro de Estudios Sociales de la Universidad de Coimbra, así como Distinguished Legal Scholar en la Universidad de Wisconsin-Madison. Bajo el sello editorial ILSA ha publicado: Estado, derecho y luchas Sociales (1991); La globalización del derecho. Los nuevos caminos de la regulación y la emancipación (1998) (coedición con la Facultad de Derecho, Ciencias Políticas y Sociales de la Universidad Nacional de Colombia); La caída del Angelus Novus: ensayos para una nueva teoría social y una nueva práctica política (2003) (coedición con la Facultad de Derecho, Ciencias Políticas y Sociales de la Universidad Nacional de Colombia); Democracia y participación. El ejemplo del presupuesto participativo de Porto Alegre (2005); El milenio huérfano. Ensayos para una nueva cultura política (2005, 2011) (coedición con Trotta); Sociología Jurídica Crítica. Para un nuevo sentido común en el derecho (2009); Sociología Jurídica Crítica. Para un nuevo sentido común en el derecho (2009) (coedición con Trotta); y Las bifurcaciones del orden. Revolución, ciudad, campo e indignación (2018) (coedición ILSA, Siglo del Hombre y Trotta).",
     xUrl: "",
