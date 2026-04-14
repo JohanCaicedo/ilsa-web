@@ -218,12 +218,12 @@
             }
 
             // Event Listener for Dynamic Mode 
-            // Esto permite que AlbumManager u otros componentes activen el lightbox pasando la data
-            window.addEventListener('open-lightbox', ((e: CustomEvent<{images: GalleryImage[], startIndex: number}>) => {
+            this._boundOpenLightbox = ((e: CustomEvent<{images: GalleryImage[], startIndex: number}>) => {
                 if (e.detail && Array.isArray(e.detail.images)) {
                     open(e.detail.startIndex || 0, e.detail.images);
                 }
-            }) as EventListener);
+            }) as EventListener;
+            window.addEventListener('open-lightbox', this._boundOpenLightbox);
 
             closeBtn?.addEventListener("click", close);
             backdrop?.addEventListener("click", close);
@@ -234,9 +234,6 @@
             this.handleKeydown = (e: KeyboardEvent) => {
                 if (!lightbox.hasAttribute("open")) return;
                 
-                // Evitamos que otras cosas también se cierren por el press de esc (ej. el dialog nativo)
-                // al procesar el primer Esc y detener la propagación. Pero si es el dialog nativo, él escucha primero. 
-                // En este caso lightbox de imagen siempre está "por encima" de cualquier dialog porque tiene z-index 200.
                 if (e.key === "Escape") {
                     e.stopPropagation();
                     close();
@@ -252,9 +249,13 @@
             if (this.handleKeydown) {
                 document.removeEventListener("keydown", this.handleKeydown, { capture: true });
             }
+            if (this._boundOpenLightbox) {
+                window.removeEventListener('open-lightbox', this._boundOpenLightbox);
+            }
         }
 
         handleKeydown!: (e: KeyboardEvent) => void;
+        _boundOpenLightbox!: EventListener;
     }
 
     customElements.define("gallery-lightbox", GalleryLightboxElement);

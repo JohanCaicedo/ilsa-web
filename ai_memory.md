@@ -55,13 +55,16 @@
 ### Session 13/04/2026 - Sistema Modular de Galerías y Automatización Multimedia
 - **Arquitectura de Galerías**:
     - Se construyó e implementó el **Sistema Modular de Galerías** para centralizar la gestión de lotes fotográficos.
-    - Diseño ajustado al patrón **Liquid Glass** de ILSA, desde las previsualizaciones 2x2 (`GalleryFolderCard.astro`), pasando por el modal de listado como "Tarjeta Flotante" inmersiva con fuerte blur y bordes de cristal (`AlbumViewerModal.astro`), hasta el Lightbox nativo a nivel \`<dialog>\`.
-    - **SEO y Performance**: Para que la página indexe de inmediato sin importar si la galería tiene 100 fotografías, se implementaron inyecciones diferidas de JS y las colecciones se transmiten codificadas en \`<script type="application/json">\`.
+    - Diseño ajustado al patrón **Liquid Glass** de ILSA, desde las previsualizaciones 2x2 (`GalleryFolderCard.astro`), pasando por el modal de listado como "Tarjeta Flotante" inmersiva con fuerte blur y bordes de cristal (`AlbumViewerModal.astro`), hasta el Lightbox nativo a nivel `<dialog>`.
+    - **SEO y Performance**: Para que la página indexe de inmediato sin importar si la galería tiene 100 fotografías, se implementaron inyecciones diferidas de JS y las colecciones se transmiten codificadas en `<script type="application/json">`.
+    - **ViewTransitions Leak Fix**: Se solucionó un bug crítico en `GalleryLightbox.astro` (Astro MPA) aislando su `window.addEventListener('open-lightbox')` con `_boundOpenLightbox` y purgado explícito en su `disconnectedCallback`, previniendo que clicks generen ejecuciones múltiples que colapsen el modal nativo en navegaciones cruzadas.
 - **Automatización de Ingesta Node.js**:
-    - Se escribieron e integraron scripts auxiliares (como \`rename_galleries.cjs\`) capaces de procesar masivamente volúmenes enteros desde el sistema de archivos del usuario.
-    - El script es inteligente: acorta nombres enormes de subdirectorios a slugs eficientes (e.g. \`visita-chita-julio\`), renombra y numera la totalidad del material fotográfico interno y mapea estructuradamente al archivo padre \`src/lib/galleries.ts\` para autocompletar la BD.
-- **Refinamientos Visuales**:
-    - Limpieza de títulos genéricos. La ruta \`/multimedia\` fue estilizada, reteniendo de forma minimalista toda la carga visual en el contenido de evento con el gran heading "Galería Fotográfica" que cuenta con gradientes propios del manual de marca de ILSA.
+    - Se escribieron e integraron scripts auxiliares (como `rename_galleries.cjs` / `process_mercado.cjs`) capaces de procesar masivamente volúmenes enteros desde el sistema de archivos del usuario.
+    - El script es inteligente: acorta nombres enormes de subdirectorios a slugs eficientes (e.g. `visita-chita-julio`, `mercado-campesino-sep-2005`), renombra y numera la totalidad del material fotográfico interno y mapea estructuradamente al archivo padre `src/lib/galleries.ts` para autocompletar la BD.
+- **Refinamientos Visuales y Consistencia**:
+    - Limpieza de títulos genéricos. La ruta `/multimedia` fue estilizada, reteniendo de forma minimalista toda la carga visual en el contenido de evento con el gran heading "Galería Fotográfica".
+    - El componente **Galería Fotográfica** fue reposicionado a primer nivel, de inmediato después de los vídeos principales de YouTube (Hero Section).
+    - **Universal Lightbox**: Componentes de imágenes asilados y codificados de forma rígida (Carruseles del *Día de la Jueza*, *Pashukanis* y el collage mampostería de *Mujeres Buscadoras*) ahora utilizan arrays precompilados de Astro y lanzan payloads despachados hacia evento `open-lightbox`, integrándose armónicamente al visor unificado interactivo en vez de permanecer sin reacción a clics.
 
 ### Session 30/03/2026 - Reestructuración de Organigrama y Ajustes Visuales
 - **`src/pages/nosotros/index.astro`**:

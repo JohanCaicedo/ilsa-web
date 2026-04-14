@@ -526,6 +526,75 @@ export const galleryData: GalleryCategory[] = [
             }
         ]
     }
-]
+,
+            {
+            "id": "mercado-campesino-sep-2005",
+            "title": "Cuarto Mercado Campesino",
+            "location": "Bogotá",
+            "date": "Septiembre 2005",
+            "images": [
+            {
+            "src": "/images/multimedia-galeria/mercado-campesino-sep-2005/mercado-campesino-sep-2005-1.webp",
+            "alt": "Cuarto Mercado Campesino - Imagen 1"
+            },
+            {
+            "src": "/images/multimedia-galeria/mercado-campesino-sep-2005/mercado-campesino-sep-2005-2.webp",
+            "alt": "Cuarto Mercado Campesino - Imagen 2"
+            },
+            {
+            "src": "/images/multimedia-galeria/mercado-campesino-sep-2005/mercado-campesino-sep-2005-3.webp",
+            "alt": "Cuarto Mercado Campesino - Imagen 3"
+            },
+            {
+            "src": "/images/multimedia-galeria/mercado-campesino-sep-2005/mercado-campesino-sep-2005-4.webp",
+            "alt": "Cuarto Mercado Campesino - Imagen 4"
+            },
+            {
+            "src": "/images/multimedia-galeria/mercado-campesino-sep-2005/mercado-campesino-sep-2005-5.webp",
+            "alt": "Cuarto Mercado Campesino - Imagen 5"
+            },
+            {
+            "src": "/images/multimedia-galeria/mercado-campesino-sep-2005/mercado-campesino-sep-2005-6.webp",
+            "alt": "Cuarto Mercado Campesino - Imagen 6"
+            },
+            {
+            "src": "/images/multimedia-galeria/mercado-campesino-sep-2005/mercado-campesino-sep-2005-7.webp",
+            "alt": "Cuarto Mercado Campesino - Imagen 7"
+            },
+            {
+            "src": "/images/multimedia-galeria/mercado-campesino-sep-2005/mercado-campesino-sep-2005-8.webp",
+            "alt": "Cuarto Mercado Campesino - Imagen 8"
+            },
+            {
+            "src": "/images/multimedia-galeria/mercado-campesino-sep-2005/mercado-campesino-sep-2005-9.webp",
+            "alt": "Cuarto Mercado Campesino - Imagen 9"
+            },
+            {
+            "src": "/images/multimedia-galeria/mercado-campesino-sep-2005/mercado-campesino-sep-2005-10.webp",
+            "alt": "Cuarto Mercado Campesino - Imagen 10"
+            },
+            {
+            "src": "/images/multimedia-galeria/mercado-campesino-sep-2005/mercado-campesino-sep-2005-11.webp",
+            "alt": "Cuarto Mercado Campesino - Imagen 11"
+            },
+            {
+            "src": "/images/multimedia-galeria/mercado-campesino-sep-2005/mercado-campesino-sep-2005-12.webp",
+            "alt": "Cuarto Mercado Campesino - Imagen 12"
+            },
+            {
+            "src": "/images/multimedia-galeria/mercado-campesino-sep-2005/mercado-campesino-sep-2005-13.webp",
+            "alt": "Cuarto Mercado Campesino - Imagen 13"
+            },
+            {
+            "src": "/images/multimedia-galeria/mercado-campesino-sep-2005/mercado-campesino-sep-2005-14.webp",
+            "alt": "Cuarto Mercado Campesino - Imagen 14"
+            },
+            {
+            "src": "/images/multimedia-galeria/mercado-campesino-sep-2005/mercado-campesino-sep-2005-15.webp",
+            "alt": "Cuarto Mercado Campesino - Imagen 15"
+            }
+            ]
+            }
+        ]
     }
 ];
