@@ -124,7 +124,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, title }) => {
                         Escucha este artículo
                     </span>
                     <span className="px-1.5 py-px rounded-full bg-[#4e7cce]/5 border border-[#4e7cce]/10 text-[9px] font-bold text-[#4e7cce]/80 uppercase tracking-wider shadow-sm">
-                        IA Generado
+                        ¡Dale play!
                     </span>
                 </div>
 

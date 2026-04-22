@@ -10,6 +10,14 @@ export interface HeroSlideData {
 
 export const heroSlidesConfig: HeroSlideData[] = [
     {
+        title: "Víctor Moncayo",
+        excerpt: "Jurista crítico y maestro comprometido con la construcción de un pensamiento emancipador",
+        image: "/images/hero-home/Víctor Moncayo  jurista crítico y maestro-ID2.webp",
+        link: "https://ilsa.org.co/2026/04/victor-moncayo-jurista-critico-homenaje/",
+        badge: "Homenaje",
+        ctaText: "Nota completa"
+    },
+    {
         title: "9 de abril",
         excerpt: "Memoria, justicia y compromiso con las víctimas",
         image: "/images/hero-home/Home-9A.jpg",
