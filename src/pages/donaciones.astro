@@ -7,16 +7,16 @@ export const prerender = true;
 ---
 
 <Layout
-    title="Apoya a ILSA - Donaciones"
+    title="Donaciones - ILSA"
     seo={{
         metaDesc:
-            "Haz tu donación a ILSA y contribuye a la construcción de un derecho alternativo y una sociedad más justa en América Latina. Conoce cómo donar vía Ko-fi.",
+            "Apoya el trabajo de ILSA en la defensa de los derechos humanos, la investigación crítica y el acceso a la justicia en América Latina.",
     }}
     width="narrow"
 >
     <div class="relative text-center py-16 sm:py-24 px-4">
         <h1 class="sr-only">
-            Donaciones a ILSA - Apóyanos para transformar realidades
+            Donaciones a ILSA - Instituto Latinoamericano para una Sociedad y un Derecho Alternativos
         </h1>
         <LiquidContainer frosted={true} class="max-w-3xl mx-auto rounded-3xl">
             <div class="p-10 md:p-16">
@@ -24,24 +24,25 @@ export const prerender = true;
                 <div class="mb-12">
                     <GradientText
                         as="h2"
-                        text="Tu apoyo transforma realidades"
+                        text="Impulsa la transformación social y el acceso a la justicia"
                         size="text-4xl md:text-5xl text-center"
                         weight="font-black"
                         from="var(--ilsa-blue)"
-                        to="#9333ea"
+                        to="#0070ba"
                         class="justify-center mb-6 block w-fit mx-auto pb-2"
                     />
                     <p
                         class="text-center justify-center text-lg text-slate-700 text-balance leading-relaxed max-w-2xl mx-auto"
                     >
-                        Contribuye a&nbsp;la construcción de&nbsp;un derecho
-                        alternativo y&nbsp;una sociedad más justa
-                        en&nbsp;América Latina. Cada donación financia nuestras
-                        investigaciones y&nbsp;actividades académicas.
+                        Al donar a&nbsp;ILSA, financias nuestro trabajo institucional
+                        en investigación sociojurídica, incidencia política, educación legal
+                        popular y&nbsp;acompañamiento a comunidades en América Latina. 
+                        Tu contribución sostiene nuestras iniciativas por la defensa 
+                        de los derechos humanos y territoriales.
                     </p>
                 </div>
 
-                <!-- Ko-fi Button Container -->
+                <!-- PayPal Button Container -->
                 <div class="max-w-xl mx-auto">
                     <div
                         class="glass-donation-box rounded-3xl p-8 border border-white/30 bg-white/40 backdrop-blur-xl shadow-xl"
@@ -50,17 +51,30 @@ export const prerender = true;
                             <h3
                                 class="text-xl font-bold text-slate-800 mb-2 uppercase tracking-wider text-center"
                             >
-                                Apóyanos con Ko-fi
+                                Realizar donación
                             </h3>
                             <p class="text-sm text-slate-600 text-center">
-                                Elige el&nbsp;monto que&nbsp;desees contribuir
+                                Selecciona o ingresa el monto de tu donación.
                             </p>
                         </div>
 
-                        <!-- Ko-fi Button -->
+                        <!-- Amount selection -->
+                        <div class="grid grid-cols-3 gap-3 mb-4">
+                            <button type="button" class="amount-btn bg-white/60 hover:bg-white border border-slate-200 rounded-xl py-3 font-semibold text-slate-700 transition-all data-[active=true]:border-[#0070ba] data-[active=true]:bg-blue-50 data-[active=true]:text-[#0070ba] data-[active=true]:shadow-sm" data-amount="10">10 USD</button>
+                            <button type="button" class="amount-btn bg-white/60 hover:bg-white border border-slate-200 rounded-xl py-3 font-semibold text-slate-700 transition-all data-[active=true]:border-[#0070ba] data-[active=true]:bg-blue-50 data-[active=true]:text-[#0070ba] data-[active=true]:shadow-sm" data-amount="20">20 USD</button>
+                            <button type="button" class="amount-btn bg-white/60 hover:bg-white border border-slate-200 rounded-xl py-3 font-semibold text-slate-700 transition-all data-[active=true]:border-[#0070ba] data-[active=true]:bg-blue-50 data-[active=true]:text-[#0070ba] data-[active=true]:shadow-sm" data-amount="50">50 USD</button>
+                        </div>
+                        
+                        <div class="relative mb-6">
+                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-bold">$</span>
+                            <input type="number" id="custom-amount" placeholder="Otro monto" min="1" class="w-full bg-white/60 border border-slate-200 rounded-xl py-3 pl-8 pr-4 text-slate-700 font-semibold focus:outline-none focus:border-[#0070ba] focus:ring-1 focus:ring-[#0070ba] transition-all" />
+                            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-sm">USD</span>
+                        </div>
+
+                        <!-- PayPal Button -->
                         <button
-                            id="kofi-trigger"
-                            class="w-full py-5 bg-gradient-to-r from-[#4a7dbf] to-[#375a9e] hover:from-[#375a9e] hover:to-[#2d4a7f] text-white font-bold rounded-2xl shadow-xl shadow-[#4a7dbf]/20 hover:shadow-[#4a7dbf]/40 hover:-translate-y-1 transition-all flex items-center justify-center gap-3 group cursor-pointer"
+                            id="paypal-trigger"
+                            class="w-full py-4 bg-[#0070ba] hover:bg-[#003087] text-white font-bold rounded-2xl shadow-xl shadow-[#0070ba]/20 hover:shadow-[#0070ba]/40 hover:-translate-y-1 transition-all flex items-center justify-center gap-3 group cursor-pointer"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -78,7 +92,7 @@ export const prerender = true;
                                     d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
                                 ></path>
                             </svg>
-                            Hacer una donación
+                            Donar vía PayPal
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="20"
@@ -112,7 +126,7 @@ export const prerender = true;
                                 stroke-width="2"
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
-                                class="text-[#4a7dbf] shrink-0 mt-0.5"
+                                class="text-[#0070ba] shrink-0 mt-0.5"
                             >
                                 <path
                                     d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"
@@ -120,47 +134,12 @@ export const prerender = true;
                             </svg>
                             <div>
                                 <p
-                                    class="font-semibold text-slate-800 mb-1 text-center"
+                                    class="font-semibold text-slate-800 mb-1 text-left"
                                 >
                                     Transacción segura
                                 </p>
-                                <p class="text-sm text-slate-600 text-center">
-                                    Ko-fi utiliza sistemas de&nbsp;pago seguros
-                                    y&nbsp;confiables para proteger
-                                    tu&nbsp;información.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div
-                            class="flex items-start gap-3 p-4 rounded-2xl bg-white/30 border border-white/20 backdrop-blur-sm"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class="text-[#4a7dbf] shrink-0 mt-0.5"
-                            >
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <path d="M12 16v-4"></path>
-                                <path d="M12 8h.01"></path>
-                            </svg>
-                            <div>
-                                <p
-                                    class="font-semibold text-slate-800 mb-1 text-center"
-                                >
-                                    Flexible y transparente
-                                </p>
-                                <p class="text-sm text-slate-600 text-center">
-                                    Puedes elegir el&nbsp;monto que&nbsp;desees
-                                    y&nbsp;realizar donaciones únicas
-                                    o&nbsp;recurrentes.
+                                <p class="text-sm text-slate-600 text-left">
+                                    Tu donación se procesa a través de la infraestructura global de PayPal, garantizando la seguridad y encriptación de tus datos financieros en todo momento.
                                 </p>
                             </div>
                         </div>
@@ -182,69 +161,65 @@ export const prerender = true;
                                     d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
                                 ></path>
                             </svg>
-                            Powered by Ko-fi
+                            Powered by PayPal
                         </span>
                     </div>
                 </div>
             </div>
         </LiquidContainer>
     </div>
+
     <script>
         document.addEventListener("astro:page-load", () => {
-            // Solo ejecutar en la página de donaciones
             if (!window.location.pathname.includes('/donaciones')) return;
 
-            const drawKofiWidget = () => {
-                if (typeof kofiWidgetOverlay !== "undefined") {
-                    // Evitar duplicados al navegar con View Transitions
-                    const existingWidgets = document.querySelectorAll('iframe[id^="kofi-"]');
-                    existingWidgets.forEach(widget => widget.remove());
+            const triggerBtn = document.getElementById("paypal-trigger");
+            const amountBtns = document.querySelectorAll(".amount-btn");
+            const customAmountInput = document.getElementById("custom-amount") as HTMLInputElement;
 
-                    try {
-                        kofiWidgetOverlay.draw("ilsacolombia", {
-                            type: "floating-chat",
-                            "floating-chat.donateButton.text": "Apoyar",
-                            "floating-chat.donateButton.background-color": "#4a7dbf",
-                            "floating-chat.donateButton.text-color": "#ffffff",
-                        });
-                    } catch (e) {
-                        console.error("Error cargando el widget de Ko-fi:", e);
+            let selectedAmount = "";
+
+            // Handle quick amount buttons
+            amountBtns.forEach(btn => {
+                btn.addEventListener("click", (e) => {
+                    const target = e.currentTarget as HTMLButtonElement;
+                    
+                    // Reset all buttons
+                    amountBtns.forEach(b => b.removeAttribute("data-active"));
+                    
+                    // Set active
+                    target.setAttribute("data-active", "true");
+                    selectedAmount = target.getAttribute("data-amount") || "";
+                    
+                    // Clear custom input
+                    if (customAmountInput) customAmountInput.value = "";
+                });
+            });
+
+            // Handle custom amount input
+            if (customAmountInput) {
+                customAmountInput.addEventListener("input", (e) => {
+                    const target = e.target as HTMLInputElement;
+                    selectedAmount = target.value;
+                    
+                    if (selectedAmount) {
+                        amountBtns.forEach(b => b.removeAttribute("data-active"));
                     }
-                }
-            };
-
-            // Cargar el script de Ko-fi si no existe
-            if (typeof kofiWidgetOverlay === "undefined") {
-                const script = document.createElement("script");
-                script.src = "https://storage.ko-fi.com/cdn/scripts/overlay-widget.js";
-                script.async = true;
-                script.onload = drawKofiWidget;
-                document.head.appendChild(script);
-            } else {
-                drawKofiWidget();
+                });
             }
 
-            // Configurar el botón de donación de la página
-            const triggerBtn = document.getElementById("kofi-trigger");
+            // Handle redirect
             if (triggerBtn) {
-                // Remover listeners previos clonando el nodo (útil en View Transitions)
+                // Remove previous listeners by cloning node (useful in View Transitions)
                 const newBtn = triggerBtn.cloneNode(true);
-                triggerBtn.parentNode.replaceChild(newBtn, triggerBtn);
+                triggerBtn.parentNode?.replaceChild(newBtn, triggerBtn);
                 
                 newBtn.addEventListener("click", () => {
-                    if (typeof kofiWidgetOverlay !== "undefined") {
-                        // Buscar el botón flotante de Ko-fi en el DOM
-                        const kofiButton = document.querySelector('.kofi-widget-overlay-iframe') || document.querySelector('iframe[src*="ko-fi"]');
-                        if (kofiButton) {
-                            // Abrir directamente ya que no podemos hacer click dentro de un iframe cross-origin de forma segura
-                            window.open("https://ko-fi.com/ilsacolombia", "_blank");
-                        } else {
-                            window.open("https://ko-fi.com/ilsacolombia", "_blank");
-                        }
-                    } else {
-                        // Fallback: enlace directo
-                        window.open("https://ko-fi.com/ilsacolombia", "_blank");
+                    let url = "https://paypal.me/ilsacolombia";
+                    if (selectedAmount && !isNaN(Number(selectedAmount)) && Number(selectedAmount) > 0) {
+                        url += `/${selectedAmount}USD`;
                     }
+                    window.open(url, "_blank");
                 });
             }
         });
@@ -259,7 +234,8 @@ export const prerender = true;
             rgba(255, 255, 255, 0.3) 100%
         );
         box-shadow:
-            0 8px 32px 0 rgba(74, 125, 191, 0.1),
+            0 8px 32px 0 rgba(0, 112, 186, 0.1),
             inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
     }
 </style>
+

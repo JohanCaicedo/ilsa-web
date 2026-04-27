@@ -52,6 +52,13 @@
 
 ## Refactorizaciones y Cambios
 
+### Session 27/04/2026 - Integración de PayPal para Donaciones
+- **`donaciones.astro`**:
+    - **Plataforma de Pago**: Se reemplazó el widget de Ko-fi por una integración directa con PayPal (paypal.me).
+    - **UI Personalizada**: Se diseñó una nueva interfaz "Liquid Glass" que permite a los usuarios seleccionar montos predefinidos (10, 20, 50 USD) o ingresar un monto personalizado.
+    - **Registro de Donantes**: Se incluyeron mensajes informativos aclarando que PayPal comparte automáticamente el nombre y correo del donante con ILSA para facilitar el registro interno, sin necesidad de formularios adicionales.
+    - **Optimización JS**: El script de Astro maneja dinámicamente la construcción de la URL de PayPal en función del monto seleccionado por el usuario y abre una nueva pestaña.
+
 ### Session 13/04/2026 - Sistema Modular de Galerías y Automatización Multimedia
 - **Arquitectura de Galerías**:
     - Se construyó e implementó el **Sistema Modular de Galerías** para centralizar la gestión de lotes fotográficos.
