@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import GradientText from "../components/atoms/GradientText.astro";
 import LiquidContainer from "../components/experimental/LiquidContainer.astro";
+import PayPalDonation from "../components/molecules/PayPalDonation";
 
 export const prerender = true;
 ---
@@ -58,63 +59,14 @@ export const prerender = true;
                             </p>
                         </div>
 
-                        <!-- Amount selection -->
-                        <div class="grid grid-cols-3 gap-3 mb-4">
-                            <button type="button" class="amount-btn bg-white/60 hover:bg-white border border-slate-200 rounded-xl py-3 font-semibold text-slate-700 transition-all data-[active=true]:border-[#0070ba] data-[active=true]:bg-blue-50 data-[active=true]:text-[#0070ba] data-[active=true]:shadow-sm" data-amount="10">10 USD</button>
-                            <button type="button" class="amount-btn bg-white/60 hover:bg-white border border-slate-200 rounded-xl py-3 font-semibold text-slate-700 transition-all data-[active=true]:border-[#0070ba] data-[active=true]:bg-blue-50 data-[active=true]:text-[#0070ba] data-[active=true]:shadow-sm" data-amount="20">20 USD</button>
-                            <button type="button" class="amount-btn bg-white/60 hover:bg-white border border-slate-200 rounded-xl py-3 font-semibold text-slate-700 transition-all data-[active=true]:border-[#0070ba] data-[active=true]:bg-blue-50 data-[active=true]:text-[#0070ba] data-[active=true]:shadow-sm" data-amount="50">50 USD</button>
-                        </div>
-                        
-                        <div class="relative mb-6">
-                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-bold">$</span>
-                            <input type="number" id="custom-amount" placeholder="Otro monto" min="1" class="w-full bg-white/60 border border-slate-200 rounded-xl py-3 pl-8 pr-4 text-slate-700 font-semibold focus:outline-none focus:border-[#0070ba] focus:ring-1 focus:ring-[#0070ba] transition-all" />
-                            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-sm">USD</span>
-                        </div>
-
-                        <!-- PayPal Button -->
-                        <button
-                            id="paypal-trigger"
-                            class="w-full py-4 bg-[#0070ba] hover:bg-[#003087] text-white font-bold rounded-2xl shadow-xl shadow-[#0070ba]/20 hover:shadow-[#0070ba]/40 hover:-translate-y-1 transition-all flex items-center justify-center gap-3 group cursor-pointer"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class="group-hover:scale-110 transition-transform"
-                            >
-                                <path
-                                    d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
-                                ></path>
-                            </svg>
-                            Donar vía PayPal
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                height="20"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2.5"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class="group-hover:translate-x-1 transition-transform"
-                            >
-                                <path d="M5 12h14"></path>
-                                <path d="m12 5 7 7-7 7"></path>
-                            </svg>
-                        </button>
+                        <!-- PayPal React Island -->
+                        <PayPalDonation client:load />
                     </div>
 
                     <!-- Info Section -->
-                    <div class="mt-10 space-y-4">
+                    <div class="mt-10 space-y-4 animate-fade-in-up" style="animation-delay: 0.2s; animation-fill-mode: both;">
                         <div
-                            class="flex items-start gap-3 p-4 rounded-2xl bg-white/30 border border-white/20 backdrop-blur-sm"
+                            class="flex items-start gap-3 p-4 rounded-2xl bg-white/30 border border-white/20 backdrop-blur-sm transition-all duration-300 hover:bg-white/40 hover:-translate-y-1 hover:shadow-lg hover:border-white/40 group/card"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -126,7 +78,7 @@ export const prerender = true;
                                 stroke-width="2"
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
-                                class="text-[#0070ba] shrink-0 mt-0.5"
+                                class="text-[#0070ba] shrink-0 mt-0.5 transition-transform duration-300 group-hover/card:scale-110 group-hover/card:rotate-3"
                             >
                                 <path
                                     d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"
@@ -169,61 +121,6 @@ export const prerender = true;
         </LiquidContainer>
     </div>
 
-    <script>
-        document.addEventListener("astro:page-load", () => {
-            if (!window.location.pathname.includes('/donaciones')) return;
-
-            const triggerBtn = document.getElementById("paypal-trigger");
-            const amountBtns = document.querySelectorAll(".amount-btn");
-            const customAmountInput = document.getElementById("custom-amount") as HTMLInputElement;
-
-            let selectedAmount = "";
-
-            // Handle quick amount buttons
-            amountBtns.forEach(btn => {
-                btn.addEventListener("click", (e) => {
-                    const target = e.currentTarget as HTMLButtonElement;
-                    
-                    // Reset all buttons
-                    amountBtns.forEach(b => b.removeAttribute("data-active"));
-                    
-                    // Set active
-                    target.setAttribute("data-active", "true");
-                    selectedAmount = target.getAttribute("data-amount") || "";
-                    
-                    // Clear custom input
-                    if (customAmountInput) customAmountInput.value = "";
-                });
-            });
-
-            // Handle custom amount input
-            if (customAmountInput) {
-                customAmountInput.addEventListener("input", (e) => {
-                    const target = e.target as HTMLInputElement;
-                    selectedAmount = target.value;
-                    
-                    if (selectedAmount) {
-                        amountBtns.forEach(b => b.removeAttribute("data-active"));
-                    }
-                });
-            }
-
-            // Handle redirect
-            if (triggerBtn) {
-                // Remove previous listeners by cloning node (useful in View Transitions)
-                const newBtn = triggerBtn.cloneNode(true);
-                triggerBtn.parentNode?.replaceChild(newBtn, triggerBtn);
-                
-                newBtn.addEventListener("click", () => {
-                    let url = "https://paypal.me/ilsacolombia";
-                    if (selectedAmount && !isNaN(Number(selectedAmount)) && Number(selectedAmount) > 0) {
-                        url += `/${selectedAmount}USD`;
-                    }
-                    window.open(url, "_blank");
-                });
-            }
-        });
-    </script>
 </Layout>
 
 <style>
@@ -236,6 +133,43 @@ export const prerender = true;
         box-shadow:
             0 8px 32px 0 rgba(0, 112, 186, 0.1),
             inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+        animation: float 6s ease-in-out infinite, fade-in-up 0.8s ease-out;
+    }
+    
+    .glass-donation-box:hover {
+        transform: translateY(-4px);
+        box-shadow: 
+            0 15px 40px 0 rgba(0, 112, 186, 0.15),
+            inset 0 1px 0 0 rgba(255, 255, 255, 0.6);
+        animation-play-state: paused;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-8px); }
+        100% { transform: translateY(0px); }
+    }
+
+    @keyframes fade-in-up {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-fade-in-up {
+        animation: fade-in-up 0.8s ease-out;
+    }
+
+    @keyframes shimmer {
+        100% {
+            transform: translateX(100%);
+        }
     }
 </style>
 

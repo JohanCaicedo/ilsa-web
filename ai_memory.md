@@ -55,9 +55,10 @@
 ### Session 27/04/2026 - Integración de PayPal para Donaciones
 - **`donaciones.astro`**:
     - **Plataforma de Pago**: Se reemplazó el widget de Ko-fi por una integración directa con PayPal (paypal.me).
-    - **UI Personalizada**: Se diseñó una nueva interfaz "Liquid Glass" que permite a los usuarios seleccionar montos predefinidos (10, 20, 50 USD) o ingresar un monto personalizado.
-    - **Registro de Donantes**: Se incluyeron mensajes informativos aclarando que PayPal comparte automáticamente el nombre y correo del donante con ILSA para facilitar el registro interno, sin necesidad de formularios adicionales.
-    - **Optimización JS**: El script de Astro maneja dinámicamente la construcción de la URL de PayPal en función del monto seleccionado por el usuario y abre una nueva pestaña.
+    - **Tono Institucional**: Se reescribió el copy de la página para eliminar anglicismos ("incidencia política" en vez de "advocacy") y lenguajes emocionales/de caridad, adoptando un tono riguroso, académico e institucional acorde a la labor de ILSA.
+    - **Micro-interacciones UI**: Se añadieron animaciones de entrada (`fade-in-up`), levitación de contenedores (`float`), efecto de brillo (shimmer) continuo en el botón de pago y micro-transiciones suaves en tarjetas e inputs para potenciar la estética "Liquid Glass".
+- **`src/components/molecules/PayPalDonation.tsx` (Nueva Isla React)**:
+    - **Robustez de UI**: Se extrajo toda la lógica de selección de montos y el redireccionamiento a PayPal en un componente de React puro. Montado mediante `client:load` para garantizar la ejecución perfecta del código del lado del cliente, resolviendo problemas de hidratación cruzada con Astro View Transitions.
 
 ### Session 13/04/2026 - Sistema Modular de Galerías y Automatización Multimedia
 - **Arquitectura de Galerías**:
