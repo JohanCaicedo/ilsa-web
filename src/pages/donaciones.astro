@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import GradientText from "../components/atoms/GradientText.astro";
 import LiquidContainer from "../components/experimental/LiquidContainer.astro";
-import PayPalDonation from "../components/molecules/PayPalDonation";
+import DonationManager from "../components/molecules/DonationManager";
 
 export const prerender = true;
 ---
@@ -16,6 +16,9 @@ export const prerender = true;
     width="narrow"
 >
     <div class="relative text-center py-16 sm:py-24 px-4">
+        <!-- ePayco Script -->
+        <script is:inline src="https://checkout.epayco.co/checkout.js"></script>
+        
         <h1 class="sr-only">
             Donaciones a ILSA - Instituto Latinoamericano para una Sociedad y un Derecho Alternativos
         </h1>
@@ -52,15 +55,15 @@ export const prerender = true;
                             <h3
                                 class="text-xl font-bold text-slate-800 mb-2 uppercase tracking-wider text-center"
                             >
-                                Realizar donación
+                                Selecciona tu método
                             </h3>
                             <p class="text-sm text-slate-600 text-center">
-                                Selecciona o ingresa el monto de tu donación.
+                                Elige tu moneda y monto de contribución.
                             </p>
                         </div>
 
-                        <!-- PayPal React Island -->
-                        <PayPalDonation client:load />
+                        <!-- Dual Payment Manager React Island -->
+                        <DonationManager client:load />
                     </div>
 
                     <!-- Info Section -->
@@ -85,13 +88,13 @@ export const prerender = true;
                                 ></path>
                             </svg>
                             <div>
-                                <p
+                                <h4
                                     class="font-semibold text-slate-800 mb-1 text-left"
                                 >
                                     Transacción segura
-                                </p>
+                                </h4>
                                 <p class="text-sm text-slate-600 text-left">
-                                    Tu donación se procesa a través de la infraestructura global de PayPal, garantizando la seguridad y encriptación de tus datos financieros en todo momento.
+                                    Tu donación nacional se procesa a través de la infraestructura segura de <strong>ePayco</strong>. Las donaciones internacionales son gestionadas por <strong>PayPal</strong>, garantizando encriptación total en todo momento.
                                 </p>
                             </div>
                         </div>
@@ -99,21 +102,13 @@ export const prerender = true;
 
                     <!-- Footer Badge -->
                     <div
-                        class="mt-10 pt-8 border-t border-slate-300/30 flex justify-center gap-2 opacity-70"
+                        class="mt-10 pt-8 border-t border-slate-300/30 flex justify-center items-center gap-4 opacity-70"
                     >
                         <span
-                            class="text-xs font-medium uppercase tracking-widest text-slate-500 flex items-center gap-2"
+                            class="text-xs font-medium tracking-widest text-slate-500 flex items-center gap-2"
                         >
-                            <svg
-                                class="w-4 h-4"
-                                fill="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
-                                ></path>
-                            </svg>
-                            Powered by PayPal
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>
+                            ePayco & PayPal Secured
                         </span>
                     </div>
                 </div>
