@@ -7,6 +7,7 @@ import ColombiaMap from "../../components/organisms/ColombiaMap.astro";
 import Breadcrumbs from "../../components/atoms/Breadcrumbs.astro";
 import Button from "../../components/Button.astro";
 import GradientText from "../../components/atoms/GradientText.astro";
+import SmartImage from "../../components/atoms/SmartImage.astro";
 import { wpQuery } from "../../lib/wp";
 import { teamData, boardData, assemblyData } from "../../lib/team";
 import type { SeoData } from "../../lib/seo";
@@ -16,35 +17,35 @@ const heroImages = [
     "/images/gallery/Nosotros (6).webp",
     "/images/gallery/Nosotros (7).webp",
     "/images/gallery/Nosotros (12).webp",
-    "/images/gallery/Nosotros (14).webp"
+    "/images/gallery/Nosotros (14).webp",
 ];
 
 const geoImages = [
     "/images/gallery/HomeGalery (1).webp",
     "/images/gallery/Nosotros (1).webp",
     "/images/gallery/Nosotros (8).webp",
-    "/images/gallery/Nosotros (15).webp"
+    "/images/gallery/Nosotros (15).webp",
 ];
 
 const missionImages = [
     "/images/gallery/HomeGalery (2).webp",
     "/images/gallery/Nosotros (2).webp",
     "/images/gallery/Nosotros (9).webp",
-    "/images/gallery/HomeGalery (6).webp"
+    "/images/gallery/HomeGalery (6).webp",
 ];
 
 const visionImages = [
     "/images/gallery/HomeGalery (3).webp",
     "/images/gallery/Nosotros (3).webp",
     "/images/gallery/Nosotros (10).webp",
-    "/images/gallery/Nosotros (13).webp"
+    "/images/gallery/Nosotros (13).webp",
 ];
 
 const camposImages = [
     "/images/gallery/HomeGalery (4).webp",
     "/images/gallery/HomeGalery (5).webp",
     "/images/gallery/Nosotros (4).webp",
-    "/images/gallery/Nosotros (11).webp"
+    "/images/gallery/Nosotros (11).webp",
 ];
 
 export const prerender = true;
@@ -80,7 +81,9 @@ const seoData: SeoData = data?.page?.seo;
 ---
 
 <Layout seo={seoData} breadcrumbs={breadcrumbItems}>
-    <div class="relative min-h-screen text-[#3d3d47] overflow-hidden overflow-x-hidden font-sans">
+    <div
+        class="relative min-h-screen text-[#3d3d47] overflow-hidden overflow-x-hidden font-sans"
+    >
         <!-- Global Atmosphere Gradients (Cool & Clean) -->
         <div class="fixed top-0 left-0 w-full h-full pointer-events-none z-0">
             <!-- Enhanced Blue/Coolness -->
@@ -129,11 +132,12 @@ const seoData: SeoData = data?.page?.seo;
 
                 <!-- Lead -->
                 <p
-                    class="text-xl md:text-2xl text-[#3d3d47]/80 max-w-3xl mx-auto leading-relaxed mb-12 text-pretty"
+                    class="text-md md:text-lg text-[#3d3d47]/80 max-w-3xl mx-auto leading-relaxed mb-12 text-pretty"
                 >
-                    Promovemos una visión crítica del derecho y la
-                    transformación social en América Latina, reconociendo la
-                    naturaleza como sujeto de derechos.
+                    Organización no gubernamental creada bajo la convicción de
+                    que el derecho puede y debe ser una herramienta para
+                    impulsar transformaciones sociales y afianzar la justicia en
+                    América Latina y el Caribe.
                 </p>
 
                 <!-- Hero Image -->
@@ -144,18 +148,20 @@ const seoData: SeoData = data?.page?.seo;
                         class="absolute inset-0 bg-gradient-to-t from-[#183069]/60 to-[#4e7cce]/20 mix-blend-multiply z-10 pointer-events-none"
                     >
                     </div>
-                    {heroImages.map((src, index) => (
-                        <img
-                            src={src}
-                            alt="Territorio y Naturaleza"
-                            width="1200"
-                            height="500"
-                            class={`absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 ${index === 0 ? 'opacity-100' : 'opacity-0'}`}
-                            data-slider-image
-                            fetchpriority={index === 0 ? 'high' : 'auto'}
-                            loading={index === 0 ? 'eager' : 'lazy'}
-                        />
-                    ))}
+                    {
+                        heroImages.map((src, index) => (
+                            <img
+                                src={src}
+                                alt="Territorio y Naturaleza"
+                                width="1200"
+                                height="500"
+                                class={`absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 ${index === 0 ? "opacity-100" : "opacity-0"}`}
+                                data-slider-image
+                                fetchpriority={index === 0 ? "high" : "auto"}
+                                loading={index === 0 ? "eager" : "lazy"}
+                            />
+                        ))
+                    }
                 </auto-slider>
 
                 <!-- Feature Grid -->
@@ -184,9 +190,10 @@ const seoData: SeoData = data?.page?.seo;
                             Trayectoria Regional
                         </h3>
                         <p class="text-[#3d3d47]/70 text-sm leading-relaxed">
-                            Desde Bogotá para toda América Latina, consolidando
-                            una experiencia histórica en investigación y acción
-                            política.
+                            Con domicilio principal en Bogotá y un profundo
+                            arraigo en América Latina y el Caribe, consolidamos
+                            una experiencia histórica en investigación
+                            sociopolítica.
                         </p>
                     </div>
 
@@ -211,11 +218,12 @@ const seoData: SeoData = data?.page?.seo;
                             >
                         </div>
                         <h3 class="text-xl font-bold text-[#3d3d47] mb-3">
-                            Praxis Emancipatoria
+                            Servicio Jurídico Crítico
                         </h3>
                         <p class="text-[#3d3d47]/70 text-sm leading-relaxed">
-                            Trabajamos junto a movimientos sociales,
-                            organizaciones de mujeres, campesinas e indígenas.
+                            Desplegamos una praxis emancipatoria mediante
+                            labores pedagógicas y el acompañamiento organizativo
+                            a sectores populares.
                         </p>
                     </div>
 
@@ -240,11 +248,12 @@ const seoData: SeoData = data?.page?.seo;
                             >
                         </div>
                         <h3 class="text-xl font-bold text-[#3d3d47] mb-3">
-                            Enfoque Integral
+                            Ecología de Saberes
                         </h3>
                         <p class="text-[#3d3d47]/70 text-sm leading-relaxed">
-                            Derechos económicos, socioambientales y de la
-                            naturaleza, con enfoques diferenciales.
+                            Articulamos las ciencias sociales y diversas áreas
+                            del saber para abordar de manera inter, multi y
+                            transdisciplinar los fenómenos sociales complejos.
                         </p>
                     </div>
                 </div>
@@ -256,6 +265,270 @@ const seoData: SeoData = data?.page?.seo;
             >
             </div>
 
+            <!-- HISTORIA INSTITUCIONAL VERBATIM -->
+            <section
+                class="mb-24 max-w-7xl mx-auto px-6 lg:px-8 scroll-mt-32 relative"
+                id="nuestra-historia"
+            >
+                <!-- Decorative background glow -->
+                <div
+                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-tr from-[#4e7cce]/5 to-[#5e3b69]/5 rounded-full blur-[100px] pointer-events-none -z-10"
+                >
+                </div>
+
+                <div class="text-center mb-16">
+                    <p
+                        class="text-[#4e7cce] font-bold text-sm tracking-widest uppercase mb-2"
+                    >
+                        Memoria y Trayectoria
+                    </p>
+                    <h2
+                        class="text-4xl text-center md:text-5xl font-bold text-[#3d3d47] mb-6"
+                    >
+                        Historia Institucional
+                    </h2>
+                    <div
+                        class="w-24 h-1 bg-gradient-to-r from-[#4e7cce] to-[#5e3b69] mx-auto rounded-full"
+                    >
+                    </div>
+                </div>
+
+                <div class="space-y-12 lg:space-y-16 relative z-10">
+                    <!-- BLOQUE 1: ORIGENES -->
+                    <div
+                        class="flex flex-col lg:flex-row items-center gap-10 lg:gap-16"
+                    >
+                        <div
+                            class="w-full lg:w-5/12 shrink-0 order-2 lg:order-1"
+                        >
+                            <!-- Fotografía Orígenes 1978 -->
+                            <div
+                                class="w-full aspect-[4/3] bg-white/30 backdrop-blur-2xl border border-white/50 rounded-[2.5rem] shadow-xl shadow-[#4e7cce]/5 relative overflow-hidden group"
+                            >
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-br from-[#4e7cce]/20 to-transparent mix-blend-multiply z-10 pointer-events-none opacity-40 group-hover:opacity-10 transition-opacity duration-500"
+                                >
+                                </div>
+                                <SmartImage 
+                                    src="/images/multimedia-galeria/visita-chita-julio/visita-chita-julio-34.webp" 
+                                    alt="Orígenes de ILSA" 
+                                    class="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000"
+                                />
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-7/12 order-1 lg:order-2">
+                            <div class="inline-flex items-center gap-4 mb-5">
+                                <span
+                                    class="flex items-center justify-center w-12 h-12 rounded-2xl bg-[#4e7cce]/10 text-[#4e7cce] font-bold text-xl border border-[#4e7cce]/20 shadow-sm"
+                                    >01</span
+                                >
+                                <h3 class="text-2xl font-bold text-[#3d3d47]">
+                                    Surgimiento y Fundamentos
+                                </h3>
+                            </div>
+                            <div
+                                class="p-6 md:p-8 rounded-[2rem] bg-white/40 backdrop-blur-xl border border-white/60 shadow-lg shadow-slate-200/50 hover:bg-white/60 transition-colors duration-500 relative"
+                            >
+                                <div
+                                    class="absolute top-0 left-8 w-12 h-1 bg-[#4e7cce] rounded-b-full"
+                                >
+                                </div>
+                                <p
+                                    class="text-[#3d3d47]/80 text-base leading-relaxed text-pretty"
+                                >
+                                    El Instituto Latinoamericano para una
+                                    Sociedad y un Derecho Alternativos (ILSA) es
+                                    una organización no gubernamental creada en
+                                    1978 bajo el auspicio del Comité Jurídico
+                                    Interamericano (IJC), principal órgano
+                                    jurídico de la Organización de Estados
+                                    Americanos (OEA), a partir de la convicción
+                                    de que el derecho puede y debe ser una
+                                    herramienta para impulsar transformaciones
+                                    sociales y ampliar el acceso a la justicia
+                                    para los sectores populares en América
+                                    Latina y el Caribe. Su surgimiento estuvo
+                                    marcado por el encuentro entre corrientes
+                                    críticas del movimiento Derecho y Desarrollo
+                                    y diversas experiencias latinoamericanas de
+                                    asistencia jurídica popular.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BLOQUE 2: CONSOLIDACION -->
+                    <div
+                        class="flex flex-col lg:flex-row items-center gap-10 lg:gap-16"
+                    >
+                        <div class="w-full lg:w-7/12">
+                            <div class="inline-flex items-center gap-4 mb-5">
+                                <span
+                                    class="flex items-center justify-center w-12 h-12 rounded-2xl bg-[#5e3b69]/10 text-[#5e3b69] font-bold text-xl border border-[#5e3b69]/20 shadow-sm"
+                                    >02</span
+                                >
+                                <h3 class="text-2xl font-bold text-[#3d3d47]">
+                                    Consolidación Institucional
+                                </h3>
+                            </div>
+                            <div
+                                class="p-6 md:p-8 rounded-[2rem] bg-white/40 backdrop-blur-xl border border-white/60 shadow-lg shadow-slate-200/50 hover:bg-white/60 transition-colors duration-500 relative"
+                            >
+                                <div
+                                    class="absolute top-0 left-8 w-12 h-1 bg-[#5e3b69] rounded-b-full"
+                                >
+                                </div>
+                                <p
+                                    class="text-[#3d3d47]/80 text-base leading-relaxed text-pretty"
+                                >
+                                    Durante la década de 1980, ILSA profundizó
+                                    un desplazamiento hacia enfoques como el uso
+                                    alternativo del derecho, los servicios
+                                    legales innovadores y el servicio jurídico
+                                    crítico, buscando romper con concepciones
+                                    tradicionales de la práctica jurídica. En
+                                    1985 obtuvo personería jurídica en Colombia
+                                    y estableció su sede principal en Bogotá,
+                                    manteniendo su proyección regional.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-5/12 shrink-0">
+                            <!-- Fotografía Consolidación -->
+                            <div
+                                class="w-full aspect-[4/3] bg-white/30 backdrop-blur-2xl border border-white/50 rounded-[2.5rem] shadow-xl shadow-[#5e3b69]/5 relative overflow-hidden group"
+                            >
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-bl from-[#5e3b69]/20 to-transparent mix-blend-multiply z-10 pointer-events-none opacity-40 group-hover:opacity-10 transition-opacity duration-500"
+                                >
+                                </div>
+                                <SmartImage 
+                                    src="/images/multimedia-galeria/mercado-campesino-sep-2005/mercado-campesino-sep-2005-1.webp" 
+                                    alt="Consolidación Institucional" 
+                                    class="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BLOQUE 3: PRACTICA CRITICA -->
+                    <div
+                        class="flex flex-col lg:flex-row items-center gap-10 lg:gap-16"
+                    >
+                        <div
+                            class="w-full lg:w-5/12 shrink-0 order-2 lg:order-1"
+                        >
+                            <!-- Fotografía de Territorio -->
+                            <div
+                                class="w-full aspect-[4/3] bg-white/30 backdrop-blur-2xl border border-white/50 rounded-[2.5rem] shadow-xl shadow-[#e9b384]/5 relative overflow-hidden group"
+                            >
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-tr from-[#e9b384]/20 to-transparent mix-blend-multiply z-10 pointer-events-none opacity-40 group-hover:opacity-10 transition-opacity duration-500"
+                                >
+                                </div>
+                                <SmartImage 
+                                    src="/images/evento-cartagena/evento-cartagena (18).jpg" 
+                                    alt="Práctica Crítica y Despliegue en Territorio" 
+                                    class="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000"
+                                />
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-7/12 order-1 lg:order-2">
+                            <div class="inline-flex items-center gap-4 mb-5">
+                                <span
+                                    class="flex items-center justify-center w-12 h-12 rounded-2xl bg-[#e9b384]/20 text-[#e9b384] font-bold text-xl border border-[#e9b384]/30 shadow-sm"
+                                    >03</span
+                                >
+                                <h3 class="text-2xl font-bold text-[#3d3d47]">
+                                    Práctica Crítica y Despliegue
+                                </h3>
+                            </div>
+                            <div
+                                class="p-6 md:p-8 rounded-[2rem] bg-white/40 backdrop-blur-xl border border-white/60 shadow-lg shadow-slate-200/50 hover:bg-white/60 transition-colors duration-500 relative"
+                            >
+                                <div
+                                    class="absolute top-0 left-8 w-12 h-1 bg-[#e9b384] rounded-b-full"
+                                >
+                                </div>
+                                <p
+                                    class="text-[#3d3d47]/80 text-base leading-relaxed text-pretty"
+                                >
+                                    Desde entonces, ILSA ha promovido una
+                                    práctica crítica del derecho y una
+                                    concepción integral de los derechos humanos
+                                    mediante labores pedagógicas, acompañamiento
+                                    jurídico y fortalecimiento organizativo
+                                    junto a asociaciones campesinas, pueblos
+                                    indígenas, comunidades negras, procesos de
+                                    mujeres, víctimas del conflicto y población
+                                    firmante de paz, entre otros sectores
+                                    sociales. Su trabajo se ha desplegado en
+                                    distintas regiones de Colombia —como el
+                                    Ariari, la costa Pacífica caucana, el páramo
+                                    de Pisba, el Urabá antioqueño, los Montes de
+                                    María y la Amazonia— y, a nivel regional, a
+                                    través de redes y plataformas como Consejo
+                                    Latinoamericano de Ciencias Sociales y la
+                                    Comunidad Latinoamericana de Empoderamiento
+                                    Jurídico, desde donde impulsa iniciativas
+                                    sobre acceso a la justicia y fortalecimiento
+                                    de agendas jurídicas emancipadoras en
+                                    América Latina.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BLOQUE 4: CAMPOS DE ACCION -->
+                    <div
+                        class="flex flex-col lg:flex-row items-center gap-10 lg:gap-16"
+                    >
+                        <div class="w-full">
+                            <div class="inline-flex items-center gap-4 mb-5">
+                                <span
+                                    class="flex items-center justify-center w-12 h-12 rounded-2xl bg-slate-200 text-slate-600 font-bold text-xl border border-slate-300 shadow-sm"
+                                    >04</span
+                                >
+                                <h3 class="text-2xl font-bold text-[#3d3d47]">
+                                    Plan Estratégico 2025-2027
+                                </h3>
+                            </div>
+                            <div
+                                class="p-6 md:p-8 rounded-[2rem] bg-white/40 backdrop-blur-xl border border-white/60 shadow-lg shadow-slate-200/50 hover:bg-white/60 transition-colors duration-500 relative"
+                            >
+                                <div
+                                    class="absolute top-0 left-8 w-12 h-1 bg-slate-400 rounded-b-full"
+                                >
+                                </div>
+                                <p
+                                    class="text-[#3d3d47]/80 text-base leading-relaxed text-pretty"
+                                >
+                                    ILSA definió para el periodo 2025-2027 los
+                                    siguientes cuatro campos de acción:
+                                    Conflicto interno y política de paz:
+                                    derechos de las víctimas, acuerdos y
+                                    justicia transicional; Producción del
+                                    territorio y conflictividades.
+                                    Territorialidades del capital y
+                                    alternativas; Democracias contemporáneas,
+                                    luchas sociales y derechos humanos; y
+                                    Género, derechos de las mujeres y
+                                    diversidades; los cuales adelanta a través
+                                    de acciones de (i) servicio legal y asesoría
+                                    sociojurídica; (ii) advocacy e incidencia
+                                    política; (iii) ecología de saberes,
+                                    educación jurídica popular y empoderamiento
+                                    legal; (iv) investigación y producción de
+                                    conocimiento; (v) alianzas estratégicas y
+                                    trabajo en red; (vi) comunicaciones, opinión
+                                    pública y publicaciones.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- GEO PRESENCE -->
             <section class="max-w-7xl mx-auto mb-24 text-center">
                 <h2 class="text-3xl font-bold text-[#3d3d47] mb-8 text-center">
@@ -266,10 +539,15 @@ const seoData: SeoData = data?.page?.seo;
                     <!-- Mapa + texto (centrado, 2/3 del ancho) -->
                     <div class="w-full md:w-2/3 flex flex-col gap-4">
                         <ColombiaMap />
-                        <p class="text-[#3d3d47]/70 italic text-sm leading-relaxed">
-                            Meta (Ariari) · Cauca (Costa Pacífica) · Boyacá (Páramo de Pisba) ·
-                            Antioquia (Urabá) · Santander (Provincia de Vélez) · Nariño (Laguna de La Cocha) ·
-                            Amazonas (Leticia) · Bolívar y Sucre (Montes de María) · San Andrés y Providencia.
+                        <p
+                            class="text-[#3d3d47]/70 italic text-sm leading-relaxed"
+                        >
+                            Despliegue de trabajo situado y adaptado
+                            culturalmente en el Ariari (Meta), Costa Pacífica
+                            (Cauca), Páramo de Pisba (Boyacá), Urabá
+                            (Antioquia), Provincia de Vélez (Santander), Laguna
+                            de La Cocha (Nariño), Trapecio Amazónico, Montes de
+                            María y el Archipiélago.
                         </p>
                     </div>
 
@@ -281,18 +559,22 @@ const seoData: SeoData = data?.page?.seo;
                             class="absolute inset-0 bg-[#4e7cce]/30 z-10 mix-blend-multiply pointer-events-none"
                         >
                         </div>
-                        <div class="absolute inset-0 opacity-80 group-hover:opacity-100 transition-opacity duration-500">
-                            {geoImages.map((src, index) => (
-                                <img
-                                    src={src}
-                                    alt="Ubicación Geográfica ILSA"
-                                    width="1200"
-                                    height="500"
-                                    class={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${index === 0 ? 'opacity-100' : 'opacity-0'}`}
-                                    data-slider-image
-                                    loading="lazy"
-                                />
-                            ))}
+                        <div
+                            class="absolute inset-0 opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+                        >
+                            {
+                                geoImages.map((src, index) => (
+                                    <img
+                                        src={src}
+                                        alt="Ubicación Geográfica ILSA"
+                                        width="1200"
+                                        height="500"
+                                        class={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${index === 0 ? "opacity-100" : "opacity-0"}`}
+                                        data-slider-image
+                                        loading="lazy"
+                                    />
+                                ))
+                            }
                         </div>
                     </auto-slider>
                 </div>
@@ -314,22 +596,28 @@ const seoData: SeoData = data?.page?.seo;
                     <p
                         class="text-lg text-[#3d3d47] leading-relaxed mb-6 font-medium"
                     >
-                        Transformación de relaciones sociales en perspectiva
-                        emancipadora.
+                        Promover una práctica crítica del derecho desde el
+                        horizonte de los servicios legales alternativos.
                     </p>
                     <div
                         class="space-y-4 text-[#3d3d47]/80 leading-relaxed text-pretty"
                     >
                         <p>
-                            ILSA contribuye con un enfoque alternativo y crítico
-                            del derecho. Articula pensamiento jurídico crítico,
-                            derecho nacido de las prácticas sociales y formación
-                            crítica.
+                            ILSA se constituye como un centro de
+                            investigación-acción orientado a consolidar una
+                            concepción integral de los derechos humanos.
+                            Buscamos romper con las lógicas tradicionales de la
+                            práctica jurídica, articulando el pensamiento
+                            crítico con la acción sociopolítica de los sectores
+                            populares.
                         </p>
                         <p>
-                            Promueve sujetos democráticos capaces de construir
-                            sociedad con justicia social, en armonía con la
-                            naturaleza.
+                            A través del servicio jurídico crítico y la
+                            educación jurídica popular, contribuimos en la
+                            construcción de procesos de exigibilidad para
+                            asociaciones campesinas, pueblos indígenas,
+                            comunidades afro, procesos de mujeres y población
+                            firmante de paz.
                         </p>
                     </div>
                 </div>
@@ -342,17 +630,19 @@ const seoData: SeoData = data?.page?.seo;
                         class="absolute inset-0 bg-gradient-to-tr from-[#4e7cce]/40 to-[#4e7cce]/10 mix-blend-multiply z-10 pointer-events-none"
                     >
                     </div>
-                    {missionImages.map((src, index) => (
-                        <img
-                            src={src}
-                            alt="Trabajo comunitario de ILSA con movimientos sociales"
-                            width="800"
-                            height="450"
-                            class={`absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 ${index === 0 ? 'opacity-100' : 'opacity-0'}`}
-                            data-slider-image
-                            loading="lazy"
-                        />
-                    ))}
+                    {
+                        missionImages.map((src, index) => (
+                            <img
+                                src={src}
+                                alt="Trabajo comunitario de ILSA con movimientos sociales"
+                                width="800"
+                                height="450"
+                                class={`absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 ${index === 0 ? "opacity-100" : "opacity-0"}`}
+                                data-slider-image
+                                loading="lazy"
+                            />
+                        ))
+                    }
                 </auto-slider>
 
                 <!-- Vision Image -->
@@ -363,17 +653,19 @@ const seoData: SeoData = data?.page?.seo;
                         class="absolute inset-0 bg-gradient-to-bl from-[#5e3b69]/40 to-[#4e7cce]/20 mix-blend-multiply z-10 pointer-events-none"
                     >
                     </div>
-                    {visionImages.map((src, index) => (
-                        <img
-                            src={src}
-                            alt="Territorios y comunidades que defiende ILSA"
-                            width="800"
-                            height="450"
-                            class={`absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 ${index === 0 ? 'opacity-100' : 'opacity-0'}`}
-                            data-slider-image
-                            loading="lazy"
-                        />
-                    ))}
+                    {
+                        visionImages.map((src, index) => (
+                            <img
+                                src={src}
+                                alt="Territorios y comunidades que defiende ILSA"
+                                width="800"
+                                height="450"
+                                class={`absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 ${index === 0 ? "opacity-100" : "opacity-0"}`}
+                                data-slider-image
+                                loading="lazy"
+                            />
+                        ))
+                    }
                 </auto-slider>
 
                 <!-- Vision Content -->
@@ -390,21 +682,25 @@ const seoData: SeoData = data?.page?.seo;
                     <p
                         class="text-lg text-[#3d3d47] leading-relaxed mb-6 font-medium"
                     >
-                        Horizonte político de defensa y promoción integral.
+                        Consolidar una plataforma para el empoderamiento
+                        jurídico regional.
                     </p>
                     <div
                         class="space-y-4 text-[#3d3d47]/80 leading-relaxed text-pretty"
                     >
                         <p>
-                            ILSA será referente en la Región y Colombia por sus
-                            contribuciones teóricas y prácticas desde el derecho
-                            alternativo.
+                            ILSA se proyecta como un referente ineludible en
+                            América Latina por sus aportes en investigación
+                            social y su contribución al pluralismo jurídico,
+                            ofreciendo marcos analíticos para enfrentar la
+                            complejidad de los retos políticos contemporáneos.
                         </p>
                         <p>
-                            Reconocida por su compromiso con el campesinado,
-                            mujeres, comunidades afro y pueblos indígenas en
-                            defensa de los territorios y distribución equitativa
-                            de la tierra.
+                            Aspiramos a profundizar nuestra articulación en el
+                            acompañamiento a las luchas sociales, afianzando la
+                            defensa por la vida, el reconocimiento de las
+                            territorialidades y la justicia socioclimática
+                            frente a las dinámicas del capital.
                         </p>
                     </div>
                 </div>
@@ -423,17 +719,19 @@ const seoData: SeoData = data?.page?.seo;
                                 class="absolute inset-0 bg-[#4e7cce]/30 mix-blend-multiply group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none"
                             >
                             </div>
-                            {camposImages.map((src, index) => (
-                                <img
-                                    src={src}
-                                    alt="Campos de acción e intervención territorial de ILSA"
-                                    width="800"
-                                    height="900"
-                                    class={`absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 ${index === 0 ? 'opacity-100' : 'opacity-0'}`}
-                                    data-slider-image
-                                    loading="lazy"
-                                />
-                            ))}
+                            {
+                                camposImages.map((src, index) => (
+                                    <img
+                                        src={src}
+                                        alt="Campos de acción e intervención territorial de ILSA"
+                                        width="800"
+                                        height="900"
+                                        class={`absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 ${index === 0 ? "opacity-100" : "opacity-0"}`}
+                                        data-slider-image
+                                        loading="lazy"
+                                    />
+                                ))
+                            }
                         </auto-slider>
                     </div>
 
@@ -442,69 +740,74 @@ const seoData: SeoData = data?.page?.seo;
                         <p
                             class="text-[#4e7cce] font-bold text-sm tracking-widest uppercase mb-2"
                         >
-                            Nuestros Ejes
+                            Horizontes de Trabajo
                         </p>
                         <h2
                             class="text-3xl md:text-4xl font-bold text-[#3d3d47] mb-6"
                         >
-                            Campos de Acción
+                            Campos de Acción Institucional
                         </h2>
                         <p
                             class="text-[#3d3d47]/70 text-base leading-relaxed mb-8"
                         >
-                            Estructuramos nuestras intervenciones en ejes
-                            fundamentales para abordar la complejidad de los
-                            derechos humanos y la justicia social en la región.
+                            Para el periodo actual, el trabajo de ILSA se ha
+                            configurado alrededor de cuatro campos fundamentales
+                            que guían nuestras intervenciones y programas
+                            misionales para responder a la complejidad de los
+                            conflictos socioterritoriales.
                         </p>
 
                         <!-- Accordion Items -->
                         <div class="space-y-3">
                             <AccordionItem
                                 variant="light"
-                                title="Conflicto interno y construcción de paz"
+                                title="Conflicto interno y política de paz"
                                 isOpen={true}
                             >
                                 <p
                                     class="mb-4 text-[#3d3d47] text-sm leading-relaxed"
                                 >
-                                    <strong>Enfoque:</strong> Derechos humanos, políticas
-                                    de seguridad, derecho transicional y garantías
-                                    de no repetición.
+                                    <strong>Líneas:</strong> Derechos de las víctimas
+                                    a la verdad, justicia y reparación, negociaciones
+                                    e implementación de acuerdos, y territorios de
+                                    paz.
                                 </p>
                             </AccordionItem>
                             <AccordionItem
                                 variant="light"
-                                title="Producción del territorio y conflictividades"
+                                title="Producción del territorio y territorialidades"
                             >
                                 <p
                                     class="mb-4 text-[#3d3d47] text-sm leading-relaxed"
                                 >
-                                    <strong>Enfoque:</strong> Resistencias, alternativas
-                                    al desarrollo y conflictos socioambientales (territorialidades
-                                    del capital).
+                                    <strong>Líneas:</strong> Conflictos socioambientales
+                                    corporativos, Derechos de la Naturaleza, agroecología
+                                    y disputas frente a las territorialidades del
+                                    capital.
                                 </p>
                             </AccordionItem>
                             <AccordionItem
                                 variant="light"
-                                title="Perspectivas críticas sobre DDHH"
+                                title="Democracias contemporáneas y luchas sociales"
                             >
                                 <p
                                     class="mb-4 text-[#3d3d47] text-sm leading-relaxed"
                                 >
-                                    <strong>Enfoque:</strong> Políticas públicas inclusivas,
-                                    participación incidente y nuevos paradigmas jurídicos.
+                                    <strong>Líneas:</strong> Sujetos de especial protección,
+                                    configuraciones del Estado, criminalización de
+                                    la protesta y movilización popular.
                                 </p>
                             </AccordionItem>
                             <AccordionItem
                                 variant="light"
-                                title="Género y derechos de las mujeres"
+                                title="Género, derechos de las mujeres y diversidades"
                             >
                                 <p
                                     class="mb-4 text-[#3d3d47] text-sm leading-relaxed"
                                 >
-                                    <strong>Enfoque:</strong> Acceso a la justicia,
-                                    economía del cuidado y participación política
-                                    de las mujeres.
+                                    <strong>Líneas:</strong> Participación política
+                                    paritaria, economía de los cuidados y la intersección
+                                    crítica entre mujeres, diversidades y justicia.
                                 </p>
                             </AccordionItem>
                         </div>
@@ -515,150 +818,324 @@ const seoData: SeoData = data?.page?.seo;
             <!-- DIRECCION EJECUTIVA SECTION -->
             <section class="max-w-7xl mx-auto mb-24">
                 <div class="text-center mb-12">
-                    <h2 class="text-4xl font-bold text-center text-[#3d3d47] mb-4 mx-auto" id="direccion-ejecutiva">
+                    <h2
+                        class="text-4xl font-bold text-center text-[#3d3d47] mb-4 mx-auto"
+                        id="direccion-ejecutiva"
+                    >
                         Dirección Ejecutiva
                     </h2>
-                    <div class="w-16 h-1 bg-[#4e7cce] mx-auto rounded-full"></div>
+                    <div class="w-16 h-1 bg-[#4e7cce] mx-auto rounded-full">
+                    </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                    {teamData.map((member, index) => (
-                        <div
-                            class={`interactive-card relative group rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl cursor-pointer h-[400px] md:h-[450px] w-full focus-visible:ring-2 focus-visible:ring-[#4e7cce] focus-visible:ring-offset-2 outline-none ${index === 0 ? 'ring-2 ring-white/40 shadow-[#4e7cce]/20' : ''}`}
-                            data-team-id={member.id} tabindex="0" role="button"
-                        >
-                            <img class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110" src={member.image} alt={member.name} width="400" height="450" loading="lazy" />
-                            
-                            {/* Insignia elegante "Liquid Glass" exclusiva para la Dirección Ejecutiva */}
-                            {index === 0 && (
-                                <div class="absolute top-4 right-4 z-20 bg-white/20 backdrop-blur-md border border-white/40 rounded-full p-2.5 shadow-lg group-hover:bg-white/30 transition-colors duration-300 pointer-events-none">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" class="drop-shadow-[0_0_8px_rgba(250,204,21,0.6)]">
-                                        <defs>
-                                            <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                                <stop offset="0%" stop-color="#FEF08A" />
-                                                <stop offset="40%" stop-color="#F59E0B" />
-                                                <stop offset="100%" stop-color="#A16207" />
-                                            </linearGradient>
-                                        </defs>
-                                        <polygon fill="url(#gold-grad)" stroke="#FEF08A" stroke-width="1.5" stroke-linejoin="round" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                    </svg>
-                                </div>
-                            )}
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"
+                >
+                    {
+                        teamData.map((member, index) => (
+                            <div
+                                class={`interactive-card relative group rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl cursor-pointer h-[400px] md:h-[450px] w-full focus-visible:ring-2 focus-visible:ring-[#4e7cce] focus-visible:ring-offset-2 outline-none ${index === 0 ? "ring-2 ring-white/40 shadow-[#4e7cce]/20" : ""}`}
+                                data-team-id={member.id}
+                                tabindex="0"
+                                role="button"
+                            >
+                                <img
+                                    class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
+                                    src={member.image}
+                                    alt={member.name}
+                                    width="400"
+                                    height="450"
+                                    loading="lazy"
+                                />
 
-                            <div class={`absolute inset-0 bg-gradient-to-t opacity-90 transition-opacity duration-300 ${index === 0 ? 'from-[#0b1b42] via-[#102352]/50 to-transparent' : 'from-[#183069] via-[#183069]/40 to-transparent'}`}></div>
-                            <div class="absolute inset-0 flex flex-col justify-end p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                <p class={`font-bold text-xs tracking-widest uppercase mb-1 opacity-80 group-hover:opacity-100 text-center shrink-0 ${index === 0 ? 'text-[#a1c4ff]' : 'text-[#efefef]'}`}>{member.role}</p>
-                                <div class="h-14 md:h-16 flex items-center justify-center w-full mb-2 shrink-0">
-                                    <h3 class={`font-bold text-center text-white leading-tight drop-shadow-md ${member.name.length > 20 ? 'text-lg md:text-xl' : 'text-xl md:text-2xl'}`}>{member.name}</h3>
-                                </div>
-                                <div class="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100 text-center">
-                                    <p class="text-slate-300 text-sm mt-2">{member.bio || ""}</p>
+                                {/* Insignia elegante "Liquid Glass" exclusiva para la Dirección Ejecutiva */}
+                                {index === 0 && (
+                                    <div class="absolute top-4 right-4 z-20 bg-white/20 backdrop-blur-md border border-white/40 rounded-full p-2.5 shadow-lg group-hover:bg-white/30 transition-colors duration-300 pointer-events-none">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="18"
+                                            height="18"
+                                            viewBox="0 0 24 24"
+                                            class="drop-shadow-[0_0_8px_rgba(250,204,21,0.6)]"
+                                        >
+                                            <defs>
+                                                <linearGradient
+                                                    id="gold-grad"
+                                                    x1="0%"
+                                                    y1="0%"
+                                                    x2="100%"
+                                                    y2="100%"
+                                                >
+                                                    <stop
+                                                        offset="0%"
+                                                        stop-color="#FEF08A"
+                                                    />
+                                                    <stop
+                                                        offset="40%"
+                                                        stop-color="#F59E0B"
+                                                    />
+                                                    <stop
+                                                        offset="100%"
+                                                        stop-color="#A16207"
+                                                    />
+                                                </linearGradient>
+                                            </defs>
+                                            <polygon
+                                                fill="url(#gold-grad)"
+                                                stroke="#FEF08A"
+                                                stroke-width="1.5"
+                                                stroke-linejoin="round"
+                                                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                                            />
+                                        </svg>
+                                    </div>
+                                )}
+
+                                <div
+                                    class={`absolute inset-0 bg-gradient-to-t opacity-90 transition-opacity duration-300 ${index === 0 ? "from-[#0b1b42] via-[#102352]/50 to-transparent" : "from-[#183069] via-[#183069]/40 to-transparent"}`}
+                                />
+                                <div class="absolute inset-0 flex flex-col justify-end p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                    <p
+                                        class={`font-bold text-xs tracking-widest uppercase mb-1 opacity-80 group-hover:opacity-100 text-center shrink-0 ${index === 0 ? "text-[#a1c4ff]" : "text-[#efefef]"}`}
+                                    >
+                                        {member.role}
+                                    </p>
+                                    <div class="h-14 md:h-16 flex items-center justify-center w-full mb-2 shrink-0">
+                                        <h3
+                                            class={`font-bold text-center text-white leading-tight drop-shadow-md ${member.name.length > 20 ? "text-lg md:text-xl" : "text-xl md:text-2xl"}`}
+                                        >
+                                            {member.name}
+                                        </h3>
+                                    </div>
+                                    <div class="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100 text-center">
+                                        <p class="text-slate-300 text-sm mt-2">
+                                            {member.bio || ""}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))
+                    }
                 </div>
             </section>
 
             <!-- BOARD SECTION -->
             <section class="max-w-7xl mx-auto mb-24">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-center text-[#3d3d47] mb-4 mx-auto" id="junta-directiva">
+                    <h2
+                        class="text-3xl font-bold text-center text-[#3d3d47] mb-4 mx-auto"
+                        id="junta-directiva"
+                    >
                         Junta Directiva de ILSA
                     </h2>
-                    <div class="w-16 h-1 bg-[#4e7cce] mx-auto rounded-full"></div>
+                    <div class="w-16 h-1 bg-[#4e7cce] mx-auto rounded-full">
+                    </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                    {boardData.map((member, index) => (
-                        <div
-                            class={`interactive-card relative group rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl cursor-pointer h-[400px] md:h-[450px] w-full focus-visible:ring-2 focus-visible:ring-[#4e7cce] focus-visible:ring-offset-2 outline-none ${index === 0 ? 'ring-2 ring-white/40 shadow-[#4e7cce]/20' : ''}`}
-                            data-team-id={member.id} tabindex="0" role="button"
-                        >
-                            <img class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110" src={member.image} alt={member.name} width="400" height="450" loading="lazy" />
-                            
-                            {/* Insignia elegante "Liquid Glass" exclusiva para la Presidencia */}
-                            {index === 0 && (
-                                <div class="absolute top-4 right-4 z-20 bg-white/20 backdrop-blur-md border border-white/40 rounded-full p-2.5 shadow-lg group-hover:bg-white/30 transition-colors duration-300 pointer-events-none">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" class="drop-shadow-[0_0_8px_rgba(250,204,21,0.6)]">
-                                        <defs>
-                                            <linearGradient id="gold-grad-board" x1="0%" y1="0%" x2="100%" y2="100%">
-                                                <stop offset="0%" stop-color="#FEF08A" />
-                                                <stop offset="40%" stop-color="#F59E0B" />
-                                                <stop offset="100%" stop-color="#A16207" />
-                                            </linearGradient>
-                                        </defs>
-                                        <polygon fill="url(#gold-grad-board)" stroke="#FEF08A" stroke-width="1.5" stroke-linejoin="round" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                    </svg>
-                                </div>
-                            )}
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6"
+                >
+                    {
+                        boardData.map((member, index) => (
+                            <div
+                                class={`interactive-card relative group rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl cursor-pointer h-[400px] md:h-[450px] w-full focus-visible:ring-2 focus-visible:ring-[#4e7cce] focus-visible:ring-offset-2 outline-none ${index === 0 ? "ring-2 ring-white/40 shadow-[#4e7cce]/20" : ""}`}
+                                data-team-id={member.id}
+                                tabindex="0"
+                                role="button"
+                            >
+                                <img
+                                    class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
+                                    src={member.image}
+                                    alt={member.name}
+                                    width="400"
+                                    height="450"
+                                    loading="lazy"
+                                />
 
-                            <div class={`absolute inset-0 bg-gradient-to-t opacity-90 transition-opacity duration-300 ${index === 0 ? 'from-[#0b1b42] via-[#102352]/50 to-transparent' : 'from-[#183069] via-[#183069]/40 to-transparent'}`}></div>
-                            <div class="absolute inset-0 flex flex-col justify-end p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                <p class={`font-bold text-xs tracking-widest uppercase mb-1 opacity-80 group-hover:opacity-100 text-center shrink-0 ${index === 0 ? 'text-[#a1c4ff]' : 'text-[#efefef]'}`}>{member.role}</p>
-                                <div class="h-14 md:h-16 flex items-center justify-center w-full mb-2 shrink-0">
-                                    <h3 class={`font-bold text-center text-white leading-tight drop-shadow-md ${member.name.length > 20 ? 'text-lg md:text-xl' : 'text-xl md:text-2xl'}`}>{member.name}</h3>
-                                </div>
-                                <div class="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100 text-center">
-                                    <p class="text-slate-300 text-sm mt-2">{member.bio || ""}</p>
+                                {/* Insignia elegante "Liquid Glass" exclusiva para la Presidencia */}
+                                {index === 0 && (
+                                    <div class="absolute top-4 right-4 z-20 bg-white/20 backdrop-blur-md border border-white/40 rounded-full p-2.5 shadow-lg group-hover:bg-white/30 transition-colors duration-300 pointer-events-none">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="18"
+                                            height="18"
+                                            viewBox="0 0 24 24"
+                                            class="drop-shadow-[0_0_8px_rgba(250,204,21,0.6)]"
+                                        >
+                                            <defs>
+                                                <linearGradient
+                                                    id="gold-grad-board"
+                                                    x1="0%"
+                                                    y1="0%"
+                                                    x2="100%"
+                                                    y2="100%"
+                                                >
+                                                    <stop
+                                                        offset="0%"
+                                                        stop-color="#FEF08A"
+                                                    />
+                                                    <stop
+                                                        offset="40%"
+                                                        stop-color="#F59E0B"
+                                                    />
+                                                    <stop
+                                                        offset="100%"
+                                                        stop-color="#A16207"
+                                                    />
+                                                </linearGradient>
+                                            </defs>
+                                            <polygon
+                                                fill="url(#gold-grad-board)"
+                                                stroke="#FEF08A"
+                                                stroke-width="1.5"
+                                                stroke-linejoin="round"
+                                                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                                            />
+                                        </svg>
+                                    </div>
+                                )}
+
+                                <div
+                                    class={`absolute inset-0 bg-gradient-to-t opacity-90 transition-opacity duration-300 ${index === 0 ? "from-[#0b1b42] via-[#102352]/50 to-transparent" : "from-[#183069] via-[#183069]/40 to-transparent"}`}
+                                />
+                                <div class="absolute inset-0 flex flex-col justify-end p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                    <p
+                                        class={`font-bold text-xs tracking-widest uppercase mb-1 opacity-80 group-hover:opacity-100 text-center shrink-0 ${index === 0 ? "text-[#a1c4ff]" : "text-[#efefef]"}`}
+                                    >
+                                        {member.role}
+                                    </p>
+                                    <div class="h-14 md:h-16 flex items-center justify-center w-full mb-2 shrink-0">
+                                        <h3
+                                            class={`font-bold text-center text-white leading-tight drop-shadow-md ${member.name.length > 20 ? "text-lg md:text-xl" : "text-xl md:text-2xl"}`}
+                                        >
+                                            {member.name}
+                                        </h3>
+                                    </div>
+                                    <div class="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100 text-center">
+                                        <p class="text-slate-300 text-sm mt-2">
+                                            {member.bio || ""}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))
+                    }
                 </div>
             </section>
 
             <!-- ASAMBLEA SECTION -->
             <section class="max-w-7xl mx-auto mb-24">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-center text-[#3d3d47] mb-4 mx-auto" id="asamblea">
+                    <h2
+                        class="text-3xl font-bold text-center text-[#3d3d47] mb-4 mx-auto"
+                        id="asamblea"
+                    >
                         Integrantes de la Asamblea de Socias y Socios de ILSA
                     </h2>
-                    <div class="w-16 h-1 bg-[#4e7cce] mx-auto rounded-full mb-8"></div>
-                    <p class="text-[#3d3d47]/70 text-center text-base max-w-2xl mx-auto mb-8 text-balance">
-                        Órgano máximo de dirección y decisión, integrado por personas comprometidas con la misión institucional y la defensa de los derechos.
+                    <div
+                        class="w-16 h-1 bg-[#4e7cce] mx-auto rounded-full mb-8"
+                    >
+                    </div>
+                    <p
+                        class="text-[#3d3d47]/70 text-center text-base max-w-2xl mx-auto mb-8 text-balance"
+                    >
+                        Órgano máximo de dirección y decisión, integrado por
+                        personas comprometidas con la misión institucional y la
+                        defensa de los derechos.
                     </p>
                 </div>
 
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-                    {assemblyData.map((member) => (
-                        <div class="flex items-center gap-4 bg-white/50 backdrop-blur-xl border border-white/60 p-4 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300">
-                            <img src={member.image} alt={member.name} width="48" height="48" class="w-12 h-12 rounded-full object-cover shadow-inner" loading="lazy" />
-                            <div>
-                                <h3 class="text-sm font-bold text-center text-[#3d3d47] leading-tight mb-1">{member.name}</h3>
-                                <p class="text-[10px] text-center text-[#4e7cce] font-bold uppercase tracking-wider">{member.role}</p>
+                    {
+                        assemblyData.map((member) => (
+                            <div class="flex items-center gap-4 bg-white/50 backdrop-blur-xl border border-white/60 p-4 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300">
+                                <img
+                                    src={member.image}
+                                    alt={member.name}
+                                    width="48"
+                                    height="48"
+                                    class="w-12 h-12 rounded-full object-cover shadow-inner"
+                                    loading="lazy"
+                                />
+                                <div>
+                                    <h3 class="text-sm font-bold text-center text-[#3d3d47] leading-tight mb-1">
+                                        {member.name}
+                                    </h3>
+                                    <p class="text-[10px] text-center text-[#4e7cce] font-bold uppercase tracking-wider">
+                                        {member.role}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))
+                    }
                 </div>
             </section>
 
             <!-- EQUIPO DE TRABAJO SECTION -->
             <section class="mb-32 max-w-7xl mx-auto">
                 <div class="text-center mb-12">
-                    <h2 class="text-4xl font-bold text-center text-[#3d3d47] mb-4 mx-auto" id="equipo-trabajo">
+                    <h2
+                        class="text-4xl font-bold text-center text-[#3d3d47] mb-4 mx-auto"
+                        id="equipo-trabajo"
+                    >
                         Equipo de Trabajo
                     </h2>
-                    <div class="w-16 h-1 bg-[#4e7cce] mx-auto rounded-full"></div>
+                    <div class="w-16 h-1 bg-[#4e7cce] mx-auto rounded-full">
+                    </div>
                 </div>
 
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-                    {[
-                        { title: "Investigadores", icon: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253", desc: "Equipo de investigadores" },
-                        { title: "Administración", icon: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z", desc: "Equipo administrativo y contable" },
-                        { title: "Comunicaciones", icon: "M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z", desc: "Equipo de comunicaciones" },
-                        { title: "Acompañamiento", icon: "M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z", desc: "Voluntarios, pasantes y practicantes" }
-                    ].map(dept => (
-                        <div class="p-8 rounded-[2rem] bg-white/50 backdrop-blur-3xl border border-white/60 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col items-center justify-center text-center group cursor-default h-full">
-                            <div class="mx-auto w-14 h-14 rounded-2xl bg-[#4e7cce]/10 text-[#4e7cce] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={dept.icon} />
-                                </svg>
+                <div
+                    class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 text-center"
+                >
+                    {
+                        [
+                            {
+                                title: "Investigadores",
+                                icon: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253",
+                                desc: "Equipo de investigadores",
+                            },
+                            {
+                                title: "Administración",
+                                icon: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z",
+                                desc: "Equipo administrativo y contable",
+                            },
+                            {
+                                title: "Comunicaciones",
+                                icon: "M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z",
+                                desc: "Equipo de comunicaciones",
+                            },
+                            {
+                                title: "Acompañamiento",
+                                icon: "M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z",
+                                desc: "Voluntarios, pasantes y practicantes",
+                            },
+                        ].map((dept) => (
+                            <div class="p-8 rounded-[2rem] bg-white/50 backdrop-blur-3xl border border-white/60 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col items-center justify-center text-center group cursor-default h-full">
+                                <div class="mx-auto w-14 h-14 rounded-2xl bg-[#4e7cce]/10 text-[#4e7cce] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="w-7 h-7"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d={dept.icon}
+                                        />
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl font-bold text-[#3d3d47] mb-2 w-full text-center">
+                                    {dept.title}
+                                </h3>
+                                <p class="text-[#3d3d47]/70 text-sm leading-relaxed w-full text-center">
+                                    {dept.desc}
+                                </p>
                             </div>
-                            <h3 class="text-xl font-bold text-[#3d3d47] mb-2 w-full text-center">{dept.title}</h3>
-                            <p class="text-[#3d3d47]/70 text-sm leading-relaxed w-full text-center">{dept.desc}</p>
-                        </div>
-                    ))}
+                        ))
+                    }
                 </div>
             </section>
 
@@ -703,7 +1180,7 @@ const seoData: SeoData = data?.page?.seo;
                         size="lg"
                         href="/nosotros/manual-marca"
                         class="gap-2 group relative z-20"
-                        {...{"data-astro-reload": true}}
+                        {...{ "data-astro-reload": true }}
                     >
                         Ver Manual de Identidad
                         <svg
@@ -759,27 +1236,27 @@ const seoData: SeoData = data?.page?.seo;
     <script>
         class AutoSlider extends HTMLElement {
             connectedCallback() {
-                const imgs = this.querySelectorAll('img[data-slider-image]');
+                const imgs = this.querySelectorAll("img[data-slider-image]");
                 if (imgs.length <= 1) return;
                 let currentIndex = 0;
-                
+
                 const nextSlide = () => {
                     const prev = imgs[currentIndex];
-                    prev.classList.remove('opacity-100');
-                    prev.classList.add('opacity-0');
-                    
+                    prev.classList.remove("opacity-100");
+                    prev.classList.add("opacity-0");
+
                     currentIndex = (currentIndex + 1) % imgs.length;
-                    
+
                     const next = imgs[currentIndex];
-                    next.classList.remove('opacity-0');
-                    next.classList.add('opacity-100');
-                    
-                    setTimeout(nextSlide, 4000 + (Math.random() * 3000));
+                    next.classList.remove("opacity-0");
+                    next.classList.add("opacity-100");
+
+                    setTimeout(nextSlide, 4000 + Math.random() * 3000);
                 };
 
-                setTimeout(nextSlide, 4000 + (Math.random() * 3000));
+                setTimeout(nextSlide, 4000 + Math.random() * 3000);
             }
         }
-        customElements.define('auto-slider', AutoSlider);
+        customElements.define("auto-slider", AutoSlider);
     </script>
 </Layout>

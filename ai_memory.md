@@ -52,13 +52,21 @@
 
 ## Refactorizaciones y Cambios
 
-### Session 27/04/2026 - Integración de PayPal para Donaciones
+### Session 28/04/2026 - Refinamiento Institucional y Tono de Comunicación
+- **`tono-y-estilo.md`**:
+    - **New**: Se creó una guía de estilo basada en los documentos fundacionales (1978) de ILSA, estableciendo el uso de lenguaje institucional, crítico y emancipatorio.
+- **`src/pages/nosotros/index.astro`**:
+    - **UX Writing**: Se reescribieron los textos de "Hero", "Misión", "Visión" y "Campos de Acción" para alinearse estrictamente a la guía de estilo, priorizando el rigor sociopolítico.
+    - **New Section**: Se incorporó la sección "Historia Institucional" narrando cronológicamente el desarrollo de ILSA desde la OEA hasta la praxis emancipatoria actual, replicando el diseño **Liquid Glass** de la vista con paneles side-by-side y un `auto-slider` de galería.
+
+### Session 27/04/2026 - Integración Dual de Donaciones (ePayco + PayPal)
 - **`donaciones.astro`**:
-    - **Plataforma de Pago**: Se reemplazó el widget de Ko-fi por una integración directa con PayPal (paypal.me).
-    - **Tono Institucional**: Se reescribió el copy de la página para eliminar anglicismos ("incidencia política" en vez de "advocacy") y lenguajes emocionales/de caridad, adoptando un tono riguroso, académico e institucional acorde a la labor de ILSA.
-    - **Micro-interacciones UI**: Se añadieron animaciones de entrada (`fade-in-up`), levitación de contenedores (`float`), efecto de brillo (shimmer) continuo en el botón de pago y micro-transiciones suaves en tarjetas e inputs para potenciar la estética "Liquid Glass".
-- **`src/components/molecules/PayPalDonation.tsx` (Nueva Isla React)**:
-    - **Robustez de UI**: Se extrajo toda la lógica de selección de montos y el redireccionamiento a PayPal en un componente de React puro. Montado mediante `client:load` para garantizar la ejecución perfecta del código del lado del cliente, resolviendo problemas de hidratación cruzada con Astro View Transitions.
+    - **Plataformas de Pago**: Se reemplazó Ko-fi por un sistema dual. ePayco Checkout para donaciones nacionales (COP) y PayPal para internacionales (USD).
+    - **Tono Institucional**: Se reescribió el copy de la página para eliminar anglicismos ("incidencia política") y adoptar un tono riguroso acorde a ILSA.
+    - **Seguridad**: Se delegó el almacenamiento de la Llave Pública de ePayco al entorno de Cloudflare Pages mediante `.env`.
+- **`src/components/molecules/DonationManager.tsx` (Isla React)**:
+    - **Robustez de UI**: Se extrajo toda la lógica de selección de país, montos y ejecución de pasarelas a un componente de React montado con `client:load` para resolver problemas de hidratación cruzada con Astro View Transitions.
+    - **Micro-interacciones Avanzadas (Liquid Glass)**: Se pulió drásticamente el diseño visual usando controles segmentados (píldoras fluidas), inputs expansivos, luces interiores (`shimmer`) y sombras dinámicas (`currentColor`), respetando estrictamente la jerarquía tipográfica global del proyecto.
 
 ### Session 13/04/2026 - Sistema Modular de Galerías y Automatización Multimedia
 - **Arquitectura de Galerías**:
@@ -140,6 +148,17 @@
 - **`Pagination.astro`**: 
     - **Feature**: Soporte para `postsPerPage` dinámico vía props y data-attributes.
 
+### Session 28/04/2026 - Historia Institucional y Optimización Responsive
+-   **`tono-y-estilo.md`**:
+    -   **New**: Se estableció un manual de tono formal, crítico y situado para estandarizar la voz de ILSA en toda la plataforma.
+-   **`nosotros/index.astro`**:
+    -   **Update**: Textos de Misión, Visión y Campos de Acción alineados al nuevo tono institucional.
+    -   **New**: Integración de la sección "Historia Institucional" preservando la fidelidad del texto base (`historia.md`) mediante un layout zig-zag.
+    -   **Images**: Integración de fotografías de archivo mediante el componente `SmartImage` manteniendo el diseño Liquid Glass y los zooms on-hover.
+    -   **Responsive Fix**: Adición de `px-6` y reducción de paddings en tarjetas móviles para garantizar una visualización cómoda sin desbordamientos de texto.
+-   **`donaciones.astro` y `DonationManager.tsx`**:
+    -   **Responsive Fix**: Eliminación de "overpadding" (márgenes excesivos) en móviles que apretaban el diseño. Ajuste de fuentes a `text-xs` y reestructuración de la grilla de cantidades para evitar superposición en pantallas estrechas.
+
 ### Session 26/01/2026 - Event Integration & Multimedia Expansion
 -   **`Actividades Page`**:
     -   **Integration**: Conectado a WP Event Manager vía GraphQL.
@@ -193,6 +212,7 @@
 9. **CSS Transitions**: Ajustar duración de fade si 0.5s resulta lento para usuarios.
 
 ## Log de Commits
+- `feat(content): define institutional tone guidelines and integrate history section into about page`
 - `feat: implementation of 'Glass Breaker' easter egg with Zelda music`
 - `chore: remove unused FluidGameEngine component`
 - `feat(easter-egg): add durability system and persistent scoring`

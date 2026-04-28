@@ -107,42 +107,42 @@ export default function DonationManager() {
                 
                 <button
                     onClick={() => setRegion('colombia')}
-                    className={`relative z-10 flex-1 py-3.5 px-4 rounded-xl font-bold text-sm sm:text-base transition-colors duration-500 flex items-center justify-center gap-2 ${
+                    className={`relative z-10 flex-1 py-2.5 px-2 sm:py-3.5 sm:px-4 rounded-xl font-bold text-xs sm:text-base transition-colors duration-500 flex items-center justify-center gap-1 sm:gap-2 ${
                         region === 'colombia'
                             ? 'text-slate-800'
                             : 'text-slate-500 hover:text-slate-700'
                     }`}
                 >
-                    <span className="text-xl drop-shadow-sm">🇨🇴</span>
-                    <span>Colombia</span>
+                    <span className="text-lg sm:text-xl drop-shadow-sm">🇨🇴</span>
+                    <span className="truncate">Colombia</span>
                 </button>
                 <button
                     onClick={() => setRegion('international')}
-                    className={`relative z-10 flex-1 py-3.5 px-4 rounded-xl font-bold text-sm sm:text-base transition-colors duration-500 flex items-center justify-center gap-2 ${
+                    className={`relative z-10 flex-1 py-2.5 px-2 sm:py-3.5 sm:px-4 rounded-xl font-bold text-xs sm:text-base transition-colors duration-500 flex items-center justify-center gap-1 sm:gap-2 ${
                         region === 'international'
                             ? 'text-slate-800'
                             : 'text-slate-500 hover:text-slate-700'
                     }`}
                 >
-                    <span className="text-xl drop-shadow-sm">🌍</span>
-                    <span>Internacional</span>
+                    <span className="text-lg sm:text-xl drop-shadow-sm">🌍</span>
+                    <span className="truncate">Internacional</span>
                 </button>
             </div>
 
             {/* Amount selection */}
-            <div className="grid grid-cols-3 gap-3 sm:gap-4 mb-5">
+            <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-5">
                 {activeConfig.quickAmounts.map((amount) => (
                     <button
                         key={amount}
                         type="button"
                         onClick={() => handleQuickAmount(amount.toString())}
                         data-active={selectedAmount === amount.toString() && inputValue === ""}
-                        className="group relative overflow-hidden bg-white/30 hover:bg-white/70 backdrop-blur-md border border-white/60 rounded-2xl py-3.5 sm:py-4 font-bold text-slate-700 transition-all duration-500 hover:scale-105 hover:-translate-y-1 hover:shadow-[0_15px_35px_-10px_rgba(0,0,0,0.12)] data-[active=true]:border-slate-800 data-[active=true]:bg-slate-800/95 data-[active=true]:text-white data-[active=true]:shadow-[0_15px_35px_-5px_rgba(15,23,42,0.4)] data-[active=true]:scale-105"
+                        className="group relative overflow-hidden bg-white/30 hover:bg-white/70 backdrop-blur-md border border-white/60 rounded-xl sm:rounded-2xl py-3 sm:py-4 font-bold text-slate-700 transition-all duration-500 hover:scale-105 hover:-translate-y-1 hover:shadow-[0_15px_35px_-10px_rgba(0,0,0,0.12)] data-[active=true]:border-slate-800 data-[active=true]:bg-slate-800/95 data-[active=true]:text-white data-[active=true]:shadow-[0_15px_35px_-5px_rgba(15,23,42,0.4)] data-[active=true]:scale-105"
                     >
                         <div className="absolute inset-0 w-full h-full bg-gradient-to-tr from-white/0 via-white/30 to-white/0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        <span className="relative z-10 flex items-center justify-center gap-1.5 text-sm sm:text-base">
-                            <span>{activeConfig.symbol}{region === 'colombia' ? amount.toLocaleString('es-CO') : amount}</span>
-                            <span className="text-[10px] sm:text-xs font-semibold opacity-70 tracking-wider">{activeConfig.currency}</span>
+                        <span className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-0 sm:gap-1.5 text-xs sm:text-base leading-none">
+                            <span className="truncate">{activeConfig.symbol}{region === 'colombia' ? amount.toLocaleString('es-CO') : amount}</span>
+                            <span className="text-[10px] sm:text-xs font-semibold opacity-70 tracking-wider hidden sm:inline">{activeConfig.currency}</span>
                         </span>
                     </button>
                 ))}
