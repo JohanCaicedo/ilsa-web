@@ -394,6 +394,7 @@ export const galleryData: GalleryCategory[] = [
             }
         ]
     },
+    /*
     {
         "id": "seguimiento-huertas-nov-2025",
         "title": "Trabajo de seguimiento de huertas",
@@ -426,6 +427,7 @@ export const galleryData: GalleryCategory[] = [
             }
         ]
     },
+    */
     {
         "id": "taller-semillas-mayo-2025",
         "title": "Intercambio de semillas y bioinsumos",

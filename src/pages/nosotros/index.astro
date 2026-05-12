@@ -150,15 +150,14 @@ const seoData: SeoData = data?.page?.seo;
                     </div>
                     {
                         heroImages.map((src, index) => (
-                            <img
+                            <SmartImage
                                 src={src}
                                 alt="Territorio y Naturaleza"
-                                width="1200"
-                                height="500"
+                                width={1200}
+                                height={500}
                                 class={`absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 ${index === 0 ? "opacity-100" : "opacity-0"}`}
                                 data-slider-image
-                                fetchpriority={index === 0 ? "high" : "auto"}
-                                loading={index === 0 ? "eager" : "lazy"}
+                                priority={index === 0}
                             />
                         ))
                     }
@@ -403,7 +402,7 @@ const seoData: SeoData = data?.page?.seo;
                                 >
                                 </div>
                                 <SmartImage 
-                                    src="/images/multimedia-galeria/mercado-campesino-sep-2005/mercado-campesino-sep-2005-1.webp" 
+                                    src="/images/Linea del tiempo.webp" 
                                     alt="Consolidación Institucional" 
                                     class="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000"
                                 />
@@ -564,14 +563,14 @@ const seoData: SeoData = data?.page?.seo;
                         >
                             {
                                 geoImages.map((src, index) => (
-                                    <img
+                                    <SmartImage
                                         src={src}
                                         alt="Ubicación Geográfica ILSA"
-                                        width="1200"
-                                        height="500"
+                                        width={1200}
+                                        height={500}
                                         class={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${index === 0 ? "opacity-100" : "opacity-0"}`}
                                         data-slider-image
-                                        loading="lazy"
+                                        priority={index === 0}
                                     />
                                 ))
                             }
@@ -632,14 +631,14 @@ const seoData: SeoData = data?.page?.seo;
                     </div>
                     {
                         missionImages.map((src, index) => (
-                            <img
+                            <SmartImage
                                 src={src}
                                 alt="Trabajo comunitario de ILSA con movimientos sociales"
-                                width="800"
-                                height="450"
+                                width={800}
+                                height={450}
                                 class={`absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 ${index === 0 ? "opacity-100" : "opacity-0"}`}
                                 data-slider-image
-                                loading="lazy"
+                                priority={index === 0}
                             />
                         ))
                     }
@@ -655,14 +654,14 @@ const seoData: SeoData = data?.page?.seo;
                     </div>
                     {
                         visionImages.map((src, index) => (
-                            <img
+                            <SmartImage
                                 src={src}
                                 alt="Territorios y comunidades que defiende ILSA"
-                                width="800"
-                                height="450"
+                                width={800}
+                                height={450}
                                 class={`absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 ${index === 0 ? "opacity-100" : "opacity-0"}`}
                                 data-slider-image
-                                loading="lazy"
+                                priority={index === 0}
                             />
                         ))
                     }
@@ -721,14 +720,14 @@ const seoData: SeoData = data?.page?.seo;
                             </div>
                             {
                                 camposImages.map((src, index) => (
-                                    <img
+                                    <SmartImage
                                         src={src}
                                         alt="Campos de acción e intervención territorial de ILSA"
-                                        width="800"
-                                        height="900"
+                                        width={800}
+                                        height={900}
                                         class={`absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 ${index === 0 ? "opacity-100" : "opacity-0"}`}
                                         data-slider-image
-                                        loading="lazy"
+                                        priority={index === 0}
                                     />
                                 ))
                             }
