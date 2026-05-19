@@ -59,11 +59,11 @@ const stages = [
   <history-slider class="block relative">
 
     <!-- Slide viewport -->
-    <div class="slider-viewport relative overflow-hidden rounded-2xl md:rounded-[2rem]">
+    <div class="slider-viewport grid relative overflow-hidden rounded-2xl md:rounded-[2rem]">
 
       {stages.map((stage, index) => (
         <div
-          class={`hs-slide absolute inset-0 w-full h-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${index === 0 ? 'hs-active' : ''}`}
+          class={`hs-slide col-start-1 row-start-1 w-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${index === 0 ? 'hs-active' : ''}`}
           data-slide={index}
           data-color={stage.color}
         >
@@ -184,12 +184,14 @@ const stages = [
     opacity: 0;
     pointer-events: none;
     transform: translateX(60px) scale(0.97);
+    z-index: 0;
   }
   .hs-slide.hs-active {
     opacity: 1;
     pointer-events: auto;
     transform: translateX(0) scale(1);
     position: relative;
+    z-index: 10;
   }
 
   /* Staggered inner elements */
