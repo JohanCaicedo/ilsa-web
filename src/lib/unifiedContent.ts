@@ -42,6 +42,14 @@ export const registeredLocalPages: LocalSpecialPage[] = [
         uri: "/noticias/especiales/cartagena",
         categorySlug: "noticias",
     },
+    {
+        title: "Ley 2570 de 2026: Jurisdicción Agraria y Rural en Colombia",
+        author: "ILSA",
+        date: "2026-05-20T12:00:00.000Z",
+        image: "/images/gallery/Nosotros (11).webp",
+        uri: "/noticias/jurisdiccion-agraria-y-rural",
+        categorySlug: "noticias",
+    },
 ];
 
 /**
