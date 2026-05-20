@@ -1,0 +1,523 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import SmartImage from "../../components/atoms/SmartImage.astro";
+import GradientText from "../../components/atoms/GradientText.astro";
+
+// Edge Caching (ISR) rule para Cloudflare
+export const prerender = false;
+Astro.response.headers.set(
+    "Cache-Control",
+    "public, s-maxage=3600, stale-while-revalidate=86400",
+);
+
+// Mejoramos el SEO para cubrir las palabras clave del texto y la ley
+const title = "Ley 2570 de 2026: Jurisdicción Agraria y Rural en Colombia | ILSA";
+const description =
+    "Análisis de la Ley 2570 de 2026 sobre la integración, estructura e implementación territorial y técnica de la Jurisdicción Agraria y Rural en Colombia.";
+---
+
+<Layout
+    title={title}
+    seo={{
+        title,
+        metaDesc: description,
+        opengraphDescription: description,
+        opengraphTitle: title,
+    }}
+    width="wide"
+>
+    <div class="relative w-full overflow-hidden mb-32">
+        <!-- Hero Section -->
+        <section
+            class="relative pt-32 pb-24 md:pt-40 md:pb-32 px-4 flex flex-col items-center justify-center min-h-[50vh]"
+        >
+            <div class="absolute inset-0 pointer-events-none overflow-hidden">
+                <div
+                    class="absolute top-1/4 left-1/4 w-96 h-96 bg-[#4e7cce]/10 rounded-full blur-[100px] animate-pulse-slow"
+                >
+                </div>
+                <div
+                    class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#93a2c1]/10 rounded-full blur-[100px] animate-pulse-slow"
+                    style="animation-delay: 2s;"
+                >
+                </div>
+            </div>
+
+            <div class="relative z-10 max-w-5xl mx-auto text-center">
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 backdrop-blur-md border border-white/60 shadow-lg text-[#4e7cce] font-medium text-sm mb-8 tracking-wide"
+                >
+                    <span
+                        class="w-2 h-2 rounded-full bg-[#4e7cce] animate-pulse"
+                    ></span>
+                    LEY 2570 DE 2026
+                </div>
+
+                <div class="text-center w-full flex flex-col items-center">
+                    <h1
+                        class="text-center text-5xl md:text-7xl font-bold tracking-tight text-[#3d3d47] mb-8 leading-tight text-balance"
+                    >
+                        Integración y estructura de la <br />
+                        <GradientText
+                            as="span"
+                            text="Jurisdicción Agraria y Rural"
+                            size="text-5xl md:text-7xl"
+                            class="tracking-tight leading-tight"
+                        />
+                    </h1>
+                </div>
+
+                <div
+                    class="text-lg md:text-xl text-[#3d3d47]/70 font-light max-w-4xl mx-auto leading-relaxed mb-12 space-y-4"
+                >
+                    <p>
+                        Por medio de la cual se modifica la Ley 270 de 1996, se
+                        determina la integración y estructura de la jurisdicción
+                        agraria y rural, y se adoptan otras disposiciones.
+                    </p>
+                    <p>
+                        En concordancia con el Acto Legislativo 03 de 2023 por
+                        medio del cual se modifica la Constitución Política de
+                        Colombia y se establece la Jurisdicción Agraria y Rural.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contenedor Principal / Liquid Glass -->
+        <div class="max-w-6xl mx-auto px-4 relative z-10">
+            <div
+                class="bg-white/50 backdrop-blur-3xl border border-white/60 shadow-2xl shadow-slate-200/50 rounded-[3rem] p-8 md:p-16 space-y-24"
+            >
+                <!-- 1. Estructura orgánica -->
+                <section>
+                    <div class="text-center mb-16">
+                        <h2
+                            class="text-center text-4xl font-bold text-[#3d3d47] mb-4"
+                        >
+                            Estructura Orgánica de la Jurisdicción
+                        </h2>
+                        <div
+                            class="w-24 h-1 bg-gradient-to-r from-[#4e7cce] to-[#93a2c1] mx-auto rounded-full"
+                        >
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-8 items-stretch">
+                        <div
+                            class="bg-white/60 rounded-3xl p-8 shadow-sm border border-white/80 hover:-translate-y-1 transition-transform duration-300"
+                        >
+                            <h3
+                                class="text-2xl font-bold text-[#4e7cce] mb-4 text-center"
+                            >
+                                Órganos de cierre
+                            </h3>
+                            <ul
+                                class="list-disc pl-5 text-[#3d3d47]/80 space-y-3"
+                            >
+                                <li>
+                                    Sala de Casación Civil, Agraria y Rural
+                                    (Corte Suprema de Justicia).
+                                </li>
+                                <li>Consejo de Estado.</li>
+                            </ul>
+                        </div>
+                        <div
+                            class="bg-white/60 rounded-3xl p-8 shadow-sm border border-white/80 hover:-translate-y-1 transition-transform duration-300"
+                        >
+                            <h3
+                                class="text-2xl font-bold text-[#4e7cce] mb-4 text-center"
+                            >
+                                Tribunales Agrarios y Rurales
+                            </h3>
+                            <p class="text-[#3d3d47]/80 text-center">
+                                Conformados por la sala plena (mínimo 3
+                                magistrados), sala de gobierno y salas
+                                especializadas.
+                            </p>
+                        </div>
+                        <div
+                            class="bg-white/60 rounded-3xl p-8 shadow-sm border border-white/80 hover:-translate-y-1 transition-transform duration-300"
+                        >
+                            <h3
+                                class="text-2xl font-bold text-[#4e7cce] mb-4 text-center"
+                            >
+                                Juzgados Agrarios
+                            </h3>
+                            <p class="text-[#3d3d47]/80 text-center">
+                                Serán la célula básica para la implementación de
+                                la jurisdicción agraria y rural.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FOTO AMBIENTAL 1 -->
+                <div class="w-full h-[300px] md:h-[450px] rounded-[2rem] overflow-hidden shadow-lg border border-white/60 relative group">
+                    <SmartImage
+                        src="/images/gallery/Nosotros (11).webp"
+                        alt="Evento Institucional ILSA"
+                        class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-1000"
+                    />
+                </div>
+
+                <!-- 2. Implementación territorial -->
+                <section>
+                    <div class="text-center mb-16">
+                        <h2
+                            class="text-center text-4xl font-bold text-[#3d3d47] mb-4"
+                        >
+                            Implementación Territorial
+                        </h2>
+                        <div
+                            class="w-24 h-1 bg-gradient-to-r from-[#4e7cce] to-[#93a2c1] mx-auto rounded-full"
+                        >
+                        </div>
+                        <p
+                            class="text-[#3d3d47]/70 mt-6 max-w-3xl mx-auto text-lg leading-relaxed"
+                        >
+                            La ubicación de los juzgados agrarios y la creación
+                            de despachos debe priorizar zonas con
+                            características específicas. Esta estructura
+                            orgánica busca que la división judicial no tenga que
+                            coincidir obligatoriamente con la división
+                            político-administrativa, priorizando la cercanía del
+                            juez con los hechos y el fácil acceso para los
+                            ciudadanos.
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div
+                            class="group relative bg-white/60 rounded-2xl p-8 shadow-sm border border-white/80 hover:bg-white/80 transition-all duration-300"
+                        >
+                            <div
+                                class="absolute -left-4 -top-4 w-10 h-10 bg-[#4e7cce] text-white rounded-full flex items-center justify-center font-bold shadow-lg text-lg"
+                            >
+                                1
+                            </div>
+                            <p class="text-[#3d3d47]/80 text-center">
+                                Zonas PDET y núcleos de reforma agraria.
+                            </p>
+                        </div>
+                        <div
+                            class="group relative bg-white/60 rounded-2xl p-8 shadow-sm border border-white/80 hover:bg-white/80 transition-all duration-300"
+                        >
+                            <div
+                                class="absolute -left-4 -top-4 w-10 h-10 bg-[#4e7cce] text-white rounded-full flex items-center justify-center font-bold shadow-lg text-lg"
+                            >
+                                2
+                            </div>
+                            <p class="text-[#3d3d47]/80 text-center">
+                                Lugares con alta informalidad en la tenencia de
+                                la tierra, concentración de propiedad y
+                                presencia de cultivos de uso ilícito.
+                            </p>
+                        </div>
+                        <div
+                            class="group relative bg-white/60 rounded-2xl p-8 shadow-sm border border-white/80 hover:bg-white/80 transition-all duration-300"
+                        >
+                            <div
+                                class="absolute -left-4 -top-4 w-10 h-10 bg-[#4e7cce] text-white rounded-full flex items-center justify-center font-bold shadow-lg text-lg"
+                            >
+                                3
+                            </div>
+                            <p class="text-[#3d3d47]/80 text-center">
+                                Territorios con presencia de poblaciones
+                                campesinas y grupos étnicos.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. Implementación técnica y rural -->
+                <section>
+                    <div class="text-center mb-16">
+                        <h2
+                            class="text-center text-4xl font-bold text-[#3d3d47] mb-4"
+                        >
+                            Implementación Técnica y Rural
+                        </h2>
+                        <div
+                            class="w-24 h-1 bg-gradient-to-r from-[#4e7cce] to-[#93a2c1] mx-auto rounded-full"
+                        >
+                        </div>
+                        <p
+                            class="text-[#3d3d47]/70 mt-6 max-w-3xl mx-auto text-lg leading-relaxed"
+                        >
+                            Para cumplir los fines misionales de la jurisdicción
+                            agraria, la ley establece un aparataje institucional
+                            interdisciplinar que será central a la hora de
+                            analizar, juzgar y resolver las problemáticas
+                            agrarias.
+                        </p>
+                    </div>
+
+                    <div class="grid lg:grid-cols-3 gap-8">
+                        <!-- Soporte Técnico -->
+                        <div
+                            class="bg-white/60 rounded-3xl p-8 shadow-sm border border-white/80 flex flex-col hover:-translate-y-1 transition-transform duration-300"
+                        >
+                            <h3 class="text-2xl font-bold text-[#4e7cce] mb-2">
+                                Soporte Técnico
+                            </h3>
+                            <p
+                                class="text-xs text-[#93a2c1] font-bold uppercase tracking-widest mb-6"
+                            >
+                                Centros de Servicios
+                            </p>
+                            <p
+                                class="text-[#3d3d47]/80 leading-relaxed mb-8"
+                            >
+                                La ley crea los Centros de Servicios Judiciales
+                                y Administrativos de Apoyo Técnico Agrario y
+                                Rural, encargados de brindar apoyo técnico,
+                                pericial y de contexto a jueces y magistrados.
+                            </p>
+                            <div class="mt-4 bg-white/40 backdrop-blur-sm rounded-2xl p-5 border border-white/60 shadow-inner">
+                                <ul class="space-y-3 text-[#3d3d47]/80 text-sm font-medium">
+                                    <li class="flex gap-3 items-start">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-[#4e7cce] mt-1.5 shrink-0"></span>
+                                        <span>Apoyo técnico y pericial especializado.</span>
+                                    </li>
+                                    <li class="flex gap-3 items-start">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-[#4e7cce] mt-1.5 shrink-0"></span>
+                                        <span>Análisis interdisciplinario de los conflictos rurales.</span>
+                                    </li>
+                                    <li class="flex gap-3 items-start">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-[#4e7cce] mt-1.5 shrink-0"></span>
+                                        <span>Inclusión de profesionales en temas étnicos, campesinos y de género.</span>
+                                    </li>
+                                    <li class="flex gap-3 items-start">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-[#4e7cce] mt-1.5 shrink-0"></span>
+                                        <span>Garantía de un enfoque diferencial y territorial.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Soporte Social -->
+                        <div
+                            class="bg-white/60 rounded-3xl p-8 shadow-sm border border-white/80 flex flex-col hover:-translate-y-1 transition-transform duration-300"
+                        >
+                            <h3 class="text-2xl font-bold text-[#4e7cce] mb-2">
+                                Soporte Social
+                            </h3>
+                            <p
+                                class="text-xs text-[#93a2c1] font-bold uppercase tracking-widest mb-6"
+                            >
+                                Facilitadores Agrarios
+                            </p>
+                            <p
+                                class="text-[#3d3d47]/80 leading-relaxed mb-8"
+                            >
+                                La Defensoría del Pueblo incorpora los
+                                Facilitadores Agrarios y Rurales para fortalecer
+                                el acceso a la justicia en el campo, ofreciendo
+                                orientación jurídica gratuita a poblaciones
+                                vulnerables.
+                            </p>
+                            <div class="mt-4 bg-white/40 backdrop-blur-sm rounded-2xl p-5 border border-white/60 shadow-inner">
+                                <ul class="space-y-3 text-[#3d3d47]/80 text-sm font-medium">
+                                    <li class="flex gap-3 items-start">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-[#4e7cce] mt-1.5 shrink-0"></span>
+                                        <span>Orientación jurídica gratuita.</span>
+                                    </li>
+                                    <li class="flex gap-3 items-start">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-[#4e7cce] mt-1.5 shrink-0"></span>
+                                        <span>Acompañamiento en trámites y acceso a la justicia.</span>
+                                    </li>
+                                    <li class="flex gap-3 items-start">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-[#4e7cce] mt-1.5 shrink-0"></span>
+                                        <span>Priorización en zonas rurales y PDET.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Logística -->
+                        <div
+                            class="bg-white/60 rounded-3xl p-8 shadow-sm border border-white/80 flex flex-col hover:-translate-y-1 transition-transform duration-300"
+                        >
+                            <h3 class="text-2xl font-bold text-[#4e7cce] mb-2">
+                                Logística y Sostenibilidad
+                            </h3>
+                            <p
+                                class="text-xs text-[#93a2c1] font-bold uppercase tracking-widest mb-6"
+                            >
+                                Garantía Efectiva
+                            </p>
+                            <p
+                                class="text-[#3d3d47]/80 leading-relaxed mb-8"
+                            >
+                                La normativa establece mecanismos para
+                                garantizar el funcionamiento efectivo, incluso
+                                en zonas de difícil acceso. Se podrán compartir
+                                apoyos logísticos con entidades de la rama
+                                ejecutiva.
+                            </p>
+                            <div class="mt-4 bg-white/40 backdrop-blur-sm rounded-2xl p-5 border border-white/60 shadow-inner">
+                                <ul class="space-y-3 text-[#3d3d47]/80 text-sm font-medium">
+                                    <li class="flex gap-3 items-start">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-[#4e7cce] mt-1.5 shrink-0"></span>
+                                        <span>Convenios de logística compartida en zonas apartadas.</span>
+                                    </li>
+                                    <li class="flex gap-3 items-start">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-[#4e7cce] mt-1.5 shrink-0"></span>
+                                        <span>Garantía presupuestal para el funcionamiento del sistema.</span>
+                                    </li>
+                                    <li class="flex gap-3 items-start">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-[#4e7cce] mt-1.5 shrink-0"></span>
+                                        <span>Selección de personal mediante concurso de méritos.</span>
+                                    </li>
+                                    <li class="flex gap-3 items-start">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-[#4e7cce] mt-1.5 shrink-0"></span>
+                                        <span>Formación en normativa agraria y ambiental.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FOTOS AMBIENTALES 2 y 3 -->
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="h-[250px] md:h-[350px] rounded-[2rem] overflow-hidden shadow-lg border border-white/60 relative group">
+                        <SmartImage
+                            src="/images/multimedia-galeria/planton-socha-capacitacion-feb-2025/planton-socha-capacitacion-feb-2025-23.webp"
+                            alt="Actividades en Territorio"
+                            class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-1000"
+                        />
+                    </div>
+                    <div class="h-[250px] md:h-[350px] rounded-[2rem] overflow-hidden shadow-lg border border-white/60 relative group">
+                        <SmartImage
+                            src="/images/multimedia-galeria/seguimiento-huertas-nov-2025/seguimiento-huertas-nov-2025-1.webp"
+                            alt="Participación Comunitaria"
+                            class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-1000"
+                        />
+                    </div>
+                </div>
+
+                <!-- 4. Provisión de cargos -->
+                <section>
+                    <div class="text-center mb-16">
+                        <h2
+                            class="text-center text-4xl font-bold text-[#3d3d47] mb-4"
+                        >
+                            Provisión de Cargos y Operativización
+                        </h2>
+                        <div
+                            class="w-24 h-1 bg-gradient-to-r from-[#4e7cce] to-[#93a2c1] mx-auto rounded-full"
+                        >
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <!-- Concurso -->
+                        <div
+                            class="bg-white/60 rounded-3xl p-8 shadow-sm border border-white/80 hover:-translate-y-1 transition-transform duration-300"
+                        >
+                            <h4
+                                class="text-xl font-bold text-[#3d3d47] mb-3 flex items-center gap-3"
+                            >
+                                <span
+                                    class="bg-[#4e7cce] text-white text-sm w-8 h-8 rounded-full flex items-center justify-center shrink-0"
+                                    >1</span
+                                >
+                                Concurso de Méritos
+                            </h4>
+                            <p
+                                class="text-[#3d3d47]/70 text-sm mb-4 leading-relaxed pl-11"
+                            >
+                                La ley establece que todos los cargos deberán
+                                proveerse mediante concurso público de méritos,
+                                convocado por el Consejo Superior de la
+                                Judicatura a través de una universidad
+                                acreditada.
+                            </p>
+                        </div>
+
+                        <!-- Capacitación -->
+                        <div
+                            class="bg-white/60 rounded-3xl p-8 shadow-sm border border-white/80 hover:-translate-y-1 transition-transform duration-300"
+                        >
+                            <h4
+                                class="text-xl font-bold text-[#3d3d47] mb-3 flex items-center gap-3"
+                            >
+                                <span
+                                    class="bg-[#93a2c1] text-white text-sm w-8 h-8 rounded-full flex items-center justify-center shrink-0"
+                                    >2</span
+                                >
+                                Curso de Capacitación
+                            </h4>
+                            <p
+                                class="text-[#3d3d47]/70 text-sm mb-4 leading-relaxed pl-11"
+                            >
+                                Antes de posesionarse, jueces y magistrados
+                                deberán aprobar un curso obligatorio en
+                                normativa agraria, ambiental y administrativa,
+                                diseñado por la Escuela Judicial Rodrigo Lara
+                                Bonilla.
+                            </p>
+                        </div>
+
+                        <!-- Provisionalidad -->
+                        <div
+                            class="bg-white/60 rounded-3xl p-8 shadow-sm border border-white/80 hover:-translate-y-1 transition-transform duration-300"
+                        >
+                            <h4
+                                class="text-xl font-bold text-[#3d3d47] mb-3 flex items-center gap-3"
+                            >
+                                <span
+                                    class="bg-[#5e3b69] text-white text-sm w-8 h-8 rounded-full flex items-center justify-center shrink-0"
+                                    >3</span
+                                >
+                                Provisionalidad
+                            </h4>
+                            <p
+                                class="text-[#3d3d47]/70 text-sm mb-4 leading-relaxed pl-11"
+                            >
+                                Para acelerar la puesta en marcha, se permiten
+                                nombramientos provisionales en zonas priorizadas
+                                (PDET o núcleos de reforma agraria), con la
+                                obligación de aprobar el curso.
+                            </p>
+                        </div>
+
+                        <!-- Requisitos Inicio -->
+                        <div
+                            class="bg-white/60 rounded-3xl p-8 shadow-sm border border-white/80 hover:-translate-y-1 transition-transform duration-300"
+                        >
+                            <h4
+                                class="text-xl font-bold text-[#3d3d47] mb-3 flex items-center gap-3"
+                            >
+                                <span
+                                    class="bg-[#af9cb5] text-white text-sm w-8 h-8 rounded-full flex items-center justify-center shrink-0"
+                                    >4</span
+                                >
+                                Requisitos para el Inicio
+                            </h4>
+                            <p
+                                class="text-[#3d3d47]/70 text-sm mb-4 leading-relaxed pl-11"
+                            >
+                                Para que entre plenamente en funcionamiento,
+                                deben cumplirse etapas administrativas y
+                                presupuestales, incluyendo la definición de
+                                juzgados y recursos estatales.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FOTO AMBIENTAL 4 (Cierre) -->
+                <div class="w-full h-[300px] md:h-[400px] rounded-[2rem] overflow-hidden shadow-lg border border-white/60 relative group">
+                    <SmartImage
+                        src="/images/multimedia-galeria/visita-chita-julio/visita-chita-julio-39.webp"
+                        alt="Eventos y Trabajo de ILSA"
+                        class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-1000"
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+</Layout>

@@ -31,6 +31,154 @@ export const galleryData: GalleryCategory[] = [
         description: "",
         albums: [
     {
+        "id": "filbo-2026",
+        "title": "Filbo 2026",
+        "location": "Bogotá",
+        "date": "2026",
+        "images": [
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026.webp",
+                "alt": "Filbo 2026 - Imagen 1"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-2.webp",
+                "alt": "Filbo 2026 - Imagen 2"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-3.webp",
+                "alt": "Filbo 2026 - Imagen 3"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-4.webp",
+                "alt": "Filbo 2026 - Imagen 4"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-5.webp",
+                "alt": "Filbo 2026 - Imagen 5"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-6.webp",
+                "alt": "Filbo 2026 - Imagen 6"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-7.webp",
+                "alt": "Filbo 2026 - Imagen 7"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-8.webp",
+                "alt": "Filbo 2026 - Imagen 8"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-9.webp",
+                "alt": "Filbo 2026 - Imagen 9"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-10.webp",
+                "alt": "Filbo 2026 - Imagen 10"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-11.webp",
+                "alt": "Filbo 2026 - Imagen 11"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-12.webp",
+                "alt": "Filbo 2026 - Imagen 12"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-13.webp",
+                "alt": "Filbo 2026 - Imagen 13"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-14.webp",
+                "alt": "Filbo 2026 - Imagen 14"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-15.webp",
+                "alt": "Filbo 2026 - Imagen 15"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-16.webp",
+                "alt": "Filbo 2026 - Imagen 16"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-17.webp",
+                "alt": "Filbo 2026 - Imagen 17"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-18.webp",
+                "alt": "Filbo 2026 - Imagen 18"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-19.webp",
+                "alt": "Filbo 2026 - Imagen 19"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-20.webp",
+                "alt": "Filbo 2026 - Imagen 20"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-21.webp",
+                "alt": "Filbo 2026 - Imagen 21"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-22.webp",
+                "alt": "Filbo 2026 - Imagen 22"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-23.webp",
+                "alt": "Filbo 2026 - Imagen 23"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-24.webp",
+                "alt": "Filbo 2026 - Imagen 24"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-25.webp",
+                "alt": "Filbo 2026 - Imagen 25"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-26.webp",
+                "alt": "Filbo 2026 - Imagen 26"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-27.webp",
+                "alt": "Filbo 2026 - Imagen 27"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-28.webp",
+                "alt": "Filbo 2026 - Imagen 28"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-29.webp",
+                "alt": "Filbo 2026 - Imagen 29"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-30.webp",
+                "alt": "Filbo 2026 - Imagen 30"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-31.webp",
+                "alt": "Filbo 2026 - Imagen 31"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-32.webp",
+                "alt": "Filbo 2026 - Imagen 32"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-33.webp",
+                "alt": "Filbo 2026 - Imagen 33"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-34.webp",
+                "alt": "Filbo 2026 - Imagen 34"
+            },
+            {
+                "src": "/images/multimedia-galeria/filbo-2026/Filbo-2026-35.webp",
+                "alt": "Filbo 2026 - Imagen 35"
+            }
+        ]
+    },
+    {
         "id": "visita-chita-julio",
         "title": "Visita a huertas",
         "location": "Chita",
