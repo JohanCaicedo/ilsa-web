@@ -1,0 +1,175 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import SmartImage from "../../../components/atoms/SmartImage.astro";
+import GradientText from "../../../components/atoms/GradientText.astro";
+
+// Edge Caching (ISR) rule para Cloudflare
+export const prerender = false;
+Astro.response.headers.set(
+    "Cache-Control",
+    "public, s-maxage=3600, stale-while-revalidate=86400",
+);
+
+const title = "Participación en el Foro Multi-actor EU-LAC sobre Cuidados | ILSA";
+const description = "ILSA participó en Berlín en el Foro Multi-actor EU-LAC sobre Cuidados de larga duración en Europa, América Latina y el Caribe, visibilizando los derechos de las madres comunitarias.";
+---
+
+<Layout
+    title={title}
+    seo={{
+        title,
+        metaDesc: description,
+        opengraphDescription: description,
+        opengraphTitle: title,
+        opengraphImage: { sourceUrl: "/images/foro-multiactor/Foro-ID.jpg" },
+        twitterImage: { sourceUrl: "/images/foro-multiactor/Foro-ID.jpg" },
+    }}
+    width="wide"
+>
+    <div class="relative w-full overflow-hidden mb-32">
+        <!-- Hero Section -->
+        <section
+            class="relative pt-32 pb-24 md:pt-40 md:pb-32 px-4 flex flex-col items-center justify-center min-h-[50vh]"
+        >
+            <div class="absolute inset-0 pointer-events-none overflow-hidden">
+                <div
+                    class="absolute top-1/4 left-1/4 w-96 h-96 bg-[#4e7cce]/10 rounded-full blur-[100px] animate-pulse-slow"
+                >
+                </div>
+                <div
+                    class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#93a2c1]/10 rounded-full blur-[100px] animate-pulse-slow"
+                    style="animation-delay: 2s;"
+                >
+                </div>
+            </div>
+
+            <div class="relative z-10 max-w-5xl mx-auto text-center">
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 backdrop-blur-md border border-white/60 shadow-lg text-[#4e7cce] font-medium text-sm mb-8 tracking-wide"
+                >
+                    <span
+                        class="w-2 h-2 rounded-full bg-[#4e7cce] animate-pulse"
+                    ></span>
+                    NOTICIAS ESPECIALES
+                </div>
+
+                <div class="text-center w-full flex flex-col items-center">
+                    <h1
+                        class="text-center text-5xl md:text-7xl font-bold tracking-tight text-[#3d3d47] mb-8 leading-tight text-balance"
+                    >
+                        Participación en el <br />
+                        <GradientText
+                            as="span"
+                            text="Foro Multi-actor EU-LAC"
+                            size="text-5xl md:text-7xl"
+                            class="tracking-tight leading-tight"
+                        />
+                    </h1>
+                </div>
+
+                <div class="flex justify-center mb-12">
+                    <div class="inline-flex items-center gap-3 bg-white/60 px-6 py-3 rounded-full border border-white/80 shadow-sm text-sm md:text-base text-[#3d3d47]/80 font-bold backdrop-blur-md">
+                        <span class="relative flex h-2.5 w-2.5">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4e7cce] opacity-40"></span>
+                            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#4e7cce]"></span>
+                        </span>
+                        Berlín, Alemania | 5 de mayo de 2026
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contenedor Principal / Liquid Glass -->
+        <div class="max-w-6xl mx-auto px-4 relative z-10">
+            <div
+                class="bg-white/50 backdrop-blur-3xl border border-white/60 shadow-2xl shadow-slate-200/50 rounded-[3rem] p-8 md:p-16 space-y-16"
+            >
+                <!-- Foto Principal -->
+                <div class="w-full h-[350px] md:h-[500px] rounded-[2rem] overflow-hidden shadow-lg border border-white/60 relative group">
+                    <SmartImage 
+                        src="/images/foro-multiactor/Foro-ID.jpg" 
+                        alt="Participación en Foro EU-LAC" 
+                        class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-1000" 
+                    />
+                </div>
+
+                <div class="max-w-4xl mx-auto space-y-8 text-lg text-[#3d3d47]/80 leading-relaxed font-light">
+                    <p>
+                        <strong class="text-[#4e7cce] relative inline-block group cursor-default">
+                            Mayerly Díaz Castellanos
+                            <span class="absolute -bottom-1 left-0 w-full h-[2px] bg-gradient-to-r from-[#4e7cce] to-[#93a2c1] scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500 rounded-full"></span>
+                        </strong>, abogada especialista en políticas públicas y justicia de género, e investigadora del ILSA, fue delegada por la Dirección Ejecutiva para participar en el “Foro Multi-actor EU-LAC en el marco del Pacto Birregional por los Cuidados: Cuidados de larga duración en Europa, América Latina y el Caribe: ¿Trayectorias distintas, retos comunes?”.
+                    </p>
+                    <p>
+                        El Foro fue organizado por la Fundación EU-LAC y contó como socios con la Comisión Europea, Uruguay (PPT CELAC), WZB, GIZ, ONU Mujeres, CEPAL, OIT y la Alianza Global por los Cuidados.
+                    </p>
+
+                    <!-- Foto Acompañante 1 -->
+                    <div class="w-full h-[250px] md:h-[350px] rounded-[2rem] overflow-hidden shadow-sm border border-white/60 relative group my-12">
+                        <SmartImage 
+                            src="/images/multimedia-galeria/foro-multiactor/17.webp" 
+                            alt="Panel Laboratorio de Ideas" 
+                            class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-1000" 
+                        />
+                    </div>
+
+                    <p>
+                        ILSA participó en la sesión paralela denominada “Laboratorio de ideas: cooperaciones locales innovadoras (familia/comunidad/sector público/sector privado) para prestar cuidados de largo plazo”. El panel estuvo integrado por siete mujeres de Europa y América Latina y el Caribe. Entre ellas participó Natalia Moreno, directora de Cuidado del Ministerio de la Igualdad de Colombia, quien expuso la estrategia de las Manzanas del Cuidado y otras iniciativas territoriales desarrolladas en el país en materia de cuidado.
+                    </p>
+                    <p>
+                        Por su parte, ILSA, como única organización de la sociedad civil asistente en representación de Colombia, presentó el proceso de incidencia en políticas para la garantía de los derechos laborales de las madres comunitarias, en el cual ha sido un actor relevante mediante el apoyo técnico, jurídico y político. La intervención se enfocó en visibilizar la precarización de su trabajo y en exigir el reconocimiento pleno de sus derechos laborales.
+                    </p>
+
+                    <!-- Foto Acompañante 2 -->
+                    <div class="w-full h-[250px] md:h-[350px] rounded-[2rem] overflow-hidden shadow-sm border border-white/60 relative group my-12">
+                        <SmartImage 
+                            src="/images/multimedia-galeria/foro-multiactor/26.webp" 
+                            alt="Intervención ILSA en Berlín" 
+                            class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-1000" 
+                        />
+                    </div>
+                </div>
+
+                <!-- Lista de Retos -->
+                <div class="pt-8">
+                    <div class="text-center mb-12">
+                        <h2 class="text-center text-3xl font-bold text-[#3d3d47] mb-4">
+                            Retos frente al Derecho al Cuidado
+                        </h2>
+                        <div class="w-24 h-1 bg-gradient-to-r from-[#4e7cce] to-[#93a2c1] mx-auto rounded-full"></div>
+                        <p class="text-[#3d3d47]/70 mt-6 max-w-2xl mx-auto text-lg">
+                            Desde ILSA se plantearon los siguientes retos fundamentales durante la sesión:
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-white/60 rounded-3xl p-8 shadow-sm border border-white/80 hover:-translate-y-1 transition-transform duration-300 flex gap-4 items-start">
+                            <div class="w-10 h-10 rounded-full bg-[#4e7cce] text-white flex items-center justify-center font-bold shrink-0 shadow-md">1</div>
+                            <p class="text-[#3d3d47]/80 leading-relaxed pt-1">
+                                Reconocer el trabajo de cuidado realizado por las personas migrantes para sostener la vida y el mundo.
+                            </p>
+                        </div>
+                        <div class="bg-white/60 rounded-3xl p-8 shadow-sm border border-white/80 hover:-translate-y-1 transition-transform duration-300 flex gap-4 items-start">
+                            <div class="w-10 h-10 rounded-full bg-[#4e7cce] text-white flex items-center justify-center font-bold shrink-0 shadow-md">2</div>
+                            <p class="text-[#3d3d47]/80 leading-relaxed pt-1">
+                                Insistir en el reconocimiento pleno de la cuarta dimensión relacionada con entornos ambientalmente sanos para las personas cuidadoras.
+                            </p>
+                        </div>
+                        <div class="bg-white/60 rounded-3xl p-8 shadow-sm border border-white/80 hover:-translate-y-1 transition-transform duration-300 flex gap-4 items-start">
+                            <div class="w-10 h-10 rounded-full bg-[#4e7cce] text-white flex items-center justify-center font-bold shrink-0 shadow-md">3</div>
+                            <p class="text-[#3d3d47]/80 leading-relaxed pt-1">
+                                Instar a los Estados a reconocer e invertir en las prácticas de cuidado ancestrales, étnicas, campesinas y populares.
+                            </p>
+                        </div>
+                        <div class="bg-white/60 rounded-3xl p-8 shadow-sm border border-white/80 hover:-translate-y-1 transition-transform duration-300 flex gap-4 items-start">
+                            <div class="w-10 h-10 rounded-full bg-[#4e7cce] text-white flex items-center justify-center font-bold shrink-0 shadow-md">4</div>
+                            <p class="text-[#3d3d47]/80 leading-relaxed pt-1">
+                                Fortalecer la integralidad y articulación entre las políticas públicas de prevención en salud, promoción de la seguridad y soberanía alimentaria, cuidado ambiental y territorial, y protección de las y los defensores ambientales.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</Layout>

@@ -50,6 +50,14 @@ export const registeredLocalPages: LocalSpecialPage[] = [
         uri: "/noticias/jurisdiccion-agraria-y-rural",
         categorySlug: "noticias",
     },
+    {
+        title: "Participación en el Foro Multi-actor EU-LAC sobre Cuidados",
+        author: "ILSA",
+        date: "2026-05-05T12:00:00.000Z",
+        image: "/images/foro-multiactor/Foro-ID.jpg",
+        uri: "/noticias/especiales/foro-multiactor",
+        categorySlug: "noticias",
+    },
 ];
 
 /**
