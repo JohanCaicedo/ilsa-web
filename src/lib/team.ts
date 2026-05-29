@@ -29,14 +29,20 @@ export const teamData: TeamMember[] = [
         name: "Juanita Villamil",
         role: "Equipo de Dirección",
         image: "/person_place_holder.webp",
+        bio: "Abogada feminista y defensora de DDHH.",
+        fullDescription: `Mi nombre es Juanita Villamil, tengo 25 años. Soy abogada feminista de la Universidad Nacional, hija del movimiento estudiantil y luchadora incansable por una Universidad pública, gratuita y de calidad. Llevo más de 7 años caminando en la defensa popular de los Derechos Humanos y ambientales. Desde que entré a la universidad, en el 2018, comencé a caminar en el Comité de Derechos Humanos de la Universidad, perteneciente a la "Campaña Defender la Libertad es Asuntos de Todas", con quienes he puesto el cuerpo en el acompañamiento a escenarios de protesta social, denuncia y acompañamiento a víctimas de violencia policial, y la disputa por la protección a la protesta social. ¿Mi motivación? Nadie debería ser perseguido, criminalizado ni asesinado por luchar por mundos justos donde quepamos todas y todos.
+
+Igualmente, pertenecí al colectivo Blanca Villamil, con quienes, gracias al trabajo colectivo y popular, logramos la histórica primera sentencia de la Corte Constitucional que protege el escrache y a las colectivas que acompañan denuncias de violencias basadas en género. Fui una de las fundadoras de la Mesa de Género de la facultad de Derecho, Ciencias Políticas y Sociales, y fui representante estudiantil al Comité de Asuntos de Género, donde acompañé procesos de denuncia de Violencias Basadas en Género y logramos comenzar la actualización del protocolo de prevención, atención y acompañamiento de VBG de la universidad. Pero el trabajo no está sólo en la institución, la organización colectiva de las mujeres es lo que nos llevará a la construcción de una sociedad antipatriarcal, equitativa y verdaderamente revolucionaria.
+
+Actualmente me encuentro acabando una especialización en Derechos Humanos y Derecho Internacional Humanitario, para continuar con el ejercicio del derecho desde una perspectiva transformadora.`,
     },
     {
         id: "annette-pearson",
         name: "Annette Pearson",
         role: "Asesora de Dirección",
         image: "/person_place_holder.webp",
-        bio: "Experta en cooperación internacional y gestión de proyectos sociales.",
-        fullDescription: "Especialista en cooperación internacional, con más de 15 años de experiencia liderando proyectos de desarrollo social en América Latina. Ha trabajado en la articulación de redes de apoyo para organizaciones de base y en la formulación de estrategias para la sostenibilidad institucional.",
+        bio: "",
+        fullDescription: "",
     },
     {
         id: "francisco-javier-toloza",
@@ -78,7 +84,7 @@ export const boardData: TeamMember[] = [
         name: "Cristina Luna Calpa",
         role: "Presidenta",
         image: "/images/perfiles/Cristina Luna Calpa.webp",
-        bio: "Liderazgo estratégico y representación institucional.",
+        bio: "",
         fullDescription: "Abogada y activista con una destacada trayectoria en la defensa de los derechos territoriales.",
     },
     {
@@ -86,16 +92,16 @@ export const boardData: TeamMember[] = [
         name: "Ismael Díaz Barbosa",
         role: "Vicepresidente",
         image: "/images/perfiles/Ismael Díaz Barbosa.webp",
-        bio: "Apoyo a la dirección y coordinación política.",
-        fullDescription: "Líder social con experiencia en procesos organizativos campesinos.",
+        bio: "",
+        fullDescription: "",
     },
     {
         id: "edwin-de-los-rios",
         name: "Edwin de los Ríos Jaramillo",
         role: "Secretario",
         image: "/images/perfiles/Edwin de los Ríos Jaramillo.webp",
-        bio: "Gestión administrativa y actas institucionales.",
-        fullDescription: "Administrador con enfoque en gestión de entidades sin ánimo de lucro.",
+        bio: "Investigación, derechos territoriales y ruralidad.",
+        fullDescription: "Sociólogo, investigador. Miembro de la junta directiva del Instituto Latinoamericano para una Sociedad y un Derecho Alternativos - ILSA. Especialista en métodos y técnicas de investigación social por el Consejo Latinoamericano de Ciencias Sociales (CLACSO) y la Facultad Latinoamericana de Ciencias Sociales (FLACSO - Brasil). Candidato a Magíster en Investigación en Ciencias sociales por la universidad de Buenos Aires (Argentina) con su trabajo de tesis: ‘Conflictos de ordenamiento y gobernanza de los terrenos comunes en el caribe colombiano: Análisis de la construcción de lo común en el proceso de gobernanza del playón comunal de la ciénaga de \"Caño Palomo\" en el municipio de San Benito Abad (Sucre)’. Con desempeño profesional en trabajos relacionados con la metodología de la investigación social aplicada, técnicas de recolección (construcción) y análisis de información en temas relacionados con la problemática rural en Colombia, la exigibilidad y la garantía de los Derechos Económicos Sociales Culturales y Ambientales (DESCA) y el restablecimiento de los derechos de la población campesina, indígena y afrodescendiente víctima del conflicto armado en Colombia. Con experiencia de trabajo en educación popular para la incidencia y exigibilidad de la garantía de los derechos humanos, y en la elaboración de material pedagógico de apoyo para la apropiación de contenidos temáticos y normativos desde la perspectiva del empoderamiento jurídico comunitario. Actualmente se desempeña como profesional de apoyo de la Secretaría Técnica Indígena de la Comisión Nacional de Territorios Indígenas (STI-CNTI) y su Observatorio de Derechos Territoriales, en las acciones de seguimiento a las políticas y los procesos de formalización, protección y restitución de los derechos territoriales de los pueblos indígenas en Colombia.",
     },
     {
         id: "maria-eugenia-ramirez",
