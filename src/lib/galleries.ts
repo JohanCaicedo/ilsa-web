@@ -10,6 +10,7 @@ export interface GalleryAlbum {
     title: string; // Título visible del álbum / carpeta
     location?: string; // Lugar, e.g., "Bogotá, Colombia"
     date?: string; // Fecha, e.g., "Octubre 2023"
+    description?: string; // Descripción o info del evento
     images: GalleryImage[]; // Lista de imágenes
 }
 
@@ -30,6 +31,35 @@ export const galleryData: GalleryCategory[] = [
         title: "",
         description: "",
         albums: [
+    {
+        "id": "proceso-pedagogico-aquitania-2026",
+        "title": "Proceso pedagógico en Aquitania",
+        "location": "Aquitania, Boyacá",
+        "date": "Junio 2026",
+        "description": "Hoy 3 de junio de 2026, desde el municipio de Aquitania- Boyacá, ILSA en alianza con el Proceso Resistencia Aquitania y la Institución Educativa de Toquilla se da inicio a un proceso pedagógico que tiene como base fundamental la soberanía alimentaria, las económicas del cuidado y solidarias. Haciendo hincapié en el fortalecimiento de liderazgos de mujeres y jóvenes rurales con perspectiva de género y ambiental. En aras de fortalecer la permanencia en el territorio campesino y la defensa del mismo en el páramo Tota-Bijagual-Mamapacha.",
+        "images": [
+            {
+                "src": "/images/multimedia-galeria/anaquita/anaquita (1).webp",
+                "alt": "Proceso pedagógico en Aquitania - Imagen 1"
+            },
+            {
+                "src": "/images/multimedia-galeria/anaquita/anaquita (2).webp",
+                "alt": "Proceso pedagógico en Aquitania - Imagen 2"
+            },
+            {
+                "src": "/images/multimedia-galeria/anaquita/anaquita (3).webp",
+                "alt": "Proceso pedagógico en Aquitania - Imagen 3"
+            },
+            {
+                "src": "/images/multimedia-galeria/anaquita/anaquita (4).webp",
+                "alt": "Proceso pedagógico en Aquitania - Imagen 4"
+            },
+            {
+                "src": "/images/multimedia-galeria/anaquita/anaquita (5).webp",
+                "alt": "Proceso pedagógico en Aquitania - Imagen 5"
+            }
+        ]
+    },
     {
         "id": "filbo-2026",
         "title": "Filbo 2026",

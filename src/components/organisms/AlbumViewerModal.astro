@@ -16,6 +16,7 @@
                     <span id="album-modal-location" class="hidden md:flex items-center gap-1 before:content-[''] before:block before:w-1 before:h-1 before:bg-slate-300 before:rounded-full before:mr-2"></span>
                     <span id="album-modal-date" class="hidden md:flex items-center gap-1 before:content-[''] before:block before:w-1 before:h-1 before:bg-slate-300 before:rounded-full before:mr-2"></span>
                 </div>
+                <p id="album-modal-description" class="hidden text-slate-600 mt-2 max-w-3xl text-xs md:text-sm leading-relaxed"></p>
             </div>
             
             <button 
@@ -51,6 +52,7 @@
         countEl: HTMLElement | null = null;
         locationEl: HTMLElement | null = null;
         dateEl: HTMLElement | null = null;
+        descriptionEl: HTMLElement | null = null;
         closeBtn: HTMLButtonElement | null = null;
         
         currentImages: GalleryImage[] = [];
@@ -69,6 +71,7 @@
             this.countEl = this.querySelector("#album-modal-count");
             this.locationEl = this.querySelector("#album-modal-location");
             this.dateEl = this.querySelector("#album-modal-date");
+            this.descriptionEl = this.querySelector("#album-modal-description");
             this.closeBtn = this.querySelector("#close-album-modal");
 
             if (!this.modal) {
@@ -117,7 +120,7 @@
         }
 
         populateModal(album: GalleryAlbum) {
-            if (!this.titleEl || !this.grid || !this.countEl || !this.locationEl || !this.dateEl) {
+            if (!this.titleEl || !this.grid || !this.countEl || !this.locationEl || !this.dateEl || !this.descriptionEl) {
                 console.error("[AlbumModal] Missing internal elements to populate");
                 return;
             }
@@ -138,6 +141,13 @@
                 this.dateEl.classList.remove("hidden");
             } else {
                 this.dateEl.classList.add("hidden");
+            }
+
+            if (album.description) {
+                this.descriptionEl.textContent = album.description;
+                this.descriptionEl.classList.remove("hidden");
+            } else {
+                this.descriptionEl.classList.add("hidden");
             }
 
             this.currentImages = album.images;
