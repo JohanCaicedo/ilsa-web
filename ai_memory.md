@@ -51,6 +51,15 @@
     - Tamaño: 247KB, 8994 líneas.
 
 ## Refactorizaciones y Cambios
+ 
+### Session 23/06/2026 - Creación de Página Especial "Bienes SAE - ILSA"
+- **`src/pages/noticias/especiales/sae.astro`**:
+    - **New**: Creación de la página especial con diseño premium "Liquid Glass" que documenta la entrega de siete inmuebles por la SAE a organizaciones sociales en Bogotá.
+    - **Video e Interacción**: Integración de video local del director Freddy Ordóñez (`/images/sae/Palabras-Freddy_1.webm`) al lado de una tarjeta de cita contextual, eliminando estructuras lineales aburridas.
+    - **Cuadrícula y Lightbox**: Implementación de una grilla de organizaciones aliadas destacando el valor de reparación del refugio claretiano, y una galería masonry de 4 fotos conectadas a `GalleryLightbox` para visualización fluida.
+    - **Caching e ISR**: Configurado SSR (`prerender = false`) con cabecera de cache a 1 hora para Cloudflare.
+- **`src/lib/unifiedContent.ts`**:
+    - **Update**: Registro de la página de la SAE en la constante `registeredLocalPages` para que se liste automáticamente en las vistas generales de noticias del portal.
 
 ### Session 28/04/2026 - Refinamiento Institucional y Tono de Comunicación
 - **`tono-y-estilo.md`**:
@@ -212,6 +221,8 @@
 9. **CSS Transitions**: Ajustar duración de fade si 0.5s resulta lento para usuarios.
 
 ## Log de Commits
+- `feat(news): add premium sae specials page with video and dynamic masonry gallery`
+- `feat(unified-content): register sae specials page in main timeline`
 - `feat(content): define institutional tone guidelines and integrate history section into about page`
 - `feat: implementation of 'Glass Breaker' easter egg with Zelda music`
 - `chore: remove unused FluidGameEngine component`

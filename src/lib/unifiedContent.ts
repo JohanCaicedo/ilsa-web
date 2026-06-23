@@ -51,6 +51,14 @@ export const registeredLocalPages: LocalSpecialPage[] = [
         categorySlug: "noticias",
     },
     {
+        title: "La SAE entrega siete inmuebles en Bogotá: ILSA seleccionada para fortalecer proyectos de memoria y derechos humanos",
+        author: "ILSA",
+        date: "2026-06-23T12:00:00.000Z",
+        image: "/images/sae/sae (4).webp",
+        uri: "/noticias/especiales/sae",
+        categorySlug: "noticias",
+    },
+    {
         title: "Participación en el Foro Multi-actor EU-LAC sobre Cuidados",
         author: "ILSA",
         date: "2026-05-28T12:00:00.000Z",

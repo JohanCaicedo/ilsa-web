@@ -1,0 +1,510 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import SmartImage from "../../../components/atoms/SmartImage.astro";
+import GradientText from "../../../components/atoms/GradientText.astro";
+import GalleryLightbox from "../../../components/molecules/GalleryLightbox.astro";
+import { 
+    MapPin, 
+    Calendar, 
+    Video, 
+    Building2, 
+    Quote, 
+    ShieldCheck, 
+    Sparkles, 
+    Users, 
+    Heart, 
+    Home 
+} from "lucide-react";
+import type { SeoData } from "../../../lib/seo";
+
+// Edge Caching (ISR) rule para Cloudflare
+export const prerender = false;
+Astro.response.headers.set(
+    "Cache-Control",
+    "public, s-maxage=3600, stale-while-revalidate=86400",
+);
+
+const breadcrumbs = [
+    { label: "Noticias", href: "/noticias" },
+    { label: "Especiales", href: "/noticias" },
+    { label: "Bienes SAE - ILSA", href: "/noticias/especiales/sae" },
+];
+
+const seoData: SeoData = {
+    title: "La SAE entrega siete inmuebles en Bogotá: ILSA entre las organizaciones seleccionadas | ILSA",
+    metaDesc: "La Sociedad de Activos Especiales (SAE) entregó en Bogotá siete inmuebles incautados al narcotráfico y corrupción a diversas organizaciones sociales, entre ellas ILSA.",
+    opengraphTitle: "Bienes que Transforman: La SAE entrega inmuebles para la paz y la memoria",
+    opengraphDescription: "A través de 'Bienes que Transforman', la SAE entregó a organizaciones sociales como ILSA siete inmuebles en Bogotá anteriormente vinculados a economías ilícitas.",
+    opengraphImage: {
+        sourceUrl: "/images/sae/sae (4).webp",
+    },
+    twitterImage: {
+        sourceUrl: "/images/sae/sae (4).webp",
+    }
+};
+
+const organizations = [
+    {
+        name: "ILSA",
+        fullName: "Instituto Latinoamericano para una Sociedad y un Derecho Alternativos",
+        description: "Organización social seleccionada. Con la asignación del inmueble potenciará su labor histórica en la defensa de los derechos humanos, el acceso a la justicia y el fortalecimiento comunitario en la región, consolidando su impacto en la construcción de paz y la transformación social.",
+        highlight: true,
+    },
+    {
+        name: "Corp. Claretiana Norman Pérez Bello",
+        fullName: "Corporación Claretiana Norman Pérez Bello",
+        description: "Organización social seleccionada. El inmueble asignado perteneció a un operador financiero del Cartel de Cali y ahora será un refugio dedicado a la protección de líderes sociales y defensores de derechos humanos.",
+        symbolic: true,
+    },
+    {
+        name: "FUNSAMACH",
+        fullName: "Fundación Saberes Ancestrales Manyulo Chanapicama",
+        description: "Organización social seleccionada mediante invitación pública para recibir uno de los siete inmuebles destinados a proyectos sociales, culturales y de memoria.",
+        symbolic: false,
+    },
+    {
+        name: "Asociación Cultural Vuelo",
+        fullName: "Asociación Cultural Vuelo",
+        description: "Colectivo social seleccionado mediante invitación pública para recibir uno de los siete inmuebles destinados a proyectos sociales, culturales y de memoria.",
+        symbolic: false,
+    },
+    {
+        name: "Arte Acción Colombia",
+        fullName: "Arte Acción Colombia",
+        description: "Colectivo social seleccionado mediante invitación pública para recibir uno de los siete inmuebles destinados a proyectos sociales, culturales y de memoria.",
+        symbolic: false,
+    },
+    {
+        name: "COARCOS",
+        fullName: "Corporación para el Arte y el Conocimiento del Ser",
+        description: "Corporación seleccionada mediante invitación pública para recibir uno de los siete inmuebles destinados a proyectos sociales, culturales y de memoria.",
+        symbolic: false,
+    },
+    {
+        name: "Fundación Integrando Fronteras",
+        fullName: "Fundación Integrando Fronteras",
+        description: "Fundación seleccionada mediante invitación pública para recibir uno de los siete inmuebles destinados a proyectos sociales, culturales y de memoria.",
+        symbolic: false,
+    }
+];
+
+const galleryImages = [
+    { src: "/images/sae/sae (4).webp", alt: "Acto oficial de entrega de inmuebles de la SAE a ILSA y organizaciones aliadas" },
+    { src: "/images/sae/sae (1).webp", alt: "Representantes de organizaciones sociales y directivos de la SAE en Bogotá" },
+    { src: "/images/sae/sae (5).webp", alt: "Entrega física de los inmuebles que ahora serán centros de memoria y derechos humanos" },
+    { src: "/images/sae/sae (6).webp", alt: "Directivas de ILSA y participantes celebrando la asignación del nuevo espacio de trabajo" },
+];
+---
+
+<Layout
+    title="Especial: Entrega de Bienes SAE - ILSA"
+    width="wide"
+    seo={seoData}
+    breadcrumbs={breadcrumbs}
+>
+    <div class="relative min-h-screen pb-32">
+        <!-- Blobs decorativos de fondo (Liquid Glass Accent) -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+            <div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[var(--ilsa-blue-light)]/10 rounded-full blur-[120px] animate-blob"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[var(--ilsa-mujeres-light)]/10 rounded-full blur-[100px] animate-blob animation-delay-2000"></div>
+        </div>
+
+        <div class="relative z-10 pt-8 max-w-5xl mx-auto px-4 md:px-8">
+            
+            <!-- Hero Title & Badge -->
+            <div class="text-center mb-16 space-y-6">
+                <div class="inline-flex items-center justify-center gap-3 px-5 py-2.5 rounded-full bg-white/60 backdrop-blur-md border border-[var(--ilsa-blue-dark)]/25 shadow-sm">
+                    <span class="relative flex h-2.5 w-2.5">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--ilsa-blue-dark)] opacity-40"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--ilsa-blue-dark)]"></span>
+                    </span>
+                    <span class="text-xs font-bold text-[var(--ilsa-blue-dark)] uppercase tracking-[0.2em]">
+                        Reporte Especial
+                    </span>
+                </div>
+
+                <h1 class="text-4xl md:text-6xl text-center font-black drop-shadow-sm leading-[1.1] text-balance mx-auto text-slate-800">
+                    <GradientText
+                        text="Bienes que Transforman:"
+                        size="text-4xl md:text-6xl"
+                        weight="font-black"
+                        from="var(--ilsa-blue)"
+                        to="var(--ilsa-blue-dark)"
+                        asSpan={true}
+                    />
+                    <br />
+                    Bienes para la Memoria y la Paz
+                </h1>
+
+                <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto text-balance leading-relaxed font-light mt-4">
+                    La SAE entrega siete inmuebles en Bogotá para fortalecer proyectos sociales, culturales y de memoria: <strong class="text-slate-800 font-semibold">ILSA entre las organizaciones seleccionadas.</strong>
+                </p>
+
+                <!-- Metadata Row -->
+                <div class="flex flex-wrap items-center justify-center gap-6 pt-4 text-sm text-slate-500 font-medium">
+                    <div class="flex items-center gap-2 bg-white/50 px-4 py-2 rounded-full border border-white/60 backdrop-blur-sm shadow-sm">
+                        <MapPin className="w-4 h-4 text-[var(--ilsa-blue)]" />
+                        <span>Bogotá, Colombia</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-white/50 px-4 py-2 rounded-full border border-white/60 backdrop-blur-sm shadow-sm">
+                        <Calendar className="w-4 h-4 text-[var(--ilsa-blue)]" />
+                        <span>23 de junio, 2026</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-white/50 px-4 py-2 rounded-full border border-white/60 backdrop-blur-sm shadow-sm">
+                        <Building2 className="w-4 h-4 text-[var(--ilsa-blue)]" />
+                        <span>7 Inmuebles Entregados</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Liquid Glass Container -->
+            <div class="bg-white/50 backdrop-blur-3xl border border-white/60 shadow-2xl shadow-slate-200/50 rounded-[3rem] p-6 md:p-12 space-y-16">
+                
+                <!-- Foto Principal Destacada -->
+                <div class="w-full aspect-[16/9] md:h-[500px] rounded-[2.5rem] overflow-hidden shadow-xl border border-white/80 relative group">
+                    <SmartImage 
+                        src="/images/sae/sae (4).webp" 
+                        alt="Acto de entrega oficial de bienes por la SAE" 
+                        class="w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-1000"
+                        priority={true}
+                        width={1200}
+                        height={675}
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/45 to-transparent"></div>
+                    <div class="absolute bottom-6 left-6 right-6 text-white text-sm md:text-base font-light bg-black/30 backdrop-blur-sm px-5 py-3 rounded-2xl border border-white/10 max-w-max">
+                        Entrega de activos de economías ilícitas al tejido social de Bogotá.
+                    </div>
+                </div>
+
+                <!-- Intro / Resumen Editorial (2 Columnas) -->
+                <section class="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-8 items-stretch pt-4">
+                    <div class="space-y-6 text-slate-700 leading-relaxed text-lg font-light text-pretty">
+                        <p class="text-xl text-slate-800 font-normal leading-relaxed">
+                            En un paso clave para el fortalecimiento del tejido social y la defensa de los derechos humanos, la Sociedad de Activos Especiales (SAE) entregó a organizaciones localizadas en Bogotá, <strong class="text-[var(--ilsa-blue-dark)] font-semibold">siete inmuebles</strong> que anteriormente estaban vinculados a economías ilícitas, narcotráfico y corrupción.
+                        </p>
+                        <p>
+                            A través de las iniciativas <strong class="text-slate-800 font-medium">"Bienes que Transforman"</strong> y <strong class="text-slate-800 font-medium">"Activos para la Memoria"</strong>, el Gobierno Nacional asignó estos espacios a diversas organizaciones sociales seleccionadas mediante invitación pública.
+                        </p>
+                        <p>
+                            Con esta jornada, la SAE reafirma su compromiso de transformar los activos incautados a la criminalidad en herramientas vivas al servicio de la paz, la cultura y la memoria, permitiendo que organizaciones con la trayectoria de <strong class="text-slate-800 font-medium">ILSA</strong> cuenten con espacios para desplegar acciones de la mano de procesos organizativos de víctimas, mujeres, sectores vulnerabilizados y población rural.
+                        </p>
+                    </div>
+
+                    <!-- Stats Card (Liquid Glass) -->
+                    <div class="relative bg-gradient-to-br from-white/70 to-white/40 backdrop-blur-2xl rounded-3xl border border-white/80 shadow-xl overflow-hidden p-8 flex flex-col justify-between">
+                        <div class="absolute -top-16 -right-16 w-48 h-48 bg-[var(--ilsa-blue-dark)]/5 rounded-full blur-3xl pointer-events-none"></div>
+                        <div class="absolute inset-x-0 bottom-0 h-1.5 bg-gradient-to-r from-[var(--ilsa-blue)] via-[var(--ilsa-blue-dark)] to-[var(--ilsa-mujeres)]"></div>
+                        
+                        <h3 class="text-xl font-black text-slate-800 flex items-center gap-2 mb-6">
+                            <Sparkles className="w-5 h-5 text-[var(--ilsa-blue)]" />
+                            Impacto del Proyecto
+                        </h3>
+
+                        <div class="space-y-6">
+                            <div class="flex items-center gap-5">
+                                <div class="w-14 h-14 shrink-0 rounded-2xl bg-[var(--ilsa-blue)]/10 flex items-center justify-center border border-white/40 shadow-sm">
+                                    <span class="text-2xl font-black text-[var(--ilsa-blue)]">7</span>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-bold text-slate-800 uppercase tracking-wider">Inmuebles Asignados</div>
+                                    <div class="text-xs text-slate-500">Ubicados estratégicamente en Bogotá</div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-5">
+                                <div class="w-14 h-14 shrink-0 rounded-2xl bg-[var(--ilsa-mujeres)]/10 flex items-center justify-center border border-white/40 shadow-sm">
+                                    <span class="text-2xl font-black text-[var(--ilsa-mujeres)]">2</span>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-bold text-slate-800 uppercase tracking-wider">Programas de Estado</div>
+                                    <div class="text-xs text-slate-500">Bienes que Transforman / Activos para la Memoria</div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-5">
+                                <div class="w-14 h-14 shrink-0 rounded-2xl bg-teal-500/10 flex items-center justify-center border border-white/40 shadow-sm">
+                                    <span class="text-2.5xl font-black text-teal-600">1</span>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-bold text-slate-800 uppercase tracking-wider">Destino Común</div>
+                                    <div class="text-xs text-slate-500">Construcción de paz, DDHH y memoria viva</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </section>
+
+                <!-- Separador de ondas / gradiente -->
+                <div class="relative py-4">
+                    <div class="w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-white border border-slate-200 rounded-full flex items-center justify-center shadow-sm">
+                        <div class="w-2 h-2 bg-[var(--ilsa-blue)] rounded-full"></div>
+                    </div>
+                </div>
+
+                <!-- Video del Director y su Cita (Evitando layouts lineales y genéricos) -->
+                <section class="space-y-8">
+                    <div class="text-center max-w-2xl mx-auto mb-8">
+                        <div class="inline-flex items-center gap-2 bg-[var(--ilsa-blue)]/5 text-[var(--ilsa-blue-dark)] text-xs font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full mb-3 border border-[var(--ilsa-blue)]/10">
+                            <Video className="w-3.5 h-3.5" />
+                            Palabras de la Dirección
+                        </div>
+                        <h2 class="text-3xl font-black text-slate-800 tracking-tight">Intervención de Nuestro Director</h2>
+                        <p class="text-slate-500 text-sm mt-1">Freddy Ordóñez Gómez, Director Ejecutivo de ILSA.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        <!-- Reproductor de Video en Liquid Glass (Adaptado para formato vertical 9:16) -->
+                        <div class="lg:col-span-5 flex justify-center w-full">
+                            <div class="relative w-full max-w-[320px] bg-white/40 p-3 rounded-[2.5rem] border border-white/80 shadow-xl overflow-hidden backdrop-blur-xl">
+                                <div class="absolute inset-0 -z-10 bg-gradient-to-br from-white to-slate-100/50"></div>
+                                
+                                <div class="relative w-full aspect-[9/16] rounded-[1.8rem] overflow-hidden bg-slate-950 shadow-inner group">
+                                    <video
+                                        src="/images/sae/Palabras-Freddy_1.webm"
+                                        controls
+                                        preload="metadata"
+                                        class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-700"
+                                        playsinline
+                                    >
+                                        Su navegador no soporta reproducción de video local HTML5.
+                                    </video>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cita Textual Destacada -->
+                        <div class="lg:col-span-7 relative flex flex-col justify-center p-8 md:p-10 bg-gradient-to-br from-[var(--ilsa-blue-dark)]/5 to-[var(--ilsa-blue)]/[0.02] rounded-[2.5rem] border border-[var(--ilsa-blue-dark)]/10 shadow-lg min-h-[300px]">
+                            <div class="absolute top-6 left-6 text-[var(--ilsa-blue)]/10 pointer-events-none">
+                                <Quote className="w-16 h-16 fill-current" />
+                            </div>
+                            
+                            <blockquote class="relative z-10 text-slate-700 text-base md:text-lg font-light italic leading-relaxed text-pretty">
+                                "El trabajo que desde 1978 ha adelantado ILSA se orienta mucho a la transformación radical de la sociedad a partir del uso del derecho para garantizar tanto el estado social de derecho como los derechos de todos los sectores subalternos de la sociedad. Sin lugar a dudas este bien contribuirá a esa tarea en el sentido de poder desarrollar procesos pedagógicos y abogacía popular con autoridades sociales como las víctimas del conflicto. Para construir paz y para cerrarle los espacios a la violencia."
+                            </blockquote>
+                            
+                            <div class="mt-8 flex items-center gap-4 border-t border-slate-200/60 pt-5">
+                                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[var(--ilsa-blue)] to-[var(--ilsa-blue-dark)] flex items-center justify-center text-white font-bold text-lg shadow-md border border-white/20 select-none">
+                                    FO
+                                </div>
+                                <div>
+                                    <h4 class="font-extrabold text-slate-800 leading-tight">Freddy Ordóñez Gómez</h4>
+                                    <p class="text-xs text-slate-500 font-bold uppercase tracking-wider mt-0.5">Director Ejecutivo ILSA</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Separador -->
+                <div class="relative py-4">
+                    <div class="w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
+                </div>
+
+                <!-- Detalle de ILSA (Foco en labor institucional) -->
+                <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-5 space-y-6">
+                        <div class="inline-flex items-center gap-2 bg-teal-500/5 text-teal-700 text-xs font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full border border-teal-500/10">
+                            <ShieldCheck className="w-3.5 h-3.5" />
+                            Impacto Institucional
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-black text-slate-800 tracking-tight leading-tight">
+                            ILSA entre las organizaciones seleccionadas
+                        </h2>
+                        <p class="text-slate-600 leading-relaxed font-light">
+                            Entre las entidades destaca de manera especial el <strong class="text-slate-800 font-medium">Instituto Latinoamericano para una Sociedad y un Derecho Alternativos (ILSA)</strong>. Con la asignación de uno de estos inmuebles, ILSA potenciará su labor histórica en la defensa de los derechos humanos, el acceso a la justicia y el fortalecimiento comunitario en la región.
+                        </p>
+                        <p class="text-slate-600 leading-relaxed font-light">
+                            Este nuevo espacio se convertirá en un punto estratégico para robustecer los procesos de formación, investigación y acompañamiento, consolidando su impacto en la construcción de paz y la transformación social desde la práctica legal crítica.
+                        </p>
+                    </div>
+
+                    <div class="lg:col-span-7">
+                        <div class="relative rounded-[2.5rem] overflow-hidden aspect-[4/3] md:aspect-[16/10] border border-white/80 shadow-lg group">
+                            <SmartImage 
+                                src="/images/sae/sae (1).webp" 
+                                alt="Representantes de la SAE entregando las llaves del inmueble a ILSA" 
+                                class="w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-700"
+                                width={800}
+                                height={500}
+                            />
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Separador -->
+                <div class="relative py-4">
+                    <div class="w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
+                </div>
+
+                <!-- Grid de Organizaciones Beneficiarias (Liquid Glass Cards) -->
+                <section class="space-y-12">
+                    <div class="text-center max-w-2xl mx-auto">
+
+                        <h2 class="text-3xl md:text-4xl font-black text-slate-800 tracking-tight text-center">El Tejido Social Beneficiado</h2>
+                        <p class="text-slate-500 font-light mt-2 text-pretty">
+                            Además de ILSA, la entrega benefició a colectivos como la Fundación Saberes Ancestrales Manyulo Chanapicama (FUNSAMACH), la Asociación Cultural Vuelo, Arte Acción Colombia, la Corporación para el Arte y el Conocimiento del Ser (COARCOS), la Fundación Integrando Fronteras y la Corporación Claretiana Norman Pérez Bello.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
+                        {
+                            organizations.map((org) => (
+                                <div class={`group relative bg-white/60 backdrop-blur-xl rounded-[2rem] p-7 border transition-all duration-500 flex flex-col justify-between overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1
+                                    ${org.highlight ? 'border-[var(--ilsa-blue-dark)]/40 bg-white/90 shadow-md ring-1 ring-[var(--ilsa-blue-light)]/20' : 'border-white/80'}
+                                    ${org.symbolic ? 'border-amber-500/40 bg-amber-50/[0.04] ring-1 ring-amber-500/10' : ''}
+                                `}>
+                                    <!-- Decorative icon background -->
+                                    <div class="absolute -right-4 -bottom-6 text-[100px] font-black pointer-events-none select-none text-slate-900/[0.02] group-hover:text-slate-900/[0.04] transition-colors duration-500 leading-none">
+                                        {org.name.charAt(0)}
+                                    </div>
+
+                                    {/* Top decorative gradient bar */}
+                                    <div class={`absolute inset-x-0 bottom-0 h-1 transition-opacity duration-500
+                                        ${org.highlight ? 'bg-gradient-to-r from-[var(--ilsa-blue)] to-[var(--ilsa-blue-dark)]' : ''}
+                                        ${org.symbolic ? 'bg-gradient-to-r from-amber-500 to-red-500' : 'bg-slate-300 group-hover:bg-[var(--ilsa-blue)]'}
+                                    `}></div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between gap-3 mb-4">
+                                            <h3 class={`text-xl font-extrabold tracking-tight truncate flex-1
+                                                ${org.highlight ? 'text-[var(--ilsa-blue-dark)]' : 'text-slate-800'}
+                                                ${org.symbolic ? 'text-amber-800' : ''}
+                                            `}>
+                                                {org.name}
+                                            </h3>
+                                            
+                                            {org.highlight && (
+                                                <span class="shrink-0 bg-[var(--ilsa-blue)]/10 text-[var(--ilsa-blue)] text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full border border-[var(--ilsa-blue)]/20">
+                                                    Destacado
+                                                </span>
+                                            )}
+
+                                            {org.symbolic && (
+                                                <span class="shrink-0 bg-amber-500/10 text-amber-700 text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full border border-amber-500/20 flex items-center gap-1">
+                                                    <Heart className="w-2.5 h-2.5 fill-current" />
+                                                    Simbólico
+                                                </span>
+                                            )}
+                                        </div>
+
+                                        <p class="text-sm text-slate-500 font-bold uppercase tracking-wider mb-2 leading-none">
+                                            {org.fullName}
+                                        </p>
+
+                                        <p class="text-slate-600 text-sm leading-relaxed font-light text-pretty">
+                                            {org.description}
+                                        </p>
+                                    </div>
+
+                                    {/* Card Footer notes */}
+                                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center gap-2">
+                                        <div class={`w-2 h-2 rounded-full 
+                                            ${org.highlight ? 'bg-[var(--ilsa-blue)]' : ''}
+                                            ${org.symbolic ? 'bg-amber-500' : 'bg-slate-300'}
+                                        `}></div>
+                                        <span class="text-[11px] text-slate-400 font-medium uppercase tracking-widest">
+                                            {org.symbolic ? "Refugio de Memoria" : "Asignación Especial"}
+                                        </span>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+
+                    <!-- Highlight especial simbólico (Norman Pérez Bello card support callout) -->
+                    <div class="relative bg-gradient-to-r from-amber-500/5 via-red-500/[0.02] to-transparent p-6 md:p-8 rounded-[2.5rem] border border-amber-500/15 flex flex-col md:flex-row items-center gap-6 overflow-hidden">
+                        <div class="absolute -right-16 -top-16 w-36 h-36 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                        
+                        <div class="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center shrink-0 border border-amber-500/20 text-amber-600">
+                            <Heart className="w-6 h-6 fill-current animate-pulse" />
+                        </div>
+                        <div class="flex-1 space-y-2 text-center md:text-left">
+
+                            <p class="text-sm text-slate-600 leading-relaxed font-light text-balance">
+                                El inmueble entregado a la <strong class="text-slate-800 font-semibold">Corporación Claretiana Norman Pérez Bello</strong> posee una alta carga de memoria histórica: perteneció anteriormente a un operador financiero del <strong class="text-red-700 font-medium">Cartel de Cali</strong>. Hoy es transformado por mandato de paz en un refugio vital para la protección e integridad de líderes y defensores de DDHH.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Separador -->
+                <div class="relative py-4">
+                    <div class="w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
+                </div>
+
+                <!-- Galería del Evento (SAE imágenes) -->
+                <section class="space-y-8">
+                    <div class="text-center max-w-2xl mx-auto">
+                        <div class="inline-flex items-center gap-2 bg-emerald-500/5 text-emerald-700 text-xs font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full mb-3 border border-emerald-500/10">
+                            <Sparkles className="w-3.5 h-3.5" />
+                            Registro Fotográfico
+                        </div>
+                        <h2 class="text-3xl font-black text-slate-800 tracking-tight text-center">Galería del Evento</h2>
+                        <p class="text-slate-500 text-sm mt-1">Haz clic sobre cualquier imagen para abrir el visor en alta resolución.</p>
+                    </div>
+
+                    <GalleryLightbox>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-4 md:px-0">
+                            {
+                                galleryImages.map((img, idx) => (
+                                    <button
+                                        type="button"
+                                        class="gallery-thumb break-inside-avoid relative rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 group border border-white/80 bg-white/50 backdrop-blur-sm cursor-zoom-in block w-full aspect-[4/3] text-left"
+                                        data-index={idx}
+                                        aria-label={`Ver foto ${idx + 1} de la entrega de bienes SAE`}
+                                    >
+                                        <SmartImage 
+                                            src={img.src}
+                                            alt={img.alt}
+                                            class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-103"
+                                            width={500}
+                                            height={375}
+                                        />
+                                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none" />
+                                        
+                                        <div class="absolute bottom-4 left-4 right-4 text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 truncate">
+                                            {img.alt}
+                                        </div>
+
+                                        <div class="absolute top-3 right-3 bg-white/80 backdrop-blur-sm rounded-full p-2.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-md">
+                                            <svg
+                                                class="w-4 h-4 text-slate-700"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                stroke-width="2.5"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
+                                                />
+                                            </svg>
+                                        </div>
+                                    </button>
+                                ))
+                            }
+                        </div>
+                    </GalleryLightbox>
+                </section>
+
+                <!-- Cierre institucional / Pie de página del Liquid Glass -->
+                <footer class="pt-8 text-center border-t border-slate-100 max-w-2xl mx-auto space-y-4">
+                    <p class="text-sm text-slate-500 font-light italic leading-relaxed text-pretty">
+                        "Con esta jornada, la SAE reafirma su compromiso de transformar los activos incautados a la criminalidad en herramientas vivas al servicio de la paz, la cultura y la memoria, permitiendo que organizaciones con la trayectoria de ILSA cuenten con espacios para desplegar acciones de la mano de procesos organizativos de víctimas, mujeres, sectores vulnerabilizados y población rural."
+                    </p>
+                    <div class="flex items-center justify-center gap-3">
+                        <div class="h-px w-8 bg-slate-200"></div>
+                        <span class="text-xs text-[var(--ilsa-blue-dark)] font-bold uppercase tracking-[0.2em]">SAE · ILSA 2026</span>
+                        <div class="h-px w-8 bg-slate-200"></div>
+                    </div>
+                </footer>
+
+            </div>
+
+        </div>
+    </div>
+</Layout>
