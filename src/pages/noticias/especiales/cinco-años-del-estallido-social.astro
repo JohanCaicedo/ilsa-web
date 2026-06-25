@@ -1,0 +1,363 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import SmartImage from "../../../components/atoms/SmartImage.astro";
+import GradientText from "../../../components/atoms/GradientText.astro";
+import {
+    MapPin,
+    Calendar,
+    Building2,
+    Users,
+    ShieldCheck,
+    Sparkles,
+    Home,
+} from "lucide-react";
+import type { SeoData } from "../../../lib/seo";
+
+// Edge Caching (ISR) rule para Cloudflare
+export const prerender = false;
+Astro.response.headers.set(
+    "Cache-Control",
+    "public, s-maxage=3600, stale-while-revalidate=86400",
+);
+
+const breadcrumbs = [
+    { label: "Noticias", href: "/noticias" },
+    { label: "Especiales", href: "/noticias" },
+    {
+        label: "Foro Estallido Social",
+        href: "/noticias/especiales/foro-estallido-social",
+    },
+];
+
+const seoData: SeoData = {
+    title: "Foro: Diálogos de saberes a cinco años del estallido social | ILSA",
+    metaDesc:
+        "Espacio de diálogo plural e interdisciplinario para la construcción colectiva de memoria, verdad y garantías de no repetición sobre el Estallido Social en Colombia.",
+    opengraphTitle:
+        "Foro: Diálogos de saberes a cinco años del estallido social",
+    opengraphDescription:
+        "Acompáñanos este 30 de junio de 2026 en la Universidad Nacional de Colombia para dialogar y construir memoria colectiva sobre la movilización social.",
+    opengraphImage: {
+        sourceUrl: "/images/sae/sae (4).webp", // Puedes cambiarla por la ruta de la imagen del foro si cuentas con ella
+    },
+    twitterImage: {
+        sourceUrl: "/images/sae/sae (4).webp",
+    },
+};
+
+const objectives = [
+    {
+        title: "Visibilizar y dignificar",
+        description:
+            "Reconocer las experiencias y testimonios de las personas y organizaciones participantes como fuentes fundamentales de verdad.",
+    },
+    {
+        title: "Articular saberes",
+        description:
+            "Unir esfuerzos entre la academia, organizaciones de derechos humanos y sociedad civil para una lectura integral de las implicaciones del estallido.",
+    },
+    {
+        title: "Fortalecer redes",
+        description:
+            "Potenciar los lazos entre actores sociales, academia e institucionalidad dedicados a la defensa de los derechos humanos en Colombia.",
+    },
+    {
+        title: "Esclarecimiento histórico",
+        description:
+            "Conocer el trabajo del Comité de Expertos Ad hoc para el esclarecimiento de violaciones a los DDHH entre 2019 y 2021.",
+    },
+];
+---
+
+<Layout
+    title="Foro: Diálogos de saberes a cinco años del estallido social"
+    width="wide"
+    seo={seoData}
+    breadcrumbs={breadcrumbs}
+>
+    <div class="relative min-h-screen pb-32">
+        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+            <div
+                class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[var(--ilsa-blue-light)]/10 rounded-full blur-[120px] animate-blob"
+            >
+            </div>
+            <div
+                class="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[var(--ilsa-mujeres-light)]/10 rounded-full blur-[100px] animate-blob animation-delay-2000"
+            >
+            </div>
+        </div>
+
+        <div class="relative z-10 pt-8 max-w-5xl mx-auto px-4 md:px-8">
+            <div class="text-center mb-16 space-y-6">
+                <div
+                    class="inline-flex items-center justify-center gap-3 px-5 py-2.5 rounded-full bg-white/60 backdrop-blur-md border border-[var(--ilsa-blue-dark)]/25 shadow-sm mx-auto"
+                >
+                    <span class="relative flex h-2.5 w-2.5">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--ilsa-blue-dark)] opacity-40"
+                        ></span>
+                        <span
+                            class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--ilsa-blue-dark)]"
+                        ></span>
+                    </span>
+                    <span
+                        class="text-xs font-bold text-[var(--ilsa-blue-dark)] uppercase tracking-[0.2em]"
+                    >
+                        Foro
+                    </span>
+                </div>
+
+                <h1
+                    class="text-4xl md:text-6xl text-center font-black drop-shadow-sm leading-[1.1] text-balance mx-auto text-slate-800"
+                >
+                    <GradientText
+                        text="Diálogos de saberes:"
+                        size="text-4xl md:text-6xl"
+                        weight="font-black"
+                        from="var(--ilsa-blue)"
+                        to="var(--ilsa-blue-dark)"
+                        asSpan={true}
+                    />
+                    <br />
+                    A cinco años del estallido social
+                </h1>
+
+                <div
+                    class="flex flex-wrap items-center justify-center gap-6 pt-4 text-sm text-slate-500 font-medium"
+                >
+                    <div
+                        class="flex items-center gap-2 bg-white/50 px-4 py-2 rounded-full border border-white/60 backdrop-blur-sm shadow-sm"
+                    >
+                        <Calendar className="w-4 h-4 text-[var(--ilsa-blue)]" />
+                        <span>30 de junio, 2026 (10:00 AM - 12:00 M)</span>
+                    </div>
+                    <div
+                        class="flex items-center gap-2 bg-white/50 px-4 py-2 rounded-full border border-white/60 backdrop-blur-sm shadow-sm"
+                    >
+                        <MapPin className="w-4 h-4 text-[var(--ilsa-blue)]" />
+                        <span>Auditorio edificio 601, Universidad Nacional</span
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="bg-white/50 backdrop-blur-3xl border border-white/60 shadow-2xl shadow-slate-200/50 rounded-[3rem] p-6 md:p-12 space-y-16"
+            >
+                <section
+                    class="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-8 items-stretch pt-4"
+                >
+                    <div
+                        class="space-y-6 text-slate-700 leading-relaxed text-lg font-light text-pretty"
+                    >
+                        <h2
+                            class="text-2xl font-black text-slate-800 text-center lg:text-left"
+                        >
+                            Justificación
+                        </h2>
+                        <p
+                            class="text-xl text-slate-800 font-normal leading-relaxed"
+                        >
+                            Desde el 28 de abril de 2021, Colombia vivió uno de
+                            los momentos más significativos y dolorosos de la
+                            historia reciente de la democracia y la movilización
+                            social. La protesta en el país se acrecentó y el
+                            Estallido Social se convirtió en la expresión
+                            popular contra décadas de desigualdad y violencias.
+                        </p>
+                        <p>
+                            Las calles se llenaron de personas que exigían
+                            condiciones de vida digna, encontrando como
+                            respuesta la estigmatización, el uso
+                            desproporcionado de la fuerza, detenciones
+                            arbitrarias y graves vulneraciones a los derechos
+                            humanos que fracturaron el tejido social.
+                        </p>
+                        <p>
+                            Cinco años después, las voces siguen vivas. Este
+                            foro nace de la convicción de rescatar la memoria
+                            frente a los discursos que pretenden limitar el
+                            derecho a la protesta o validar la represión
+                            estatal. La verdad debe construirse colectivamente
+                            integrando el saber académico, institucional y
+                            comunitario.
+                        </p>
+                    </div>
+
+                    <div
+                        class="relative bg-gradient-to-br from-white/70 to-white/40 backdrop-blur-2xl rounded-3xl border border-white/80 shadow-xl overflow-hidden p-8 flex flex-col"
+                    >
+                        <div
+                            class="absolute -top-16 -right-16 w-48 h-48 bg-[var(--ilsa-blue-dark)]/5 rounded-full blur-[120px] pointer-events-none"
+                        >
+                        </div>
+                        <div
+                            class="absolute inset-x-0 bottom-0 h-1.5 bg-gradient-to-r from-[var(--ilsa-blue)] via-[var(--ilsa-blue-dark)] to-[var(--ilsa-mujeres)]"
+                        >
+                        </div>
+
+                        <h3
+                            class="text-xl font-black text-slate-800 flex items-center justify-center lg:justify-start gap-2 mb-3 text-center lg:text-left"
+                        >
+                            <Sparkles
+                                className="w-5 h-5 shrink-0 text-[var(--ilsa-blue)]"
+                            />
+                            Ubicación y Hora
+                        </h3>
+
+                        <div class="space-y-6 my-auto">
+                            <div
+                                class="flex flex-col sm:flex-row items-center lg:items-start gap-5 text-center sm:text-left"
+                            >
+                                <div
+                                    class="w-14 h-14 shrink-0 rounded-2xl bg-[var(--ilsa-blue)]/10 flex items-center justify-center border border-white/40 shadow-sm"
+                                >
+                                    <Building2
+                                        className="w-6 h-6 text-[var(--ilsa-blue)]"
+                                    />
+                                </div>
+                                <div>
+                                    <div
+                                        class="text-sm font-bold text-slate-800 uppercase tracking-wider"
+                                    >
+                                        Lugar
+                                    </div>
+                                    <div class="text-xs text-slate-500">
+                                        Facultad de Derecho, Ciencias Políticas
+                                        y Sociales.<br />
+                                        Auditorio edificio 601. Universidad Nacional
+                                        de Colombia.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="flex flex-col sm:flex-row items-center lg:items-start gap-5 text-center sm:text-left"
+                            >
+                                <div
+                                    class="w-14 h-14 shrink-0 rounded-2xl bg-[var(--ilsa-mujeres)]/10 flex items-center justify-center border border-white/40 shadow-sm"
+                                >
+                                    <Calendar
+                                        className="w-6 h-6 text-[var(--ilsa-mujeres)]"
+                                    />
+                                </div>
+                                <div>
+                                    <div
+                                        class="text-sm font-bold text-slate-800 uppercase tracking-wider"
+                                    >
+                                        Fecha y Horario
+                                    </div>
+                                    <div class="text-xs text-slate-500">
+                                        30 de junio de 2026<br />
+                                        10:00 AM a 12:00 M.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="relative py-4">
+                    <div
+                        class="w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"
+                    >
+                    </div>
+                    <div
+                        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-white border border-slate-200 rounded-full flex items-center justify-center shadow-sm"
+                    >
+                        <div class="w-2 h-2 bg-[var(--ilsa-blue)] rounded-full">
+                        </div>
+                    </div>
+                </div>
+
+                <section class="space-y-8">
+                    <div class="text-center max-w-2xl mx-auto">
+                        <div
+                            class="inline-flex items-center gap-2 bg-teal-500/5 text-teal-700 text-xs font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full border border-teal-500/10 mx-auto"
+                        >
+                            <ShieldCheck className="w-3.5 h-3.5" />
+                            Horizonte Institucional
+                        </div>
+                        <h2
+                            class="text-3xl font-black text-slate-800 tracking-tight text-center mt-3"
+                        >
+                            Objetivo General
+                        </h2>
+                        <p
+                            class="text-slate-600 leading-relaxed font-light mt-2 max-w-3xl mx-auto text-balance text-center"
+                        >
+                            Generar un espacio de diálogo plural e
+                            interdisciplinario que contribuya a la construcción
+                            colectiva de memoria, verdad y garantías de no
+                            repetición sobre los hechos ocurridos en el
+                            Estallido Social y sobre el ejercicio del derecho a
+                            la protesta.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
+                        {
+                            objectives.map((obj) => (
+                                <div class="bg-white/40 border border-white/60 p-6 rounded-2xl shadow-sm space-y-2">
+                                    <h3 class="font-extrabold text-slate-800 text-lg flex items-center gap-2">
+                                        <span class="w-2 h-2 rounded-full bg-[var(--ilsa-blue)] shrink-0" />
+                                        {obj.title}
+                                    </h3>
+                                    <p class="text-sm text-slate-600 font-light leading-relaxed">
+                                        {obj.description}
+                                    </p>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </section>
+
+                <div class="relative py-4">
+                    <div
+                        class="w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"
+                    >
+                    </div>
+                </div>
+
+                <footer
+                    class="pt-8 text-center border-t border-slate-100 max-w-3xl mx-auto space-y-6"
+                >
+                    <div class="space-y-2">
+                        <div
+                            class="inline-flex items-center gap-2 bg-emerald-500/5 text-emerald-700 text-xs font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full border border-emerald-500/10 mx-auto"
+                        >
+                            <Users className="w-3.5 h-3.5" />
+                            Convocan
+                        </div>
+                        <ul
+                            class="text-sm text-slate-600 font-medium space-y-2 pt-2"
+                        >
+                            <li>
+                                Instituto Latinoamericano para una Sociedad y un
+                                Derecho Alternativos (ILSA)
+                            </li>
+                            <li>
+                                Vicedecanatura de Investigación y Extensión.
+                                Facultad de Derecho, Ciencias Políticas y
+                                Sociales. Universidad Nacional de Colombia
+                            </li>
+                            <li>
+                                Grupo de Trabajo de Clacso “Pensamiento jurídico
+                                crítico y luchas antisistémicas”
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="flex items-center justify-center gap-3 pt-4">
+                        <div class="h-px w-8 bg-slate-200"></div>
+                        <span
+                            class="text-xs text-[var(--ilsa-blue-dark)] font-bold uppercase tracking-[0.2em]"
+                            >ILSA · UNAL 2026</span
+                        >
+                        <div class="h-px w-8 bg-slate-200"></div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+</Layout>

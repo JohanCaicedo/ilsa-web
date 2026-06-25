@@ -52,7 +52,7 @@ const organizations = [
         fullName:
             "Instituto Latinoamericano para una Sociedad y un Derecho Alternativos",
         description:
-            "Organización social seleccionada. Con la asignación del inmueble potenciará su labor histórica en la defensa de los derechos humanos, el acceso a la justicia y el fortalecimiento comunitario en la región, consolidando su impacto en la construcción de paz y la transformación social.",
+            "Organización social seleccionada. Con la asignación del inmueble potenciará su labor histórica en la defense de los derechos humanos, el acceso a la justicia y el fortalecimiento comunitario en la región, consolidando su impacto en la construcción de paz y la transformación social.",
         highlight: true,
     },
     {
@@ -130,7 +130,6 @@ const galleryImages = [
     breadcrumbs={breadcrumbs}
 >
     <div class="relative min-h-screen pb-32">
-        <!-- Blobs decorativos de fondo (Liquid Glass Accent) -->
         <div class="absolute inset-0 pointer-events-none overflow-hidden">
             <div
                 class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[var(--ilsa-blue-light)]/10 rounded-full blur-[120px] animate-blob"
@@ -143,10 +142,9 @@ const galleryImages = [
         </div>
 
         <div class="relative z-10 pt-8 max-w-5xl mx-auto px-4 md:px-8">
-            <!-- Hero Title & Badge -->
             <div class="text-center mb-16 space-y-6">
                 <div
-                    class="inline-flex items-center justify-center gap-3 px-5 py-2.5 rounded-full bg-white/60 backdrop-blur-md border border-[var(--ilsa-blue-dark)]/25 shadow-sm"
+                    class="inline-flex items-center justify-center gap-3 px-5 py-2.5 rounded-full bg-white/60 backdrop-blur-md border border-[var(--ilsa-blue-dark)]/25 shadow-sm mx-auto"
                 >
                     <span class="relative flex h-2.5 w-2.5">
                         <span
@@ -179,7 +177,7 @@ const galleryImages = [
                 </h1>
 
                 <p
-                    class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto text-balance leading-relaxed font-light mt-4"
+                    class="text-lg md:text-xl text-center text-slate-600 max-w-3xl mx-auto text-balance leading-relaxed font-light mt-4"
                 >
                     La SAE entrega siete inmuebles en Bogotá para fortalecer
                     proyectos sociales, culturales y de memoria: <strong
@@ -188,7 +186,6 @@ const galleryImages = [
                     >
                 </p>
 
-                <!-- Metadata Row -->
                 <div
                     class="flex flex-wrap items-center justify-center gap-6 pt-4 text-sm text-slate-500 font-medium"
                 >
@@ -215,11 +212,9 @@ const galleryImages = [
                 </div>
             </div>
 
-            <!-- Main Liquid Glass Container -->
             <div
                 class="bg-white/50 backdrop-blur-3xl border border-white/60 shadow-2xl shadow-slate-200/50 rounded-[3rem] p-6 md:p-12 space-y-16"
             >
-                <!-- Foto Principal Destacada -->
                 <div
                     class="w-full aspect-[16/9] md:h-[500px] rounded-[2.5rem] overflow-hidden shadow-xl border border-white/80 relative group"
                 >
@@ -243,7 +238,6 @@ const galleryImages = [
                     </div>
                 </div>
 
-                <!-- Intro / Resumen Editorial (2 Columnas) -->
                 <section
                     class="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-8 items-stretch pt-4"
                 >
@@ -254,7 +248,7 @@ const galleryImages = [
                             class="text-xl text-slate-800 font-normal leading-relaxed"
                         >
                             En un paso clave para el fortalecimiento del tejido
-                            social y la defensa de los derechos humanos, la
+                            social y la defense de los derechos humanos, la
                             Sociedad de Activos Especiales (SAE) entregó a
                             organizaciones localizadas en Bogotá, <strong
                                 class="text-[var(--ilsa-blue-dark)] font-semibold"
@@ -285,30 +279,31 @@ const galleryImages = [
                         </p>
                     </div>
 
-                    <!-- Stats Card (Liquid Glass) -->
                     <div
                         class="relative bg-gradient-to-br from-white/70 to-white/40 backdrop-blur-2xl rounded-3xl border border-white/80 shadow-xl overflow-hidden p-8 flex flex-col"
                     >
                         <div
-                            class="absolute -top-16 -right-16 w-48 h-48 bg-[var(--ilsa-blue-dark)]/5 rounded-full blur-3xl pointer-events-none"
+                            class="absolute -top-16 -right-16 w-48 h-48 bg-[var(--ilsa-blue-dark)]/5 rounded-full blur-[120px] pointer-events-none"
                         >
                         </div>
                         <div
-                            class="absolute inset-x-0 bottom-0 h-1.5 bg-gradient-to-r from-[var(--ilsa-blue)] via-[var(--ilsa-blue-dark)] to-[var(--ilsa-mujeres)]"
+                            class="absolute inset-x-0 bottom-0 h-1.5 bg-gradient-to-r from-gradient-to-r from-[var(--ilsa-blue)] via-[var(--ilsa-blue-dark)] to-[var(--ilsa-mujeres)]"
                         >
                         </div>
 
                         <h3
-                            class="text-xl font-black text-slate-800 flex items-center gap-2 mb-3"
+                            class="text-xl font-black text-slate-800 flex items-center justify-center lg:justify-start gap-2 mb-3 text-center lg:text-left"
                         >
                             <Sparkles
-                                className="w-5 h-5 text-[var(--ilsa-blue)]"
+                                className="w-5 h-5 shrink-0 text-[var(--ilsa-blue)]"
                             />
                             Impacto del Proyecto
                         </h3>
 
                         <div class="space-y-6">
-                            <div class="flex items-center gap-5">
+                            <div
+                                class="flex flex-col sm:flex-row items-center lg:items-start gap-5 text-center sm:text-left"
+                            >
                                 <div
                                     class="w-14 h-14 shrink-0 rounded-2xl bg-[var(--ilsa-blue)]/10 flex items-center justify-center border border-white/40 shadow-sm"
                                 >
@@ -329,7 +324,9 @@ const galleryImages = [
                                 </div>
                             </div>
 
-                            <div class="flex items-center gap-5">
+                            <div
+                                class="flex flex-col sm:flex-row items-center lg:items-start gap-5 text-center sm:text-left"
+                            >
                                 <div
                                     class="w-14 h-14 shrink-0 rounded-2xl bg-[var(--ilsa-mujeres)]/10 flex items-center justify-center border border-white/40 shadow-sm"
                                 >
@@ -351,12 +348,14 @@ const galleryImages = [
                                 </div>
                             </div>
 
-                            <div class="flex items-center gap-5">
+                            <div
+                                class="flex flex-col sm:flex-row items-center lg:items-start gap-5 text-center sm:text-left"
+                            >
                                 <div
                                     class="w-14 h-14 shrink-0 rounded-2xl bg-teal-500/10 flex items-center justify-center border border-white/40 shadow-sm"
                                 >
                                     <span
-                                        class="text-2.5xl font-black text-teal-600"
+                                        class="text-2xl font-black text-teal-600"
                                         >1</span
                                     >
                                 </div>
@@ -375,7 +374,6 @@ const galleryImages = [
                     </div>
                 </section>
 
-                <!-- Separador de ondas / gradiente -->
                 <div class="relative py-4">
                     <div
                         class="w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"
@@ -389,11 +387,10 @@ const galleryImages = [
                     </div>
                 </div>
 
-                <!-- Video del Director y su Cita (Evitando layouts lineales y genéricos) -->
                 <section class="space-y-8">
                     <div class="text-center max-w-2xl mx-auto mb-8">
                         <div
-                            class="text-center inline-flex items-center gap-2 bg-[var(--ilsa-blue)]/5 text-[var(--ilsa-blue-dark)] text-xs font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full mb-3 border border-[var(--ilsa-blue)]/10"
+                            class="inline-flex items-center gap-2 bg-[var(--ilsa-blue)]/5 text-[var(--ilsa-blue-dark)] text-xs font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full mb-3 border border-[var(--ilsa-blue)]/10 mx-auto"
                         >
                             <Video className="w-3.5 h-3.5" />
                             Palabras de la Dirección
@@ -408,7 +405,6 @@ const galleryImages = [
                     <div
                         class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
                     >
-                        <!-- Reproductor de Video en Liquid Glass (Adaptado para formato vertical 9:16) -->
                         <div class="lg:col-span-5 flex justify-center w-full">
                             <div
                                 class="relative w-full max-w-[320px] bg-white/40 p-3 rounded-[2.5rem] border border-white/80 shadow-xl overflow-hidden backdrop-blur-xl"
@@ -435,7 +431,6 @@ const galleryImages = [
                             </div>
                         </div>
 
-                        <!-- Cita Textual Destacada -->
                         <div
                             class="lg:col-span-7 relative flex flex-col justify-center p-8 md:p-10 bg-gradient-to-br from-[var(--ilsa-blue-dark)]/5 to-[var(--ilsa-blue)]/[0.02] rounded-[2.5rem] border border-[var(--ilsa-blue-dark)]/10 shadow-lg min-h-[300px]"
                         >
@@ -446,7 +441,7 @@ const galleryImages = [
                             </div>
 
                             <blockquote
-                                class="relative z-10 text-slate-700 text-base md:text-lg font-light italic leading-relaxed"
+                                class="relative z-10 text-center lg:text-left text-slate-700 text-base md:text-lg font-light italic leading-relaxed pt-6 lg:pt-0"
                             >
                                 "El trabajo que desde 1978 ha adelantado ILSA se
                                 orienta a la transformación de la sociedad a
@@ -455,17 +450,17 @@ const galleryImages = [
                                 de todos los sectores subalternos de la
                                 sociedad. Sin lugar a dudas este bien
                                 contribuirá a esa tarea en el sentido de poder
-                                desarrollar procesos pedagógicos y abogacía
+                                desarrollar procesos pedagógicos y abogacía *
                                 popular con actorias sociales, como las víctimas
                                 del conflicto. Para construir paz y para
                                 cerrarle los espacios a la violencia"
                             </blockquote>
 
                             <div
-                                class="mt-8 flex items-center gap-4 border-t border-slate-200/60 pt-5"
+                                class="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 border-t border-slate-200/60 pt-5 text-center sm:text-left"
                             >
                                 <div
-                                    class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[var(--ilsa-blue)] to-[var(--ilsa-blue-dark)] flex items-center justify-center text-white font-bold text-lg shadow-md border border-white/20 select-none"
+                                    class="w-12 h-12 shrink-0 rounded-2xl bg-gradient-to-tr from-[var(--ilsa-blue)] to-[var(--ilsa-blue-dark)] flex items-center justify-center text-white font-bold text-lg shadow-md border border-white/20 select-none"
                                 >
                                     FO
                                 </div>
@@ -486,7 +481,6 @@ const galleryImages = [
                     </div>
                 </section>
 
-                <!-- Separador -->
                 <div class="relative py-4">
                     <div
                         class="w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"
@@ -494,13 +488,14 @@ const galleryImages = [
                     </div>
                 </div>
 
-                <!-- Detalle de ILSA (Foco en labor institucional) -->
                 <section
                     class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
                 >
-                    <div class="lg:col-span-5 space-y-6">
+                    <div
+                        class="lg:col-span-5 space-y-6 text-center lg:text-left"
+                    >
                         <div
-                            class="inline-flex items-center gap-2 bg-teal-500/5 text-teal-700 text-xs font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full border border-teal-500/10"
+                            class="inline-flex items-center gap-2 bg-teal-500/5 text-teal-700 text-xs font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full border border-teal-500/10 mx-auto lg:mx-0"
                         >
                             <ShieldCheck className="w-3.5 h-3.5" />
                             Impacto Institucional
@@ -510,24 +505,28 @@ const galleryImages = [
                         >
                             ILSA entre las organizaciones seleccionadas
                         </h2>
-                        <p class="text-slate-600 leading-relaxed font-light">
-                            Entre las entidades destaca de manera especial el <strong
-                                class="text-slate-800 font-medium"
-                                >Instituto Latinoamericano para una Sociedad y
-                                un Derecho Alternativos (ILSA)</strong
-                            >. Con la asignación de uno de estos inmuebles, ILSA
-                            potenciará su labor histórica en la defensa de los
-                            derechos humanos, el acceso a la justicia y el
-                            fortalecimiento comunitario en la región.
-                        </p>
-                        <p class="text-slate-600 leading-relaxed font-light">
-                            Este nuevo espacio se convertirá en un punto
-                            estratégico para robustecer los procesos de
-                            formación, investigación y acompañamiento,
-                            consolidando su impacto en la construcción de paz y
-                            la transformación social desde la práctica legal
-                            crítica.
-                        </p>
+                        <div
+                            class="text-slate-600 leading-relaxed font-light space-y-4"
+                        >
+                            <p>
+                                Entre las entidades destaca de manera especial
+                                el <strong class="text-slate-800 font-medium"
+                                    >Instituto Latinoamericano para una Sociedad
+                                    y un Derecho Alternativos (ILSA)</strong
+                                >. Con la asignación de uno de estos inmuebles,
+                                ILSA potenciará su labor histórica en la defense
+                                de los derechos humanos, el acceso a la justicia
+                                y el fortalecimiento comunitario en la región.
+                            </p>
+                            <p>
+                                Este nuevo espacio se convertirá en un punto
+                                estratégico para robustecer los procesos de
+                                formación, investigación y acompañamiento,
+                                consolidando su impacto en la construcción de
+                                paz y la transformación social desde la práctica
+                                legal crítica.
+                            </p>
+                        </div>
                     </div>
 
                     <div class="lg:col-span-7">
@@ -545,11 +544,10 @@ const galleryImages = [
                     </div>
                 </section>
 
-                <!-- Galería del Evento (SAE imágenes) -->
                 <section class="space-y-8">
                     <div class="text-center max-w-2xl mx-auto">
                         <div
-                            class="inline-flex items-center gap-2 bg-emerald-500/5 text-emerald-700 text-xs font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full mb-3 border border-emerald-500/10"
+                            class="inline-flex items-center gap-2 bg-emerald-500/5 text-emerald-700 text-xs font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full mb-3 border border-emerald-500/10 mx-auto"
                         >
                             <Sparkles className="w-3.5 h-3.5" />
                             Registro Fotográfico
@@ -612,12 +610,11 @@ const galleryImages = [
                     </GalleryLightbox>
                 </section>
 
-                <!-- Cierre institucional / Pie de página del Liquid Glass -->
                 <footer
                     class="pt-8 text-center border-t border-slate-100 max-w-2xl mx-auto space-y-4"
                 >
                     <p
-                        class="text-sm text-slate-500 font-light italic leading-relaxed text-pretty"
+                        class="text-sm text-slate-500 font-light italic leading-relaxed text-pretty text-center mx-auto"
                     >
                         "Con esta jornada, la SAE reafirma su compromiso de
                         transformar los activos incautados a la criminalidad en
