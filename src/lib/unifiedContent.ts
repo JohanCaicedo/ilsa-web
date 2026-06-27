@@ -28,20 +28,81 @@ export interface UnifiedCardData {
     isLocal: boolean;
 }
 
+// ---------------------------------------------------------------------------
+// Auto-discovery of pages in /noticias/especiales/
+// ---------------------------------------------------------------------------
+// Vite glob — discovers all .astro files under the especiales directory.
+const especialesModules = import.meta.glob("../pages/noticias/especiales/*.astro");
+
 /**
- * The Central Registry of Local Special Pages.
- * Developers / Users should add an entry here whenever a custom layout like
- * /noticias/especiales/evento.astro is created.
+ * Slug → metadata overrides for pages that need custom title / date / image.
+ * Only add entries here when the auto-derived filename title isn't enough.
  */
-export const registeredLocalPages: LocalSpecialPage[] = [
-    {
+const especialesMeta: Record<string, Partial<LocalSpecialPage>> = {
+    cartagena: {
         title: "Evento Especial en Cartagena: Reflexiones de Justicia",
         author: "Equipo ILSA",
-        date: "2026-03-01T12:00:00.000Z", // Example past date
-        image: "https://api.ilsa.org.co/wp-content/uploads/2023/10/DJI_0447-1024x683.jpg", // Example nice placeholder
-        uri: "/noticias/especiales/cartagena",
-        categorySlug: "noticias",
+        date: "2026-03-01T12:00:00.000Z",
+        image: "https://api.ilsa.org.co/wp-content/uploads/2023/10/DJI_0447-1024x683.jpg",
     },
+    sae: {
+        title: "La SAE entrega siete inmuebles en Bogotá: ILSA seleccionada para fortalecer proyectos de memoria y derechos humanos",
+        date: "2026-06-23T12:00:00.000Z",
+        image: "/images/sae/sae (4).webp",
+    },
+    "foro-multiactor": {
+        title: "Participación en el Foro Multi-actor EU-LAC sobre Cuidados",
+        date: "2026-05-28T12:00:00.000Z",
+        image: "/images/foro-multiactor/Foro-ID.jpg",
+    },
+    "alerta-temprana-unal": {
+        title: "Alerta Temprana: Presencia e intimidación de Águilas Negras en inmediaciones Universidad Nacional",
+        date: "2026-06-27T12:00:00.000Z",
+        image: "/images/unal.webp",
+    },
+    "cinco-años-del-estallido-social": {
+        title: "Foro: Diálogos de saberes a cinco años del estallido social",
+        date: "2026-06-29T12:00:00.000Z",
+        image: "/images/sae/sae (4).webp",
+    },
+};
+
+/** Converts a kebab-case slug to a human-readable title (fallback). */
+function slugToTitle(slug: string): string {
+    return slug
+        .replace(/[-_]/g, " ")
+        .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+/**
+ * Returns all discovered local pages inside the especiales directory,
+ * merged with any custom overrides.
+ */
+function discoverEspecialesPages(category: LocalSpecialPage["categorySlug"]): UnifiedCardData[] {
+    const pages: UnifiedCardData[] = [];
+
+    for (const path of Object.keys(especialesModules)) {
+        const slug = path.replace(/^.*[\\/]/, "").replace(".astro", "");
+        const override = especialesMeta[slug] ?? {};
+
+        pages.push({
+            id: `local-${slug}`,
+            title: override.title ?? slugToTitle(slug),
+            author: override.author ?? "ILSA",
+            date: override.date ?? new Date().toISOString(),
+            image: override.image ?? "",
+            uri: `/noticias/especiales/${slug}`,
+            isLocal: true,
+        });
+    }
+
+    return pages;
+}
+
+// ---------------------------------------------------------------------------
+// Manual registry for pages OUTSIDE /noticias/especiales/ (e.g. standalone)
+// ---------------------------------------------------------------------------
+const standaloneLocalPages: LocalSpecialPage[] = [
     {
         title: "Ley 2570 de 2026: Jurisdicción Agraria y Rural en Colombia",
         author: "ILSA",
@@ -50,27 +111,14 @@ export const registeredLocalPages: LocalSpecialPage[] = [
         uri: "/noticias/jurisdiccion-agraria-y-rural",
         categorySlug: "noticias",
     },
-    {
-        title: "La SAE entrega siete inmuebles en Bogotá: ILSA seleccionada para fortalecer proyectos de memoria y derechos humanos",
-        author: "ILSA",
-        date: "2026-06-23T12:00:00.000Z",
-        image: "/images/sae/sae (4).webp",
-        uri: "/noticias/especiales/sae",
-        categorySlug: "noticias",
-    },
-    {
-        title: "Participación en el Foro Multi-actor EU-LAC sobre Cuidados",
-        author: "ILSA",
-        date: "2026-05-28T12:00:00.000Z",
-        image: "/images/foro-multiactor/Foro-ID.jpg",
-        uri: "/noticias/especiales/foro-multiactor",
-        categorySlug: "noticias",
-    },
 ];
 
 /**
- * Merges WordPress Posts and Registered Local Pages matching a specific category,
+ * Merges WordPress Posts and Local Pages matching a specific category,
  * sorting the unified array from newest to oldest.
+ *
+ * Local pages are auto-discovered from /noticias/especiales/ and combined
+ * with any manually registered standalone pages.
  */
 export function getUnifiedTimeline(wpPosts: CardPostNode[], category: LocalSpecialPage["categorySlug"]): UnifiedCardData[] {
     // 1. Normalize WP Posts
@@ -84,18 +132,21 @@ export function getUnifiedTimeline(wpPosts: CardPostNode[], category: LocalSpeci
         isLocal: false,
     }));
 
-    // 2. Fetch and Normalize Local Pages matching the category
-    const localUnified: UnifiedCardData[] = registeredLocalPages
-        .filter((page) => page.categorySlug === category)
-        .map((page) => ({
-            id: `local-${page.uri}`,
-            title: page.title,
-            author: page.author,
-            date: page.date,
-            image: page.image,
-            uri: page.uri,
-            isLocal: true,
-        }));
+    // 2. Auto-discover especiales/ pages + standalone manual pages
+    const localUnified: UnifiedCardData[] = [
+        ...discoverEspecialesPages(category),
+        ...standaloneLocalPages
+            .filter((p) => p.categorySlug === category)
+            .map((p) => ({
+                id: `local-${p.uri}`,
+                title: p.title,
+                author: p.author,
+                date: p.date,
+                image: p.image,
+                uri: p.uri,
+                isLocal: true,
+            })),
+    ];
 
     // 3. Merge and Sort chronologically (newest first)
     const combined = [...wpUnified, ...localUnified];

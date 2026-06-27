@@ -61,6 +61,14 @@
 - **`src/lib/unifiedContent.ts`**:
     - **Update**: Registro de la página de la SAE en la constante `registeredLocalPages` para que se liste automáticamente en las vistas generales de noticias del portal.
 
+### Session 27/06/2026 - Auto-descubrimiento de páginas especiales en unifiedContent
+- **`src/lib/unifiedContent.ts`**:
+    - **Refactor**: Reemplazado el array `registeredLocalPages` (manual) por auto-descubrimiento vía `import.meta.glob` que escanea `src/pages/noticias/especiales/*.astro`.
+    - **`especialesMeta`**: Map opcional para sobreescribir título/fecha/imagen en páginas que lo requieran.
+    - **Fallback automático**: cualquier `.astro` nuevo en `especiales/` aparece en el grid sin tocar código. Si no tiene entrada en `especialesMeta`, se genera un título desde el filename (kebab-case → Title Case).
+    - **`standaloneLocalPages`**: Solo para páginas fuera de `especiales/` (ej. `jurisdiccion-agraria-y-rural`).
+- **`src/pages/noticias/especiales/cinco-años-del-estallido-social.astro`**, **`alerta-temprana-unal.astro`**: Registradas implícitamente vía auto-descubrimiento.
+
 ### Session 28/04/2026 - Refinamiento Institucional y Tono de Comunicación
 - **`tono-y-estilo.md`**:
     - **New**: Se creó una guía de estilo basada en los documentos fundacionales (1978) de ILSA, estableciendo el uso de lenguaje institucional, crítico y emancipatorio.
