@@ -1,0 +1,447 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import SmartImage from "../../../components/atoms/SmartImage.astro";
+import GradientText from "../../../components/atoms/GradientText.astro";
+import { MapPin, Calendar } from "lucide-react";
+import type { SeoData } from "../../../lib/seo";
+
+// Edge Caching (ISR) rule para Cloudflare
+export const prerender = false;
+Astro.response.headers.set(
+    "Cache-Control",
+    "public, s-maxage=3600, stale-while-revalidate=86400",
+);
+
+// Mantenemos la estructura de carpetas exacta en los breadcrumbs para el compilador de la landing
+const breadcrumbs = [
+    { label: "Noticias", href: "/noticias" },
+    { label: "Especiales", href: "/noticias" },
+    {
+        label: "Alerta Temprana - ILSA",
+        href: "/noticias/especiales/alerta-temprana-unal",
+    },
+];
+
+const seoData: SeoData = {
+    title: "Alerta Temprana: Presencia e intimidación de Águilas Negras en inmediaciones Universidad Nacional | ILSA",
+    metaDesc:
+        "Alertamos sobre la presencia de individuos que dicen pertenecer al grupo paramilitar Águilas Negras en los alrededores de la Universidad Nacional de Colombia, Sede Bogotá.",
+    opengraphTitle:
+        "Alerta Temprana: Presencia e intimidación de Águilas Negras en inmediaciones Universidad Nacional",
+    opengraphDescription:
+        "Esta situación constituye una amenaza directa e ilegal contra la integridad, la libertad y la seguridad de los y las estudiantes.",
+    opengraphImage: {
+        sourceUrl: "/images/unal.webp",
+    },
+    twitterImage: {
+        sourceUrl: "/images/unal.webp",
+    },
+};
+
+// Se mantienen los arrays técnicos idénticos a la estructura SAE para que tu loop selector no tire error al mapear la página
+const organizations = [];
+const galleryImages = [];
+---
+
+<Layout
+    title="Especial: Alerta Temprana UNAL - ILSA"
+    width="wide"
+    seo={seoData}
+    breadcrumbs={breadcrumbs}
+>
+    <div class="relative min-h-screen pb-32">
+        <!-- Blobs decorativos de fondo (Liquid Glass Accent) -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+            <div
+                class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-red-500/5 rounded-full blur-[120px] animate-blob"
+            >
+            </div>
+            <div
+                class="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[var(--ilsa-blue-light)]/10 rounded-full blur-[100px] animate-blob animation-delay-2000"
+            >
+            </div>
+        </div>
+
+        <div class="relative z-10 pt-8 max-w-5xl mx-auto px-4 md:px-8">
+            <!-- Hero Title & Badge -->
+            <div class="text-center mb-16 space-y-6">
+                <h1
+                    class="text-4xl md:text-6xl text-center font-black drop-shadow-sm leading-[1.1] text-balance mx-auto text-slate-800"
+                >
+                    <GradientText
+                        text="Alerta Temprana"
+                        size="text-4xl md:text-6xl"
+                        weight="font-black"
+                        from="rgb(220, 38, 38)"
+                        to="rgb(153, 27, 27)"
+                        asSpan={true}
+                    />
+                    <br />
+                    Presencia e intimidación de Águilas Negras en inmediaciones de
+                    la Universidad Nacional de Colombia Sede Bogotá y la sede de ILSA
+                </h1>
+
+                <!-- Metadata Row Limpio -->
+                <div
+                    class="flex flex-wrap items-center justify-center gap-6 pt-4 text-sm text-slate-500 font-medium"
+                >
+                    <div
+                        class="flex items-center gap-2 bg-white/50 px-4 py-2 rounded-full border border-white/60 backdrop-blur-sm shadow-sm"
+                    >
+                        <MapPin className="w-4 h-4 text-red-600" />
+                        <span>Bogotá, Colombia</span>
+                    </div>
+                    <div
+                        class="flex items-center gap-2 bg-white/50 px-4 py-2 rounded-full border border-white/60 backdrop-blur-sm shadow-sm"
+                    >
+                        <Calendar className="w-4 h-4 text-red-600" />
+                        <span>27 de junio de 2026</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Liquid Glass Container -->
+            <div
+                class="bg-white/50 backdrop-blur-3xl border border-white/60 shadow-2xl shadow-slate-200/50 rounded-[3rem] p-6 md:p-12 space-y-12"
+            >
+                <!-- Foto Principal Destacada (Formato Cuadrado de la UNAL) -->
+                <div
+                    class="w-full max-w-[400px] aspect-square mx-auto rounded-[2.5rem] overflow-hidden shadow-xl border border-white/80 relative bg-slate-100"
+                >
+                    <SmartImage
+                        src="/images/unal.webp"
+                        alt="Universidad Nacional de Colombia"
+                        class="w-full h-full object-cover object-center"
+                        priority={true}
+                        width={500}
+                        height={500}
+                    />
+                </div>
+
+                <!-- Contenido Plano Literal del PDF sin alteraciones de texto -->
+                <div
+                    class="max-w-3xl mx-auto space-y-6 text-slate-700 font-light text-lg leading-relaxed text-pretty"
+                >
+                    <p class="font-normal text-slate-800">
+                        Alertamos sobre la presencia de individuos que dicen
+                        pertenecer al grupo paramilitar Águilas Negras en los
+                        alrededores de la Universidad Nacional de Colombia, Sede
+                        Bogotá. <span class="text-red-600 font-semibold"
+                            >Esta situación constituye una amenaza directa e
+                            ilegal contra la integridad, la libertad y la
+                            seguridad de los y las estudiantes, quienes son su
+                            principal objetivo.</span
+                        >
+                    </p>
+
+                    <h2
+                        class="text-2xl font-black text-slate-900 pt-4 text-center"
+                    >
+                        Narración de los hechos
+                    </h2>
+
+                    <p>
+                        El día de ayer 26 de junio de las 12:30 pm, un
+                        integrante de ILSA, estudiante de la Universidad
+                        Nacional e investigador del grupo Eilusos, salía de la
+                        oficina de ILSA con la intención de almorzar cerca a la
+                        calle 26, posteriormente se devolvió al parque de
+                        desalojo, ubicado frente a Uniempresarial (carrera 33a#
+                        31). Fue allí donde un group de 5 hombres se le acercó.
+                    </p>
+
+                    <p>
+                        Le dijeron que lo habían visto "dando vueltas" por el
+                        sector y que necesitaban saber si era consumidor o
+                        distribuidor de marihuana. Afirmaron estar buscando a
+                        una persona que había intoxicado a una menor de edad en
+                        la zona y que le estaba robando el negocio, un negocio
+                        que describieron como de 20 a 30 millones de pesos
+                        diarios.
+                    </p>
+
+                    <p>
+                        Le indicaron que los acompañara y se quedara en el
+                        parque esperando que nadie se le acercara a pedirle que
+                        les vendiera marihuana, como forma de verificar si tenía
+                        o no relación con la distribución. Durante ese tiempo,
+                        le exigieron abrir WhatsApp y mostrarles sus chats,
+                        mostrarles sus cuentas bancarias y hacer transferencias
+                        entre ellas para comprobar si alguien lo llamaba al
+                        mover la plata. El grupo fue rotando y en distintos
+                        momentos eran entre 3 y 5 personas.
+                    </p>
+
+                    <p>
+                        Se identificaron como integrantes de las Águilas Negras,
+                        afirmaron controlar el sector y dijeron contar con un
+                        total de 32 hombres cuidando la zona. <span
+                            class="text-red-600 font-semibold"
+                            >Fueron explícitos en que su interés no era robarlo,
+                            pero sí lo fueron en la amenaza pues advirtieron que
+                            si se enteraban de que era él quien distribuía,
+                            "después no se pusiera a llorar cuando lo montaran a
+                            la camioneta".</span
+                        >
+                    </p>
+
+                    <p>
+                        De igual manera, un episodio similar ocurrió
+                        anteriormente el día 2 de junio donde un estudiante
+                        afirma que fue abordado por 3 hombres que le dijeron lo
+                        mismo pues estaban buscando al jíbaro de la Universidad
+                        para matarlo. De igual manera, durante la elaboración de
+                        esta alerta temprana se ha venido evidenciado varios
+                        casos similares con una misma forma de operar y abordar
+                        a los y las estudiantes.
+                    </p>
+
+                    <p>
+                        Es preocupante que se desplieguen este tipo de
+                        situaciones justo después de una campaña electoral en
+                        que el discurso de odio, la amenaza de la fuerza y la
+                        narrativa del enemigo fue parte del proyecto político
+                        elegido. Como organizaciones populares, nos alarma que
+                        grupos de civiles y organizaciones criminales, que se
+                        presentan como integrantes de estructuras paramilitares
+                        y emulan el accionar paramilitar, aparezcan ahora
+                        actuando a plena luz del día en inmediaciones de la
+                        universidad pública y sedes de organizaciones no
+                        gubernamentales defensoras de derechos humanos.
+                    </p>
+
+                    <p>
+                        No descartamos que se trate de una banda que usa el
+                        nombre de las Águilas Negras para infundir miedo sin ser
+                        necesariamente estructura paramilitar formal. Pero
+                        tampoco podemos descartarlo, y en cualquiera de los dos
+                        casos la amenaza es real y el patrón es preocupante.
+                    </p>
+
+                    <h2
+                        class="text-2xl font-black text-slate-900 pt-4 text-center"
+                    >
+                        Llamado urgente a las instituciones
+                    </h2>
+
+                    <p>
+                        Hacemos un llamado urgente a las siguientes
+                        instituciones para que adopten medidas concretas e
+                        inmediatas ante esta situación:
+                    </p>
+
+                    <p>
+                        <strong
+                            >A la Rectoría y las directivas de la Universidad
+                            Nacional de Colombia, sede Bogotá:</strong
+                        > que en un plazo no mayor a 48 horas activen los mecanismos
+                        institucionales de protección de la comunidad universitaria,
+                        emitan un pronunciamiento público sobre los hechos y coordinen
+                        acciones concretas de seguridad en las zonas aledañas al campus.
+                    </p>
+
+                    <p>
+                        <strong
+                            >A la Alcaldía Local de Teusaquillo y a la Alcaldía
+                            Mayor de Bogotá:</strong
+                        > que intervengan en el territorio con medidas verificables
+                        y no permitan la consolidación de grupos paramilitares o de
+                        estructuras criminales que operan con sus métodos en los alrededores
+                        de la universidad.
+                    </p>
+
+                    <p>
+                        <strong>A la Defensoría del Pueblo:</strong> que en el término
+                        de 48 horas active el Sistema de Alertas Tempranas (SAT),
+                        despliegue acompañamiento a la comunidad universitaria y documente
+                        el riesgo presente en el corredor aledaño a la UNAL sede Bogotá.
+                    </p>
+
+                    <p>
+                        <strong>A la Personería Distrital de Bogotá:</strong> que
+                        adelante de manera inmediata acciones de seguimiento, vigilancia
+                        y verificación del cumplimiento de los derechos fundamentales
+                        de quienes habitan y transitan este territorio.
+                    </p>
+
+                    <p>
+                        <strong
+                            >A la Unidad Nacional de Protección (UNP):</strong
+                        > que realice de manera inmediata una valoración del nivel
+                        de riesgo que esta situación representa para integrantes de
+                        organizaciones sociales, estudiantiles y políticas con presencia
+                        en la zona, y adopte las medidas preventivas correspondientes.
+                    </p>
+
+                    <p>
+                        <strong>A la Fiscalía General de la Nación:</strong> que en
+                        el término de 72 horas informe sobre la apertura de investigación
+                        penal por los hechos de amenaza, coacción, acceso forzado
+                        a datos personales e intimidación paramilitar aquí documentados,
+                        y garantice medidas efectivas de protección para las personas
+                        afectadas.
+                    </p>
+
+                    <p>
+                        La universidad ha sido históricamente un espacio de
+                        pensamiento crítico, organización y resistencia. No
+                        vamos a normalizar la intimidación a nuestra comunidad
+                        ni a permitir que estos grupos avancen sin que haya una
+                        respuesta organizada y colectiva.
+                    </p>
+
+                    <p class="font-normal text-slate-800">
+                        Convocamos a las organizaciones sociales, estudiantiles
+                        y de derechos humanos a sumarse a esta alerta y a exigir
+                        respuesta institucional.
+                    </p>
+                </div>
+
+                <!-- Separador de ondas / gradiente -->
+                <div class="relative py-4">
+                    <div
+                        class="w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"
+                    >
+                    </div>
+                </div>
+
+                <!-- Sección Espacio para los Logos a Color de las Organizaciones Firmantes -->
+                <section class="max-w-3xl mx-auto space-y-6">
+                    <h3
+                        class="text-sm font-bold text-slate-400 uppercase tracking-[0.2em] text-center"
+                    >
+                        Firmantes
+                    </h3>
+
+                    <div
+                        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 items-center justify-items-center pt-4"
+                    >
+                        {/* 1. LOGO DE ILSA */}
+                        <div
+                            class="w-24 h-24 flex items-center justify-center p-2 bg-white/60 rounded-2xl border border-white/80 shadow-sm aspect-square"
+                        >
+                            <img
+                                src="/images/ILSA-LOGO-20.png"
+                                alt="ILSA"
+                                class="max-w-full max-h-full object-contain transition-transform duration-300 hover:scale-105"
+                            />
+                        </div>
+
+                        {/* 2. LOGO 01 */}
+                        <div
+                            class="w-24 h-24 flex items-center justify-center p-2 bg-white/60 rounded-2xl border border-white/80 shadow-sm aspect-square"
+                        >
+                            <img
+                                src="/images/logos/logos-01.webp"
+                                alt="Organización aportante 1"
+                                class="max-w-full max-h-full object-contain transition-transform duration-300 hover:scale-105"
+                            />
+                        </div>
+
+                        {/* 3. LOGO 02 */}
+                        <div
+                            class="w-24 h-24 flex items-center justify-center p-2 bg-white/60 rounded-2xl border border-white/80 shadow-sm aspect-square"
+                        >
+                            <img
+                                src="/images/logos/logos-02.webp"
+                                alt="Organización aportante 2"
+                                class="max-w-full max-h-full object-contain transition-transform duration-300 hover:scale-105"
+                            />
+                        </div>
+
+                        {/* 4. LOGO 03 */}
+                        <div
+                            class="w-24 h-24 flex items-center justify-center p-2 bg-white/60 rounded-2xl border border-white/80 shadow-sm aspect-square"
+                        >
+                            <img
+                                src="/images/logos/logos-03.webp"
+                                alt="Organización aportante 3"
+                                class="max-w-full max-h-full object-contain transition-transform duration-300 hover:scale-105"
+                            />
+                        </div>
+
+                        {/* 5. LOGO 04 */}
+                        <div
+                            class="w-24 h-24 flex items-center justify-center p-2 bg-white/60 rounded-2xl border border-white/80 shadow-sm aspect-square"
+                        >
+                            <img
+                                src="/images/logos/logos-04.webp"
+                                alt="Organización aportante 4"
+                                class="max-w-full max-h-full object-contain transition-transform duration-300 hover:scale-105"
+                            />
+                        </div>
+
+                        {/* 6. LOGO 05 */}
+                        <div
+                            class="w-24 h-24 flex items-center justify-center p-2 bg-white/60 rounded-2xl border border-white/80 shadow-sm aspect-square"
+                        >
+                            <img
+                                src="/images/logos/logos-05.webp"
+                                alt="Organización aportante 5"
+                                class="max-w-full max-h-full object-contain transition-transform duration-300 hover:scale-105"
+                            />
+                        </div>
+
+                        {/* 7. LOGO 06 */}
+                        <div
+                            class="w-24 h-24 flex items-center justify-center p-2 bg-white/60 rounded-2xl border border-white/80 shadow-sm aspect-square"
+                        >
+                            <img
+                                src="/images/logos/logos-06.webp"
+                                alt="Organización aportante 6"
+                                class="max-w-full max-h-full object-contain transition-transform duration-300 hover:scale-105"
+                            />
+                        </div>
+
+                        {/* 8. LOGO 07 */}
+                        <div
+                            class="w-24 h-24 flex items-center justify-center p-2 bg-white/60 rounded-2xl border border-white/80 shadow-sm aspect-square"
+                        >
+                            <img
+                                src="/images/logos/logos-07.webp"
+                                alt="Organización aportante 7"
+                                class="max-w-full max-h-full object-contain transition-transform duration-300 hover:scale-105"
+                            />
+                        </div>
+
+                        {/* 9. LOGO 08 */}
+                        <div
+                            class="w-24 h-24 flex items-center justify-center p-2 bg-white/60 rounded-2xl border border-white/80 shadow-sm aspect-square"
+                        >
+                            <img
+                                src="/images/logos/logos-08.webp"
+                                alt="Organización aportante 8"
+                                class="max-w-full max-h-full object-contain transition-transform duration-300 hover:scale-105"
+                            />
+                        </div>
+
+                        {/* 10. LOGO 09 */}
+                        <div
+                            class="w-24 h-24 flex items-center justify-center p-2 bg-white/60 rounded-2xl border border-white/80 shadow-sm aspect-square"
+                        >
+                            <img
+                                src="/images/logos/logos-09.webp"
+                                alt="Organización aportante 9"
+                                class="max-w-full max-h-full object-contain transition-transform duration-300 hover:scale-105"
+                            />
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Cierre institucional -->
+                <footer
+                    class="pt-8 text-center border-t border-slate-200/60 max-w-2xl mx-auto"
+                >
+                    <div class="flex items-center justify-center gap-3">
+                        <div class="h-px w-8 bg-slate-200"></div>
+                        <span
+                            class="text-xs text-red-700 font-bold uppercase tracking-[0.2em]"
+                            >DDHH · BOGOTÁ 2026</span
+                        >
+                        <div class="h-px w-8 bg-slate-200"></div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+</Layout>
