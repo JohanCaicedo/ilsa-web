@@ -10,6 +10,14 @@ export interface HeroSlideData {
 
 export const heroSlidesConfig: HeroSlideData[] = [
     {
+        title: "<span class='text-[0.7em] leading-tight'>Cinco años del Estallido Social</span>",
+        excerpt: "Foro: Diálogos de Saberes a cinco años del Estallido Social.",
+        image: "https://api.ilsa.org.co/wp-content/uploads/2026/06/Diagramacion-07.webp",
+        link: "https://ilsa.org.co/noticias/especiales/cinco-a%C3%B1os-del-estallido-social",
+        badge: "Evento",
+        ctaText: "Saber más"
+    },
+    {
         title: "Víctor Moncayo",
         excerpt: "Jurista crítico y maestro comprometido con la construcción de un pensamiento emancipador",
         image: "/images/hero-home/Víctor Moncayo  jurista crítico y maestro-ID2.webp",
@@ -56,5 +64,6 @@ export const heroSlidesConfig: HeroSlideData[] = [
         link: "https://open.spotify.com/show/1QUNFi8S1z16xZpU4ZIpSa",
         badge: "Podcast",
         ctaText: "Escucha ahora"
-    }
+    },
+
 ];
