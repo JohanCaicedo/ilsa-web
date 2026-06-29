@@ -25,7 +25,7 @@ const breadcrumbs = [
     { label: "Especiales", href: "/noticias" },
     {
         label: "Foro Estallido Social",
-        href: "/noticias/especiales/foro-estallido-social",
+        href: "/noticias/especiales/cinco-años-del-estallido-social",
     },
 ];
 
@@ -38,10 +38,12 @@ const seoData: SeoData = {
     opengraphDescription:
         "Acompáñanos este 30 de junio de 2026 en la Universidad Nacional de Colombia para dialogar y construir memoria colectiva sobre la movilización social.",
     opengraphImage: {
-        sourceUrl: "/images/sae/sae (4).webp", // Puedes cambiarla por la ruta de la imagen del foro si cuentas con ella
+        sourceUrl:
+            "https://api.ilsa.org.co/wp-content/uploads/2026/06/Diagramacion-07.webp",
     },
     twitterImage: {
-        sourceUrl: "/images/sae/sae (4).webp",
+        sourceUrl:
+            "https://api.ilsa.org.co/wp-content/uploads/2026/06/Diagramacion-07.webp",
     },
 };
 
@@ -49,7 +51,7 @@ const objectives = [
     {
         title: "Visibilizar y dignificar",
         description:
-            "Reconocer las experiencias y testimonios de las personas y organizaciones participantes como fuentes fundamentales de verdad.",
+            "Reconocer las experiences y testimonios de las personas y organizaciones participantes como fuentes fundamentales de verdad.",
     },
     {
         title: "Articular saberes",
@@ -142,7 +144,7 @@ const objectives = [
 
                 <div class="pt-4">
                     <a
-                        href="https://forms.gle/NwfebHPPc3TJpDFa7"
+                        href="https://forms.gle/L73efH8yNGCKAKGz6"
                         target="_blank"
                         rel="noopener noreferrer"
                         class="inline-flex items-center gap-2.5 px-8 py-3.5 bg-[var(--ilsa-blue)] backdrop-blur-md border border-[var(--ilsa-blue-light)]/40 rounded-full text-sm font-bold text-white shadow-lg shadow-[var(--ilsa-blue)]/30 hover:bg-[var(--ilsa-blue-dark)] hover:shadow-xl hover:shadow-[var(--ilsa-blue-dark)]/40 hover:scale-105 transition-all duration-300"
@@ -160,7 +162,7 @@ const objectives = [
                                 d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-6.75-1.5a4.5 4.5 0 01-4.5-4.5v-3a6.75 6.75 0 0112 0v3a4.5 4.5 0 01-4.5 4.5z"
                             ></path>
                         </svg>
-                        Registro
+                        Inscríbete aquí
                     </a>
                 </div>
             </div>
@@ -169,7 +171,7 @@ const objectives = [
                 class="bg-white/50 backdrop-blur-3xl border border-white/60 shadow-2xl shadow-slate-200/50 rounded-[3rem] p-6 md:p-12 space-y-16"
             >
                 <section
-                    class="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-8 items-stretch pt-4"
+                    class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-8 items-start pt-4"
                 >
                     <div
                         class="space-y-6 text-slate-700 leading-relaxed text-lg font-light text-pretty"
@@ -208,74 +210,91 @@ const objectives = [
                         </p>
                     </div>
 
-                    <div
-                        class="relative bg-gradient-to-br from-white/70 to-white/40 backdrop-blur-2xl rounded-3xl border border-white/80 shadow-xl overflow-hidden p-8 flex flex-col"
-                    >
+                    <div class="space-y-6 flex flex-col">
                         <div
-                            class="absolute -top-16 -right-16 w-48 h-48 bg-[var(--ilsa-blue-dark)]/5 rounded-full blur-[120px] pointer-events-none"
+                            class="relative bg-gradient-to-br from-white/70 to-white/40 backdrop-blur-2xl rounded-3xl border border-white/80 shadow-xl overflow-hidden p-8 flex flex-col"
                         >
-                        </div>
-                        <div
-                            class="absolute inset-x-0 bottom-0 h-1.5 bg-gradient-to-r from-[var(--ilsa-blue)] via-[var(--ilsa-blue-dark)] to-[var(--ilsa-mujeres)]"
-                        >
-                        </div>
-
-                        <h3
-                            class="text-xl font-black text-slate-800 flex items-center justify-center lg:justify-start gap-2 mb-3 text-center lg:text-left"
-                        >
-                            <Sparkles
-                                className="w-5 h-5 shrink-0 text-[var(--ilsa-blue)]"
-                            />
-                            Ubicación y Hora
-                        </h3>
-
-                        <div class="space-y-6 my-auto">
                             <div
-                                class="flex flex-col sm:flex-row items-center lg:items-start gap-5 text-center sm:text-left"
+                                class="absolute -top-16 -right-16 w-48 h-48 bg-[var(--ilsa-blue-dark)]/5 rounded-full blur-[120px] pointer-events-none"
                             >
+                            </div>
+                            <div
+                                class="absolute inset-x-0 bottom-0 h-1.5 bg-gradient-to-r from-[var(--ilsa-blue)] via-[var(--ilsa-blue-dark)] to-[var(--ilsa-mujeres)]"
+                            >
+                            </div>
+
+                            <h3
+                                class="text-xl font-black text-slate-800 flex items-center justify-center lg:justify-start gap-2 mb-4 text-center lg:text-left"
+                            >
+                                <Sparkles
+                                    className="w-5 h-5 shrink-0 text-[var(--ilsa-blue)]"
+                                />
+                                Ubicación y Hora
+                            </h3>
+
+                            <div class="space-y-6 my-auto">
                                 <div
-                                    class="w-14 h-14 shrink-0 rounded-2xl bg-[var(--ilsa-blue)]/10 flex items-center justify-center border border-white/40 shadow-sm"
+                                    class="flex flex-col sm:flex-row items-center lg:items-start gap-5 text-center sm:text-left"
                                 >
-                                    <Building2
-                                        className="w-6 h-6 text-[var(--ilsa-blue)]"
-                                    />
-                                </div>
-                                <div>
                                     <div
-                                        class="text-sm font-bold text-slate-800 uppercase tracking-wider"
+                                        class="w-14 h-14 shrink-0 rounded-2xl bg-[var(--ilsa-blue)]/10 flex items-center justify-center border border-white/40 shadow-sm"
                                     >
-                                        Lugar
+                                        <Building2
+                                            className="w-6 h-6 text-[var(--ilsa-blue)]"
+                                        />
                                     </div>
-                                    <div class="text-xs text-slate-500">
-                                        Facultad de Derecho, Ciencias Políticas
-                                        y Sociales.<br />
-                                        Auditorio edificio 610. Universidad Nacional
-                                        de Colombia.
+                                    <div>
+                                        <div
+                                            class="text-sm font-bold text-slate-800 uppercase tracking-wider"
+                                        >
+                                            Lugar
+                                        </div>
+                                        <div class="text-xs text-slate-500">
+                                            Facultad de Derecho, Ciencias
+                                            Políticas y Sociales.<br />
+                                            Auditorio edificio 610. Universidad Nacional
+                                            de Colombia.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="flex flex-col sm:flex-row items-center lg:items-start gap-5 text-center sm:text-left"
+                                >
+                                    <div
+                                        class="w-14 h-14 shrink-0 rounded-2xl bg-[var(--ilsa-mujeres)]/10 flex items-center justify-center border border-white/40 shadow-sm"
+                                    >
+                                        <Calendar
+                                            className="w-6 h-6 text-[var(--ilsa-mujeres)]"
+                                        />
+                                    </div>
+                                    <div>
+                                        <div
+                                            class="text-sm font-bold text-slate-800 uppercase tracking-wider"
+                                        >
+                                            Fecha y Horario
+                                        </div>
+                                        <div class="text-xs text-slate-500">
+                                            30 de junio de 2026<br />
+                                            10:00 AM a 12:00 M.
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
+                        {/* Contenedor del Flyer en formato vertical 9:16 */}
+                        <div
+                            class="bg-white/60 border border-white/80 p-4 rounded-3xl shadow-lg overflow-hidden group"
+                        >
                             <div
-                                class="flex flex-col sm:flex-row items-center lg:items-start gap-5 text-center sm:text-left"
+                                class="aspect-[9/16] w-full rounded-2xl overflow-hidden relative bg-slate-100"
                             >
-                                <div
-                                    class="w-14 h-14 shrink-0 rounded-2xl bg-[var(--ilsa-mujeres)]/10 flex items-center justify-center border border-white/40 shadow-sm"
-                                >
-                                    <Calendar
-                                        className="w-6 h-6 text-[var(--ilsa-mujeres)]"
-                                    />
-                                </div>
-                                <div>
-                                    <div
-                                        class="text-sm font-bold text-slate-800 uppercase tracking-wider"
-                                    >
-                                        Fecha y Horario
-                                    </div>
-                                    <div class="text-xs text-slate-500">
-                                        30 de junio de 2026<br />
-                                        10:00 AM a 12:00 M.
-                                    </div>
-                                </div>
+                                <SmartImage
+                                    src="https://api.ilsa.org.co/wp-content/uploads/2026/06/Artboard-13.webp"
+                                    alt="Flyer oficial Foro cinco años del estallido social"
+                                    class="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500"
+                                />
                             </div>
                         </div>
                     </div>
