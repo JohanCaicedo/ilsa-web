@@ -10,6 +10,14 @@ export interface HeroSlideData {
 
 export const heroSlidesConfig: HeroSlideData[] = [
     {
+        title: "Justicia climática feminista",
+        excerpt: "La urgencia de una justicia climática feminista ante el avance de las ultraderechas",
+        image: "https://api.ilsa.org.co/wp-content/uploads/2026/07/Portada-03.webp",
+        link: "https://ilsa.org.co/2026/07/justicia-climatica-feminista-ultraderechas/",
+        badge: "Análisis",
+        ctaText: "Leer análisis"
+    },
+    {
         title: "<span class='text-[0.7em] leading-tight'>Cinco años del Estallido Social</span>",
         excerpt: "Foro: Diálogos de Saberes a cinco años del Estallido Social.",
         image: "https://api.ilsa.org.co/wp-content/uploads/2026/06/Diagramacion-07.webp",
