@@ -3,8 +3,8 @@ export interface TeamMember {
     name: string;
     role: string;
     image: string;
-    bio?: string; // Short bio for card
-    fullDescription?: string; // Long bio for modal
+    bio?: string;
+    fullDescription?: string;
     xUrl?: string;
 }
 
@@ -28,7 +28,7 @@ export const teamData: TeamMember[] = [
         id: "juanita-villamil",
         name: "Juanita Villamil",
         role: "Equipo de Dirección",
-        image: "/person_place_holder.webp",
+        image: "/images/perfiles/Juanita Villamil.webp",
         bio: "Abogada feminista y defensora de DDHH.",
         fullDescription: `Mi nombre es Juanita Villamil, tengo 25 años. Soy abogada feminista de la Universidad Nacional, hija del movimiento estudiantil y luchadora incansable por una Universidad pública, gratuita y de calidad. Llevo más de 7 años caminando en la defensa popular de los Derechos Humanos y ambientales. Desde que entré a la universidad, en el 2018, comencé a caminar en el Comité de Derechos Humanos de la Universidad, perteneciente a la "Campaña Defender la Libertad es Asuntos de Todas", con quienes he puesto el cuerpo en el acompañamiento a escenarios de protesta social, denuncia y acompañamiento a víctimas de violencia policial, y la disputa por la protección a la protesta social. ¿Mi motivación? Nadie debería ser perseguido, criminalizado ni asesinado por luchar por mundos justos donde quepamos todas y todos.
 
