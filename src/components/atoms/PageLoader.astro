@@ -52,12 +52,12 @@ const { type = "article" } = Astro.props;
 </div>
 
 <script>
-    const loader = document.getElementById("page-loader");
     let timeoutId: number | undefined;
 
     function showLoader() {
+        // Query the DOM dynamically to avoid stale references after View Transitions DOM swap
+        const loader = document.getElementById("page-loader");
         if (loader) {
-            // Clear any pending hide timeouts
             clearTimeout(timeoutId);
             loader.classList.remove("opacity-0", "pointer-events-none");
             loader.classList.add("opacity-100");
@@ -66,8 +66,9 @@ const { type = "article" } = Astro.props;
     }
 
     function hideLoader() {
+        // Query the DOM dynamically to avoid stale references after View Transitions DOM swap
+        const loader = document.getElementById("page-loader");
         if (loader) {
-            // Delay to ensure smooth transition
             timeoutId = setTimeout(() => {
                 loader.classList.remove("opacity-100");
                 loader.classList.add("opacity-0", "pointer-events-none");

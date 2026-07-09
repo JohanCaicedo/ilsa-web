@@ -332,6 +332,5 @@ import Button from "../Button.astro";
     }
 
     // Run on initial load and on Astro view transitions
-    initSocialCTA();
-    document.addEventListener("astro:after-swap", initSocialCTA);
+    document.addEventListener("astro:page-load", initSocialCTA);
 </script>

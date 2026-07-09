@@ -27,8 +27,21 @@
         progressBar.style.transform = `scaleX(${progress})`;
     }
 
-    window.addEventListener("scroll", updateReadingProgress, { passive: true });
-    window.addEventListener("resize", updateReadingProgress);
+    document.addEventListener("astro:page-load", () => {
+        window.addEventListener("scroll", updateReadingProgress, {
+            passive: true,
+        });
+        window.addEventListener("resize", updateReadingProgress);
 
-    updateReadingProgress();
+        updateReadingProgress();
+    });
+
+    document.addEventListener(
+        "astro:before-preparation",
+        () => {
+            window.removeEventListener("scroll", updateReadingProgress);
+            window.removeEventListener("resize", updateReadingProgress);
+        },
+        { once: true },
+    );
 </script>

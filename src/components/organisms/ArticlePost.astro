@@ -149,7 +149,7 @@ const formattedDate = new Date(date).toLocaleDateString("es-CO", {
       <!-- Audio Player Injection (Moved below Author Card) -->
       {
         audioUrl && (
-          <div class="mb-12" transition:persist="audio-player">
+          <div class="mb-12">
             <AudioPlayer client:load src={audioUrl} title={title} />
           </div>
         )
@@ -744,6 +744,5 @@ const formattedDate = new Date(date).toLocaleDateString("es-CO", {
     });
   }
 
-  setupPdfViewer();
   document.addEventListener("astro:page-load", setupPdfViewer);
 </script>

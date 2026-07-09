@@ -231,8 +231,8 @@ const {
         };
     }
 
-    // Se ejecuta de inmediato para soportar SSR, SSG y Astro View Transitions (data-astro-rerun)
-    // El evento 'click' en 'document' persiste, pero lo limpiamos y volvemos a registrar por seguridad en recargas
+    // El handler se registra con remove+add para garantizar exactamente UN listener activo,
+    // sin importar cuántas veces se re-ejecute el script (data-astro-rerun + SSR/SSG/View Transitions).
     document.removeEventListener("click", window.handlePaginationClick);
     document.addEventListener("click", window.handlePaginationClick);
 </script>

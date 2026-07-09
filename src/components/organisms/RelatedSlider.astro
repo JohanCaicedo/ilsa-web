@@ -169,8 +169,6 @@ const { posts } = Astro.props;
     });
   }
 
-  // Initial load
-  setupSliders();
-  // Astro Page Loads
+  // Astro Page Loads (also fires on initial load)
   document.addEventListener("astro:page-load", setupSliders);
 </script>
