@@ -1,0 +1,444 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import SmartImage from "../../../components/atoms/SmartImage.astro";
+import GradientText from "../../../components/atoms/GradientText.astro";
+import GalleryLightbox from "../../../components/molecules/GalleryLightbox.astro";
+
+import ShareButtons from "../../../components/atoms/ShareButtons.astro";
+import { 
+    Calendar, 
+    Mail, 
+    Camera, 
+    FileText, 
+    Video,
+    Sparkles,
+    CheckCircle2, 
+    Download, 
+    MapPin, 
+    Eye,
+    Image as ImageIcon
+} from "lucide-react";
+import type { SeoData } from "../../../lib/seo";
+
+// Edge Caching (ISR) rule para Cloudflare
+export const prerender = false;
+Astro.response.headers.set(
+    "Cache-Control",
+    "public, s-maxage=3600, stale-while-revalidate=86400",
+);
+
+const breadcrumbs = [
+    { label: "Noticias", href: "/noticias" },
+    { label: "Especiales", href: "/noticias" },
+    { label: "Convocatoria 28A", href: "/noticias/especiales/convocatoria-28a" },
+];
+
+const seoData: SeoData = {
+    title: "Convocatoria: Galería de la Memoria del Estallido Social | ILSA",
+    metaDesc: "Convocatoria abierta para periodistas, fotógrafas y comunicadoras populares a cinco años del 28 de abril de 2021. Galería de la Memoria del Estallido Social.",
+    opengraphTitle: "Convocatoria: Galería de la Memoria del Estallido Social (28A)",
+    opengraphDescription: "A cinco años del 28 de abril de 2021, la comunicación sigue siendo un acto político. Envía tus fotografías para construir la Galería de la Memoria.",
+    opengraphImage: {
+        sourceUrl: "https://api.ilsa.org.co/wp-content/uploads/2026/08/Convocatoria-Galeria-de-la-memoria-Banner.webp",
+    },
+    twitterImage: {
+        sourceUrl: "https://api.ilsa.org.co/wp-content/uploads/2026/08/Convocatoria-Galeria-de-la-memoria-Banner.webp",
+    }
+};
+
+const thematics = [
+    {
+        number: "01",
+        title: "La resistencia en las calles",
+        subtitle: "Escenarios de movilización y protesta",
+        description: "Fotografías que capturan la fuerza, la dignidad y el encuentro ciudadano en las calles durante las jornadas de protesta."
+    },
+    {
+        number: "02",
+        title: "El pueblo que sostuvo el paro",
+        subtitle: "Ollas comunitarias, brigadas de salud, defensoras de DD.HH.",
+        description: "Imágenes sobre la organización comunitaria, redes de cuidado, apoyo médico primario y defensa de derechos en los puntos de concentración."
+    },
+    {
+        number: "03",
+        title: "La creatividad del movimiento social",
+        subtitle: "Las diferentes formas de protesta",
+        description: "Expresiones artísticas, puestas en escena, batucadas, cartelería, gráfica popular y manifestaciones creativas de la indignación y la esperanza."
+    },
+    {
+        number: "04",
+        title: "Represión, violencia y encarcelamiento",
+        subtitle: "Denuncia y registro de vulneraciones",
+        description: "Registro testimonial sobre la respuesta estatal, el uso desproporcionado de la fuerza, la persecución y las violaciones a los Derechos Humanos."
+    },
+    {
+        number: "05",
+        title: "Duelo colectivo y espacios de memoria",
+        subtitle: "Homenajes, altares y lugares sagrados",
+        description: "Retratos del dolor compartido, la conmemoración de quienes cayeron y la resignificación de espacios públicos como lugares de memoria viva."
+    }
+];
+
+// 6 Piezas Gráficas Informativas (Formato 4:5)
+const infoPieces = [
+    { id: 1, src: "https://api.ilsa.org.co/wp-content/uploads/2026/08/Convocatoria-Galeria-de-la-memoria-IG-1.webp", title: "Pieza Informativa 1", subtitle: "Convocatoria Galería de la Memoria", alt: "Pieza 1 Convocatoria Galería de la Memoria 28A" },
+    { id: 2, src: "https://api.ilsa.org.co/wp-content/uploads/2026/08/Convocatoria-Galeria-de-la-memoria-IG-2.webp", title: "Pieza Informativa 2", subtitle: "Convocatoria Galería de la Memoria", alt: "Pieza 2 Convocatoria Galería de la Memoria 28A" },
+    { id: 3, src: "https://api.ilsa.org.co/wp-content/uploads/2026/08/Convocatoria-Galeria-de-la-memoria-IG-3.webp", title: "Pieza Informativa 3", subtitle: "Convocatoria Galería de la Memoria", alt: "Pieza 3 Convocatoria Galería de la Memoria 28A" },
+    { id: 4, src: "https://api.ilsa.org.co/wp-content/uploads/2026/08/Convocatoria-Galeria-de-la-memoria-IG-4.webp", title: "Pieza Informativa 4", subtitle: "Convocatoria Galería de la Memoria", alt: "Pieza 4 Convocatoria Galería de la Memoria 28A" },
+    { id: 5, src: "https://api.ilsa.org.co/wp-content/uploads/2026/08/Convocatoria-Galeria-de-la-memoria-IG-5.webp", title: "Pieza Informativa 5", subtitle: "Convocatoria Galería de la Memoria", alt: "Pieza 5 Convocatoria Galería de la Memoria 28A" },
+    { id: 6, src: "https://api.ilsa.org.co/wp-content/uploads/2026/08/Convocatoria-Galeria-de-la-memoria-IG-6.webp", title: "Pieza Informativa 6", subtitle: "Convocatoria Galería de la Memoria", alt: "Pieza 6 Convocatoria Galería de la Memoria 28A" }
+];
+
+
+---
+
+<Layout
+    title="Convocatoria: Galería de la Memoria del Estallido Social (28A)"
+    width="wide"
+    seo={seoData}
+    breadcrumbs={breadcrumbs}
+>
+    <div class="relative min-h-screen pb-32">
+        <!-- Blobs decorativos de fondo (Liquid Glass Accent en Azul ILSA) -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+            <div class="absolute top-1/6 left-1/4 w-[500px] h-[500px] bg-[var(--ilsa-blue-light)]/15 rounded-full blur-[120px] animate-blob"></div>
+            <div class="absolute top-1/2 right-1/4 w-[450px] h-[450px] bg-[var(--ilsa-blue-dark)]/10 rounded-full blur-[110px] animate-blob animation-delay-2000"></div>
+        </div>
+
+        <div class="relative z-10 pt-8 max-w-5xl mx-auto px-4 md:px-8">
+            
+            <!-- Hero Title & Badge -->
+            <div class="text-center mb-16 space-y-6">
+                <div class="inline-flex items-center justify-center gap-3 px-5 py-2.5 rounded-full bg-white/70 backdrop-blur-md border border-[var(--ilsa-blue-dark)]/25 shadow-sm">
+                    <span class="relative flex h-2.5 w-2.5">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--ilsa-blue-dark)] opacity-60"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--ilsa-blue-dark)]"></span>
+                    </span>
+                    <span class="text-xs text-center font-bold text-[var(--ilsa-blue-dark)] uppercase tracking-[0.2em]">
+                        Convocatoria Abierta · Hasta el 31 de Julio
+                    </span>
+                </div>
+
+                <GradientText
+                    text="Galería de la Memoria del Estallido Social (28A)"
+                    as="h1"
+                    size="text-4xl md:text-6xl"
+                    weight="font-black"
+                    from="var(--ilsa-blue-dark)"
+                    to="var(--ilsa-blue)"
+                    class="text-center drop-shadow-sm leading-[1.1] text-balance mx-auto w-full"
+                />
+
+                <p class="text-lg md:text-2xl text-slate-700 max-w-3xl mx-auto text-balance leading-relaxed font-light mt-4">
+                    "A cinco años del 28 de abril de 2021, la comunicación sigue siendo un acto político."
+                </p>
+
+                <!-- Metadata Badges -->
+                <div class="flex flex-wrap items-center justify-center gap-4 pt-2 text-sm text-slate-600 font-medium">
+                    <div class="flex items-center gap-2 bg-white/60 px-4 py-2 rounded-full border border-white/80 backdrop-blur-sm shadow-sm">
+                        <Calendar className="w-4 h-4 text-[var(--ilsa-blue-dark)]" />
+                        <span>Cierre: 31 de julio</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-white/60 px-4 py-2 rounded-full border border-white/80 backdrop-blur-sm shadow-sm">
+                        <MapPin className="w-4 h-4 text-[var(--ilsa-blue)]" />
+                        <span>Centro de Memoria, Paz y Reconciliación (Bogotá)</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-white/60 px-4 py-2 rounded-full border border-white/80 backdrop-blur-sm shadow-sm">
+                        <Mail className="w-4 h-4 text-[var(--ilsa-blue)]" />
+                        <span>ilsa@ilsa.org.co</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Liquid Glass Container -->
+            <div class="bg-white/50 backdrop-blur-3xl border border-white/60 shadow-2xl shadow-slate-200/50 rounded-[3rem] p-6 md:p-12 space-y-16">
+                
+                <!-- Main Hero Banner Image -->
+                <div class="w-full rounded-[2.5rem] overflow-hidden shadow-xl border border-white/80 relative">
+                    <SmartImage 
+                        src="https://api.ilsa.org.co/wp-content/uploads/2026/08/Convocatoria-Galeria-de-la-memoria-Banner.webp" 
+                        alt="Banner Convocatoria Galería de la Memoria del Estallido Social ILSA" 
+                        class="w-full h-auto object-cover object-center"
+                        priority={true}
+                        width={1200}
+                        height={675}
+                    />
+                </div>
+
+                <!-- Intro Context Text (Fiel a ILSA - Convocatoria 28A.docx en Azul ILSA) -->
+                <section class="space-y-6 text-slate-700 leading-relaxed text-lg font-light text-pretty">
+                    <div class="bg-gradient-to-r from-[var(--ilsa-blue)]/10 via-[var(--ilsa-blue-light)]/10 to-transparent p-6 md:p-8 rounded-3xl border border-[var(--ilsa-blue)]/20 shadow-sm">
+                        <p class="text-xl text-slate-800 font-normal leading-relaxed">
+                            Estamos buscando a periodistas, fotógrafas y comunicadoras populares que participaron del Estallido Social a lo largo y ancho del país, porque queremos imprimir su trabajo y construir conjuntamente una <strong class="text-[var(--ilsa-blue-dark)] font-semibold">Galería de la Memoria del Estallido</strong>.
+                        </p>
+                    </div>
+
+                    <p>
+                        Han pasado 5 años y con el paso del tiempo crece la estigmatización a la protesta y la movilización social. Porque cosas se han dicho muchas, como que fue un plan malévolo para acabar con el país, pero ustedes y nosotras sabemos que eso es falso.
+                    </p>
+
+                    <p>
+                        En ese contexto es crucial enfrentar la estigmatización y reivindicar el trabajo tan valioso realizado por la prensa y la comunicación para el fortalecimiento de la movilización y para la denuncia de vulneraciones a los Derechos Humanos. Si no hubiera sido por eso, muchos casos habrían quedado aún más impunes.
+                    </p>
+
+                    <p class="text-slate-900 font-medium">
+                        Por eso desde ILSA abrimos la convocatoria para la recepción de las fotografías que serán parte de la Galería de la Memoria del Estallido Social.
+                    </p>
+                </section>
+
+                <!-- Separador -->
+                <div class="relative py-2">
+                    <div class="w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
+                </div>
+
+                <!-- Temáticas de Participación (Estilo Azul ILSA) -->
+                <section class="space-y-8">
+                    <div class="text-center max-w-2xl mx-auto">
+                        <div class="inline-flex items-center gap-2 bg-[var(--ilsa-blue)]/10 text-[var(--ilsa-blue-dark)] text-xs font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full mb-3 border border-[var(--ilsa-blue)]/20">
+                            <Sparkles className="w-3.5 h-3.5" />
+                            Líneas Temáticas
+                        </div>
+                        <h2 class="text-3xl font-black text-slate-800 tracking-tight text-center">Elige la Temática de tus Fotos</h2>
+                        <p class="text-slate-500 text-sm mt-1">Puedes participar en una o varias de las siguientes categorías temáticas:</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {
+                            thematics.map((item) => (
+                                <div class="relative rounded-3xl p-6 border border-[var(--ilsa-blue-dark)]/20 bg-white/70 backdrop-blur-xl flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-4">
+                                            <span class="text-2xl font-black text-[var(--ilsa-blue-dark)] opacity-40">{item.number}</span>
+                                            <Sparkles className="w-5 h-5 text-[var(--ilsa-blue)] opacity-60" />
+                                        </div>
+                                        <h3 class="text-xl font-bold text-slate-800 tracking-tight mb-1">{item.title}</h3>
+                                        <p class="text-xs font-semibold uppercase tracking-wider text-[var(--ilsa-blue-dark)] mb-3">{item.subtitle}</p>
+                                        <p class="text-sm text-slate-600 font-light leading-relaxed">{item.description}</p>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </section>
+
+                <!-- Separador -->
+                <div class="relative py-2">
+                    <div class="w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
+                </div>
+
+                <!-- Requisitos Técnicos e Instrucciones de Envío (Azul ILSA) -->
+                <section class="bg-gradient-to-br from-white/80 via-white/60 to-blue-50/30 rounded-3xl border border-white/80 p-6 md:p-10 shadow-xl space-y-8">
+                    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border-b border-slate-200/60 pb-6">
+                        <div class="space-y-1">
+                            <div class="inline-flex items-center gap-2 text-[var(--ilsa-blue-dark)] text-xs font-bold uppercase tracking-widest">
+                                <CheckCircle2 className="w-4 h-4" />
+                                Guía de Calidad y Envío
+                            </div>
+                            <h2 class="text-2xl md:text-3xl font-black text-slate-800">Prepara tu Archivo</h2>
+                        </div>
+                        
+                        <a 
+                            href="mailto:ilsa@ilsa.org.co?subject=Convocatoria%20Galer%C3%ADa%20de%20la%20Memoria"
+                            class="inline-flex items-center gap-3 bg-gradient-to-r from-[var(--ilsa-blue)] to-[var(--ilsa-blue-dark)] text-white px-6 py-3 rounded-2xl font-bold text-sm shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5"
+                        >
+                            <Mail className="w-4 h-4" />
+                            Enviar a ilsa@ilsa.org.co
+                        </a>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-slate-700 text-sm font-light leading-relaxed">
+                        <div class="space-y-4">
+                            <h4 class="font-bold text-slate-800 text-base flex items-center gap-2">
+                                <Camera className="w-4 h-4 text-[var(--ilsa-blue)]" />
+                                Requisitos de Imagen
+                            </h4>
+                            <ul class="space-y-2 list-disc list-inside text-slate-600">
+                                <li><strong>Máxima definición posible:</strong> Idealmente a 300 DPI.</li>
+                                <li><strong>Formatos aceptados:</strong> JPG, PNG o RAW.</li>
+                                <li><strong>Evita la compresión:</strong> No envíes capturas de pantalla ni imágenes descargadas de WhatsApp, Facebook e Instagram.</li>
+                                <li><strong>Archivo original:</strong> Envía siempre la foto original tomada por la cámara o celular (entre más pesado el archivo, mejor).</li>
+                            </ul>
+                        </div>
+
+                        <div class="space-y-4">
+                            <h4 class="font-bold text-slate-800 text-base flex items-center gap-2">
+                                <Mail className="w-4 h-4 text-[var(--ilsa-blue-dark)]" />
+                                Datos para el Correo
+                            </h4>
+                            <ul class="space-y-2 list-disc list-inside text-slate-600">
+                                <li><strong>Destinatario:</strong> <span class="font-mono text-slate-800">ilsa@ilsa.org.co</span></li>
+                                <li><strong>Asunto obligatorio:</strong> <span class="font-mono text-slate-800">Convocatoria Galería de la Memoria</span></li>
+                                <li><strong>En el cuerpo del mensaje incluir:</strong>
+                                    <ul class="pl-6 pt-1 space-y-1 list-circle text-xs text-slate-500">
+                                        <li>Nombre completo</li>
+                                        <li>Lugar de la toma</li>
+                                        <li>Fecha aproximada</li>
+                                        <li>Pequeña descripción para el pie de foto</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Fecha límite:</strong> Abierta hasta el 31 de julio.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Curaduría y Exposición -->
+                    <div class="bg-blue-50/50 rounded-2xl p-5 border border-[var(--ilsa-blue)]/20 text-xs md:text-sm text-slate-700 leading-relaxed">
+                        <strong class="font-semibold text-slate-900">Curaduría colaborativa y exposición:</strong> Se seleccionarán las fotos dependiendo de su calidad, territorialidad y temática. Este proceso de curaduría y diseño museográfico se realizará de manera colaborativa con lxs participantes, y las fotos seleccionadas serán impresas para la galería y expuestas, inicialmente, en el <strong>Centro de Memoria, Paz y Reconciliación</strong> en Bogotá.
+                    </div>
+                </section>
+
+                <!-- Separador -->
+                <div class="relative py-2">
+                    <div class="w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
+                </div>
+
+                <!-- 1. SECCIÓN DE LAS 6 PIEZAS DE LA CONVOCATORIA (Vertical 3:4 Placeholders) -->
+                <section class="space-y-8">
+                    <div class="text-center max-w-2xl mx-auto">
+                        <div class="inline-flex items-center gap-2 bg-[var(--ilsa-blue)]/10 text-[var(--ilsa-blue-dark)] text-xs font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full mb-3 border border-[var(--ilsa-blue)]/20">
+                            <Camera className="w-3.5 h-3.5" />
+                            Lo que debes saber de la convocatoria
+                        </div>
+                    </div>
+
+                    <GalleryLightbox>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {
+                                infoPieces.map((piece, idx) => (
+                                    <button
+                                        type="button"
+                                        class="gallery-thumb group relative rounded-[2rem] overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 border border-white/80 bg-white/60 backdrop-blur-md cursor-zoom-in block w-full aspect-[4/5] text-left"
+                                        data-index={idx}
+                                        aria-label={`Ver ${piece.title}`}
+                                    >
+                                        {piece.src ? (
+                                            <SmartImage 
+                                                src={piece.src}
+                                                alt={piece.alt}
+                                                class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
+                                                width={600}
+                                                height={800}
+                                            />
+                                        ) : (
+                                            <!-- Clean Glass Placeholder for the 6 vertical pieces -->
+                                            <div class="w-full h-full bg-gradient-to-b from-slate-100 via-blue-50/30 to-slate-200/50 flex flex-col items-center justify-center p-6 text-center space-y-3 group-hover:bg-blue-50/50 transition-colors">
+                                                <div class="w-14 h-14 rounded-2xl bg-[var(--ilsa-blue)]/10 text-[var(--ilsa-blue-dark)] flex items-center justify-center border border-[var(--ilsa-blue)]/20 shadow-sm group-hover:scale-110 transition-transform">
+                                                    <ImageIcon className="w-7 h-7" />
+                                                </div>
+                                                <div>
+                                                    <span class="text-[11px] font-extrabold uppercase tracking-widest text-[var(--ilsa-blue-dark)]">Pieza {piece.id} de 6</span>
+                                                    <h4 class="text-base font-bold text-slate-800 mt-1">{piece.title}</h4>
+                                                    <p class="text-xs text-slate-500 font-light mt-0.5">{piece.subtitle}</p>
+                                                </div>
+                                                <span class="text-[10px] text-slate-400 bg-white/80 px-3 py-1 rounded-full border border-slate-200">
+                                                    [ Placeholder Imagen Vertical ]
+                                                </span>
+                                            </div>
+                                        )}
+
+                                        <div class="absolute top-3 right-3 bg-white/80 backdrop-blur-md rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-md">
+                                            <Eye className="w-4 h-4 text-slate-800" />
+                                        </div>
+                                    </button>
+                                ))
+                            }
+                        </div>
+                    </GalleryLightbox>
+                </section>
+
+                <!-- Separador -->
+                <div class="relative py-2">
+                    <div class="w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
+                </div>
+
+                <!-- 2. VIDEO DE LA CONVOCATORIA (Vertical 9:16 Placeholder) -->
+                <section class="space-y-4">
+
+                    <!-- Contenedor de Video Vertical 9:16 -->
+                    <div class="flex justify-center w-full">
+                        <div class="relative w-full max-w-[460px] bg-white/50 p-3 rounded-[2.5rem] border border-white/80 shadow-2xl overflow-hidden backdrop-blur-xl">
+                            <div class="relative w-full aspect-[9/16] rounded-[1.8rem] overflow-hidden bg-slate-100 shadow-inner flex flex-col items-center justify-center">
+                                <iframe 
+                                    src="https://www.instagram.com/reel/Da_jckxgW5Y/embed" 
+                                    width="460" 
+                                    height="818" 
+                                    frameborder="0" 
+                                    scrolling="no" 
+                                    allowtransparency="true"
+                                    allow="encrypted-media"
+                                    class="w-full h-full border-0"
+                                ></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+
+                <!-- Separador -->
+                <div class="relative py-2">
+                    <div class="w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
+                </div>
+
+                <!-- 4. VISOR DE PDF AL FINAL -->
+                <section class="space-y-8">
+                    <div class="text-center max-w-2xl mx-auto">
+                        <div class="inline-flex items-center gap-2 bg-[var(--ilsa-blue)]/10 text-[var(--ilsa-blue-dark)] text-xs font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full mb-3 border border-[var(--ilsa-blue)]/20">
+                            <FileText className="w-3.5 h-3.5" />
+                            Documento Oficial
+                        </div>
+                        <h3 class="text-3xl font-black text-slate-800 tracking-tight text-center">Consulta y descarga los términos completos de la Convocatoria 28A.</h3>
+                    </div>
+
+                    <div class="bg-white/70 backdrop-blur-2xl rounded-[2.5rem] border border-white/80 p-4 md:p-8 shadow-2xl space-y-6">
+                        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/70 pb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-[var(--ilsa-blue)]/10 text-[var(--ilsa-blue-dark)] flex items-center justify-center">
+                                    <FileText className="w-5 h-5" />
+                                </div>
+                                <div>
+                                    <h4 class="font-extrabold text-slate-800 text-sm md:text-base">Galeria-de-la-memoria.pdf</h4>
+                                    <p class="text-xs text-slate-500">Términos de referencia y documento oficial de la convocatoria</p>
+                                </div>
+                            </div>
+
+                            <a 
+                                href="https://api.ilsa.org.co/wp-content/uploads/2026/08/Galeria-de-la-memoria.pdf" 
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                download="Galeria-de-la-memoria.pdf"
+                                class="inline-flex items-center gap-2 bg-[var(--ilsa-blue-dark)] text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow hover:bg-[var(--ilsa-blue)] transition-colors"
+                            >
+                                <Download className="w-4 h-4" />
+                                Descargar PDF
+                            </a>
+                        </div>
+
+                        <!-- Visor interactivo -->
+                        <div class="w-full aspect-[17/22] rounded-2xl overflow-hidden border border-slate-200/80 bg-slate-100 shadow-inner">
+                            <iframe 
+                                src="https://api.ilsa.org.co/wp-content/uploads/2026/08/Galeria-de-la-memoria.pdf" 
+                                title="Visor Documento Galeria de la memoria PDF"
+                                class="w-full h-full border-0"
+                            ></iframe>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Share & Footer -->
+                <footer class="pt-8 text-center border-t border-slate-200/70 max-w-2xl mx-auto space-y-6">
+                    <ShareButtons url="https://ilsa.org.co/noticias/especiales/convocatoria-28a" title="Convocatoria: Galería de la Memoria del Estallido Social (28A)" />
+
+                    <div class="flex items-center justify-center gap-3">
+                        <div class="h-px w-8 bg-slate-200"></div>
+                        <span class="text-xs text-[var(--ilsa-blue-dark)] font-bold uppercase tracking-[0.2em]">ILSA · 28A ESTALLIDO SOCIAL</span>
+                        <div class="h-px w-8 bg-slate-200"></div>
+                    </div>
+                </footer>
+
+            </div>
+        </div>
+    </div>
+</Layout>
+
+

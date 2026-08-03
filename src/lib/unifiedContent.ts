@@ -65,6 +65,11 @@ const especialesMeta: Record<string, Partial<LocalSpecialPage>> = {
         date: "2026-06-29T12:00:00.000Z",
         image: "/images/sae/sae (4).webp",
     },
+    "convocatoria-28a": {
+        title: "Convocatoria: Galería de la Memoria del Estallido Social (28A)",
+        date: "2026-08-03T12:00:00.000Z",
+        image: "https://api.ilsa.org.co/wp-content/uploads/2026/08/Convocatoria-Galeria-de-la-memoria-Banner.webp",
+    },
 };
 
 /** Converts a kebab-case slug to a human-readable title (fallback). */
