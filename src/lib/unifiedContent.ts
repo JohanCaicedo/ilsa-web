@@ -70,6 +70,11 @@ const especialesMeta: Record<string, Partial<LocalSpecialPage>> = {
         date: "2026-08-03T12:00:00.000Z",
         image: "https://api.ilsa.org.co/wp-content/uploads/2026/08/Convocatoria-Galeria-de-la-memoria-Banner.webp",
     },
+    "territorialidades-campesinas": {
+        title: "Primer Encuentro de Territorialidades Campesinas – Boyacá, Santander y Cundinamarca",
+        date: "2026-05-15T12:00:00.000Z",
+        image: "https://api.ilsa.org.co/wp-content/uploads/2026/08/Territorialidades-campesinas-Evento-8.webp",
+    },
 };
 
 /** Converts a kebab-case slug to a human-readable title (fallback). */

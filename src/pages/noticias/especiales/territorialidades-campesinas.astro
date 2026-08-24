@@ -1,0 +1,564 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import GradientText from "../../../components/atoms/GradientText.astro";
+import SmartImage from "../../../components/atoms/SmartImage.astro";
+import GalleryLightbox from "../../../components/molecules/GalleryLightbox.astro";
+import ShareButtons from "../../../components/atoms/ShareButtons.astro";
+import { Calendar, MapPin, Quote, Camera } from "lucide-react";
+import type { SeoData } from "../../../lib/seo";
+
+// Edge Caching (ISR) rule para Cloudflare
+export const prerender = false;
+Astro.response.headers.set(
+    "Cache-Control",
+    "public, s-maxage=3600, stale-while-revalidate=86400",
+);
+
+const breadcrumbs = [
+    { label: "Noticias", href: "/noticias" },
+    { label: "Especiales", href: "/noticias" },
+    {
+        label: "Territorialidades Campesinas",
+        href: "/noticias/especiales/territorialidades-campesinas",
+    },
+];
+
+const seoData: SeoData = {
+    title: "Campesinado y la lucha por su territorio | ILSA",
+    metaDesc:
+        "Encuentro de territorialidades campesinas de los departamentos de Boyacá, Santander y Cundinamarca - 15 de mayo de 2026. Avances, ZRC, TECAM, APPA y ordenamiento territorial.",
+    canonical:
+        "https://ilsa.org.co/noticias/especiales/territorialidades-campesinas",
+    opengraphTitle:
+        "Campesinado y la lucha por su territorio – Encuentro de Territorialidades Campesinas",
+    opengraphDescription:
+        "Registro y memoria del Encuentro de territorialidades campesinas de Boyacá, Santander y Cundinamarca convocadas por ILSA y ANUC.",
+    opengraphImage: {
+        sourceUrl:
+            "https://api.ilsa.org.co/wp-content/uploads/2026/08/Territorialidades-campesinas-Evento-8.webp",
+    },
+    twitterImage: {
+        sourceUrl:
+            "https://api.ilsa.org.co/wp-content/uploads/2026/08/Territorialidades-campesinas-Evento-8.webp",
+    },
+};
+
+// 26 fotografías del evento (formato vertical 667x1000px)
+const BASE_URL =
+    "https://api.ilsa.org.co/wp-content/uploads/2026/08/Territorialidades-campesinas-Evento-";
+const eventPhotos = Array.from({ length: 26 }, (_, i) => ({
+    id: i + 1,
+    src: `${BASE_URL}${i + 1}.webp`,
+    alt: `Encuentro de Territorialidades Campesinas – Fotografía ${i + 1}`,
+}));
+
+const territorialidades = [
+    {
+        tipo: "ZRC",
+        municipios: "Pandi, Venecia, Páramo de Sumapaz",
+        departamento: "Cundinamarca",
+    },
+    {
+        tipo: "ZRC",
+        municipios:
+            "Tasco, Socha y Socotá (páramo de Pisba), Arcabuco, Tinjacá, Ráquira, Motavita, Toguí",
+        departamento: "Boyacá",
+    },
+    {
+        tipo: "TECAM",
+        municipios: "Samacá, Tierra Negra, Moniquirá, Gachantivá",
+        departamento: "Boyacá",
+    },
+    {
+        tipo: "TECAM",
+        municipios: "Vélez, Jesús María, La Belleza y Bolívar",
+        departamento: "Santander",
+    },
+    {
+        tipo: "APPA",
+        municipios: "Chía, Tabio, Tenjo, Guasca",
+        departamento: "Cundinamarca",
+    },
+];
+---
+
+<Layout
+    title="Campesinado y la lucha por su territorio | ILSA"
+    width="wide"
+    seo={seoData}
+    breadcrumbs={breadcrumbs}
+>
+    <div class="relative min-h-screen pb-32">
+        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+            <div
+                class="absolute top-1/6 left-1/4 w-[500px] h-[500px] bg-[var(--ilsa-blue-light)]/15 rounded-full blur-[120px] animate-blob"
+            >
+            </div>
+            <div
+                class="absolute top-1/2 right-1/4 w-[450px] h-[450px] bg-[var(--ilsa-blue-dark)]/10 rounded-full blur-[110px] animate-blob animation-delay-2000"
+            >
+            </div>
+        </div>
+
+        <div class="relative z-10 pt-8 max-w-5xl mx-auto px-4 md:px-8">
+            <div class="text-center mb-16 space-y-6">
+                <GradientText
+                    text="Campesinado y la lucha por su territorio"
+                    as="h1"
+                    size="text-4xl md:text-6xl"
+                    weight="font-black"
+                    from="var(--ilsa-blue-dark)"
+                    to="var(--ilsa-blue)"
+                    class="text-center drop-shadow-sm leading-[1.1] text-balance mx-auto w-full"
+                />
+
+                <p
+                    class="text-lg md:text-2xl text-slate-700 max-w-3xl mx-auto text-balance leading-relaxed font-light mt-4"
+                >
+                    Encuentro de territorialidades campesinas de los
+                    departamentos de Boyacá, Santander y Cundinamarca - 15 de
+                    mayo de 2026
+                </p>
+
+                <div
+                    class="flex flex-wrap items-center justify-center gap-4 pt-2 text-sm text-slate-600 font-medium"
+                >
+                    <div
+                        class="flex items-center gap-2 bg-white/60 px-4 py-2 rounded-full border border-white/80 backdrop-blur-sm shadow-sm"
+                    >
+                        <Calendar
+                            className="w-4 h-4 text-[var(--ilsa-blue-dark)]"
+                        />
+                        <span>15 de mayo de 2026</span>
+                    </div>
+                    <div
+                        class="flex items-center gap-2 bg-white/60 px-4 py-2 rounded-full border border-white/80 backdrop-blur-sm shadow-sm"
+                    >
+                        <MapPin className="w-4 h-4 text-[var(--ilsa-blue)]" />
+                        <span>Boyacá, Santander y Cundinamarca</span>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="bg-white/50 backdrop-blur-3xl border border-white/60 shadow-2xl shadow-slate-200/50 rounded-[3rem] p-6 md:p-12 space-y-12"
+            >
+                <section
+                    class="space-y-6 text-slate-700 leading-relaxed text-lg font-light text-pretty"
+                >
+                    <p>
+                        Las reivindicaciones por la tierra del movimiento
+                        campesino colombiano han sido permanentes e históricas.
+                        Inicialmente los encontramos luchando contra la
+                        liberación del patronazgo y la servidumbre, siguiendo
+                        consignas mundiales como la planteada por los campesinos
+                        en la revolución mexicana “tierra para quien la
+                        trabaja”, la reforma de las políticas de tierras
+                        ejidales y, por otra parte, abolir la entrega de tierras
+                        a los peones para que la trabajaran mientras el patrón
+                        reclamaba la mitad de la producción, lo cual constituía
+                        una esclavitud y explotación al campesinado.
+                    </p>
+
+                    <p>
+                        Pero los campesinos no solo pedían y siguen pidiendo
+                        tierras, sino seguridad sobre la tenencia, autonomía en
+                        su producción y apoyo y reconocimiento a sus procesos
+                        organizativos como las Ligas Campesinas, posteriormente
+                        las Juntas Comunales, los resguardos indígenas, los
+                        consejos comunitarios para comunidades afrodescendientes
+                        y, más recientemente, otras figuras como las Zonas de
+                        Reserva Campesina (ZRC) y los Territorios Campesinos
+                        Agroalimentarios (TECAM). Así sucesivamente fueron
+                        apareciendo figuras de ordenamiento del territorio que
+                        tienen de fondo la lucha por la tierra y el territorio,
+                        como es el caso de los territorios PDET, surgidos de la
+                        firma del Acuerdo Final de Paz (AFP).
+                    </p>
+
+                    <p>
+                        Las territorialidades campesinas han sido apuestas del
+                        movimiento social campesino y es plausible su
+                        reconocimiento legal en la Ley 200 de 1936, la propuesta
+                        de reforma agraria de Lleras Restrepo en 1966, la Ley
+                        160 de 1994 (que faculta la conformación de las ZRC) y
+                        la Reforma Rural Integral resultado del Acuerdo Final de
+                        Paz, los cuales además han sido reconocidos en
+                        documentos de políticas sociales como el CONPES 4184 de
+                        2026.
+                    </p>
+
+                    <p>
+                        Esta normatividad ha permitido que los y las campesinas
+                        hasta hoy hayan logrado la formalización de 27 ZRC, que
+                        abarcan alrededor de 1.536.314 ha. Durante el gobierno
+                        del Presidente Petro se aprobaron 20 ZRC, lo cual quiere
+                        decir que desde 1994 a 2022 solo se habían constituido 7
+                        ZRC; aún existen 32 procesos de ZRC en estudio, que en
+                        conjunto sumarían 2.324.616 ha (DOSP, 2025).
+                    </p>
+
+                    <p>
+                        Por su parte, sobre los TECAM (propuesta de la
+                        Coordinadora Nacional Agraria - CNA en 2013), solo en el
+                        gobierno de Petro se ha avanzado en la constitución de
+                        los mismos: en 2024 fueron identificadas cerca de 100
+                        iniciativas creadas de hecho por las organizaciones
+                        campesinas, de las cuales 29 hacen trámite para su
+                        formalización en diferentes regiones del país y cinco se
+                        han constituido oficialmente.
+                    </p>
+
+                    <p>
+                        Respecto a las APPA, impulsadas por la UPRA, se informa
+                        de la creación de dos de estas territorialidades: la del
+                        sur de la Guajira (que abarca una extensión de 79.961 ha
+                        en 8 municipios) y la del municipio de Falán en el
+                        Tolima (febrero de 2026) con una extensión de 11.703 ha.
+                        De igual forma, según las organizaciones campesinas, en
+                        el Departamento de Córdoba existe otra APPA. Finalmente
+                        encontramos los Territorios Acuáticos Agroalimentarios
+                        (EAA), que son territorialidades en una etapa incipiente
+                        de configuración.
+                    </p>
+
+                    <p>
+                        Por su parte, el diagnóstico que presenta el CONPES 4184
+                        de febrero de 2026 sobre reforma agraria en Colombia es
+                        claro en advertir las dificultades que trae consigo la
+                        inseguridad jurídica que afecta la propiedad rural en
+                        las zonas donde se proyecta la creación de las
+                        territorialidades campesinas:
+                    </p>
+                </section>
+
+                <section>
+                    <div
+                        class="relative bg-gradient-to-br from-slate-50/90 to-white/70 border border-slate-200/80 rounded-3xl p-6 md:p-10 shadow-sm"
+                    >
+                        <div class="absolute -top-4 left-8">
+                            <div
+                                class="w-10 h-10 rounded-2xl bg-[var(--ilsa-blue)]/10 text-[var(--ilsa-blue-dark)] flex items-center justify-center border border-[var(--ilsa-blue)]/20 shadow-sm"
+                            >
+                                <Quote className="w-5 h-5" />
+                            </div>
+                        </div>
+                        <blockquote
+                            class="text-slate-700 text-base md:text-lg leading-relaxed font-light italic pt-2"
+                        >
+                            “La falta de reglas y procedimientos definidos para
+                            adjudicar, formalizar o redistribuir estos predios
+                            limita la capacidad de las instituciones estatales
+                            para garantizar seguridad jurídica, proteger la
+                            biodiversidad y asegurar un uso sostenible de los
+                            recursos, generando disputas entre comunidades
+                            locales, actores económicos y autoridades
+                            ambientales. La falta de criterios técnicos
+                            unificados y de coordinación entre autoridades
+                            agrarias y ambientales genera incertidumbre sobre
+                            los derechos de propiedad, propicia conflictos entre
+                            comunidades, actores económicos y entidades
+                            públicas, y dificulta la protección de ecosistemas
+                            estratégicos. Esta indefinición normativa no solo
+                            retrasa la consolidación de derechos para familias
+                            campesinas, sino que también favorece dinámicas de
+                            informalidad en la ocupación y explotación de la
+                            tierra (FAO, 2004). En consecuencia, se debilitan
+                            tanto los objetivos de inclusión productiva de la
+                            reforma agraria como la gobernanza ambiental y
+                            territorial, al no contar con un marco institucional
+                            suficientemente claro para ordenar, distribuir y
+                            supervisar el uso de estos predios (Novoa Alvarez &
+                            Durán Guerrero, 2025)” (Citado en CONPES 4184,
+                            2026).
+                        </blockquote>
+                    </div>
+                </section>
+
+                <section
+                    class="space-y-6 text-slate-700 leading-relaxed text-lg font-light text-pretty"
+                >
+                    <p>
+                        En este contexto, el Instituto Latinoamericano para una
+                        Sociedad y un Derecho Alternativos (ILSA), en
+                        coordinación con la Asociación Nacional de Usuarios
+                        Campesinos de Cundinamarca (ANUC), convocó a diversos
+                        procesos de territorialidades campesinas (ZRC, TECAM,
+                        APPA) de los departamentos de Cundinamarca, Boyacá y
+                        Santander al <strong
+                            >Primer Encuentro de Territorialidades Campesinas de
+                            los Departamentos de Boyacá, Santander y
+                            Cundinamarca</strong
+                        >, realizado en Bogotá el día 15 de mayo de 2026, con el
+                        objetivo de abordar las siguientes proposiciones:
+                    </p>
+
+                    <ul
+                        class="space-y-3 pl-6 list-disc text-slate-700 font-light"
+                    >
+                        <li>
+                            Propiciar un encuentro y diálogo entre líderes y
+                            lideresas de diferentes territorialidades campesinas
+                            constituidas o en proceso de constitución en algunos
+                            departamentos de la zona central del país, para
+                            valorar desde el movimiento social campesino los
+                            avances, dificultades y proyecciones de la política
+                            relacionada con las territorialidades campesinas.
+                        </li>
+                        <li>
+                            Discutir posibilidades de trabajo en red entre las
+                            territorialidades campesinas y explorar rutas de
+                            fortalecimiento y exigibilidad a los planes
+                            comunitarios de ordenamiento territorial campesino.
+                        </li>
+                    </ul>
+
+                    <p class="pt-4">
+                        El encuentro contó con líderes y lideresas de las
+                        siguientes territorialidades:
+                    </p>
+                </section>
+
+                <section>
+                    <div
+                        class="overflow-hidden rounded-3xl border border-white/80 shadow-xl bg-white/70 backdrop-blur-xl"
+                    >
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr
+                                    class="bg-[var(--ilsa-blue)]/10 border-b border-[var(--ilsa-blue)]/20"
+                                >
+                                    <th
+                                        class="text-left px-6 py-4 font-bold text-[var(--ilsa-blue-dark)] uppercase tracking-wider text-xs"
+                                        >Territorialidad</th
+                                    >
+                                    <th
+                                        class="text-left px-6 py-4 font-bold text-[var(--ilsa-blue-dark)] uppercase tracking-wider text-xs"
+                                        >Municipios</th
+                                    >
+                                    <th
+                                        class="text-left px-6 py-4 font-bold text-[var(--ilsa-blue-dark)] uppercase tracking-wider text-xs"
+                                        >Departamento</th
+                                    >
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    territorialidades.map((t, idx) => (
+                                        <tr
+                                            class={`border-b border-slate-100 transition-colors hover:bg-[var(--ilsa-blue)]/5 ${idx % 2 === 0 ? "bg-white/50" : "bg-slate-50/50"}`}
+                                        >
+                                            <td class="px-6 py-4 font-bold text-[var(--ilsa-blue-dark)]">
+                                                {t.tipo}
+                                            </td>
+                                            <td class="px-6 py-4 text-slate-700 leading-relaxed">
+                                                {t.municipios}
+                                            </td>
+                                            <td class="px-6 py-4 font-medium text-slate-800">
+                                                {t.departamento}
+                                            </td>
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section
+                    class="space-y-6 text-slate-700 leading-relaxed text-lg font-light text-pretty"
+                >
+                    <p>
+                        Metodológica y temáticamente, el encuentro facilitó que
+                        los líderes compartieran los logros, avances y
+                        dificultades que han tenido en el proceso de
+                        formulación, consolidación, financiación y puesta en
+                        marcha de sus respectivos Planes de Vida, Planes de
+                        Desarrollo Sostenible o según lo defina cada
+                        territorialidad.
+                    </p>
+
+                    <p>
+                        En un segundo momento, el profesor Héctor Mondragón,
+                        consultor de la Agencia Nacional de Tierras, compartió
+                        una disertación sobre las diferentes formas de
+                        territorialidad y cómo antes de ellas ya se contaba con
+                        figuras como los ejidos, las ligas campesinas, las
+                        reservas de la sociedad civil y las JAC. Paralelo a
+                        ello, expuso cómo se ha avanzado en un reconocimiento
+                        sociopolítico y jurídico del campesinado hasta que el
+                        Presidente Petro acoge la Declaración de Naciones Unidas
+                        sobre los derechos del campesino mediante el Acto
+                        Legislativo 01 de 2023, dándole reconocimiento a rango
+                        constitucional mediante la reforma del artículo 64 de la
+                        Carta Magna.
+                    </p>
+
+                    <p>
+                        Posteriormente, intervino el señor Segundo Riaño,
+                        representante de las organizaciones campesinas ante la
+                        Comisión Mixta Campesina, la cual es interlocutora
+                        válida en la formulación de las políticas agrarias y
+                        demás asuntos campesinos.
+                    </p>
+
+                    <p>
+                        Asimismo, la Dra. Teresa Ramírez, del Departamento
+                        Nacional de Planeación (DNP), presentó las bondades del
+                        Trazador Presupuestal Campesino y las obligaciones de
+                        las entidades públicas. Explicó cómo este trazador está
+                        dirigido a todo tipo de políticas formuladas a nivel
+                        nacional y departamental, e invitó a los líderes a
+                        apropiarse de este instrumento para exigir a las
+                        autoridades territoriales que presupuesten las
+                        propuestas campesinas, abarcando en promedio 17 derechos
+                        como salud, educación, vivienda, vías, entre otros.
+                    </p>
+
+                    <p>
+                        Finalmente, para concluir el encuentro, los líderes
+                        solicitaron a ILSA definir compromisos para garantizar
+                        un trabajo a mediano y largo plazo, así como un
+                        acompañamiento más amplio a las territorialidades y la
+                        proyección de un encuentro nacional.
+                    </p>
+
+                    <p class="pt-2 font-medium text-slate-800">
+                        En concreto, se acordó lo siguiente:
+                    </p>
+
+                    <ol
+                        class="space-y-3 pl-6 list-decimal text-slate-700 font-light"
+                    >
+                        <li>
+                            Los asistentes realizarán con los miembros de sus
+                            territorialidades una socialización de lo conversado
+                            en el encuentro.
+                        </li>
+                        <li>
+                            Realizar un nuevo encuentro a mediados de julio, una
+                            vez transcurrido el proceso electoral, para explorar
+                            fórmulas y estrategias de incidencia del campesinado
+                            ante el nuevo gobierno.
+                        </li>
+                        <li>
+                            Diseñar y promover una campaña sobre el Trazador
+                            Presupuestal Campesino en todos los municipios
+                            —especialmente donde se impulsan figuras
+                            territoriales— para hacer seguimiento y evaluación a
+                            las políticas, planes y programas dirigidos al
+                            sector.
+                        </li>
+                        <li>
+                            Buscar recursos para llevar a cabo un encuentro más
+                            amplio de territorialidades, idealmente de carácter
+                            nacional.
+                        </li>
+                        <li>
+                            Promover un trabajo en red que permita la
+                            visibilización de los logros y dificultades que se
+                            presentan tanto en el desarrollo de las políticas
+                            públicas para el campesinado como en las distintas
+                            territorialidades campesinas.
+                        </li>
+                    </ol>
+                </section>
+
+                <div class="relative py-2">
+                    <div
+                        class="w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"
+                    >
+                    </div>
+                </div>
+
+                <section class="space-y-4">
+                    <div class="flex justify-center w-full">
+                        <div
+                            class="relative w-full max-w-[460px] bg-white/50 p-3 rounded-[2.5rem] border border-white/80 shadow-2xl overflow-hidden backdrop-blur-xl"
+                        >
+                            <div
+                                class="relative w-full aspect-[9/16] rounded-[1.8rem] overflow-hidden bg-slate-100 shadow-inner flex flex-col items-center justify-center"
+                            >
+                                <iframe
+                                    src="https://www.instagram.com/reel/DYa8Q6kRCDo/embed"
+                                    width="460"
+                                    height="818"
+                                    frameborder="0"
+                                    scrolling="no"
+                                    allowtransparency="true"
+                                    allow="encrypted-media"
+                                    class="w-full h-full border-0"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="relative py-2">
+                    <div
+                        class="w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"
+                    >
+                    </div>
+                </div>
+
+                <section class="space-y-8">
+                    <div class="text-center max-w-2xl mx-auto">
+                        <div
+                            class="inline-flex items-center gap-2 bg-[var(--ilsa-blue)]/10 text-[var(--ilsa-blue-dark)] text-xs font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full mb-3 border border-[var(--ilsa-blue)]/20"
+                        >
+                            <Camera className="w-3.5 h-3.5" />
+                            Registro Fotográfico del Evento
+                        </div>
+                    </div>
+
+                    <GalleryLightbox>
+                        <div
+                            class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"
+                        >
+                            {
+                                eventPhotos.map((photo, idx) => (
+                                    <button
+                                        type="button"
+                                        class="gallery-thumb group relative rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 border border-white/80 bg-white/60 backdrop-blur-md cursor-zoom-in block w-full aspect-[2/3] text-left"
+                                        data-index={idx}
+                                        aria-label={photo.alt}
+                                    >
+                                        <SmartImage
+                                            src={photo.src}
+                                            alt={photo.alt}
+                                            class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
+                                            width={667}
+                                            height={1000}
+                                        />
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                        <div class="absolute bottom-2 left-2 bg-white/80 backdrop-blur-md rounded-full px-2 py-0.5 text-[10px] font-bold text-slate-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                            {idx + 1} / 26
+                                        </div>
+                                    </button>
+                                ))
+                            }
+                        </div>
+                    </GalleryLightbox>
+                </section>
+
+                <footer
+                    class="pt-8 text-center border-t border-slate-200/70 max-w-2xl mx-auto space-y-6"
+                >
+                    <ShareButtons
+                        url="https://ilsa.org.co/noticias/especiales/territorialidades-campesinas"
+                        title="Campesinado y la lucha por su territorio – ILSA"
+                    />
+
+                    <div class="flex items-center justify-center gap-3">
+                        <div class="h-px w-8 bg-slate-200"></div>
+                        <span
+                            class="text-xs text-[var(--ilsa-blue-dark)] font-bold uppercase tracking-[0.2em]"
+                            >ILSA · TERRITORIALIDADES CAMPESINAS</span
+                        >
+                        <div class="h-px w-8 bg-slate-200"></div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+</Layout>
+

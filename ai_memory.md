@@ -51,7 +51,30 @@
     - Tamaño: 247KB, 8994 líneas.
 
 ## Refactorizaciones y Cambios
- 
+
+### Session 24/08/2026 - Creación de Página Especial "Territorialidades Campesinas"
+- **`src/pages/noticias/especiales/territorialidades-campesinas.astro`**:
+    - **New**: Página especial para el "Primer Encuentro de Territorialidades Campesinas de los Departamentos de Boyacá, Santander y Cundinamarca" (15 de mayo de 2026).
+    - **Liquid Glass Compliance**: 10/10. Basada en `Layout.astro`, con acentos de cristal (`bg-white/50 backdrop-blur-3xl border border-white/60 shadow-2xl`), cita destacada del CONPES 4184 sobre panel esmerilado con icono `Quote`, tabla estilizada de territorialidades (ZRC, TECAM, APPA) y visualización limpia sin fotos superiores indeseadas.
+    - **Fidelidad de Texto**: 100% fiel al documento original `CAMPESINADO Y SU LUCHA POR EL TERRITORIO.md` sin textos ni títulos inventados, limpiando artefactos de citación.
+    - **Video de Instagram Reel**: Integración de iframe Reel (`DYa8Q6kRCDo`) en contenedor 9:16 de 460px (`max-w-[460px] aspect-[9/16]`) con fondo de refracción.
+    - **Galería de Evento**: Grilla 4 columnas en relación vertical 2:3 de 26 fotos del evento conectada directamente al componente unificado `GalleryLightbox`.
+    - **SEO**: Objeto `SeoData` completo con canonical, metadatos, imagen destacada (`Territorialidades-campesinas-Evento-8.webp`), opengraph y twitter cards.
+- **`src/lib/unifiedContent.ts`**:
+    - **Update**: Registro explícito de `territorialidades-campesinas` en `especialesMeta` con su fecha oficial (15/05/2026), título descriptivo e imagen `Evento-8.webp`.
+
+### Session 03/08/2026 - Creación de Página Especial "Convocatoria 28A"
+- **`src/pages/noticias/especiales/convocatoria-28a.astro`**:
+    - **New**: Página especial para la "Galería de la Memoria del Estallido Social (28A)".
+    - **Liquid Glass Compliance**: 10/10. Paleta corporativa estricta Azul ILSA (`var(--ilsa-blue)`, `var(--ilsa-blue-dark)`), eliminados tonos rojos/naranjas. Banner principal limpio sin overlay oscuro.
+    - **Multimedia & PDF**:
+        - 6 piezas informativas IG en relación 4:5 integradas con `GalleryLightbox`.
+        - Visor interactivo PDF (`Galeria-de-la-memoria.pdf`) con relación de aspecto carta (`aspect-[17/22]`) y botón de descarga directa.
+        - Video vertical Instagram Reel (`Da_jckxgW5Y`) en iframe 9:16 dentro de tarjeta de cristal de 460px.
+    - **Fix Centrado**: Corrección de centrado tipográfico pasando `as="h1"` y `class="text-center w-full"` directamente a `GradientText` en lugar de envolverlo en un `<h1>` redundantemente.
+- **`src/lib/unifiedContent.ts`**:
+    - **Update**: Registro de `convocatoria-28a` en `especialesMeta`.
+
 ### Session 23/06/2026 - Creación de Página Especial "Bienes SAE - ILSA"
 - **`src/pages/noticias/especiales/sae.astro`**:
     - **New**: Creación de la página especial con diseño premium "Liquid Glass" que documenta la entrega de siete inmuebles por la SAE a organizaciones sociales en Bogotá.
@@ -229,6 +252,8 @@
 9. **CSS Transitions**: Ajustar duración de fade si 0.5s resulta lento para usuarios.
 
 ## Log de Commits
+- `feat(news): add territorialidades-campesinas special page with Instagram reel and 26-photo gallery`
+- `feat(news): add convocatoria-28a special page with Azul ILSA palette and PDF viewer`
 - `feat(news): add premium sae specials page with video and dynamic masonry gallery`
 - `feat(unified-content): register sae specials page in main timeline`
 - `feat(content): define institutional tone guidelines and integrate history section into about page`
