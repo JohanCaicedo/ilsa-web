@@ -11,11 +11,15 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://ilsa.org.co',
   output: 'server',
+  // Desactiva la precarga global para eliminar la advertencia de recursos no usados
+  prefetch: false,
   adapter: cloudflare({
     imageService: 'passthrough',
     routes: {
       include: ["/*"],
-      exclude: ["/actividades/*", "/publicaciones/*", "/nosotros/*", "/_astro/*", "/assets/*", "/fonts/*", "/icons/*", "/images/*"]
+      // Elimina las rutas dinámicas como /actividades/* o /publicaciones/* de las exclusiones.
+      // Solo debes excluir recursos puramente estáticos o assets globales.
+      exclude: ["/_astro/*", "/assets/*", "/fonts/*", "/icons/*", "/images/*"]
     }
   }),
   image: {
@@ -32,7 +36,6 @@ export default defineConfig({
         output: {
           banner: `
             if (typeof globalThis.MessageChannel === 'undefined') {
-              // console.log('Polyfilling MessageChannel for React 19 (Banner)');
               class MessagePortPolyfill extends EventTarget {
                 constructor() { super(); this.otherPort = null; this.onmessage = null; }
                 postMessage(message) {
