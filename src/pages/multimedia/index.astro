@@ -7,13 +7,9 @@ import GallerySection from "../../components/organisms/GallerySection.astro";
 import AlbumViewerModal from "../../components/organisms/AlbumViewerModal.astro";
 import GalleryLightbox from "../../components/molecules/GalleryLightbox.astro";
 
-export const prerender = false;
-
-// Cloudflare Edge Caching (ISR): Serve from Edge cache for 1 hr, revalidate in background for 1 day
-Astro.response.headers.set(
-    "Cache-Control",
-    "public, s-maxage=3600, stale-while-revalidate=86400",
-);
+// Esta página solo usa contenido definido en el repositorio. Se publica como
+// HTML estático para que Cloudflare Pages no la envíe al Worker SSR.
+export const prerender = true;
 
 // ==========================================
 // ✏️ VARIABLES DE CONTENIDO Y ENLACES

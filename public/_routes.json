@@ -16,6 +16,8 @@
         "/",
         "/noticias",
         "/noticias/*",
+        "/multimedia",
+        "/multimedia/*",
         "/actividades",
         "/19*",
         "/20*",
