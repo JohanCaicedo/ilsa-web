@@ -52,6 +52,38 @@
 
 ## Refactorizaciones y Cambios
 
+### Session 27/08/2026 - Noticias: especiales, paginación móvil e imágenes SEO
+
+#### Separación editorial en `/noticias`
+- **`src/pages/noticias/index.astro`**:
+  - El timeline unificado se divide explícitamente en `regularNews` (entradas WordPress) y `specialNews` (páginas Astro locales identificadas con `isLocal`). Ya no comparten una sola cuadrícula ni una paginación.
+  - Los **Especiales** aparecen justo después del hero de Noticias. El título se muestra centrado y se eliminó el texto auxiliar “Coberturas y contenidos editoriales”.
+  - Las noticias normales quedan debajo y conservan la cuadrícula de tres columnas con **una sola** instancia de `Pagination`.
+  - Especiales usa su propio grid (`special-news-grid`), muestra hasta nueve tarjetas por página y solo renderiza su paginación independiente cuando excede nueve elementos.
+  - Cada grid usa su propio `gridId` y `cardClass`, por lo que el script delegado de `Pagination.astro` filtra únicamente las tarjetas de su bloque correspondiente.
+
+#### Molécula reutilizable para tarjetas especiales
+- **`src/components/molecules/AuthorCard.astro`**:
+  - Se añadió la prop `variant?: "default" | "special"`; el diseño existente se conserva como valor por defecto y sigue atendiendo las demás vistas del sitio.
+  - La variante `special` reutiliza la estética Liquid Glass de `AuthorCard`, se presenta en formato horizontal e incorpora a la izquierda una miniatura cuadrada (`size-24`, `sm:size-28`).
+  - Usa `SmartImage.astro` con `object-cover`, por lo que la imagen SEO llena el marco sin deformarse ni estirarse. Importante: `SmartImage` debe mantenerse importado en la molécula; su ausencia provocaba `ReferenceError: SmartImage is not defined` en desarrollo.
+
+#### Paginación adaptable a móvil
+- **`src/components/molecules/Pagination.astro`**:
+  - El contenedor de botones ahora usa `flex-wrap`, `max-w-full` y centrado horizontal. Si los números no caben en un móvil, pasan automáticamente a una fila inferior en vez de desbordar o cortarse.
+  - Desde el breakpoint `sm` (tablet/escritorio) conserva el comportamiento previo: una única fila (`flex-nowrap`) y borde completamente redondeado.
+  - No se alteraron los atributos `data-grid`, `data-card`, `data-posts-per-page`, los IDs ni la lógica JavaScript de paginación; el componente continúa siendo compatible con todas sus instancias existentes.
+
+#### Imágenes SEO y tarjetas de especiales
+- **`src/pages/noticias/especiales/cinco-años-del-estallido-social.astro`**:
+  - `opengraphImage` y `twitterImage` se actualizaron a `https://api.ilsa.org.co/wp-content/uploads/2026/06/Artboard-13.webp`.
+- **`src/pages/noticias/especiales/cartagena.astro`**:
+  - `opengraphImage` y `twitterImage` usan `https://ilsa.org.co/images/evento-cartagena/redes/cartagena-redes%20(1).webp`.
+- **`src/lib/unifiedContent.ts`**:
+  - `especialesMeta` utiliza las mismas imágenes para que las tarjetas de `/noticias` coincidan con sus metadatos sociales.
+  - Cartagena usa `/images/evento-cartagena/redes/cartagena-redes (1).webp` y “cinco años del estallido social” usa `Artboard-13.webp`.
+  - SAE conserva su imagen original `/images/sae/sae (4).webp`.
+
 ### Session 27/08/2026 - Incidente crítico: páginas CMS vacías en Cloudflare Pages (solucionado)
 
 #### Síntoma observado en producción

@@ -23,14 +23,20 @@ Astro.response.headers.set(
 // Fetch news posts dynamically
 const wpNews = await getPostsByCategory("noticias", 100);
 
-// Combine WP posts with any registered manual/local pages
+// Combine WP posts with local special pages, then render each editorial group
+// independently so their pagination does not mix different content types.
 const allNews = getUnifiedTimeline(wpNews, "noticias");
+const specialNews = allNews.filter((post) => post.isLocal);
+const regularNews = allNews.filter((post) => !post.isLocal);
 
-// Pagination Logic
+// Independent pagination for regular news and local special pages.
 const postsPerPage = 9;
-const totalPages = Math.ceil(allNews.length / postsPerPage);
-const gridId = "news-grid";
-const cardClass = "news-card";
+const regularTotalPages = Math.ceil(regularNews.length / postsPerPage);
+const specialTotalPages = Math.ceil(specialNews.length / postsPerPage);
+const regularGridId = "news-grid";
+const specialGridId = "special-news-grid";
+const regularCardClass = "news-card";
+const specialCardClass = "special-news-card";
 ---
 
 <Layout title="Noticias - ILSA" width="wide">
@@ -96,30 +102,59 @@ const cardClass = "news-card";
 
             <WPLoader type="card">
                 <div class="container mx-auto px-4 pb-20">
-                    {/* Top Pagination */}
                     {
-                        totalPages > 1 && (
-                            <Pagination
-                                totalPages={totalPages}
-                                gridId={gridId}
-                                cardClass={cardClass}
-                                postsPerPage={postsPerPage}
-                            />
+                        specialNews.length > 0 && (
+                            <section class="mb-24">
+                                <div
+                                    id={specialGridId}
+                                    class="grid grid-cols-1 lg:grid-cols-2 gap-6"
+                                >
+                                    {specialNews.map((post, index) => (
+                                        <div
+                                            class={`${specialCardClass} ${index >= postsPerPage ? "hidden" : "flex"} w-full`}
+                                        >
+                                            <AuthorCard
+                                                title={post.title}
+                                                author={post.author}
+                                                authorImage=""
+                                                date={new Date(
+                                                    post.date,
+                                                ).toLocaleDateString("es-CO", {
+                                                    day: "numeric",
+                                                    month: "short",
+                                                    year: "numeric",
+                                                })}
+                                                image={post.image}
+                                                uri={post.uri}
+                                                variant="special"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {specialTotalPages > 1 && (
+                                    <div class="mt-12">
+                                        <Pagination
+                                            totalPages={specialTotalPages}
+                                            gridId={specialGridId}
+                                            cardClass={specialCardClass}
+                                            postsPerPage={postsPerPage}
+                                        />
+                                    </div>
+                                )}
+                            </section>
                         )
                     }
 
                     {
-                        allNews.length > 0 ? (
+                        regularNews.length > 0 ? (
                             <div
-                                id={gridId}
+                                id={regularGridId}
                                 class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center perspective-1000"
                             >
-                                {allNews.map((post, index) => (
+                                {regularNews.map((post, index) => (
                                     <div
-                                        class={`${cardClass} ${index >= postsPerPage ? "hidden" : "flex"} w-full justify-center transform transition-transform duration-500 hover:-translate-y-2 group`}
-                                        data-is-local={
-                                            post.isLocal ? "true" : "false"
-                                        }
+                                        class={`${regularCardClass} ${index >= postsPerPage ? "hidden" : "flex"} w-full justify-center transform transition-transform duration-500 hover:-translate-y-2 group`}
                                     >
                                         <AuthorCard
                                             title={post.title}
@@ -147,14 +182,13 @@ const cardClass = "news-card";
                         )
                     }
 
-                    {/* Bottom Pagination */}
                     {
-                        totalPages > 1 && (
+                        regularTotalPages > 1 && (
                             <div class="mt-12">
                                 <Pagination
-                                    totalPages={totalPages}
-                                    gridId={gridId}
-                                    cardClass={cardClass}
+                                    totalPages={regularTotalPages}
+                                    gridId={regularGridId}
+                                    cardClass={regularCardClass}
                                     postsPerPage={postsPerPage}
                                 />
                             </div>

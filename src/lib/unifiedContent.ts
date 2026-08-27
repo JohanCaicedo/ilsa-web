@@ -43,7 +43,7 @@ const especialesMeta: Record<string, Partial<LocalSpecialPage>> = {
         title: "Evento Especial en Cartagena: Reflexiones de Justicia",
         author: "Equipo ILSA",
         date: "2026-03-01T12:00:00.000Z",
-        image: "https://api.ilsa.org.co/wp-content/uploads/2023/10/DJI_0447-1024x683.jpg",
+        image: "/images/evento-cartagena/redes/cartagena-redes (1).webp",
     },
     sae: {
         title: "La SAE entrega siete inmuebles en Bogotá: ILSA seleccionada para fortalecer proyectos de memoria y derechos humanos",
@@ -63,7 +63,7 @@ const especialesMeta: Record<string, Partial<LocalSpecialPage>> = {
     "cinco-años-del-estallido-social": {
         title: "Foro: Diálogos de saberes a cinco años del estallido social",
         date: "2026-06-29T12:00:00.000Z",
-        image: "/images/sae/sae (4).webp",
+        image: "https://api.ilsa.org.co/wp-content/uploads/2026/06/Artboard-13.webp",
     },
     "convocatoria-28a": {
         title: "Convocatoria: Galería de la Memoria del Estallido Social (28A)",
