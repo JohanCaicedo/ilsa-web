@@ -1,5 +1,5 @@
 ---
-import { fetchPostByURI, getRelatedPosts, type PostNode } from "../lib/wp";
+import { fetchAllPosts, fetchPostByURI, getRelatedPosts, type PostNode } from "../lib/wp";
 import Layout from "../layouts/Layout.astro";
 import ArticlePost from "../components/organisms/ArticlePost.astro";
 import RelatedSlider from "../components/organisms/RelatedSlider.astro";
@@ -8,8 +8,26 @@ import { authorsConfig, defaultAuthor } from "../lib/authors";
 import { cn } from "../lib/utils";
 import { collectionsConfig } from "../lib/collections";
 
-// Enable Server-Side Rendering (SSR) for real-time WordPress dynamic content
-export const prerender = false;
+// Pre-render WordPress posts at build time. Cloudflare Pages then serves a
+// complete static document instead of contacting WordPress from the Worker.
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const { posts } = await fetchAllPosts();
+
+  return await Promise.all(
+    posts.nodes.map(async (post) => ({
+      params: { uri: post.uri.replace(/^\/+|\/+$/g, "") },
+      props: {
+        post,
+        // Avoid hundreds of extra GraphQL requests during a deployment. A
+        // temporarily empty related-post slider is preferable to failing the
+        // complete build when the WordPress database is under load.
+        relatedPosts: [],
+      },
+    })),
+  );
+}
 
 // Cloudflare Edge Caching (ISR): Serve from Edge cache for 1 hr, revalidate in background for 1 day
 Astro.response.headers.set(
@@ -20,9 +38,10 @@ Astro.response.headers.set(
 const { uri } = Astro.params;
 const currentUrl = Astro.url.href;
 
-// 1. Fetch Post dynamically
+// Use the build-time payload for published routes. The runtime fallback keeps
+// local development usable if a route is rendered on demand.
 const postUri = uri ? `/${uri}/` : "/";
-const post = await fetchPostByURI(postUri);
+const post = Astro.props.post ?? await fetchPostByURI(postUri);
 
 if (!post) {
   return Astro.redirect("/404");
@@ -33,7 +52,7 @@ const primaryCategory = post.categories?.nodes[0];
 const categorySlug = primaryCategory?.slug;
 const categoryName = primaryCategory?.name || "Actualidad";
 
-const relatedPosts = await getRelatedPosts(categorySlug, postUri);
+const relatedPosts = Astro.props.relatedPosts ?? await getRelatedPosts(categorySlug, postUri);
 
 // 2. Author Logic (Only for Opinion)
 const isOpinion = post.categories?.nodes.some((c) => c.slug === "opinion");

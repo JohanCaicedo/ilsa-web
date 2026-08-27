@@ -8,8 +8,9 @@ import WPLoader from "../../components/molecules/WPLoader.astro";
 import GradientText from "../../components/atoms/GradientText.astro";
 import LiquidContainer from "../../components/experimental/LiquidContainer.astro";
 
-// Switch to SSR to support dynamic query parameters (filtering)
-export const prerender = false;
+// Serve a prebuilt HTML page from the CDN. This avoids a runtime dependency on
+// WordPress for the activity index in Cloudflare Pages.
+export const prerender = true;
 
 const allEvents = await getEvents();
 

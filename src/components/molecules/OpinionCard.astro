@@ -30,8 +30,9 @@ const aspectRatio = validW / validH;
 const finalHeight = TARGET_HEIGHT;
 const finalWidth = Math.round(TARGET_HEIGHT * aspectRatio);
 
-// By default, recent fetched articles should prioritize optimization.
-const shouldOptimize = true;
+// Keep remote WordPress images as direct URLs. Downloading them at build time
+// makes a deployment fail whenever the origin temporarily returns 403/500.
+const shouldOptimize = false;
 ---
 
 <a

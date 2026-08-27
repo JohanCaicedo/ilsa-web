@@ -9,8 +9,10 @@ import WPLoader from "../../components/molecules/WPLoader.astro";
 import GradientText from "../../components/atoms/GradientText.astro";
 import LiquidContainer from "../../components/experimental/LiquidContainer.astro";
 
-// Switch to SSR to support dynamic pagination or params if needed
-export const prerender = false;
+// Generate the news index during the build. WordPress is reachable from the
+// build environment, while rendering it on every Cloudflare request can leave
+// the streamed document incomplete if the upstream API is unavailable.
+export const prerender = true;
 
 // Cloudflare Edge Caching (ISR): Serve from Edge cache for 1 hr, revalidate in background for 1 day
 Astro.response.headers.set(
