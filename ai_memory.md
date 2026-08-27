@@ -52,6 +52,89 @@
 
 ## Refactorizaciones y Cambios
 
+### Session 27/08/2026 - Incidente crítico: páginas CMS vacías en Cloudflare Pages (solucionado)
+
+#### Síntoma observado en producción
+- En `https://ilsa.org.co/noticias`, `https://ilsa.org.co/actividades`, `https://ilsa.org.co/multimedia` y las entradas de WordPress resueltas por `src/pages/[...uri].astro` se mostraban únicamente el `Navbar` y el fondo global. El contenido central no aparecía.
+- El fallo era exclusivo del sitio desplegado en Cloudflare Pages: los HTML/las rutas funcionaban al ejecutar el proyecto localmente con el Worker de Pages y el build local sí generaba el contenido.
+- El contenido no estaba simplemente oculto por CSS: en la respuesta pública afectada el `<main>` contenía el breadcrumb, pero faltaban las tarjetas, el artículo o las secciones de la página.
+- Una página podía aparentar funcionar en una prueba aislada por el caché, pero el comportamiento no era fiable. El problema reaparecía al navegar, usar una URL nueva o pedir una ruta no cacheada.
+
+#### Diagnóstico definitivo
+1. El sitio usaba `output: "server"` y varias rutas con `export const prerender = false`; por ello Cloudflare enviaba cada visita al Worker SSR.
+2. El Worker debía consultar `https://api.ilsa.org.co/graphql` en tiempo de petición para obtener WordPress. Durante el diagnóstico se observaron fallos reales del origen: respuestas `500` de WordPress (incluido el mensaje de error de conexión con la base de datos) y después `403` del WAF/Hostinger. Cuando esa consulta fallaba durante el render/streaming, el documento quedaba incompleto y solo sobrevivía la estructura ya emitida por el layout.
+3. El intento previo de quitar `ClientRouter` de Astro y el ajuste de visibilidad de `WPLoader` eran correcciones defensivas válidas, pero no resolvían la dependencia crítica del Worker hacia WordPress.
+4. El factor que impedía que los HTML prerenderizados se sirvieran de inmediato era `public/_routes.json`. Este archivo manual tiene precedencia sobre la generación automática de rutas de `@astrojs/cloudflare`. Conservaba `include: ["/*"]` y no excluía `/noticias`, `/multimedia` ni las URLs de artículos fechadas, por lo que Pages seguía enviando esas solicitudes al Worker SSR incluso cuando el build ya había creado sus archivos HTML.
+
+#### Estrategia aplicada
+- Se cambió el contenido que no necesita datos dinámicos por petición a generación estática durante el build. Así WordPress se consulta una vez por despliegue, no para cada visitante.
+- Se mantuvo el Worker disponible para las rutas que sí requieran lógica dinámica; el cambio está limitado a las rutas publicadas como archivos estáticos en el CDN.
+- Se modificó explícitamente el `_routes.json` manual para que Cloudflare Pages entregue esos archivos desde el CDN sin invocar SSR.
+- Esta decisión sustituye de forma intencional el patrón ISR/SSR recomendado para CMS en estas rutas concretas: la disponibilidad de WordPress desde el Worker era menor que la necesidad de que la página siempre responda completa. La frescura del contenido queda ligada a cada deployment.
+
+#### Cambios de código y configuración
+
+1. **Entradas de WordPress — `src/pages/[...uri].astro`**
+   - Se cambió de `prerender = false` a `prerender = true`.
+   - Se añadió `getStaticPaths()` usando `fetchAllPosts()` de `src/lib/wp.ts`, respetando el acceso centralizado a WPGraphQL.
+   - Cada `post.uri` se normaliza eliminando las barras inicial/final y se usa como parámetro de la ruta catch-all. Esto genera archivos como `dist/2026/08/guerra-hibrida-america-latina/index.html`.
+   - El post ya obtenido durante el build se pasa mediante `Astro.props.post`; si se renderiza en desarrollo bajo demanda se conserva el fallback `fetchPostByURI(postUri)`.
+   - Los artículos relacionados se inicializan como `[]` durante el build para no disparar una consulta GraphQL adicional por cada artículo. Esto evita cientos de llamadas y evita que una indisponibilidad parcial de WP aborte el deployment. El fallback dinámico a `getRelatedPosts()` se conserva para usos locales/on-demand.
+
+2. **Listados de CMS — `src/pages/noticias/index.astro` y `src/pages/actividades/index.astro`**
+   - Se cambiaron a `export const prerender = true`.
+   - `dist/noticias/index.html` y `dist/actividades/index.html` se generan completos en cada build, incluyendo las tarjetas alimentadas por WordPress/Event Manager.
+   - Consecuencia funcional: los filtros/paginación que dependieran exclusivamente de parámetros SSR no se recalculan desde WP para cada URL; la prioridad es entregar una página completa y estable desde el CDN.
+
+3. **Multimedia — `src/pages/multimedia/index.astro`**
+   - Se cambió a `export const prerender = true`.
+   - Se eliminó la cabecera ISR que solo tenía sentido cuando la página se servía por SSR. La página usa contenido definido en el repositorio, por lo que no necesita pasar por el Worker.
+   - El build confirmó la creación de `dist/multimedia/index.html` con contenido real.
+
+4. **Imágenes remotas — `src/components/molecules/OpinionCard.astro`**
+   - `shouldOptimize` se fijó en `false` para las imágenes remotas de WordPress.
+   - Motivo: el optimizador intentaba descargar imágenes durante el build; un `403` temporal del origen podía hacer fallar todo el deployment. Las imágenes se sirven como URL remota en lugar de bloquear la publicación por una optimización no esencial.
+
+5. **Routing de Cloudflare Pages — `public/_routes.json`**
+   - Se añadieron las exclusiones:
+     - `/noticias` y `/noticias/*`
+     - `/actividades`
+     - `/multimedia` y `/multimedia/*`
+     - `/19*` y `/20*` para las entradas históricas de WordPress con URL basada en año (`/1985/...`, `/2026/...`, etc.).
+   - En `_routes.json`, `include: ["/*"]` dirige por defecto al SSR; cada patrón de `exclude` se entrega como activo estático y no invoca la función. Estas exclusiones son imprescindibles mientras exista el archivo manual.
+   - La configuración de `astro.config.mjs` no sustituye este archivo: `public/_routes.json` gana por precedencia. Cualquier ruta estática nueva que se agregue en el futuro debe revisarse también en este archivo.
+
+6. **Correcciones defensivas previas**
+   - `src/layouts/Layout.astro`: se retiró `ClientRouter` de `astro:transitions` (commit `9201a1e`) para eliminar una posible fuente de navegación parcial/hidratación inconsistente.
+   - `src/components/molecules/WPLoader.astro`: el contenido real queda visible por defecto (`opacity: 1; visibility: visible`) y el skeleton se oculta con `display: none` (commit `84a1d6c`). Antes, una animación con `opacity: 0` podía dejar contenido invisible si se cancelaba/pausaba. Este cambio protege todas las páginas que usan el componente, aunque no era la causa raíz del SSR incompleto.
+
+#### Validación realizada
+- `npm run build` completó correctamente después de los cambios.
+- El build generó los índices estáticos y **288 entradas de WordPress** desde `src/pages/[...uri].astro`.
+- Se verificó la existencia y contenido de:
+  - `dist/noticias/index.html`
+  - `dist/actividades/index.html`
+  - `dist/multimedia/index.html`
+  - `dist/2026/08/guerra-hibrida-america-latina/index.html`
+- Se inspeccionó el `dist/_routes.json` final y confirmó las exclusiones mencionadas.
+- Tras el deployment de Cloudflare Pages se comprobaron las URLs públicas desde un navegador real:
+  - `/noticias` mostró titular, tarjetas y textos.
+  - `/2026/08/guerra-hibrida-america-latina/` mostró el artículo completo (más de 22.000 caracteres en el `<main>`).
+  - `/multimedia` mostró el hero, galería y secciones audiovisuales completas.
+
+#### Commits asociados (publicados en `main`)
+- `9201a1e` — `fix: layout ClientRouter`
+- `84a1d6c` — `fix: wploader`
+- `1970042` — `fix: prerender wordpress content for cloudflare pages`
+- `ed6868f` — `fix: serve prerendered wordpress pages from pages`
+- `0494569` — `fix: prerender multimedia for cloudflare pages`
+
+#### Regla operativa para el futuro
+- Al publicar o editar contenido en WordPress, ejecutar un nuevo deployment de Cloudflare Pages (o hacer un commit vacío que lo dispare) para regenerar las páginas estáticas. El sitio ya no depende de WP durante la visita, pero el HTML se actualiza en el build.
+- Para una ruta nueva con datos de WordPress, decidir primero si debe ser estática o realmente dinámica. Si se pre-renderiza, añadir una exclusión apropiada a `public/_routes.json`; de lo contrario Pages la seguirá mandando al Worker.
+- Antes de volver a SSR/ISR, comprobar que WPGraphQL y el WAF permiten de manera estable las consultas desde Cloudflare Workers. Debe haber manejo explícito de errores/fallback para que una caída de WordPress no genere documentos parciales.
+- No eliminar las exclusiones `/19*` y `/20*` sin reemplazarlas por reglas equivalentes: cubren todo el archivo histórico y futuro de entradas fechadas.
+
 ### Session 24/08/2026 - Creación de Página Especial "Territorialidades Campesinas"
 - **`src/pages/noticias/especiales/territorialidades-campesinas.astro`**:
     - **New**: Página especial para el "Primer Encuentro de Territorialidades Campesinas de los Departamentos de Boyacá, Santander y Cundinamarca" (15 de mayo de 2026).

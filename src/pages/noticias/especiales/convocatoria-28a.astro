@@ -20,12 +20,9 @@ import {
 } from "lucide-react";
 import type { SeoData } from "../../../lib/seo";
 
-// Edge Caching (ISR) rule para Cloudflare
-export const prerender = false;
-Astro.response.headers.set(
-    "Cache-Control",
-    "public, s-maxage=3600, stale-while-revalidate=86400",
-);
+// Contenido editorial local: debe existir como HTML estático porque
+// Cloudflare Pages entrega /noticias/* desde el CDN, sin invocar SSR.
+export const prerender = true;
 
 const breadcrumbs = [
     { label: "Noticias", href: "/noticias" },
@@ -440,5 +437,4 @@ const infoPieces = [
         </div>
     </div>
 </Layout>
-
 

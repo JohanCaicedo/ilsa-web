@@ -1,14 +1,10 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import SmartImage from "../../components/atoms/SmartImage.astro";
-import GradientText from "../../components/atoms/GradientText.astro";
+import Layout from "../../../layouts/Layout.astro";
+import SmartImage from "../../../components/atoms/SmartImage.astro";
+import GradientText from "../../../components/atoms/GradientText.astro";
 
-// Edge Caching (ISR) rule para Cloudflare
-export const prerender = false;
-Astro.response.headers.set(
-    "Cache-Control",
-    "public, s-maxage=3600, stale-while-revalidate=86400",
-);
+// Contenido editorial local: Cloudflare Pages lo entrega estáticamente.
+export const prerender = true;
 
 // Mejoramos el SEO para cubrir las palabras clave del texto y la ley
 const title = "Ley 2570 de 2026: Jurisdicción Agraria y Rural en Colombia | ILSA";

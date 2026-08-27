@@ -7,6 +7,9 @@ import Breadcrumbs from "../../../components/atoms/Breadcrumbs.astro";
 import GalleryLightbox from "../../../components/molecules/GalleryLightbox.astro";
 import type { SeoData } from "../../../lib/seo";
 
+// Contenido editorial local: Cloudflare Pages lo entrega estáticamente.
+export const prerender = true;
+
 const breadcrumbs = [
     { label: "Noticias", href: "/noticias" },
     { label: "Especiales", href: "/noticias" },

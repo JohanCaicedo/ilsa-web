@@ -6,11 +6,8 @@ import { MapPin, Calendar } from "lucide-react";
 import type { SeoData } from "../../../lib/seo";
 
 // Edge Caching (ISR) rule para Cloudflare
-export const prerender = false;
-Astro.response.headers.set(
-    "Cache-Control",
-    "public, s-maxage=3600, stale-while-revalidate=86400",
-);
+// Contenido editorial local: Cloudflare Pages lo entrega estáticamente.
+export const prerender = true;
 
 // Mantenemos la estructura de carpetas exacta en los breadcrumbs para el compilador de la landing
 const breadcrumbs = [

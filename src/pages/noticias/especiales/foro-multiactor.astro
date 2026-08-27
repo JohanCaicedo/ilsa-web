@@ -4,11 +4,8 @@ import SmartImage from "../../../components/atoms/SmartImage.astro";
 import GradientText from "../../../components/atoms/GradientText.astro";
 
 // Edge Caching (ISR) rule para Cloudflare
-export const prerender = false;
-Astro.response.headers.set(
-    "Cache-Control",
-    "public, s-maxage=3600, stale-while-revalidate=86400",
-);
+// Contenido editorial local: Cloudflare Pages lo entrega estáticamente.
+export const prerender = true;
 
 const title = "Participación en el Foro Multi-actor EU-LAC sobre Cuidados | ILSA";
 const description = "ILSA participó en Berlín en el Foro Multi-actor EU-LAC sobre Cuidados de larga duración en Europa, América Latina y el Caribe, visibilizando los derechos de las madres comunitarias.";

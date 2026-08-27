@@ -75,6 +75,11 @@ const especialesMeta: Record<string, Partial<LocalSpecialPage>> = {
         date: "2026-05-15T12:00:00.000Z",
         image: "https://api.ilsa.org.co/wp-content/uploads/2026/08/Territorialidades-campesinas-Evento-8.webp",
     },
+    "jurisdiccion-agraria-y-rural": {
+        title: "Ley 2570 de 2026: Jurisdicción Agraria y Rural en Colombia",
+        date: "2026-05-20T12:00:00.000Z",
+        image: "/id/JAR-20M.webp",
+    },
 };
 
 /** Converts a kebab-case slug to a human-readable title (fallback). */
@@ -109,26 +114,11 @@ function discoverEspecialesPages(category: LocalSpecialPage["categorySlug"]): Un
     return pages;
 }
 
-// ---------------------------------------------------------------------------
-// Manual registry for pages OUTSIDE /noticias/especiales/ (e.g. standalone)
-// ---------------------------------------------------------------------------
-const standaloneLocalPages: LocalSpecialPage[] = [
-    {
-        title: "Ley 2570 de 2026: Jurisdicción Agraria y Rural en Colombia",
-        author: "ILSA",
-        date: "2026-05-20T12:00:00.000Z",
-        image: "/id/JAR-20M.webp",
-        uri: "/noticias/jurisdiccion-agraria-y-rural",
-        categorySlug: "noticias",
-    },
-];
-
 /**
- * Merges WordPress Posts and Local Pages matching a specific category,
- * sorting the unified array from newest to oldest.
+ * Merges WordPress posts with auto-discovered local special pages, sorting the
+ * unified timeline from newest to oldest.
  *
- * Local pages are auto-discovered from /noticias/especiales/ and combined
- * with any manually registered standalone pages.
+ * Local pages are auto-discovered from /noticias/especiales/.
  */
 export function getUnifiedTimeline(wpPosts: CardPostNode[], category: LocalSpecialPage["categorySlug"]): UnifiedCardData[] {
     // 1. Normalize WP Posts
@@ -142,21 +132,8 @@ export function getUnifiedTimeline(wpPosts: CardPostNode[], category: LocalSpeci
         isLocal: false,
     }));
 
-    // 2. Auto-discover especiales/ pages + standalone manual pages
-    const localUnified: UnifiedCardData[] = [
-        ...discoverEspecialesPages(category),
-        ...standaloneLocalPages
-            .filter((p) => p.categorySlug === category)
-            .map((p) => ({
-                id: `local-${p.uri}`,
-                title: p.title,
-                author: p.author,
-                date: p.date,
-                image: p.image,
-                uri: p.uri,
-                isLocal: true,
-            })),
-    ];
+    // 2. Auto-discover local pages from especiales/.
+    const localUnified = discoverEspecialesPages(category);
 
     // 3. Merge and Sort chronologically (newest first)
     const combined = [...wpUnified, ...localUnified];
