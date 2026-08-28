@@ -435,13 +435,9 @@ const formattedDate = new Date(date).toLocaleDateString("es-CO", {
 
       .content-body :global(sup a) {
         font-weight: 700;
-        /* WP/Elementor may inject a later stylesheet inside the post body.
-           Keep citation links on the site's accessible purple regardless. */
-        color: #5e3b69 !important;
+        color: var(--primary);
         padding: 0 2px;
-        text-decoration: underline;
-        text-decoration-thickness: 1px;
-        text-underline-offset: 2px;
+        text-decoration: none;
       }
 
       /* Sección Notas al Pie (WordPress specific class: .wp-block-footnotes) */
@@ -501,7 +497,6 @@ const formattedDate = new Date(date).toLocaleDateString("es-CO", {
       }
 
       .content-body :global(.footnote-back) {
-        color: #5e3b69 !important;
         text-decoration: none;
         margin-left: 5px;
         font-size: 1.2em;
@@ -516,20 +511,12 @@ const formattedDate = new Date(date).toLocaleDateString("es-CO", {
 
       /* Custom tweaks - Links in body */
       .content-body :global(a:not(.footnote-back):not(sup a)) {
-        /* Content coming from WordPress can include unlayered CSS rules for
-           anchors. !important is intentional here: this is the final visual
-           rule for editorial hyperlinks rendered inside an article. */
-        color: #5e3b69 !important;
-        font-weight: 600;
-        text-decoration: underline;
-        text-decoration-color: color-mix(in srgb, var(--ilsa-link) 55%, transparent);
-        text-decoration-thickness: 1px;
-        text-underline-offset: 3px;
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
       }
-      .content-body :global(a:hover),
-      .content-body :global(a:focus-visible) {
-        color: #7b5088 !important;
-        text-decoration-thickness: 2px;
+      .content-body :global(a:hover) {
+        text-decoration: underline;
       }
 
       /* Mobile Adjustments */
