@@ -15,18 +15,30 @@ export const prerender = true;
 export async function getStaticPaths() {
   const { posts } = await fetchAllPosts();
 
-  return await Promise.all(
-    posts.nodes.map(async (post) => ({
+  return posts.nodes.map((post) => {
+    const primaryCategorySlug = post.categories?.nodes[0]?.slug;
+    const relatedPosts = posts.nodes
+      .filter((candidate) => candidate.uri !== post.uri)
+      .filter(
+        (candidate) =>
+          !primaryCategorySlug ||
+          candidate.categories?.nodes.some(
+            (category) => category.slug === primaryCategorySlug,
+          ),
+      )
+      .slice(0, 10);
+
+    return {
       params: { uri: post.uri.replace(/^\/+|\/+$/g, "") },
       props: {
         post,
-        // Avoid hundreds of extra GraphQL requests during a deployment. A
-        // temporarily empty related-post slider is preferable to failing the
-        // complete build when the WordPress database is under load.
-        relatedPosts: [],
+        // Reuse the build-time collection instead of making one GraphQL
+        // related-post request per page. This keeps the carousel populated
+        // without making the Pages build depend on hundreds of extra requests.
+        relatedPosts,
       },
-    })),
-  );
+    };
+  });
 }
 
 // Cloudflare Edge Caching (ISR): Serve from Edge cache for 1 hr, revalidate in background for 1 day

@@ -169,6 +169,15 @@ const { posts } = Astro.props;
     });
   }
 
-  // Astro Page Loads (also fires on initial load)
+  // Initial load must not depend on ClientRouter/View Transitions. The site
+  // can render as an MPA, where astro:page-load is not guaranteed to be the
+  // first lifecycle event available to this component.
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupSliders, { once: true });
+  } else {
+    setupSliders();
+  }
+
+  // Re-initialize when Astro navigation is enabled on a consuming page.
   document.addEventListener("astro:page-load", setupSliders);
 </script>

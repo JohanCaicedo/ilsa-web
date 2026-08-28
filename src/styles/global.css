@@ -64,6 +64,8 @@
   --ilsa-bg-light: #f3f4f6;
   --ilsa-mujeres: #274067;
   --ilsa-mujeres-light: #af9cb5;
+  --ilsa-link: #5e3b69;
+  --ilsa-link-hover: #7b5088;
 
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -165,6 +167,28 @@
     @apply font-bold tracking-tight;
     text-wrap: balance;
     text-align: left;
+  }
+
+  /* Default link treatment: content coming from WordPress and any unstyled
+     anchor remains clearly identifiable without overriding component-specific
+     Tailwind colour utilities (buttons, navigation, badges, etc.). */
+  a {
+    color: var(--ilsa-link);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: color-mix(
+      in srgb,
+      var(--ilsa-link) 55%,
+      transparent
+    );
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  a:hover,
+  a:focus-visible {
+    color: var(--ilsa-link-hover);
+    text-decoration-thickness: 2px;
   }
 }
 
@@ -313,4 +337,18 @@ html.is-ios .bg-noise-layer {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   will-change: transform, opacity;
+}
+
+/* Global hyperlink colour.
+ * This is intentionally outside Tailwind's layers and uses !important: every
+ * <a> in the site, including navigation and component links, must use the
+ * Mujeres purple rather than a component-specific utility colour. */
+a,
+a:visited {
+  color: #5e3b69 !important;
+}
+
+a:hover,
+a:focus-visible {
+  color: #7b5088 !important;
 }

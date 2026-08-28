@@ -435,9 +435,13 @@ const formattedDate = new Date(date).toLocaleDateString("es-CO", {
 
       .content-body :global(sup a) {
         font-weight: 700;
-        color: var(--primary);
+        /* WP/Elementor may inject a later stylesheet inside the post body.
+           Keep citation links on the site's accessible purple regardless. */
+        color: #5e3b69 !important;
         padding: 0 2px;
-        text-decoration: none;
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 2px;
       }
 
       /* Sección Notas al Pie (WordPress specific class: .wp-block-footnotes) */
@@ -465,31 +469,39 @@ const formattedDate = new Date(date).toLocaleDateString("es-CO", {
         letter-spacing: 1px;
       }
 
-      .content-body :global(.wp-block-footnotes ol) {
-        list-style: none !important; /* Kill default markers to avoid duplicates */
-        padding-left: 0 !important;
+      .content-body :global(ol.wp-block-footnotes) {
+        /* The Page Builder output is still an ordered list. Disable its native
+           marker at both levels, then render exactly one controlled counter. */
+        list-style: none !important;
+        padding-left: 0;
         margin: 0;
-        counter-reset: footnotes;
+        counter-reset: article-footnotes;
       }
 
       .content-body :global(.wp-block-footnotes li) {
+        list-style: none !important;
         margin-bottom: 12px;
-        padding-left: 1.5em; /* Space for the custom number */
+        padding-left: 2rem;
         line-height: 1.6;
         position: relative;
-        counter-increment: footnotes;
+        counter-increment: article-footnotes;
+      }
+
+      .content-body :global(.wp-block-footnotes li::marker) {
+        content: "";
       }
 
       .content-body :global(.wp-block-footnotes li::before) {
-        content: counter(footnotes) ". ";
+        content: counter(article-footnotes) ".";
         position: absolute;
         left: 0;
         top: 0;
+        color: var(--ilsa-mujeres);
         font-weight: 700;
-        color: var(--primary);
       }
 
       .content-body :global(.footnote-back) {
+        color: #5e3b69 !important;
         text-decoration: none;
         margin-left: 5px;
         font-size: 1.2em;
@@ -504,12 +516,20 @@ const formattedDate = new Date(date).toLocaleDateString("es-CO", {
 
       /* Custom tweaks - Links in body */
       .content-body :global(a:not(.footnote-back):not(sup a)) {
-        color: var(--primary);
-        text-decoration: none;
-        font-weight: 500;
-      }
-      .content-body :global(a:hover) {
+        /* Content coming from WordPress can include unlayered CSS rules for
+           anchors. !important is intentional here: this is the final visual
+           rule for editorial hyperlinks rendered inside an article. */
+        color: #5e3b69 !important;
+        font-weight: 600;
         text-decoration: underline;
+        text-decoration-color: color-mix(in srgb, var(--ilsa-link) 55%, transparent);
+        text-decoration-thickness: 1px;
+        text-underline-offset: 3px;
+      }
+      .content-body :global(a:hover),
+      .content-body :global(a:focus-visible) {
+        color: #7b5088 !important;
+        text-decoration-thickness: 2px;
       }
 
       /* Mobile Adjustments */
@@ -742,6 +762,17 @@ const formattedDate = new Date(date).toLocaleDateString("es-CO", {
         }
       });
     });
+  }
+
+  // The article pages are now served as prerendered HTML and can load without
+  // Astro's client-navigation lifecycle. Initialize on a normal document load
+  // as well, while retaining support for pages that enable Astro navigation.
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupPdfViewer, {
+      once: true,
+    });
+  } else {
+    setupPdfViewer();
   }
 
   document.addEventListener("astro:page-load", setupPdfViewer);
