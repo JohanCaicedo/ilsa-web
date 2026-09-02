@@ -13,7 +13,7 @@ export const heroSlidesConfig: HeroSlideData[] = [
         title: "El Acuerdo Final de Paz, diez años después",
         excerpt: "Avances, resistencias y proyecciones",
         image: "https://api.ilsa.org.co/wp-content/uploads/2026/09/El-Acuerdo-Final-de-Paz-diez-anos-despues.webp",
-        link: "https://ilsa.org.co/evento/acuerdo-final-de-paz-diez-anos-despues/",
+        link: "https://ilsa.org.co/actividades/acuerdo-final-de-paz-diez-anos-despues/",
         badge: "Seminario",
         ctaText: "Ver programación"
     },
