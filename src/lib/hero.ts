@@ -10,6 +10,15 @@ export interface HeroSlideData {
 
 export const heroSlidesConfig: HeroSlideData[] = [
     {
+        title: "El Acuerdo Final de Paz, diez años después",
+        excerpt: "Avances, resistencias y proyecciones",
+        image: "https://api.ilsa.org.co/wp-content/uploads/2026/09/El-Acuerdo-Final-de-Paz-diez-anos-despues.webp",
+        link: "https://ilsa.org.co/evento/acuerdo-final-de-paz-diez-anos-despues/",
+        badge: "Seminario",
+        ctaText: "Ver programación"
+    },
+
+    {
         title: "Justicia climática feminista",
         excerpt: "La urgencia de una justicia climática feminista ante el avance de las ultraderechas",
         image: "https://api.ilsa.org.co/wp-content/uploads/2026/07/Portada-03.webp",
@@ -42,7 +51,7 @@ export const heroSlidesConfig: HeroSlideData[] = [
         ctaText: "Leer más"
     },
     {
-        title: "<span class='text-[0.7em] leading-tight'>Dificultades y Desafíos<br/>de la Reforma Rural Integral</span>",
+        title: "Dificultades y Desafíos de la Reforma Rural Integral",
         excerpt: "Revive el diálogo histórico entre el Gobierno Nacional, el movimiento social y la academia en el marco de la ICARRD+20 en Cartagena.",
         image: "/images/hero-home/Dificultades y Desafíos.webp",
         link: "/noticias/especiales/cartagena",

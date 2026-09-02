@@ -128,33 +128,42 @@ const { slides, class: className } = Astro.props;
     import "swiper/css";
     import "swiper/css/navigation";
     import "swiper/css/pagination";
-    import "swiper/css/effect-fade"; // Opcional si quieres fade en vez de slide
+    import "swiper/css/effect-fade";
 
-    document.addEventListener("astro:page-load", () => {
-        const swiper = new Swiper(".hero-swiper", {
+    let heroSwiperInstance: Swiper | null = null;
+
+    function initHeroSwiper() {
+        const container = document.querySelector(".hero-swiper");
+        if (!container) return;
+
+        if (heroSwiperInstance) {
+            heroSwiperInstance.destroy(true, true);
+            heroSwiperInstance = null;
+        }
+
+        heroSwiperInstance = new Swiper(".hero-swiper", {
             modules: [Navigation, Pagination, Autoplay, EffectFade],
 
             // Configuración clave para evitar el "baile"
             loop: true, // Infinito
             slidesPerView: 1, // Solo uno a la vez
             spaceBetween: 0, // Sin espacios raros
-            autoHeight: true, // SE AJUSTA A LA ALTURA DEL CONTENIDO DEL SLIDE ACTUAL
+            autoHeight: true, // Se ajusta a la altura del contenido del slide actual
 
             // Efecto suave
             effect: "fade",
             fadeEffect: { crossFade: true },
-            speed: 1000, // Transición más lenta y elegante
+            speed: 1000, // Transición elegante
 
             autoplay: {
                 delay: 8000, // Más tiempo para leer
                 disableOnInteraction: false,
-                pauseOnMouseEnter: true, // UX improvement: pause when user wants to read
+                pauseOnMouseEnter: true, // Pausa cuando el usuario interactúa o pasa el cursor
             },
 
             pagination: {
                 el: ".swiper-pagination",
                 clickable: true,
-                // Esto arregla que solo salgan 2 puntos
                 dynamicBullets: true,
             },
 
@@ -163,7 +172,15 @@ const { slides, class: className } = Astro.props;
                 prevEl: ".swiper-button-prev",
             },
         });
-    });
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initHeroSwiper, { once: true });
+    } else {
+        initHeroSwiper();
+    }
+
+    document.addEventListener("astro:page-load", initHeroSwiper);
 </script>
 
 <style>
