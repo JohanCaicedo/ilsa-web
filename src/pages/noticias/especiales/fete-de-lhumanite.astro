@@ -90,6 +90,26 @@ const galleryImages = [
         caption:
             "Freddy Ordóñez, director ejecutivo de ILSA, en la presentación de la novedad editorial.",
     },
+    {
+        src: "/images/fete-humanite/fete-humanite-extra-1.jpeg",
+        alt: "Fotografía del stand de ILSA y APDH Colombie - 1",
+        caption: "",
+    },
+    {
+        src: "/images/fete-humanite/fete-humanite-extra-2.jpeg",
+        alt: "Fotografía del stand de ILSA y APDH Colombie - 2",
+        caption: "",
+    },
+    {
+        src: "/images/fete-humanite/fete-humanite-extra-3.jpeg",
+        alt: "Fotografía del stand de ILSA y APDH Colombie - 3",
+        caption: "",
+    },
+    {
+        src: "/images/fete-humanite/fete-humanite-extra-4.jpeg",
+        alt: "Fotografía del stand de ILSA y APDH Colombie - 4",
+        caption: "",
+    },
 ];
 
 const videoItems = [
@@ -113,6 +133,12 @@ const videoItems = [
         description:
             "Diálogos críticos sobre los 10 años del Acuerdo de Paz, estallido social y la novedad editorial de ILSA.",
         badge: "Debate & Derechos Humanos",
+    },
+    {
+        src: "/images/fete-humanite/fete-humanite-extra-1.mp4",
+        title: "Registro audiovisual",
+        description: "",
+        badge: "Audiovisual",
     },
 ];
 ---
@@ -627,9 +653,9 @@ const videoItems = [
                     </div>
 
                     <!-- Vertical Videos -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {
-                            [videoItems[0], videoItems[2]].map((vid) => (
+                            [videoItems[0], videoItems[2], videoItems[3]].map((vid) => (
                                 <div class="bg-white/80 backdrop-blur-md rounded-3xl overflow-hidden border border-slate-200/80 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col group">
                                     <div class="relative w-full aspect-[9/16] bg-slate-900 overflow-hidden">
                                         <video
