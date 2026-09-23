@@ -1,0 +1,759 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import SmartImage from "../../../components/atoms/SmartImage.astro";
+import GradientText from "../../../components/atoms/GradientText.astro";
+import GalleryLightbox from "../../../components/molecules/GalleryLightbox.astro";
+import {
+    MapPin,
+    Calendar,
+    Globe,
+    Users,
+    Sparkles,
+    Music,
+    BookOpen,
+    Quote,
+    Heart,
+    Play,
+    Film,
+    Camera,
+} from "lucide-react";
+import type { SeoData } from "../../../lib/seo";
+
+export const prerender = true;
+
+const title =
+    "La Fête de l’Humanité 2026: Tres días de cultura, debate político y encuentro popular | ILSA";
+const metaDesc =
+    "Entre el 11 y el 13 de septiembre de 2026, ILSA y APDH Colombie estuvieron presentes en la 91.ª edición de la Fête de l’Humanité en Francia. Reportaje completo con galería y videos.";
+
+const breadcrumbs = [
+    { label: "Noticias", href: "/noticias" },
+    { label: "Especiales", href: "/noticias" },
+    {
+        label: "Fête de l’Humanité",
+        href: "/noticias/especiales/fete-de-lhumanite",
+    },
+];
+
+const seoData: SeoData = {
+    title,
+    metaDesc,
+    opengraphTitle: title,
+    opengraphDescription: metaDesc,
+    opengraphImage: {
+        sourceUrl: "/images/Fête de l’Humanité/Fête de l’Humanité (1).jpeg",
+    },
+    twitterImage: {
+        sourceUrl: "/images/Fête de l’Humanité/Fête de l’Humanité (1).jpeg",
+    },
+};
+
+const featuredImage = {
+    src: "/images/Fête de l’Humanité/Flayer-diseño-5.webp",
+    highRes: "/images/Fête de l’Humanité/Flayer-diseño-5.jpg",
+    alt: "Flayer Diseño 5 de la Fête de l’Humanité 2026",
+};
+
+const galleryImages = [
+    {
+        src: "/images/Fête de l’Humanité/Fête de l’Humanité (1).jpeg",
+        alt: "Multitud y delegación colombiana en la Fête de l’Humanité 2026",
+        caption:
+            "Vista de la delegación de ILSA y APDH Colombie reuniendo la fraternidad internacional.",
+    },
+    {
+        src: "/images/Fête de l’Humanité/Fête de l’Humanité (2).jpeg",
+        alt: "Stand de APDH Colombie e ILSA - Afiche oficial y actividades",
+        caption:
+            "Espacio de encuentro, libros e información sobre derechos humanos en Colombia.",
+    },
+    {
+        src: "/images/Fête de l’Humanité/Fête de l’Humanité (3).jpeg",
+        alt: "Intercambios políticos y culturales en el espacio de APDH e ILSA",
+        caption:
+            "Diálogos sobre derechos humanos, paz y pensamiento crítico en Le Plessis-Pâté.",
+    },
+    {
+        src: "/images/Fête de l’Humanité/Fête de l’Humanité (4).jpeg",
+        alt: "Conciertos y animación cultural en la Fête de l’Humanité",
+        caption:
+            "La diversidad cultural y musical reuniendo a miles de asistentes.",
+    },
+    {
+        src: "/images/Fête de l’Humanité/Fête de l’Humanité (5).jpeg",
+        alt: "Gastronomía típica colombiana y sancocho en el stand",
+        caption:
+            "Oferta gastronómica típica: sancocho, fritos de la Costa Caribe y café colombiano.",
+    },
+    {
+        src: "/images/Fête de l’Humanité/Fête de l’Humanité (6).jpeg",
+        alt: "Presentación del libro Paramilitarismo del siglo XXI por Freddy Ordóñez",
+        caption:
+            "Freddy Ordóñez, director ejecutivo de ILSA, en la presentación de la novedad editorial.",
+    },
+];
+
+const videoItems = [
+    {
+        src: "/images/Fête de l’Humanité/Fête de l’Humanité (1).mp4",
+        title: "Agua e’Coclí y Muestra Musical Colombiana",
+        description:
+            "Presentación del grupo de bullerengue de Necoclí (Urabá antioqueño), Valen Espitia y Diego Vega en el stand.",
+        badge: "Cultura & Música",
+    },
+    {
+        src: "/images/Fête de l’Humanité/Fête de l’Humanité (2).mp4",
+        title: "Ambiente Popular y Gastronomía en el Stand",
+        description:
+            "Momentos de encuentro, solidaridad popular, café y tradición colombiana en la Fête 2026.",
+        badge: "Encuentro Popular",
+    },
+    {
+        src: "/images/Fête de l’Humanité/Fête de l’Humanité (3).mp4",
+        title: "Conferencias de Paz y Presentación Editorial",
+        description:
+            "Diálogos críticos sobre los 10 años del Acuerdo de Paz, estallido social y la novedad editorial de ILSA.",
+        badge: "Debate & Derechos Humanos",
+    },
+];
+---
+
+<Layout title={title} seo={seoData} width="wide" breadcrumbs={breadcrumbs}>
+    <div class="relative min-h-screen pb-32">
+        <!-- Ambient Glowing Background Bubbles -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+            <div
+                class="absolute top-1/6 left-1/4 w-[500px] h-[500px] bg-[var(--ilsa-blue-light)]/10 rounded-full blur-[140px] animate-pulse-slow"
+            >
+            </div>
+            <div
+                class="absolute bottom-1/3 right-1/4 w-[500px] h-[500px] bg-[var(--ilsa-red-light,rgba(239,68,68,0.08))] rounded-full blur-[140px] animate-pulse-slow"
+                style="animation-delay: 3s;"
+            >
+            </div>
+        </div>
+
+        <div class="relative z-10 pt-8 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- HERO HEADER -->
+            <header
+                class="text-center mb-16 space-y-6 max-w-4xl mx-auto flex flex-col items-center justify-center"
+            >
+                <div
+                    class="inline-flex items-center justify-center gap-3 px-5 py-2.5 rounded-full bg-white/70 backdrop-blur-md border border-[var(--ilsa-blue-dark)]/20 shadow-sm mx-auto"
+                >
+                    <span class="relative flex h-2.5 w-2.5">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--ilsa-blue-dark)] opacity-40"
+                        ></span>
+                        <span
+                            class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--ilsa-blue-dark)]"
+                        ></span>
+                    </span>
+                    <span
+                        class="text-xs font-extrabold text-[var(--ilsa-blue-dark)] uppercase tracking-[0.2em]"
+                    >
+                        Especial Internacional
+                    </span>
+                </div>
+
+                <div
+                    class="w-full text-center flex flex-col items-center justify-center"
+                >
+                    <h1
+                        class="text-3xl sm:text-5xl lg:text-6xl font-black drop-shadow-sm leading-[1.15] text-slate-800 text-center w-full mx-auto"
+                    >
+                        <span class="block text-center w-full mb-1"
+                            >La Fête de l’Humanité</span
+                        >
+                    </h1>
+                </div>
+
+                <!-- Meta Pills -->
+                <div
+                    class="flex flex-wrap items-center justify-center gap-3 text-xs sm:text-sm text-slate-600 pt-2 font-medium"
+                >
+                    <span
+                        class="inline-flex items-center gap-2 bg-white/80 px-4 py-2 rounded-full border border-slate-200/80 shadow-sm backdrop-blur-sm"
+                    >
+                        <Globe className="w-4 h-4 text-[var(--ilsa-blue)]" />
+                        Le Plessis-Pâté, Essonne (Francia)
+                    </span>
+                    <span
+                        class="inline-flex items-center gap-2 bg-white/80 px-4 py-2 rounded-full border border-slate-200/80 shadow-sm backdrop-blur-sm"
+                    >
+                        <Calendar className="w-4 h-4 text-[var(--ilsa-blue)]" />
+                        11 – 13 de septiembre de 2026
+                    </span>
+                </div>
+            </header>
+
+            <!-- FEATURED PORTRAIT IMAGE SECTION (RESPONSIVE FOR ALL SCREEN SIZES) -->
+            <div class="mb-16 max-w-4xl mx-auto">
+                <div
+                    class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white/60 backdrop-blur-2xl border border-white/80 rounded-[2.5rem] p-6 sm:p-8 lg:p-10 shadow-xl shadow-slate-200/50"
+                >
+                    <!-- Featured Image Container (Portrait Format Responsive Sizing) -->
+                    <div class="lg:col-span-5 flex justify-center w-full">
+                        <button
+                            type="button"
+                            id="featured-img-btn"
+                            data-highres={featuredImage.highRes}
+                            data-alt={featuredImage.alt}
+                            class="relative w-full max-w-[280px] sm:max-w-[340px] aspect-[707/1000] rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white/90 group bg-slate-900 block cursor-zoom-in"
+                            aria-label="Ver en alta resolución"
+                        >
+                            <SmartImage
+                                src={featuredImage.src}
+                                alt={featuredImage.alt}
+                                class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                                width={707}
+                                height={1000}
+                            />
+                        </button>
+                    </div>
+
+                    <!-- Intro Callout Box -->
+                    <div
+                        class="lg:col-span-7 space-y-6 text-slate-700 text-center flex flex-col items-center justify-center lg:items-start lg:text-left"
+                    >
+                        <div
+                            class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--ilsa-blue)]/10 text-[var(--ilsa-blue-dark)] text-xs font-bold uppercase tracking-wider mx-auto lg:mx-0"
+                        >
+                            <Sparkles className="w-4 h-4" />
+                            Presencia Internacional de ILSA
+                        </div>
+                        <h2
+                            class="text-2xl sm:text-3xl font-black text-slate-800 leading-snug text-center w-full"
+                        >
+                            ILSA y APDH Colombie en la 91.ª edición de la Fête
+                            de l’Humanité
+                        </h2>
+                        <p
+                            class="text-base sm:text-lg leading-relaxed text-slate-600 font-light text-center lg:text-left"
+                        >
+                            Un espacio histórico de cultura popular, debate
+                            político y solidaridad internacional que convocó a
+                            más de medio millón de personas en Francia. ILSA
+                            acompañó a <strong
+                                class="text-slate-800 font-medium"
+                                >APDH Colombie</strong
+                            > con una agenda cargada de música, derechos humanos,
+                            análisis crítico y la presentación de sus más recientes
+                            publicaciones.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TABBED / BILINGUAL ARTICLE CONTENT CONTAINER -->
+            <main class="max-w-4xl mx-auto mb-20">
+                <article
+                    class="bg-white/80 backdrop-blur-2xl border border-white/90 shadow-2xl rounded-[3rem] p-6 sm:p-12 lg:p-16 space-y-12"
+                >
+                    <!-- Language Selector Tabs -->
+                    <div class="flex justify-center" id="lang-tab-container">
+                        <div
+                            class="inline-flex p-1.5 rounded-full bg-slate-100 border border-slate-200 shadow-inner"
+                        >
+                            <button
+                                type="button"
+                                id="btn-lang-es"
+                                class="px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 shadow-md bg-[var(--ilsa-blue)] text-white"
+                                aria-label="Ver en Español"
+                            >
+                                🇨🇴 Español
+                            </button>
+                            <button
+                                type="button"
+                                id="btn-lang-fr"
+                                class="px-6 py-2.5 rounded-full text-sm font-bold text-slate-600 hover:text-slate-900 transition-all duration-300"
+                                aria-label="Voir en Français"
+                            >
+                                🇫🇷 Français
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- SPANISH ARTICLE CONTENT -->
+                    <div
+                        id="content-es"
+                        class="space-y-8 text-base sm:text-lg text-slate-700 leading-relaxed font-light transition-opacity duration-300"
+                    >
+                        <div class="border-b border-slate-100 pb-6 space-y-3">
+                            <h2
+                                class="text-xl sm:text-2xl font-black text-slate-800 text-center leading-snug"
+                            >
+                                La Fête de l’Humanité, 11 – 13 de septiembre:
+                                tres días de cultura, debate político y
+                                encuentro popular
+                            </h2>
+                            <p
+                                class="text-sm font-medium italic text-slate-500 text-center pt-1"
+                            >
+                                Instituto Latinoamericano para una Sociedad y un
+                                Derecho Alternativos (ILSA)
+                            </p>
+                        </div>
+
+                        <p>
+                            Entre el 11 y el 13 de septiembre de 2026 se realizó
+                            en la Base 217 de Le Plessis-Pâté, en Essonne, la
+                            91.ª edición de la Fête de l’Humanité, uno de los
+                            grandes acontecimientos políticos, culturales y
+                            populares de Francia. Organizada por el diario
+                            L’Humanité desde 1930, la Fiesta volvió a reunir una
+                            multitud en torno a conciertos, debates,
+                            organizaciones sociales, asociaciones, espacios
+                            gastronómicos, exposiciones y actividades
+                            culturales. La edición de este año registró 570.000
+                            participantes, cifra que confirma la enorme
+                            capacidad de convocatoria del evento. ILSA estuvo en
+                            esta edición de la Fête de la mano de la
+                            organización Accion Pour le Developpement et la
+                            Defense des Droits Humains en Colombie – APDH
+                            Colombie.
+                        </p>
+
+                        <p>
+                            En la Fête, la dimensión política tuvo una
+                            relevancia particular debido a la proximidad de las
+                            elecciones presidenciales francesas de 2027. La
+                            Fiesta funcionó como uno de los principales
+                            escenarios de la rentrée politique de la izquierda
+                            francesa. Por allí pasaron, entre otros, Fabien
+                            Roussel, secretario nacional del Partido Comunista
+                            Francés (PCF); Jean-Luc Mélenchon, dirigente de La
+                            France insoumise; François Ruffin, Marine Tondelier
+                            y Sophie Binet, secretaria general de la CGT. La
+                            presencia simultánea de estas figuras puso de
+                            manifiesto tanto la diversidad de corrientes
+                            existentes en la izquierda francesa como las
+                            diferencias acerca de las formas de articulación
+                            política de cara al próximo ciclo electoral.
+                        </p>
+
+                        <!-- Inline Banner Image 1 -->
+                        <div
+                            class="my-10 rounded-3xl overflow-hidden shadow-xl border border-slate-200/80 relative group"
+                        >
+                            <SmartImage
+                                src="/images/Fête de l’Humanité/Fête de l’Humanité (1).jpeg"
+                                alt="Multitud y espacio en la Fête de l’Humanité 2026"
+                                class="w-full aspect-[16/9] object-cover object-[50%_15%] group-hover:scale-102 transition-transform duration-700"
+                                width={1200}
+                                height={675}
+                            />
+                        </div>
+
+                        <p>
+                            Sin embargo, reducir la Fête de l’Humanité a sus
+                            dirigentes políticos sería desconocer una de sus
+                            características fundamentales. La política se
+                            desarrolló también en las calles, los stands, los
+                            debates y los encuentros entre participantes. Así,
+                            la programación abordó una agenda social y política
+                            considerablemente amplia: trabajo y derechos
+                            laborales, pensiones, salud, vivienda, transición
+                            ecológica, cambio climático, feminismo,
+                            discriminación, desigualdad, migraciones, libertad
+                            de prensa, cultura, protesta social, situación de
+                            Gaza, fascismo y extrema derecha, entre otros
+                            asuntos. La programación oficial combinó estos
+                            espacios de discusión con más de medio centenar de
+                            conciertos y una amplia presencia de asociaciones y
+                            organizaciones políticas, sociales, humanitarias y
+                            de derechos humanos.
+                        </p>
+
+                        <p>
+                            En el terreno cultural, la programación volvió a
+                            caracterizarse por su diversidad. Durante los tres
+                            días actuaron artistas y grupos de muy distintos
+                            géneros y procedencias, entre ellos Kneecap, Josman,
+                            UB40, Oumou Sangaré, Kery James, Soprano, Louane,
+                            Superbus, Les Wampas, The Limiñanas, Oxmo Puccino,
+                            Gauvain Sers y el colombiano Yuri Buenaventura. La
+                            música convivió con cine, exposiciones, teatro,
+                            debates y un village du livre, manteniendo la
+                            característica combinación entre cultura popular y
+                            discusión política que distingue al encuentro.
+                        </p>
+
+                        <p>
+                            También tuvo presencia significativa la dimensión
+                            internacional de la Fiesta. Diversas organizaciones
+                            y delegaciones extranjeras participaron en debates y
+                            actividades. Entre ellas estuvo Cuba Coopération
+                            France, que instaló un espacio de 400 m² dedicado a
+                            intercambios, exposiciones y actividades culturales
+                            sobre Cuba y reunió 25 espacios de debate
+                            relacionados con la situación de la isla. Esta
+                            presencia forma parte de una tradición histórica de
+                            solidaridad internacional asociada a la Fête de
+                            l’Humanité.
+                        </p>
+
+                        <p>
+                            En el caso colombiano, el stand de APDH Colombie e
+                            ILSA, presentó una programación musical y cultural
+                            muy destacada con la presencia del grupo de
+                            bullerengue Agua e’Coclí del municipio de Necoclí,
+                            en el Urabá antioqueño; la cantante y compositora
+                            Valen Espitia y el cantautor Diego Vega expositor de
+                            la nueva canción protesta colombiana. También se
+                            desarrollaron conferencias sobre paz, derechos
+                            humanos y conflicto en el país a propósito de los
+                            diez años del Acuerdo Final de Paz y de los cinco
+                            años del estallido social, así como diálogos sobre
+                            abordajes críticos del derecho por parte del
+                            director ejecutivo de nuestro instituto, Freddy
+                            Ordóñez, quien presentó el libro “Paramilitarismo
+                            del siglo XXI. Actualidad del orden contrainsurgente
+                            en Colombia”, novedad del sello editorial de ILSA. A
+                            lo anterior, se sumó una oferta gastronómica que
+                            incluyó cocteles, café, fritos típicos de la Costa
+                            Caribe y el tradicional sancocho colombiano, e
+                            información sobre el trabajo desarrollado por las
+                            mujeres de la región del Urabá.
+                        </p>
+
+                        <p
+                            class="text-lg font-medium text-slate-800 pt-4 border-t border-slate-100"
+                        >
+                            La edición 2026 de la Fête de l’Humanité conservó
+                            uno de los rasgos más importantes de su historia: no
+                            es solamente un festival político ni solamente un
+                            festival cultural. Es una experiencia de encuentro
+                            en la que la política y la sensibilidad social se
+                            practican también como conversación, cultura,
+                            organización, solidaridad y celebración colectiva.
+                            Su historia desde 1930 y su capacidad para convocar
+                            cientos de miles de personas muestran que continúa
+                            siendo un espacio singular de la cultura política
+                            francesa y del mundo, un espacio de unidad y de
+                            esperanza.
+                        </p>
+                    </div>
+
+                    <!-- FRENCH ARTICLE CONTENT (HIDDEN BY DEFAULT) -->
+                    <div
+                        id="content-fr"
+                        class="hidden space-y-8 text-base sm:text-lg text-slate-700 leading-relaxed font-light transition-opacity duration-300"
+                    >
+                        <div class="border-b border-slate-100 pb-6 space-y-3">
+                            <h2
+                                class="text-xl sm:text-2xl font-black text-slate-800 text-center leading-snug"
+                            >
+                                La Fête de l’Humanité, du 11 au 13 septembre :
+                                trois jours de culture, de débats politiques et
+                                de rencontres populaires
+                            </h2>
+                            <p
+                                class="text-sm font-medium italic text-slate-500 text-right pt-1"
+                            >
+                                Instituto Latinoamericano para una Sociedad y un
+                                Derecho Alternativos (ILSA)
+                            </p>
+                        </div>
+
+                        <p>
+                            Du 11 au 13 septembre 2026, la Base 217 de Le
+                            Plessis-Pâté, dans l’Essonne, a accueilli la 91e
+                            édition de la Fête de l’Humanité, l’un des grands
+                            événements politiques, culturels et populaires de
+                            France. Organisée par le quotidien L’Humanité depuis
+                            1930, la Fête a une nouvelle fois rassemblé une
+                            foule nombreuse autour de concerts, de débats,
+                            d’organisations sociales, d’associations, d’espaces
+                            gastronomiques, d’expositions et d’activités
+                            culturelles. Cette année, l’édition a réuni 570 000
+                            participants, confirmant l’immense capacité de
+                            mobilisation de l’événement. ILSA était présent à
+                            cette édition de la Fête aux côtés de l’organisation
+                            Action pour le Développement et la Défense des
+                            Droits Humains en Colombie – APDH Colombie.
+                        </p>
+
+                        <p>
+                            À la Fête, la dimension politique a revêtu une
+                            importance particulière en raison de la proximité de
+                            l’élection présidentielle française de 2027. La Fête
+                            a constitué l’un des principaux espaces de la
+                            rentrée politique de la gauche française. Parmi les
+                            personnalités présentes figuraient notamment Fabien
+                            Roussel, secrétaire national du Parti communiste
+                            français (PCF) ; Jean-Luc Mélenchon, dirigeant de La
+                            France insoumise ; François Ruffin, Marine Tondelier
+                            et Sophie Binet, secrétaire générale de la CGT. La
+                            présence simultanée de ces différentes figures a mis
+                            en évidence à la fois la diversité des courants au
+                            sein de la gauche française et les divergences quant
+                            aux modalités de son articulation politique à
+                            l’approche du prochain cycle électoral.
+                        </p>
+
+                        <p>
+                            Cependant, réduire la Fête de l’Humanité à ses
+                            dirigeants politiques reviendrait à méconnaître
+                            l’une de ses caractéristiques fondamentales. La
+                            politique s’est également exprimée dans les rues,
+                            sur les stands, lors des débats et dans les
+                            rencontres entre les participants. La programmation
+                            a ainsi abordé un large éventail de questions
+                            sociales et politiques : travail et droits des
+                            travailleurs, retraites, santé, logement, transition
+                            écologique, changement climatique, féminisme,
+                            discriminations, inégalités, migrations, liberté de
+                            la presse, culture, protestation sociale, situation
+                            à Gaza, fascisme et extrême droite, entre autres. La
+                            programmation officielle a associé ces espaces de
+                            discussion à plus d’une cinquantaine de concerts et
+                            à une importante présence d’associations et
+                            d’organisations politiques, sociales, humanitaires
+                            et de défense des droits humains.
+                        </p>
+
+                        <p>
+                            Sur le plan culturel, la programmation s’est une
+                            nouvelle fois distinguée par sa diversité. Au cours
+                            des trois jours, des artistes et des groupes issus
+                            de genres et d’horizons très différents se sont
+                            produits, parmi lesquels Kneecap, Josman, UB40,
+                            Oumou Sangaré, Kery James, Soprano, Louane,
+                            Superbus, Les Wampas, The Limiñanas, Oxmo Puccino,
+                            Gauvain Sers et le Colombien Yuri Buenaventura. La
+                            musique a côtoyé le cinéma, les expositions, le
+                            théâtre, les débats et le Village du livre,
+                            perpétuant la combinaison caractéristique de culture
+                            populaire et de débat politique qui distingue cette
+                            rencontre.
+                        </p>
+
+                        <p>
+                            La dimension internationale de la Fête a également
+                            occupé une place importante. Diverses organisations
+                            et délégations étrangères ont participé aux débats
+                            et aux activités. Parmi elles figurait Cuba
+                            Coopération France, qui a installé un espace de 400
+                            m² consacré aux échanges, aux expositions et aux
+                            activités culturelles autour de Cuba, et qui a
+                            proposé 25 espaces de débat consacrés à la situation
+                            de l’île. Cette présence s’inscrit dans une
+                            tradition historique de solidarité internationale
+                            associée à la Fête de l’Humanité.
+                        </p>
+
+                        <p>
+                            Dans le cas colombien, le stand d’APDH Colombie et
+                            d’ILSA a proposé une programmation musicale et
+                            culturelle particulièrement riche, avec la
+                            participation du groupe de bullerengue Agua e’Coclí,
+                            de la municipalité de Necoclí, dans l’Urabá
+                            antioqueño; de la chanteuse et compositrice Valen
+                            Espitia et de l’auteur-compositeur-interprète Diego
+                            Vega, représentant de la nouvelle chanson de
+                            protestation colombienne. Des conférences sur la
+                            paix, les droits humains et le conflit en Colombie
+                            ont également été organisées à l’occasion des dix
+                            ans de l’Accord final de paix et des cinq ans de
+                            l’Estallido social, ainsi que des échanges consacrés
+                            aux approches critiques du droit, animés par le
+                            directeur exécutif de notre institut, Freddy
+                            Ordóñez, qui a présenté le livre Paramilitarismo del
+                            siglo XXI. Actualidad del orden contrainsurgente en
+                            Colombia, nouvelle publication des éditions d’ILSA.
+                            À cela s’est ajoutée une offre gastronomique
+                            comprenant des cocktails, du café, des fritures
+                            traditionnelles de la côte caraïbe et le
+                            traditionnel sancocho colombien, ainsi que des
+                            informations sur le travail mené par les femmes de
+                            la région de l’Urabá.
+                        </p>
+
+                        <p
+                            class="text-lg font-medium text-slate-800 pt-4 border-t border-slate-100"
+                        >
+                            L’édition 2026 de la Fête de l’Humanité a préservé
+                            l’un des traits les plus importants de son histoire
+                            : elle n’est ni seulement un festival politique, ni
+                            seulement un festival culturel. Elle est une
+                            expérience de rencontre dans laquelle la politique
+                            et la sensibilité sociale se vivent également à
+                            travers la conversation, la culture, l’organisation,
+                            la solidarité et la célébration collective. Son
+                            histoire depuis 1930 et sa capacité à rassembler des
+                            centaines de milliers de personnes montrent qu’elle
+                            demeure un espace singulier de la culture politique
+                            française et mondiale, un espace d’unité et
+                            d’espoir.
+                        </p>
+                    </div>
+                </article>
+            </main>
+
+            <!-- VIDEO MULTIMEDIA SECTION -->
+            <section class="mb-20 space-y-8 max-w-5xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto space-y-3">
+                    <div
+                        class="inline-flex items-center gap-2 bg-purple-500/10 text-purple-700 text-xs font-extrabold uppercase tracking-widest px-4 py-1.5 rounded-full border border-purple-500/20"
+                    >
+                        <Film className="w-4 h-4" />
+                        Audiovisual
+                    </div>
+                    <h2
+                        class="text-3xl sm:text-4xl font-black text-slate-800 text-center tracking-tight"
+                    >
+                        Videos de la Fête de l’Humanité 2026
+                    </h2>
+                </div>
+
+                <div class="flex flex-col gap-6 w-full md:w-3/4 mx-auto">
+                    <!-- Horizontal Video -->
+                    <div
+                        class="bg-white/80 backdrop-blur-md rounded-3xl overflow-hidden border border-slate-200/80 shadow-lg hover:shadow-2xl transition-all duration-300 w-full"
+                    >
+                        <div
+                            class="relative w-full aspect-video bg-slate-900 overflow-hidden"
+                        >
+                            <video
+                                src={videoItems[1].src}
+                                controls
+                                preload="metadata"
+                                class="w-full h-full object-cover"
+                            >
+                                Tu navegador no soporta la reproducción de video
+                                HTML5.
+                            </video>
+                        </div>
+                    </div>
+
+                    <!-- Vertical Videos -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {
+                            [videoItems[0], videoItems[2]].map((vid) => (
+                                <div class="bg-white/80 backdrop-blur-md rounded-3xl overflow-hidden border border-slate-200/80 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col group">
+                                    <div class="relative w-full aspect-[9/16] bg-slate-900 overflow-hidden">
+                                        <video
+                                            src={vid.src}
+                                            controls
+                                            preload="metadata"
+                                            class="w-full h-full object-cover"
+                                        >
+                                            Tu navegador no soporta la
+                                            reproducción de video HTML5.
+                                        </video>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+            </section>
+
+            <!-- PHOTO GALLERY LIGHTBOX SECTION -->
+            <section class="space-y-8 max-w-5xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto space-y-3">
+                    <div
+                        class="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-700 text-xs font-extrabold uppercase tracking-widest px-4 py-1.5 rounded-full border border-emerald-500/20"
+                    >
+                        <Camera className="w-4 h-4" />
+                        Galería Fotográfica
+                    </div>
+                    <h2
+                        class="text-3xl sm:text-4xl font-black text-slate-800 text-center tracking-tight"
+                    >
+                        Fotografías del Evento
+                    </h2>
+                </div>
+
+                <GalleryLightbox>
+                    <div
+                        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                    >
+                        {
+                            galleryImages.map((img, idx) => (
+                                <button
+                                    type="button"
+                                    class="gallery-thumb group relative rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 border border-white/90 bg-slate-900 cursor-zoom-in block w-full aspect-[4/3] text-left"
+                                    data-index={idx}
+                                    aria-label={`Ver imagen ${idx + 1}: ${img.alt}`}
+                                >
+                                    <SmartImage
+                                        src={img.src}
+                                        alt={img.alt}
+                                        class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
+                                        width={600}
+                                        height={450}
+                                    />
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none" />
+
+                                    <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-md rounded-full p-2.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-md">
+                                        <svg
+                                            class="w-4 h-4 text-slate-800"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2.5"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
+                                            />
+                                        </svg>
+                                    </div>
+                                </button>
+                            ))
+                        }
+                    </div>
+                </GalleryLightbox>
+            </section>
+        </div>
+    </div>
+</Layout>
+
+<!-- Client Script for Interactive Language Tabs -->
+<script>
+    const btnEs = document.getElementById("btn-lang-es");
+    const btnFr = document.getElementById("btn-lang-fr");
+    const contentEs = document.getElementById("content-es");
+    const contentFr = document.getElementById("content-fr");
+
+    if (btnEs && btnFr && contentEs && contentFr) {
+        btnEs.addEventListener("click", () => {
+            contentEs.classList.remove("hidden");
+            contentFr.classList.add("hidden");
+
+            btnEs.className =
+                "px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 shadow-md bg-[var(--ilsa-blue)] text-white";
+            btnFr.className =
+                "px-6 py-2.5 rounded-full text-sm font-bold text-slate-600 hover:text-slate-900 transition-all duration-300";
+        });
+
+        btnFr.addEventListener("click", () => {
+            contentFr.classList.remove("hidden");
+            contentEs.classList.add("hidden");
+
+            btnFr.className =
+                "px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 shadow-md bg-[var(--ilsa-blue)] text-white";
+            btnEs.className =
+                "px-6 py-2.5 rounded-full text-sm font-bold text-slate-600 hover:text-slate-900 transition-all duration-300";
+        });
+    }
+
+    const featuredBtn = document.getElementById("featured-img-btn");
+    if (featuredBtn) {
+        featuredBtn.addEventListener("click", () => {
+            const highRes = featuredBtn.getAttribute("data-highres") || "";
+            const alt = featuredBtn.getAttribute("data-alt") || "";
+
+            const event = new CustomEvent("open-lightbox", {
+                detail: {
+                    images: [{ src: highRes, alt: alt }],
+                    startIndex: 0,
+                },
+            });
+            window.dispatchEvent(event);
+        });
+    }
+</script>

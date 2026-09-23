@@ -80,6 +80,12 @@ const especialesMeta: Record<string, Partial<LocalSpecialPage>> = {
         date: "2026-05-20T12:00:00.000Z",
         image: "/id/JAR-20M.webp",
     },
+    "fete-de-lhumanite": {
+        title: "La Fête de l’Humanité 2026: Tres días de cultura, debate político y encuentro popular",
+        author: "ILSA",
+        date: "2026-09-14T12:00:00.000Z",
+        image: "/images/Fête de l’Humanité/Fête de l’Humanité (1).jpeg",
+    },
 };
 
 /** Converts a kebab-case slug to a human-readable title (fallback). */

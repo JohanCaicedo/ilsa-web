@@ -10,6 +10,14 @@ export interface HeroSlideData {
 
 export const heroSlidesConfig: HeroSlideData[] = [
     {
+        title: "La Fête de l’Humanité 2026",
+        excerpt: "Tres días de cultura, debate político y encuentro popular de la mano de APDH Colombie e ILSA.",
+        image: "/images/Fête de l’Humanité/Fête de l’Humanité (1).jpeg",
+        link: "/noticias/especiales/fete-de-lhumanite",
+        badge: "Especial",
+        ctaText: "Ver artículo y galería"
+    },
+    {
         title: "El Acuerdo Final de Paz, diez años después",
         excerpt: "Avances, resistencias y proyecciones",
         image: "https://api.ilsa.org.co/wp-content/uploads/2026/09/El-Acuerdo-Final-de-Paz-diez-anos-despues.webp",
