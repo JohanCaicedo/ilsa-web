@@ -1,0 +1,446 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import SmartImage from "../../../components/atoms/SmartImage.astro";
+import GradientText from "../../../components/atoms/GradientText.astro";
+import ShareButtons from "../../../components/atoms/ShareButtons.astro";
+import {
+    Calendar,
+    Download,
+    ExternalLink,
+    Eye,
+    FileText,
+    Quote,
+} from "lucide-react";
+import type { SeoData } from "../../../lib/seo";
+
+export const prerender = true;
+
+const title =
+    "Mininterior recibe el informe final del Comité de Expertos AdHoc para el Esclarecimiento de Violaciones a los Derechos Humanos en Contexto de Protesta Social entre 2019 y 2021.";
+const heroImage =
+    "https://api.ilsa.org.co/wp-content/uploads/2026/09/mininterior-recibe-el-informe-final-del-comite-de-expertos-adhoc-para-el-esclarecimiento-de-violaciones-a-los-derechos-humanos-en-contexto-de-protesta-social-entre-2019-y-2021.webp";
+const videoUrl =
+    "https://api.ilsa.org.co/wp-content/uploads/2026/09/2026-09-24-12-20-13.webm";
+const sourcePdfUrl =
+    "https://www.mininterior.gov.co/wp-content/uploads/2026/08/0.-texto_final-vf-comite-de-expertos_compressed.pdf";
+const backupPdfUrl =
+    "https://pub-8aec768733474013aace13d54151ba67.r2.dev/Comite-de-Expertos.pdf";
+const quote =
+    "El informe representa un aporte fundamental en materia de esclarecimiento de hechos, memoria colectiva y recomendaciones para el fortalecimiento de las garantías de no repetición en Colombia.";
+const publicationDate = "24 de septiembre de 2026";
+const seoTitle =
+    "Informe final del Comité de Expertos Ad Hoc sobre protestas sociales | ILSA";
+const seoDescription =
+    "El Ministerio del Interior recibió el informe final sobre violaciones de derechos humanos en protestas sociales entre 2019 y 2021.";
+
+const breadcrumbs = [
+    { label: "Noticias", href: "/noticias" },
+    { label: "Especiales", href: "/noticias" },
+    {
+        label: "Informe final del Comité de Expertos AdHoc para el Esclarecimiento de Violaciones a los Derechos Humanos",
+        href: "/noticias/especiales/informe-esclarecimiento-ddhh-protesta-social",
+    },
+];
+
+const seoData: SeoData = {
+    title: seoTitle,
+    metaDesc: seoDescription,
+    opengraphTitle: seoTitle,
+    opengraphDescription: seoDescription,
+    opengraphImage: { sourceUrl: heroImage },
+    twitterImage: { sourceUrl: heroImage },
+};
+---
+
+<Layout title={title} width="wide" seo={seoData} breadcrumbs={breadcrumbs}>
+    <div class="relative min-h-screen pb-32">
+        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+            <div
+                class="absolute top-1/6 left-1/4 h-[500px] w-[500px] rounded-full bg-[var(--ilsa-blue-light)]/15 blur-[120px] animate-blob"
+            >
+            </div>
+            <div
+                class="absolute right-1/4 top-1/2 h-[450px] w-[450px] rounded-full bg-[var(--ilsa-blue-dark)]/10 blur-[110px] animate-blob animation-delay-2000"
+            >
+            </div>
+        </div>
+
+        <main class="relative z-10 mx-auto max-w-5xl px-4 pt-8 md:px-8">
+            <header class="mb-16 space-y-6 text-center">
+                <GradientText
+                    text={title}
+                    as="h1"
+                    size="text-3xl md:text-5xl"
+                    weight="font-black"
+                    from="var(--ilsa-blue-dark)"
+                    to="var(--ilsa-blue)"
+                    class="mx-auto w-full text-center leading-[1.1] text-balance drop-shadow-sm"
+                />
+                <div
+                    class="flex justify-center pt-2 text-sm font-medium text-slate-600"
+                >
+                    <div
+                        class="flex items-center gap-2 rounded-full border border-white/80 bg-white/60 px-4 py-2 shadow-sm backdrop-blur-sm"
+                    >
+                        <Calendar
+                            className="h-4 w-4 text-[var(--ilsa-blue-dark)]"
+                        />
+                        <span>{publicationDate}</span>
+                    </div>
+                </div>
+            </header>
+
+            <article
+                class="space-y-12 rounded-[3rem] border border-white/60 bg-white/50 p-6 shadow-2xl shadow-slate-200/50 backdrop-blur-3xl md:p-12"
+            >
+                <div
+                    class="relative w-full overflow-hidden rounded-[2.5rem] border border-white/80 shadow-xl"
+                >
+                    <SmartImage
+                        src={heroImage}
+                        alt={title}
+                        class="h-auto w-full object-cover object-center"
+                        priority={true}
+                        width={1200}
+                        height={675}
+                    />
+                </div>
+
+                <blockquote
+                    class="mx-auto max-w-3xl rounded-3xl border border-[var(--ilsa-blue)]/20 bg-gradient-to-r from-[var(--ilsa-blue)]/10 via-[var(--ilsa-blue-light)]/10 to-transparent p-6 text-center text-xl font-normal leading-relaxed text-slate-800 shadow-sm md:p-8"
+                >
+                    <Quote
+                        className="mx-auto mb-3 h-7 w-7 text-[var(--ilsa-blue-dark)]"
+                    />
+                    <p><em>{quote}</em></p>
+                </blockquote>
+
+                <div
+                    class="mx-auto max-w-3xl space-y-6 text-lg font-light leading-relaxed text-slate-700 text-pretty"
+                >
+                    <p><em>{quote}</em></p>
+                    <p>
+                        <strong
+                            >Bogotá, 31 de julio de 2026 (@MinInterior).</strong
+                        >– El Gobierno Nacional a través del Ministerio del
+                        Interior y la Consejería Presidencial para los Derechos
+                        Humanos y el DIH, recibió este viernes 31 de julio el
+                        Informe Final del Comité de Expertos Ad Hoc para el
+                        esclarecimiento de violaciones a los derechos humanos
+                        ocurridas en el marco de las protestas sociales
+                        desarrolladas entre los años 2019 y 2021, un documento
+                        que representa un aporte fundamental en materia de
+                        verdad, memoria y garantías de no repetición en
+                        Colombia.
+                    </p>
+                    <p>
+                        El Comité de Expertos Ad Hoc fue concebido como un
+                        mecanismo transitorio, extrajudicial e independiente en
+                        el cumplimiento de su mandato y objetivos, integrado por
+                        Leyder Humberto Perdomo, Fernanda Espinoza Moreno, María
+                        Clara Galvis y su equipo investigativo, con el propósito
+                        de documentar, analizar y esclarecer los hechos
+                        ocurridos durante las movilizaciones sociales entre 2019
+                        y 2021, así como formular recomendaciones orientadas a
+                        fortalecer la protección de los derechos humanos y el
+                        ejercicio del derecho fundamental a la protesta social.
+                    </p>
+                    <p>
+                        En conformidad con el Decreto 1190 de 2025, el Comité no
+                        tiene funciones judiciales ni competencias para
+                        establecer responsabilidades penales, disciplinarias,
+                        fiscales o administrativas. Su mandato se orientó
+                        exclusivamente a contribuir al esclarecimiento de los
+                        hechos desde una perspectiva de derechos humanos,
+                        promoviendo el reconocimiento de las víctimas y el
+                        fortalecimiento de la acción institucional en contextos
+                        de movilización social y protesta.
+                    </p>
+                    <p>
+                        Durante un año, el Comité desarrolló un proceso de
+                        análisis e investigación sobre los hechos ocurridos en
+                        el país, identificando patrones, contextos y dinámicas
+                        relacionadas con posibles vulneraciones de derechos
+                        humanos en escenarios de protesta social. Asimismo,
+                        recopiló insumos para formular recomendaciones dirigidas
+                        a las instituciones del Estado con el propósito de
+                        prevenir la repetición de estos hechos, fortalecer las
+                        garantías para quienes ejercen el derecho a la
+                        movilización y promover la no estigmatización y la no
+                        criminalización de la protesta social.
+                    </p>
+                    <p>
+                        La entrega del informe se llevó a cabo en el Salón Azul
+                        de la Casa de Nariño, en cumplimiento de lo establecido
+                        por el Decreto 1190 de 2025, mediante el cual el
+                        Gobierno nacional creó este mecanismo extraordinario e
+                        independiente de esclarecimiento. El acto contó con la
+                        participación de organizaciones de derechos humanos,
+                        sociales y de víctimas, así como de representantes de la
+                        comunidad internacional, ONU Derechos Humanos y
+                        delegados del Gobierno nacional.
+                    </p>
+                    <p>
+                        La presentación de este informe constituye un hito
+                        importante para el país y para los ejercicios de
+                        memoria, reconocimiento y fortalecimiento de la
+                        democracia y sus instituciones. Sus hallazgos y
+                        recomendaciones contribuyen al diseño y consolidación de
+                        políticas públicas que garanticen el respeto y la
+                        protección de los derechos humanos, fortalezcan la
+                        confianza ciudadana en el Estado y promuevan escenarios
+                        de diálogo y resolución pacífica de los conflictos
+                        sociales.
+                    </p>
+                    <p>
+                        Con la recepción de este informe, el Gobierno nacional,
+                        reafirma la responsabilidad del Estado con la promoción
+                        y protección de los derechos humanos, el derecho
+                        legítimo a la protesta social y movilización pacífica en
+                        condiciones de seguridad, respeto y plenas garantías
+                        para todas las personas.
+                    </p>
+                    <p>
+                        <a
+                            href={sourcePdfUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="font-semibold text-[var(--ilsa-blue-dark)] underline decoration-[var(--ilsa-blue)]/50 underline-offset-4 hover:text-[var(--ilsa-blue)]"
+                            >Informe Final del Comité de Expertos Ad Hoc para el
+                            esclarecimiento de violaciones a los derechos
+                            humanos ocurridas en el marco de las protestas
+                            sociales desarrolladas entre los años 2019 y 2021</a
+                        >
+                    </p>
+                    <p><strong>Ministerio del Interior</strong></p>
+                </div>
+
+                <section
+                    class="space-y-5 border-t border-slate-200/70 pt-12"
+                    aria-label="Registro audiovisual y fuente"
+                >
+                    <div
+                        class="overflow-hidden rounded-[2rem] border border-white/80 bg-slate-950 shadow-xl"
+                    >
+                        <video
+                            class="aspect-video w-full"
+                            autoplay
+                            muted
+                            loop
+                            playsinline
+                            preload="none"
+                            poster={heroImage}
+                            aria-label="Registro audiovisual relacionado con la publicación del Ministerio del Interior"
+                        >
+                            <source src={videoUrl} type="video/webm" />
+                        </video>
+                    </div>
+                    <p
+                        class="mx-auto max-w-3xl text-center text-sm leading-relaxed text-slate-600"
+                    >
+                        Texto tomado de la publicación del Ministerio del
+                        Interior. <a
+                            href={sourcePdfUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center gap-1 font-semibold text-[var(--ilsa-blue-dark)] underline underline-offset-4 hover:text-[var(--ilsa-blue)]"
+                            >Consultar fuente original <ExternalLink
+                                className="h-3.5 w-3.5"
+                            /></a
+                        >
+                    </p>
+                </section>
+
+                <section
+                    class="space-y-6 border-t border-slate-200/70 pt-12"
+                    aria-label="Documento PDF"
+                >
+                    <div class="text-center">
+                        <div
+                            class="mb-3 inline-flex items-center gap-2 rounded-full border border-[var(--ilsa-blue)]/20 bg-[var(--ilsa-blue)]/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest text-[var(--ilsa-blue-dark)]"
+                        >
+                            <FileText className="h-3.5 w-3.5" /> Documento PDF
+                        </div>
+                        <p
+                            class="mx-auto max-w-2xl text-lg font-light leading-relaxed text-slate-700"
+                        >
+                            Informe Final del Comité de Expertos Ad Hoc para el
+                            esclarecimiento de violaciones a los derechos
+                            humanos ocurridas en el marco de las protestas
+                            sociales desarrolladas entre los años 2019 y 2021
+                        </p>
+                    </div>
+                    <div
+                        class="pdf-pill mx-auto max-w-3xl"
+                        data-pdf-url={backupPdfUrl}
+                    >
+                        <span class="pdf-icon"
+                            ><FileText className="h-7 w-7" /></span
+                        >
+                        <button
+                            type="button"
+                            class="btn-pdf btn-pdf-view"
+                            aria-expanded="false"
+                        >
+                            <Eye className="h-4 w-4" /> Ver PDF
+                        </button>
+                        <a
+                            href={backupPdfUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn-pdf btn-pdf-download"
+                        >
+                            <Download className="h-4 w-4" /> Descargar
+                        </a>
+                    </div>
+                    <div
+                        class="pdf-viewer-shell pdf-viewer-letter mx-auto max-w-3xl"
+                        aria-live="polite"
+                    >
+                    </div>
+                </section>
+
+                <footer class="border-t border-slate-200/70 pt-8 text-center">
+                    <ShareButtons
+                        url="https://ilsa.org.co/noticias/especiales/informe-esclarecimiento-ddhh-protesta-social"
+                        title={title}
+                    />
+                </footer>
+            </article>
+        </main>
+    </div>
+</Layout>
+
+<style>
+    .pdf-pill {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 16px 24px;
+        background: rgba(255, 255, 255, 0.55);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        border-radius: 999px;
+        box-shadow: 0 8px 32px 0 var(--glass-shadow);
+        flex-wrap: wrap;
+    }
+
+    .pdf-icon {
+        display: flex;
+        align-items: center;
+        color: var(--ilsa-blue);
+        opacity: 0.8;
+    }
+
+    .btn-pdf {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 10px 22px;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        white-space: nowrap;
+    }
+
+    .btn-pdf-view {
+        border: none;
+        background: var(--ilsa-blue);
+        color: white;
+        box-shadow: 0 4px 12px rgba(34, 67, 149, 0.25);
+    }
+    .btn-pdf-view:hover {
+        background: var(--ilsa-blue-dark);
+        box-shadow: 0 6px 18px rgba(34, 67, 149, 0.35);
+        transform: translateY(-1px);
+    }
+    .btn-pdf-download {
+        border: 1.5px solid var(--ilsa-blue);
+        background: transparent;
+        color: var(--ilsa-blue);
+        text-decoration: none;
+    }
+    .btn-pdf-download:hover {
+        background: rgba(34, 67, 149, 0.06);
+        transform: translateY(-1px);
+    }
+
+    .pdf-viewer-shell {
+        width: 100%;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 16px 48px -8px var(--glass-shadow);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        background: #f1f5f9;
+        margin-top: -24px;
+        max-height: 0;
+        transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Este informe se muestra en proporción carta vertical (8.5 × 11). */
+    .pdf-viewer-letter.open {
+        max-height: 1000px;
+    }
+    .pdf-viewer-letter :global(iframe) {
+        display: block;
+        width: 100%;
+        height: 1000px;
+        border: none;
+    }
+
+    @media (max-width: 640px) {
+        .pdf-pill {
+            border-radius: 20px;
+            flex-direction: column;
+            align-items: stretch;
+            padding: 16px;
+        }
+        .btn-pdf {
+            justify-content: center;
+        }
+    }
+</style>
+
+<script>
+    document
+        .querySelectorAll<HTMLElement>(".pdf-pill[data-pdf-url]")
+        .forEach((pill) => {
+            const pdfUrl = pill.dataset.pdfUrl;
+            const viewButton =
+                pill.querySelector<HTMLButtonElement>(".btn-pdf-view");
+            const viewer = pill.nextElementSibling;
+
+            if (
+                !pdfUrl ||
+                !viewButton ||
+                !viewer?.classList.contains("pdf-viewer-shell")
+            )
+                return;
+
+            viewButton.addEventListener("click", () => {
+                if (window.innerWidth < 768) {
+                    window.open(pdfUrl, "_blank");
+                    return;
+                }
+
+                const isOpen = viewer.classList.contains("open");
+                if (!isOpen && !viewer.querySelector("iframe")) {
+                    const iframe = document.createElement("iframe");
+                    iframe.src = `${pdfUrl}#toolbar=1&navpanes=0`;
+                    iframe.title = "PDF Preview";
+                    iframe.loading = "lazy";
+                    viewer.appendChild(iframe);
+                }
+
+                viewer.classList.toggle("open", !isOpen);
+                viewButton.setAttribute("aria-expanded", String(!isOpen));
+                viewButton.innerHTML = isOpen ? "Ver PDF" : "Ocultar";
+            });
+        });
+</script>

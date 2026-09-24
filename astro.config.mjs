@@ -19,7 +19,7 @@ export default defineConfig({
       include: ["/*"],
       // Elimina las rutas dinámicas como /actividades/* o /publicaciones/* de las exclusiones.
       // Solo debes excluir recursos puramente estáticos o assets globales.
-      exclude: ["/_astro/*", "/assets/*", "/fonts/*", "/icons/*", "/images/*"]
+      exclude: ["/_astro/*", "/assets/*", "/fonts/*", "/icons/*", "/images/*", "/docs/*"]
     }
   }),
   image: {

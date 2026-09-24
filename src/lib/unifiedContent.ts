@@ -86,6 +86,12 @@ const especialesMeta: Record<string, Partial<LocalSpecialPage>> = {
         date: "2026-09-14T12:00:00.000Z",
         image: "/images/Fête de l’Humanité/Fête de l’Humanité (1).jpeg",
     },
+    "informe-esclarecimiento-ddhh-protesta-social": {
+        title: "Mininterior recibe el informe final del Comité de Expertos AdHoc para el Esclarecimiento de Violaciones a los Derechos Humanos en Contexto de Protesta Social entre 2019 y 2021.",
+        author: "Ministerio del Interior",
+        date: "2026-09-24T12:00:00.000Z",
+        image: "https://api.ilsa.org.co/wp-content/uploads/2026/09/mininterior-recibe-el-informe-final-del-comite-de-expertos-adhoc-para-el-esclarecimiento-de-violaciones-a-los-derechos-humanos-en-contexto-de-protesta-social-entre-2019-y-2021.webp",
+    },
 };
 
 /** Converts a kebab-case slug to a human-readable title (fallback). */
