@@ -101,12 +101,22 @@ const galleryImages = [
         caption: "",
     },
     {
-        src: "/images/fete-humanite/fete-humanite-extra-3.jpeg",
+        src: "/images/fete-humanite/fete-humanite-extra-5.jpeg",
         alt: "Fotografía del stand de ILSA y APDH Colombie - 3",
         caption: "",
     },
     {
         src: "/images/fete-humanite/fete-humanite-extra-4.jpeg",
+        alt: "Fotografía del stand de ILSA y APDH Colombie - 4",
+        caption: "",
+    },
+    {
+        src: "/images/fete-humanite/fete-humanite-extra-5.jpeg",
+        alt: "Fotografía del stand de ILSA y APDH Colombie - 4",
+        caption: "",
+    },
+    {
+        src: "/images/fete-humanite/fete-humanite-extra-3.jpeg",
         alt: "Fotografía del stand de ILSA y APDH Colombie - 4",
         caption: "",
     },
@@ -655,21 +665,23 @@ const videoItems = [
                     <!-- Vertical Videos -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {
-                            [videoItems[0], videoItems[2], videoItems[3]].map((vid) => (
-                                <div class="bg-white/80 backdrop-blur-md rounded-3xl overflow-hidden border border-slate-200/80 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col group">
-                                    <div class="relative w-full aspect-[9/16] bg-slate-900 overflow-hidden">
-                                        <video
-                                            src={vid.src}
-                                            controls
-                                            preload="metadata"
-                                            class="w-full h-full object-cover"
-                                        >
-                                            Tu navegador no soporta la
-                                            reproducción de video HTML5.
-                                        </video>
+                            [videoItems[0], videoItems[2], videoItems[3]].map(
+                                (vid) => (
+                                    <div class="bg-white/80 backdrop-blur-md rounded-3xl overflow-hidden border border-slate-200/80 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col group">
+                                        <div class="relative w-full aspect-[9/16] bg-slate-900 overflow-hidden">
+                                            <video
+                                                src={vid.src}
+                                                controls
+                                                preload="metadata"
+                                                class="w-full h-full object-cover"
+                                            >
+                                                Tu navegador no soporta la
+                                                reproducción de video HTML5.
+                                            </video>
+                                        </div>
                                     </div>
-                                </div>
-                            ))
+                                ),
+                            )
                         }
                     </div>
                 </div>
