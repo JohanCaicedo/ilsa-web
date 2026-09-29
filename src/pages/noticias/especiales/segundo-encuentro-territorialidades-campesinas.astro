@@ -1,0 +1,118 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import GradientText from "../../../components/atoms/GradientText.astro";
+import SmartImage from "../../../components/atoms/SmartImage.astro";
+import GalleryLightbox from "../../../components/molecules/GalleryLightbox.astro";
+import ShareButtons from "../../../components/atoms/ShareButtons.astro";
+import { Calendar, Camera } from "lucide-react";
+import type { SeoData } from "../../../lib/seo";
+
+export const prerender = true;
+
+const title =
+    "II Encuentro de territorialidades campesinas de los departamentos de Boyacá, Santander, Tolima y Cundinamarca";
+const slug = "segundo-encuentro-territorialidades-campesinas";
+const photoBaseUrl =
+    "https://api.ilsa.org.co/wp-content/uploads/2026/09/Evento-II-segundo-encuentro-territorialidades-campesinas-";
+const eventPhotos = Array.from({ length: 45 }, (_, index) => ({
+    id: index + 1,
+    src: `${photoBaseUrl}${index + 1}.webp`,
+    alt: `II Encuentro de territorialidades campesinas – Fotografía ${index + 1}`,
+}));
+const featuredImage = eventPhotos[19].src;
+const seoDescription =
+    "En Bogotá, organizaciones campesinas definieron acciones para defender sus territorialidades y fortalecer la articulación agraria regional.";
+
+const seoData: SeoData = {
+    title: "II Encuentro de Territorialidades Campesinas | ILSA",
+    metaDesc: seoDescription,
+    canonical: `https://ilsa.org.co/noticias/especiales/${slug}`,
+    opengraphTitle: "II Encuentro de Territorialidades Campesinas | ILSA",
+    opengraphDescription: seoDescription,
+    opengraphImage: { sourceUrl: featuredImage },
+    twitterImage: { sourceUrl: featuredImage },
+};
+
+const breadcrumbs = [
+    { label: "Noticias", href: "/noticias" },
+    { label: "Especiales", href: "/noticias" },
+    { label: "II Encuentro de territorialidades campesinas", href: `/noticias/especiales/${slug}` },
+];
+---
+
+<Layout title={seoData.title} width="wide" seo={seoData} breadcrumbs={breadcrumbs}>
+    <div class="relative min-h-screen pb-32">
+        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+            <div class="absolute top-1/6 left-1/4 h-[500px] w-[500px] rounded-full bg-[var(--ilsa-blue-light)]/15 blur-[120px] animate-blob"></div>
+            <div class="absolute right-1/4 top-1/2 h-[450px] w-[450px] rounded-full bg-[var(--ilsa-blue-dark)]/10 blur-[110px] animate-blob animation-delay-2000"></div>
+        </div>
+
+        <main class="relative z-10 mx-auto max-w-5xl px-4 pt-8 md:px-8">
+            <header class="mb-12 space-y-6 text-center md:mb-16">
+                <GradientText
+                    text="II Encuentro de territorialidades campesinas"
+                    as="h1"
+                    size="text-3xl md:text-5xl"
+                    weight="font-black"
+                    from="var(--ilsa-blue-dark)"
+                    to="var(--ilsa-blue)"
+                    class="mx-auto w-full text-center leading-[1.12] text-balance drop-shadow-sm"
+                />
+                <p class="mx-auto max-w-3xl text-lg font-light leading-relaxed text-slate-700 md:text-2xl">
+                    de los departamentos de Boyacá, Santander, Tolima y Cundinamarca
+                </p>
+                <div class="flex flex-wrap justify-center gap-3 pt-2 text-sm font-medium text-slate-600">
+                    <div class="flex items-center gap-2 rounded-full border border-white/80 bg-white/60 px-4 py-2 shadow-sm backdrop-blur-sm">
+                        <Calendar className="h-4 w-4 text-[var(--ilsa-blue-dark)]" />
+                        <span>25 y 26 de septiembre de 2026</span>
+                    </div>
+                </div>
+            </header>
+
+            <article class="space-y-12 rounded-[2rem] border border-white/60 bg-white/50 p-6 shadow-2xl shadow-slate-200/50 backdrop-blur-3xl md:rounded-[3rem] md:p-12">
+                <section class="mx-auto max-w-3xl space-y-6 text-pretty text-lg font-light leading-relaxed text-slate-700">
+                    <p>Convocado por el Instituto Latinoamericano para una Sociedad y un Derecho Alternativos (ILSA), los días 25 y 26 de septiembre se realizó en Bogotá el II Encuentro de Territorialidades Campesinas de Boyacá, Santander, Tolima y Cundinamarca. El encuentro reunió a más de 20 líderes y lideresas de Zonas de Reserva Campesina, Territorios Campesinos Agroalimentarios y Áreas de Protección para la Producción de Alimentos (APPA) y representantes de organizaciones campesinas de estos departamentos, quienes desarrollaron una amplia agenda de discusión en torno a la defensa de la vida, las territorialidades campesinas, los bienes comunes y la Reforma Agraria Integral y Popular.</p>
+
+                    <p>Las comunidades campesinas se dieron cita en este espacio para construir apuestas de unidad frente a las recientes acciones judiciales interpuestas (19 en total) por sectores económicos vinculados a intereses financieros, mineros y petroleros, que, según señalaron las organizaciones participantes, buscan desarticular, derogar y poner fin a las territorialidades campesinas. El encuentro también permitió identificar problemáticas comunes, entre ellas, la falta de presupuesto para hacer efectivos los Planes de Desarrollo Sostenible y los Planes de Vida Digna; los obstáculos administrativos que dificultan la formalización de las territorialidades; la estigmatización y criminalización del movimiento campesino, y los intereses que amenazan los bienes comunes y la protección ambiental, en un contexto que las organizaciones caracterizaron como parte de una arremetida imperial sobre Nuestra América. Frente a estas situaciones, las organizaciones plantearon horizontes comunes de acción y articulación.</p>
+
+                    <p>Además de la participación de profesionales y directivos de ILSA, el II Encuentro contó con la presencia de la procuradora judicial agraria y ambiental y exministra de Agricultura, Martha Carvajalino; del defensor delegado para Asuntos Agrarios, Territorialidades y Derechos del Campesinado, Juan Camilo Morales; y de integrantes de la Red Colombiana de Abogacía Popular. Las organizaciones campesinas impulsoras de las distintas territorialidades hicieron un llamado al Estado colombiano, a la Rama Judicial y a los sectores populares a defender las formas de territorialidad campesina reconocidas en la Constitución Política. Destacaron, además, su importancia para garantizar el derecho a la alimentación adecuada y contribuir a enfrentar las crisis ambiental y climática, en tanto en estos territorios la producción de alimentos coexiste con la protección del agua, los bosques y la biodiversidad.</p>
+
+                    <p>El II Encuentro de Territorialidades Campesinas concluyó con un plan de acción alrededor de la defensa y garantía de implementación de los territorios campesinos de la región central; así como con un importante llamado a fortalecer la unidad del movimiento agrario y a articular esfuerzos con los pueblos indígenas, los pueblos negros, afrocolombianos, raizales y palenqueros, así como con las comunidades pesqueras y anfibias. El propósito es avanzar en la construcción conjunta de objetivos, metas, agendas y acciones del movimiento agrario y, en particular, promover la realización de un <strong>Encuentro Nacional de Territorialidades Campesinas</strong> para la defensa de los territorios y las territorialidades.</p>
+
+                    <p class="pt-2 text-base font-medium text-slate-800">Para saber más del trabajo de ILSA escriba a: <a class="text-[var(--ilsa-blue-dark)] underline decoration-[var(--ilsa-blue)]/50 underline-offset-4 hover:text-[var(--ilsa-blue)]" href="mailto:comunicaciones@ilsa.org.co">comunicaciones@ilsa.org.co</a> / <a class="text-[var(--ilsa-blue-dark)] underline decoration-[var(--ilsa-blue)]/50 underline-offset-4 hover:text-[var(--ilsa-blue)]" href="mailto:ilsa@ilsa.org.co">ilsa@ilsa.org.co</a></p>
+                </section>
+
+                <section class="space-y-8 border-t border-slate-200/70 pt-12">
+                    <div class="mx-auto max-w-2xl text-center">
+                        <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-[var(--ilsa-blue)]/20 bg-[var(--ilsa-blue)]/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest text-[var(--ilsa-blue-dark)]">
+                            <Camera className="h-3.5 w-3.5" /> Galería fotográfica
+                        </div>
+                        <p class="text-lg font-light leading-relaxed text-slate-700">II Encuentro de Territorialidades Campesinas</p>
+                    </div>
+
+                    <GalleryLightbox>
+                        <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
+                            {eventPhotos.map((photo, index) => (
+                                <button type="button" class="gallery-thumb group relative block aspect-square w-full cursor-zoom-in overflow-hidden rounded-2xl border border-white/80 bg-slate-100 text-left shadow-md transition-all duration-500 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ilsa-blue)]" data-index={index} aria-label={photo.alt}>
+                                    <SmartImage src={photo.src} alt={photo.alt} class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" width={800} height={800} />
+                                    <span class="absolute bottom-2 left-2 rounded-full bg-white/85 px-2 py-0.5 text-[10px] font-bold text-slate-700 opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100">{index + 1} / {eventPhotos.length}</span>
+                                </button>
+                            ))}
+                        </div>
+                    </GalleryLightbox>
+                </section>
+
+                <footer class="mx-auto max-w-2xl space-y-6 border-t border-slate-200/70 pt-8 text-center">
+                    <div class="flex justify-center">
+                        <ShareButtons url={`https://ilsa.org.co/noticias/especiales/${slug}`} title={title} />
+                    </div>
+                    <div class="flex items-center justify-center gap-3">
+                        <div class="h-px w-8 bg-slate-200"></div>
+                        <span class="text-xs font-bold uppercase tracking-[0.2em] text-[var(--ilsa-blue-dark)]">ILSA · TERRITORIALIDADES CAMPESINAS</span>
+                        <div class="h-px w-8 bg-slate-200"></div>
+                    </div>
+                </footer>
+            </article>
+        </main>
+    </div>
+</Layout>

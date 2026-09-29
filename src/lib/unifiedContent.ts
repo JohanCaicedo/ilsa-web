@@ -92,6 +92,12 @@ const especialesMeta: Record<string, Partial<LocalSpecialPage>> = {
         date: "2026-09-24T12:00:00.000Z",
         image: "https://api.ilsa.org.co/wp-content/uploads/2026/09/mininterior-recibe-el-informe-final-del-comite-de-expertos-adhoc-para-el-esclarecimiento-de-violaciones-a-los-derechos-humanos-en-contexto-de-protesta-social-entre-2019-y-2021.webp",
     },
+    "segundo-encuentro-territorialidades-campesinas": {
+        title: "II Encuentro de territorialidades campesinas de los departamentos de Boyacá, Santander, Tolima y Cundinamarca",
+        author: "ILSA",
+        date: "2026-09-29T12:00:00.000Z",
+        image: "https://api.ilsa.org.co/wp-content/uploads/2026/09/Evento-II-segundo-encuentro-territorialidades-campesinas-20.webp",
+    },
 };
 
 /** Converts a kebab-case slug to a human-readable title (fallback). */

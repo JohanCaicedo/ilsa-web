@@ -2,3 +2,6 @@ name = "ilsa-web"
 compatibility_date = "2025-01-01"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = "dist"
+
+[vars]
+BUN_VERSION = "1.4.2"
