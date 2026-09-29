@@ -1,0 +1,141 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import GradientText from "../../../components/atoms/GradientText.astro";
+import ShareButtons from "../../../components/atoms/ShareButtons.astro";
+import Button from "../../../components/Button.astro";
+import type { SeoData } from "../../../lib/seo";
+
+export const prerender = true;
+
+const title =
+    "COMUNICADO A LA OPINIÓN PÚBLICA, INTERNACIONAL, AUTORIDADES GUBERNAMENTALES, RAMA JUDICIAL Y A LOS SECTORES POPULARES DE COLOMBIA";
+const slug = "comunicado-segundo-encuentro-territorialidades-campesinas";
+const encounter =
+    "II Encuentro de territorialidades campesinas de los departamentos de Boyacá, Santander, Tolima y Cundinamarca";
+
+const concerns = [
+    "Los campesinos y campesinas existimos en Colombia. Somos una clase social organizada y en movimiento. La Constitución nos reconoce como sujetos y sujetas de especial protección constitucional gracias al acto legislativo 01 de 2023, reformatorio del articulo 64 superior que reconoció nuestra dimensión política, social, económica, cultural y ambiental.",
+    "Rechazamos todo intento del Gobierno de borrar del lenguaje institucional al campesino y a la campesina de los debates sociales, políticos y jurídicos, bajo la idea de que es una acepción peyorativa, cuando lo que busca realmente es eliminar los compromisos estatales con las políticas agrarias que realizan nuestros derechos. Está búsqueda del gobierno por invizibilizar al campesinado no es nueva y por el contrario ha sido utilizada históricamente como un medio para promover y adelantar procesos sociales genocidas contra los campesinos y campesinas de nuestros territorios. Saludamos el fallo de tutela del Juzgado 46 Laboral del Circuito de Bogotá que amparó los derechos a la dignidad, igualdad y reconocimiento de la identidad y ordenó a Ministro de Agricultura, Indalecio Dangond, a ofrecer disculpas a los campesinos y campesinas del país.",
+    "Rechazamos la estrategia jurídica y política que promueven actores económicos poderosos para desmontar los avances logrados en las políticas públicas agrarias que protegen y realizan nuestros derechos constitucionales, esto no es más que un intento de contrareforma agraria en el país. Vemos con gran preocupación los 19 procesos judiciales que se tramita en la jurisdicción contenciosa administrativa, contra las APPA, las Zonas de Reserva Campesina y los TECAM, cuyo objetivo es anular los actos administrativos de creación de estas territorialidades, así como otras resoluciones del Ministerio de Agricultura que durante el Gobierno anterior, decidieron incentivos y apoyos a la economía campesina, étnica, familiar y popular.",
+    "Llamamos a los jueces y juezas de la República y a los Organismos de Control a la defensa del campesinado y del Estado Social de Derecho. Las territorialidades campesinas se encuentran  reconocidas por diversos instrumentos normativos y, lo que es más importante por los campesinos y campesinas de territorios que dotan de contenido nuestras apuestas políticas por ordenar y gobernar nuestros territorios, en caso de adoptarse decisiones que deroguen o congelen los trámites de reconocimiento, de formalización legal y de implementación de las territorialidades esto no podrá entenderse más que como un intento del Estado colombiano  a desestabilizar nuestras organizaciones y procesos sociales.",
+    "Las organizaciones campesinas defendemos las APPA y los avances logrados en la protección del suelo rural y para la producción de alimentos, rechazamos los retrocesos que se pretenden hacer contra estas territorialidades, desconociendo que son un instrumento para la seguridad alimentaria, el ordenamiento territorial y la subsistencia de la economía campesina.",
+    "Llamamos a las organizaciones sociales y políticas a defender las APPA que son los suelos para producir nuestros alimentos y el futuro de las nuevas generaciones. Los intereses del volteo de tierras, de la expansión urbana o de la mineria no pueden imponerse y prevalecer sobre el derecho de los pueblos a una alimentación digna o el mismo derecho de los pueblos a decidir sobre nuestros territorios",
+    "Advertimos con profunda preocupación la intención de materializar una política de un \"campo sin campesinos\". Denunciamos que se busca acabar con la identidad campesina al intentar categorizarnos simplemente como \"pequeños empresarios del campo\". Esta visión excluyente e impulsada por lógicas de colonialismo representa una amenaza de genocidio cultural para nuestros pueblos.",
+    "Alertamos al país que actualmente cursa una acción popular en el Tribunal Administrativo de Cundinamarca que pretende derogar figuras fundamentales para nuestra pervivencia, como las Zonas de Reserva Campesina,  los Territorios Campesinos Agroalimentarios y las APPA. Hacemos un llamado a defender estas figuras y a participar activamente en estos escenarios judiciales. Exigimos al Estado que garantice nuestros derechos como sujetos políticos y de especial protección constitucional; esto no es una concesión, sino una restitución histórica. Como campesinado organizado, haremos uso de todos los mecanismos de lucha: la movilización social, la presión política, las herramientas constitucionales y legales que estén a nuestro alcance.",
+    "Frente a este panorama, reivindicamos nuestro rol fundamental como guardianes ambientales. Ante la grave crisis climática y los incendios que hoy consumen al Santander, Tolima, Boyacá y el resto del país, somos nosotros quienes asumimos de manera responsable y seria la protección de bienes comunes: el agua, los ríos, el suelo, los bosques y la biodiversidad, garantizando así la supervivencia de las futuras generaciones.",
+    "Nuestro modelo de agricultura campesina y producción familiar no solo ha resistido por más de 200 años, sino que hoy se erige como la verdadera solución estructural frente a la crisis climática: somos el campesinado quienes enfriamos el planeta. A través de la agroecología campesina, construimos una propuesta que garantiza la soberanía alimentaria sin agotar los bienes naturales, sustentado en nuestro profundo sentido de permanencia, dignidad y arraigo en el territorio. A diferencia del modelo agroindustrial y del monocultivo que calienta y devasta, nuestra agricultura diversifica los predios combinando cultivos permanentes, como la madera y el café, con cultivos transitorios como el maíz, la yuca y el arroz, integrando también especies menores y ganadería. Esta diversificación nos permite rotar y conservar la fertilidad de los suelos, hacer un uso soberano del agua y proteger la biodiversidad. Por ello, exigimos tierra y derechos para quienes garantizamos la vida, pues la agroecología campesina es la respuesta para construir un futuro con justicia social.",
+];
+
+const demands = [
+    "Facilitar y destrabar el proceso de constitución y consolidación de los TECAM y las Zonas de Reserva Campesina, superando los cuellos de botella institucionales que hoy frenan iniciativas territoriales como las de Moniquirá, Alas del Territorio, la Gran Cordillera de los Agataes y Cacique Poima.",
+    "Garantizar el reconocimiento jurídico pleno de las figuras de TECAM y ZRC, con la asignación presupuestal para su funcionamiento.",
+    "Lograr una articulación institucional vinculante que garantice el financiamiento de nuestros Planes de Vida Digna y Planes de Desarrollo Sostenible, así como la implementación real y con presupuesto vinculante de la Reforma Rural Integral contemplada en el Acuerdo Final de Paz.",
+    "Garantizar mecanismos reforzados de participación y el reconocimiento vinculante de las ZRC y los TECAM en todos los temas que tengan que ver con nuestros territorios, instando en ello al Congreso de la República, al Gobierno Nacional y a las entidades competentes.",
+    "Reconocer todas las dimensiones de la vida, cultura e identidad del campesinado en las políticas públicas, así como su papel de guardián ambiental de los territorios, formal y materialmente.",
+    "Garantizar la exigibilidad del reconocimiento en la práctica de los derechos del campesinado.",
+    "Implementar recursos para la Ley de Agroecología que permitan avanzar hacia la transición agroecológica y la soberanía alimentaria como pilares de la política campesina.",
+    "Implementar una educación con enfoque diferencial campesino, verdaderamente contextualizada a las realidades, necesidades y saberes de nuestros territorios.",
+    "Fortalecer la cadena de producción, transformación y comercialización de mercados justos, con apoyos técnicos para el fortalecimiento productivo agroecológico, entrega y titulación masiva de tierras y acceso a bienes públicos que aseguren la permanencia digna en el campo.",
+    "Garantizar el acceso al trazador presupuestal y fomentar los presupuestos participativos con las comunidades.",
+    "Promover la armonización y el rescate de nuestros saberes ancestrales, facilitando un diálogo horizontal entre la ciencia, la salud y la medicina tradicional campesina.",
+];
+
+const signatories = [
+    "TERRITORIO CAMPESINO AGROALIMENTARIO MONIQUIRÁ",
+    "ZONA DE RESERVA CAMPESINA PARAISO ESCONDIDO: TOGÜÍ",
+    "ZONA DE RESERVA CAMPESINA VENECIA PARTE ALTA",
+    "ASOCIACIÓN DE GESTIÓN, UNIDAD Y ACCIÓN CAMPESINA",
+    "AGUA CAMPESINA",
+    "ZONA DE RESERVA CAMPESINA DE CABRERA-ASOCIACIÓN CAMPESINA CUNA DE PAZ CORCUNPAZ",
+    "ZONA DE RESERVA CAMPESINA SANTUARIO DEL RÁBANAL SAMACÁ Y VENTAQUEMADA",
+    "ASOCIACIÓN DE PEQUEÑOS Y MEDIANOS AGRICULTUROES DE BOYACÁ-MOTAVITA-COMBITA-ARCABUCO",
+    "ASOAGRYNBOY-FENSUAGRO",
+    "ANUC CAJICÁ",
+    "ANUC BOYACÁ",
+    "ANUC CUNDINAMARCA",
+    "ANUC CHÍA",
+    "ANUC TENJO",
+    "COMITÉ DE IMPULSO DE ZRC DEL PÁRAMO DE PISBA",
+    "AZOACTASCO",
+    "VEEDURIA AMBIENTAL DE TASCO",
+    "VELEZ 500 AÑOS UNIDOS POR EL DESARROLLO",
+    "CONGRESO AMBIENTAL DE SANTANDER-CASA AGUAYA",
+    "TECAM CACIQUE POIMA",
+    "TECAM ALAS DEL TERRITORIO",
+    "TECAM GRAN CORDILLERA DE LOS AGATAES",
+    "GRUPO DE INVESTIGACIÓN EN ESTUDIOS AGRARIOS Y CAMPESINOS SUMAPAZ",
+    "INSTITUTO LATINOAMERICANO PARA UNA SOCIEDAD Y UN DERECHO ALTERNATIVOS (ILSA)",
+    "RED COLOMBIANA DE ABOGACÍA POPULAR",
+];
+
+const seoData: SeoData = {
+    title: "Comunicado sobre territorialidades campesinas | ILSA",
+    metaDesc:
+        "Comunicado del II Encuentro de Territorialidades Campesinas sobre la defensa de las ZRC, los TECAM y las APPA.",
+    canonical: `https://ilsa.org.co/noticias/especiales/${slug}`,
+    opengraphTitle: "Comunicado sobre territorialidades campesinas | ILSA",
+    opengraphDescription:
+        "Comunicado del II Encuentro de Territorialidades Campesinas sobre la defensa de las ZRC, los TECAM y las APPA.",
+};
+
+const breadcrumbs = [
+    { label: "Noticias", href: "/noticias" },
+    { label: "Especiales", href: "/noticias" },
+    { label: "Comunicado territorialidades campesinas", href: `/noticias/especiales/${slug}` },
+];
+---
+
+<Layout title={seoData.title} width="wide" seo={seoData} breadcrumbs={breadcrumbs}>
+    <div class="relative min-h-screen pb-32">
+        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+            <div class="absolute top-1/6 left-1/4 h-[500px] w-[500px] rounded-full bg-[var(--ilsa-blue-light)]/15 blur-[120px] animate-blob"></div>
+            <div class="absolute right-1/4 top-1/2 h-[450px] w-[450px] rounded-full bg-[var(--ilsa-blue-dark)]/10 blur-[110px] animate-blob animation-delay-2000"></div>
+        </div>
+
+        <main class="relative z-10 mx-auto max-w-5xl px-4 pt-8 md:px-8">
+            <article class="rounded-[2rem] border border-white/60 bg-white/50 p-6 shadow-2xl shadow-slate-200/50 backdrop-blur-3xl md:rounded-[3rem] md:p-12">
+                <header class="mx-auto max-w-4xl space-y-5 pb-10 text-center">
+                    <p class="text-lg font-light italic leading-relaxed text-slate-700 md:text-xl">{encounter}</p>
+                    <p class="text-base font-medium text-slate-600">Bogotá D.C. 26 de septiembre de 2026</p>
+                    <GradientText text={title} as="h1" size="text-[1.5rem] md:text-[2.4rem]" weight="font-black" from="var(--ilsa-blue-dark)" to="var(--ilsa-blue)" class="mx-auto w-full text-center leading-[1.12] text-balance drop-shadow-sm" />
+                </header>
+
+                <div class="mx-auto max-w-3xl space-y-7 text-pretty text-lg font-light leading-relaxed text-slate-700">
+                    <p>Lideres y lideresas campesinos provenientes de las Zonas de Reserva Campesina (ZRC) de los municipios de Cabrera, Venecia, Páramo de Pisba, Samacá, Combita-Motavita y Togüi; de las Áreas de Protección para la Producción de Alimentos (APPA) de los municipios de Tenjo, Chía y Cajicá; y los Territorios Campesinos Agroalimentarios (TECAM) TECAM Cacique Poima (Oiba y Guadalupe) TECAM Alas del Territorio (Jesús María) TECAM Gan Cordillera de los Agataes (Velez y Bolívar) y TECAM Moniquirá, convocados por el Instituto Lationamericano por una Sociedad y un Derecho Alternativos (ILSA), reunidos los días 25 y 26 de septiembre del presente año, en la ciudad de Bogotá D.C. manifestamos públicamente las siguientes preocupaciones.</p>
+
+                    <ol class="list-decimal space-y-5 pl-6 marker:font-bold marker:text-[var(--ilsa-blue-dark)] md:pl-8">
+                        {concerns.map((concern) => <li class="pl-2">{concern}</li>)}
+                    </ol>
+
+                    <p>Como territorialidades campesinas manifestamos con extrema preocupación la intención del gobierno nacional y de sectores con intereses económicos de generar una regresión frente a los derechos campesinos adquiridos.</p>
+                    <p>Las ZRC y los TECAM representan para nuestros territorios una apuesta colectiva de gobernanza, defensa territorial y ordenamiento territorial que no fue una concesión del Estado, sino el resultado de décadas de lucha del campesinado por el reconocimiento de su papel como sujeto de derechos y actor fundamental en la construcción de paz territorial. Desconocer o debilitar estas territorialidades hoy no es un simple ajuste normativo: es un retroceso frente a compromisos que el Estado colombiano asumió con sus propias comunidades rurales y con el país entero en el marco de la construcción de paz.</p>
+                    <p>Reafirmamos que nuestras territorialidades campesinas: ZRC, TECAM y Áreas de Protección para la Producción de Alimentos, son pilares indispensables para la soberanía alimentaria de la nación y la contención de la crisis climática, constituyéndose en territorios vivos donde la producción de alimentos coexiste de manera armónica con la protección del agua, los bosques y la biodiversidad. Frente a esta amenaza, no vamos a permitir que se desmonten silenciosamente los espacios de vida, organización y autonomía que hemos construido con esfuerzo propio.</p>
+                    <p>Rechazamos la estigmatización del ministro de agricultura, quien afirma que nuestras ZRC son tierras donde se cultiva coca. Este discurso no es gratuito: busca estigmatizarnos y criminalizarnos. Nuestras territorialidades son territorios de paz y no permitiremos que se nos señale ante el país como un eslabón más del narcotráfico.</p>
+                    <p>Por lo anterior, como territorialidades campesinas exigimos:</p>
+
+                    <ol class="list-decimal space-y-5 pl-6 marker:font-bold marker:text-[var(--ilsa-blue-dark)] md:pl-8">
+                        {demands.map((demand) => <li class="pl-2">{demand}</li>)}
+                    </ol>
+
+                    <p>Nuestra permanencia en el campo, nuestra capacidad de producir alimentos y de cuidar los ecosistemas que habitamos depende directamente de que estos derechos adquiridos se respeten y se fortalezcan. Exigimos al Gobierno Nacional garantías reales para la constitución y consolidación de nuestras territorialidades, y no obstáculos disfrazados de tecnicismos administrativos o de intereses económicos ajenos al territorio.</p>
+                    <p>Instamos a la sociedad civil a abrazar estos procesos, así como al grueso del movimiento campesino a estar unidos y alertas a una posible contrarreforma agraria, es un momento imperante para construir lazos de unidad y fortalecer en nuestros territorios una apuesta por la defensa de la vida.</p>
+                    <p>Como organizaciones campesinas hacemos un llamado a la organización, unidad y movilización de los sectores agrarios y populares; a los pueblos índigenas, pueblos negros, raizales, palenqueros  comunidades pesqueras y anfibias, para que nos encontremos nuevamente alrededor de necesidad de crear un movimiento agrario unificado y en pie de lucha.</p>
+                    <p>Así mismo, consideramos inaplazable que nos encontremos Zonas de Reservas Campesinas, Territorios Campesinos Agroalimentarios, Áreas de Protección para la Producción de Alimentos y Territorios Acuaticos Agroalimentarios en un ENCUENTRO NACIONAL DE TERRITORIALIDADES CAMPESINAS para a construir una apuesta conjunta por la defensa de nuestros territorios y territorialidades.</p>
+                    <p class="text-center font-medium">¡Por una reforma agraria, acuaria, estructural integral y popular! ¡Por la Tierra, el Territorio y la Soberanía Alimentaria! ¡Reforma Agraria Integral y Popular ya!</p>
+                </div>
+
+                <section class="mx-auto mt-12 max-w-3xl border-t border-slate-200/70 pt-10">
+                    <h2 class="mb-6 text-center text-xl font-black tracking-wide text-slate-800">SUSCRIBEN</h2>
+                    <ul class="grid gap-x-8 gap-y-3 text-sm font-medium leading-relaxed text-slate-700 md:grid-cols-2">
+                        {signatories.map((signatory) => <li class="min-w-0 break-words border-l-2 border-[var(--ilsa-blue)]/30 pl-3">{signatory}</li>)}
+                    </ul>
+                </section>
+
+                <footer class="mx-auto mt-12 max-w-2xl space-y-6 border-t border-slate-200/70 pt-8 text-center">
+                    <div class="flex justify-center"><ShareButtons url={`https://ilsa.org.co/noticias/especiales/${slug}`} title={title} /></div>
+                    <div class="flex items-center justify-center gap-3"><div class="h-px w-8 bg-slate-200"></div><span class="text-xs font-bold uppercase tracking-[0.2em] text-[var(--ilsa-blue-dark)]">ILSA · TERRITORIALIDADES CAMPESINAS</span><div class="h-px w-8 bg-slate-200"></div></div>
+                </footer>
+            </article>
+        </main>
+    </div>
+</Layout>

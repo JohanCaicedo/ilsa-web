@@ -98,6 +98,12 @@ const especialesMeta: Record<string, Partial<LocalSpecialPage>> = {
         date: "2026-09-29T12:00:00.000Z",
         image: "https://api.ilsa.org.co/wp-content/uploads/2026/09/Evento-II-segundo-encuentro-territorialidades-campesinas-20.webp",
     },
+    "comunicado-segundo-encuentro-territorialidades-campesinas": {
+        title: "Comunicado del II Encuentro de Territorialidades Campesinas",
+        author: "ILSA",
+        date: "2026-09-26T12:00:00.000Z",
+        image: "https://api.ilsa.org.co/wp-content/uploads/2026/09/Cominicado-II-Encuentro-de-territorialidades-campesinas.webp",
+    },
 };
 
 /** Converts a kebab-case slug to a human-readable title (fallback). */
