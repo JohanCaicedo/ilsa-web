@@ -10,6 +10,14 @@ export interface HeroSlideData {
 
 export const heroSlidesConfig: HeroSlideData[] = [
     {
+        title: "Comunicado II Encuentro de Territorialidades Campesinas",
+        excerpt: "Comunicado a la opinión pública nacional e internacional, a las autoridades gubernamentales, a la Rama Judicial y a los sectores populares de Colombia.",
+        image: "https://api.ilsa.org.co/wp-content/uploads/2026/09/Cominicado-II-Encuentro-de-territorialidades-campesinas.webp",
+        link: "/noticias/especiales/comunicado-segundo-encuentro-territorialidades-campesinas",
+        badge: "Comunicado",
+        ctaText: "Leer comunicado"
+    },
+    {
         title: "La Fête de l’Humanité 2026",
         excerpt: "Tres días de cultura, debate político y encuentro popular de la mano de APDH Colombie e ILSA.",
         image: "/images/Fête de l’Humanité/Fête de l’Humanité (1).jpeg",
@@ -35,36 +43,12 @@ export const heroSlidesConfig: HeroSlideData[] = [
         ctaText: "Leer análisis"
     },
     {
-        title: "<span class='text-[0.7em] leading-tight'>Cinco años del Estallido Social</span>",
-        excerpt: "Foro: Diálogos de Saberes a cinco años del Estallido Social.",
-        image: "https://api.ilsa.org.co/wp-content/uploads/2026/06/Diagramacion-07.webp",
-        link: "https://ilsa.org.co/noticias/especiales/cinco-a%C3%B1os-del-estallido-social",
-        badge: "Evento",
-        ctaText: "Saber más"
-    },
-    {
-        title: "Víctor Moncayo",
-        excerpt: "Jurista crítico y maestro comprometido con la construcción de un pensamiento emancipador",
-        image: "/images/hero-home/Víctor Moncayo  jurista crítico y maestro-ID2.webp",
-        link: "https://ilsa.org.co/2026/04/victor-moncayo-jurista-critico-homenaje/",
-        badge: "Homenaje",
-        ctaText: "Nota completa"
-    },
-    {
-        title: "9 de abril",
-        excerpt: "Memoria, justicia y compromiso con las víctimas",
-        image: "/images/hero-home/Home-9A.jpg",
-        link: "https://ilsa.org.co/2026/04/dia-nacional-victimas-colombia/",
-        badge: "Especial",
-        ctaText: "Leer más"
-    },
-    {
-        title: "Dificultades y Desafíos de la Reforma Rural Integral",
-        excerpt: "Revive el diálogo histórico entre el Gobierno Nacional, el movimiento social y la academia en el marco de la ICARRD+20 en Cartagena.",
-        image: "/images/hero-home/Dificultades y Desafíos.webp",
-        link: "/noticias/especiales/cartagena",
-        badge: "Evento",
-        ctaText: "Ver resumen y galería"
+        title: "Galería de la memoria del estallido social",
+        excerpt: "A cinco años del estallido, la comunicación sigue siendo un acto político.",
+        image: "https://api.ilsa.org.co/wp-content/uploads/2026/08/Convocatoria-Galeria-de-la-memoria-Banner.webp",
+        link: "/noticias/especiales/convocatoria-28a",
+        badge: "Convocatoria",
+        ctaText: "Ver convocatoria"
     },
     {
         title: "Voces en movimiento",
