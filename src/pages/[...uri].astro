@@ -1,5 +1,10 @@
 ---
-import { fetchAllPosts, fetchPostByURI, getRelatedPosts, type PostNode } from "../lib/wp";
+import {
+  fetchAllPosts,
+  fetchPostByURI,
+  getRelatedPosts,
+  type PostNode,
+} from "../lib/wp";
 import Layout from "../layouts/Layout.astro";
 import ArticlePost from "../components/organisms/ArticlePost.astro";
 import RelatedSlider from "../components/organisms/RelatedSlider.astro";
@@ -53,7 +58,7 @@ const currentUrl = Astro.url.href;
 // Use the build-time payload for published routes. The runtime fallback keeps
 // local development usable if a route is rendered on demand.
 const postUri = uri ? `/${uri}/` : "/";
-const post = Astro.props.post ?? await fetchPostByURI(postUri);
+const post = Astro.props.post ?? (await fetchPostByURI(postUri));
 
 if (!post) {
   return Astro.redirect("/404");
@@ -64,7 +69,8 @@ const primaryCategory = post.categories?.nodes[0];
 const categorySlug = primaryCategory?.slug;
 const categoryName = primaryCategory?.name || "Actualidad";
 
-const relatedPosts = Astro.props.relatedPosts ?? await getRelatedPosts(categorySlug, postUri);
+const relatedPosts =
+  Astro.props.relatedPosts ?? (await getRelatedPosts(categorySlug, postUri));
 
 // 2. Author Logic (Only for Opinion)
 const isOpinion = post.categories?.nodes.some((c) => c.slug === "opinion");
