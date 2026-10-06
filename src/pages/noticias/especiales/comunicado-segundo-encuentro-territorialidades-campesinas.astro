@@ -3,6 +3,17 @@ import Layout from "../../../layouts/Layout.astro";
 import GradientText from "../../../components/atoms/GradientText.astro";
 import ShareButtons from "../../../components/atoms/ShareButtons.astro";
 import Button from "../../../components/Button.astro";
+import SmartImage from "../../../components/atoms/SmartImage.astro";
+import RelatedSlider from "../../../components/organisms/RelatedSlider.astro";
+import { getPostsByCategory, type CardPostNode } from "../../../lib/wp";
+import {
+    FileText,
+    Eye,
+    Download,
+    Newspaper,
+    ArrowRight,
+    Camera,
+} from "lucide-react";
 import type { SeoData } from "../../../lib/seo";
 
 export const prerender = true;
@@ -12,8 +23,21 @@ const title =
 const slug = "comunicado-segundo-encuentro-territorialidades-campesinas";
 const photoBaseUrl =
     "https://api.ilsa.org.co/wp-content/uploads/2026/09/Cominicado-II-Encuentro-de-territorialidades-campesinas.webp";
+const pdfUrl =
+    "https://api.ilsa.org.co/wp-content/uploads/2026/10/Comunicado-II-Encuentro-de-territorialidades-campesinas-Final.pdf";
+const pressNoteUrl =
+    "/noticias/especiales/segundo-encuentro-territorialidades-campesinas";
+const pressNoteImage =
+    "https://api.ilsa.org.co/wp-content/uploads/2026/09/Evento-II-segundo-encuentro-territorialidades-campesinas-20.webp";
 const encounter =
     "II Encuentro de territorialidades campesinas de los departamentos de Boyacá, Santander, Tolima y Cundinamarca";
+
+let opinionArticles: CardPostNode[] = [];
+try {
+    opinionArticles = await getPostsByCategory("opinion", 10);
+} catch (error) {
+    console.error("Error al cargar artículos de opinión:", error);
+}
 
 const comunicado = `Líderes y lideresas campesinos provenientes de las Zonas de Reserva Campesina (ZRC) de los municipios de Cabrera, Venecia, Páramo de Pisba, Samacá, Cómbita-Motavita y Togüí; de las Áreas de Protección para la Producción de Alimentos (APPA) de los municipios de Tenjo, Chía y Cajicá; y los Territorios Campesinos Agroalimentarios (TECAM): Cacique Poima (Oiba y Guadalupe), TECAM Alas del Territorio (Jesús María), TECAM Gran Cordillera de los Agataes (Vélez y Bolívar), y TECAM Moniquirá, convocados por el Instituto Latinoamericano para una Sociedad y un Derecho Alternativos (ILSA), reunidos los días 25 y 26 de septiembre del presente año, en la ciudad de Bogotá D.C., manifestamos:
 1. Los campesinos y campesinas existimos en Colombia. Somos sujetos políticos, social y territorialmente organizados. La Constitución nos reconoce como sujetos y sujetas de derechos y de especial protección gracias al Acto Legislativo 01 de 2023, reformatorio del artículo 64 superior que reconoció nuestra dimensión social, política, económica, cultural y ambiental. 
@@ -262,6 +286,138 @@ const breadcrumbs = [
                     </ul>
                 </section>
 
+                {/* ─── VISOR DE PDF DEL COMUNICADO OFICIAL ─── */}
+                <section
+                    class="mx-auto mt-14 max-w-3xl space-y-6 border-t border-[#5d4a44]/20 pt-12"
+                    aria-label="Documento PDF del Comunicado Oficial"
+                >
+                    <div class="text-center">
+                        <div
+                            class="inline-flex items-center gap-2 rounded-full border border-[#5d4a44]/20 bg-[#5d4a44]/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-widest text-[#5d4a44]"
+                        >
+                            <FileText className="h-3.5 w-3.5" /> Documento Oficial en PDF
+                        </div>
+                    </div>
+
+                    <div
+                        class="pdf-pill mx-auto max-w-3xl"
+                        data-pdf-url={pdfUrl}
+                    >
+                        <span class="pdf-icon">
+                            <FileText className="h-6 w-6" />
+                        </span>
+                        <div class="flex-1 min-w-[200px] text-left">
+                            <p class="text-sm font-bold text-[#5d4a44] truncate">
+                                Comunicado-II-Encuentro-de-territorialidades-campesinas-Final.pdf
+                            </p>
+                            <p class="text-xs text-[#5d4a44]/70">
+                                Documento original suscrito · PDF
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <button
+                                type="button"
+                                class="btn-pdf btn-pdf-view"
+                                aria-expanded="false"
+                            >
+                                <Eye className="h-4 w-4" /> Ver PDF
+                            </button>
+                            <a
+                                href={`/api/download?url=${encodeURIComponent(pdfUrl)}`}
+                                download="Comunicado-II-Encuentro-de-territorialidades-campesinas-Final.pdf"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="btn-pdf btn-pdf-download"
+                            >
+                                <Download className="h-4 w-4" /> Descargar
+                            </a>
+                        </div>
+                    </div>
+
+                    <div
+                        class="pdf-viewer-shell pdf-viewer-letter mx-auto max-w-3xl"
+                        aria-live="polite"
+                    >
+                    </div>
+                </section>
+
+                {/* ─── TARJETA / BOTÓN HACIA LA NOTA DE PRENSA ─── */}
+                <section
+                    class="mx-auto mt-12 max-w-3xl border-t border-[#5d4a44]/20 pt-10"
+                    aria-label="Nota de prensa relacionada"
+                >
+                    <div
+                        class="group relative overflow-hidden rounded-3xl border border-white/70 bg-gradient-to-br from-white/80 via-white/60 to-white/40 p-6 shadow-xl shadow-slate-200/50 backdrop-blur-xl transition-all duration-300 hover:border-white/90 hover:shadow-2xl md:p-8"
+                    >
+                        <div
+                            class="grid grid-cols-1 gap-6 md:grid-cols-[200px_1fr] md:items-center"
+                        >
+                            <div
+                                class="relative aspect-[4/3] overflow-hidden rounded-2xl bg-slate-100 shadow-inner md:aspect-square"
+                            >
+                                <SmartImage
+                                    src={pressNoteImage}
+                                    alt="II Encuentro de territorialidades campesinas - Galería y nota de prensa"
+                                    width={400}
+                                    height={400}
+                                    class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                />
+                                <span
+                                    class="absolute bottom-2 left-2 inline-flex items-center gap-1 rounded-full bg-black/60 px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur-md"
+                                >
+                                    <Camera className="h-3 w-3" /> 45 fotos
+                                </span>
+                            </div>
+
+                            <div class="space-y-3">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span
+                                        class="inline-flex items-center gap-1.5 rounded-full border border-[var(--ilsa-blue)]/20 bg-[var(--ilsa-blue)]/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[var(--ilsa-blue-dark)]"
+                                    >
+                                        <Newspaper className="h-3.5 w-3.5" /> Nota de prensa
+                                    </span>
+                                    <span class="text-xs font-medium text-slate-500">
+                                        25 y 26 de septiembre de 2026
+                                    </span>
+                                </div>
+
+                                <h3
+                                    class="text-lg font-bold leading-snug text-slate-800 md:text-xl"
+                                >
+                                    II Encuentro de territorialidades campesinas: Boyacá, Santander, Tolima y Cundinamarca
+                                </h3>
+
+                                <p
+                                    class="text-sm font-light leading-relaxed text-slate-600"
+                                >
+                                    Lee la crónica de la jornada, los acuerdos alcanzados frente a las acciones judiciales y recorre la galería fotográfica completa del evento.
+                                </p>
+
+                                <div class="pt-2">
+                                    <Button
+                                        href={pressNoteUrl}
+                                        variant="primary"
+                                        size="md"
+                                        class="inline-flex items-center gap-2 shadow-md transition-all hover:gap-3 hover:shadow-lg"
+                                    >
+                                        <span>Ir a la nota de prensa</span>
+                                        <ArrowRight className="h-4 w-4" />
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* ─── ARTÍCULOS DE OPINIÓN RELACIONADOS (SLIDER) ─── */}
+                {
+                    opinionArticles && opinionArticles.length > 0 && (
+                        <div class="border-t border-[#5d4a44]/20 pt-6">
+                            <RelatedSlider posts={opinionArticles} />
+                        </div>
+                    )
+                }
+
                 <footer
                     class="mx-auto mt-12 max-w-2xl space-y-6 border-t border-slate-200/70 pt-8 text-center"
                 >
@@ -282,3 +438,165 @@ const breadcrumbs = [
         </main>
     </div>
 </Layout>
+
+<style>
+    .pdf-pill {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 16px 24px;
+        background: rgba(255, 255, 255, 0.65);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        border-radius: 999px;
+        box-shadow: 0 8px 32px 0 var(--glass-shadow, rgba(31, 38, 135, 0.08));
+        flex-wrap: wrap;
+    }
+
+    .pdf-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(93, 74, 68, 0.08);
+        color: #5d4a44;
+        flex-shrink: 0;
+    }
+
+    .btn-pdf {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 10px 20px;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        white-space: nowrap;
+        text-decoration: none;
+    }
+
+    .btn-pdf-view {
+        border: none;
+        background: #5d4a44;
+        color: white;
+        box-shadow: 0 4px 12px rgba(93, 74, 68, 0.25);
+    }
+    .btn-pdf-view:hover {
+        background: #463732;
+        box-shadow: 0 6px 18px rgba(93, 74, 68, 0.35);
+        transform: translateY(-1px);
+    }
+    .btn-pdf-download {
+        border: 1.5px solid #5d4a44;
+        background: transparent;
+        color: #5d4a44;
+    }
+    .btn-pdf-download:hover {
+        background: rgba(93, 74, 68, 0.08);
+        transform: translateY(-1px);
+    }
+
+    .pdf-viewer-shell {
+        width: 100%;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 16px 48px -8px var(--glass-shadow, rgba(31, 38, 135, 0.12));
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        background: #f8fafc;
+        margin-top: 16px;
+        max-height: 0;
+        transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .pdf-viewer-letter.open {
+        max-height: 1000px;
+    }
+    .pdf-viewer-letter :global(iframe) {
+        display: block;
+        width: 100%;
+        height: 1000px;
+        border: none;
+    }
+
+    @media (max-width: 640px) {
+        .pdf-pill {
+            border-radius: 20px;
+            flex-direction: column;
+            align-items: stretch;
+            padding: 16px;
+        }
+        .btn-pdf {
+            justify-content: center;
+            width: 100%;
+        }
+        .pdf-viewer-letter.open {
+            max-height: 600px;
+        }
+        .pdf-viewer-letter :global(iframe) {
+            height: 600px;
+        }
+    }
+</style>
+
+<script>
+    function setupPdfViewer() {
+        document
+            .querySelectorAll<HTMLElement>(".pdf-pill[data-pdf-url]")
+            .forEach((pill) => {
+                if (pill.dataset.bound === "true") return;
+                pill.dataset.bound = "true";
+
+                const pdfUrl = pill.dataset.pdfUrl;
+                const viewButton =
+                    pill.querySelector<HTMLButtonElement>(".btn-pdf-view");
+                const viewer = pill.nextElementSibling as HTMLElement | null;
+
+                if (
+                    !pdfUrl ||
+                    !viewButton ||
+                    !viewer?.classList.contains("pdf-viewer-shell")
+                )
+                    return;
+
+                viewButton.addEventListener("click", () => {
+                    if (window.innerWidth < 768) {
+                        window.open(pdfUrl, "_blank");
+                        return;
+                    }
+
+                    const isOpen = viewer.classList.contains("open");
+                    if (!isOpen && !viewer.querySelector("iframe")) {
+                        const iframe = document.createElement("iframe");
+                        iframe.src = `${pdfUrl}#toolbar=1&navpanes=0`;
+                        iframe.title = "Visor Documento Comunicado Oficial PDF";
+                        iframe.loading = "lazy";
+                        viewer.appendChild(iframe);
+                    }
+
+                    viewer.classList.toggle("open", !isOpen);
+                    viewButton.setAttribute("aria-expanded", String(!isOpen));
+                    viewButton.innerHTML = isOpen
+                        ? `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:16px;height:16px"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.644C3.399 8.049 7.21 5 12 5c4.791 0 8.601 3.049 9.964 6.322.059.136.059.308 0 .444C20.601 15.951 16.79 19 12 19c-4.791 0-8.601-3.049-9.964-6.322z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg> Ver PDF`
+                        : `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:16px;height:16px"><path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" /></svg> Ocultar`;
+                });
+            });
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", setupPdfViewer, {
+            once: true,
+        });
+    } else {
+        setupPdfViewer();
+    }
+
+    document.addEventListener("astro:page-load", setupPdfViewer);
+</script>
