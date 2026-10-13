@@ -10,6 +10,14 @@ export interface HeroSlideData {
 
 export const heroSlidesConfig: HeroSlideData[] = [
     {
+        title: "Paramilitarismo del siglo XXI",
+        excerpt: "Actualidad del orden contrainsurgente en Colombia",
+        image: "https://api.ilsa.org.co/wp-content/uploads/2026/10/Paramilitarismo-del-siglo-XXI-Banner-Home.webp",
+        link: "/publicaciones/paramilitarismo-del-siglo-xxi",
+        badge: "Publicación",
+        ctaText: "Conocer más"
+    },
+    {
         title: "Comunicado II Encuentro de Territorialidades Campesinas",
         excerpt: "Comunicado a la opinión pública nacional e internacional, a las autoridades gubernamentales, a la Rama Judicial y a los sectores populares de Colombia.",
         image: "https://api.ilsa.org.co/wp-content/uploads/2026/09/Cominicado-II-Encuentro-de-territorialidades-campesinas.webp",
@@ -17,6 +25,7 @@ export const heroSlidesConfig: HeroSlideData[] = [
         badge: "Comunicado",
         ctaText: "Leer comunicado"
     },
+
     {
         title: "La Fête de l’Humanité 2026",
         excerpt: "Tres días de cultura, debate político y encuentro popular de la mano de APDH Colombie e ILSA.",
