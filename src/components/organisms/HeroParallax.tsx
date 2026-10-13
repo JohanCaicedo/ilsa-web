@@ -45,8 +45,8 @@ export default function HeroParallax() {
                     <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-[var(--ilsa-blue-dark)]/15 to-transparent" aria-hidden="true" />
                 </div>
 
-                <div data-parallax-foreground className="pointer-events-none absolute inset-x-0 -bottom-[14%] z-20 mx-auto h-[115%] w-full will-change-transform md:-bottom-[20%] md:h-[145%] md:w-[74%]" aria-hidden="true">
-                    <img src={foreground} alt="" className="block h-full w-full max-w-none object-contain object-bottom drop-shadow-[0_18px_22px_rgba(17,24,39,.28)] md:object-center md:translate-x-0 md:scale-100" />
+                <div data-parallax-foreground className="pointer-events-none absolute inset-x-0 -bottom-[14%] z-20 mx-auto h-[125%] w-full will-change-transform md:-bottom-[20%] md:h-[145%] md:w-[74%]" aria-hidden="true">
+                    <img src={foreground} alt="" className="block h-full w-full max-w-none scale-[1.9] origin-bottom object-contain object-bottom drop-shadow-[0_18px_22px_rgba(17,24,39,.28)] md:scale-100 md:origin-center md:object-center md:translate-x-0" />
                 </div>
             </div>
         </section>
