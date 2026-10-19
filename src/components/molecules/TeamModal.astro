@@ -1,8 +1,8 @@
 ---
-import { teamData, boardData } from "../../lib/team";
+import { teamData, boardData, workTeamAreas } from "../../lib/team";
 
 // Combine all data for lookup
-const allMembers = [...teamData, ...boardData];
+const allMembers = [...teamData, ...boardData, ...workTeamAreas.flatMap((area) => area.members)];
 ---
 
 <dialog

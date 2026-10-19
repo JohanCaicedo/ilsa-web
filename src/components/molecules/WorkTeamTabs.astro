@@ -1,0 +1,162 @@
+---
+import SmartImage from "../atoms/SmartImage.astro";
+import { workTeamAreas } from "../../lib/team";
+import { cn } from "../../lib/utils";
+
+const tabIconPaths = {
+    investigadores: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2m18 0v-2a4 4 0 0 0-3-3.87M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm6 2a4 4 0 0 0 0-8",
+    administracion: "M4 22h16M6 18V9l6-4 6 4v9M9 22v-6h6v6M9 12h.01M15 12h.01",
+    comunicaciones: "M23 7l-7 5 7 5V7ZM1 5h15v14H1z",
+    acompanamiento: "M8 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm8 1a4 4 0 0 1 4 4v2H4v-2a4 4 0 0 1 4-4h8Z",
+};
+
+const getTeamGridClass = (memberCount: number) => {
+    if (memberCount <= 1) return "max-w-sm";
+    if (memberCount === 2) return "max-w-2xl sm:grid-cols-2";
+    if (memberCount === 3) return "max-w-4xl sm:grid-cols-2 lg:grid-cols-3";
+    if (memberCount === 4) return "max-w-5xl sm:grid-cols-2 lg:grid-cols-4";
+    return "max-w-7xl sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5";
+};
+---
+
+<div>
+    <div class="w-full overflow-hidden rounded-2xl border border-white/60 bg-white/20">
+        <div class="flex flex-wrap justify-center gap-1.5 p-2 sm:gap-2 sm:p-3" role="tablist" aria-label="Áreas del equipo de trabajo">
+            {workTeamAreas.map((area, index) => (
+                <button
+                    type="button"
+                    class:list={[
+                        "work-team-tab inline-flex items-center gap-2 rounded-xl border border-transparent px-3 py-2.5 text-sm font-semibold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ilsa-blue)] focus-visible:ring-offset-2 sm:px-4",
+                        index === 0
+                            ? "bg-[var(--ilsa-blue)] text-white"
+                            : "text-[var(--ilsa-text-dark)] hover:border-white/60 hover:bg-white/50",
+                    ]}
+                    id={`work-team-tab-${area.id}`}
+                    role="tab"
+                    aria-controls={`work-team-panel-${area.id}`}
+                    aria-selected={index === 0 ? "true" : "false"}
+                    tabindex={index === 0 ? 0 : -1}
+                    data-work-team-tab={area.id}
+                >
+                    <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d={tabIconPaths[area.id]} />
+                    </svg>
+                    <span>{area.title}</span>
+                </button>
+            ))}
+        </div>
+
+        <div class="border-t border-white/60 px-5 py-3 text-center sm:px-8" aria-live="polite">
+            {workTeamAreas.map((area, index) => (
+                <p
+                    class:list={[
+                        "work-team-description text-xl font-bold leading-relaxed text-[var(--ilsa-text-gray)] transition-opacity duration-200 ease-out motion-reduce:transition-none sm:text-2xl",
+                        index === 0 ? "opacity-100" : "opacity-0",
+                    ]}
+                    hidden={index !== 0}
+                    data-work-team-description={area.id}
+                >
+                    {area.description}
+                </p>
+            ))}
+        </div>
+    </div>
+
+    {workTeamAreas.map((area, index) => (
+        <section
+            id={`work-team-panel-${area.id}`}
+            role="tabpanel"
+            aria-labelledby={`work-team-tab-${area.id}`}
+            hidden={index !== 0}
+            data-work-team-panel={area.id}
+            class:list={[
+                "min-h-[432px] pt-7 transition-opacity duration-200 ease-out motion-reduce:transition-none sm:pt-8",
+                index === 0 ? "opacity-100" : "opacity-0",
+            ]}
+        >
+            {area.members.length > 0 ? (
+                <div
+                    class={cn(
+                        "mx-auto grid w-full grid-cols-1 gap-6",
+                        getTeamGridClass(area.members.length),
+                    )}
+                >
+                    {area.members.map((member) => (
+                        <button type="button" class="interactive-card group relative h-[400px] w-full overflow-hidden rounded-[2rem] border border-white/20 shadow-lg transition-all duration-300 hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ilsa-blue)] focus-visible:ring-offset-2" data-team-id={member.id} aria-label={`Ver información de ${member.name}`}>
+                            <SmartImage src={member.image} alt={member.name} class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-[var(--ilsa-blue-dark)] via-[var(--ilsa-blue-dark)]/40 to-transparent opacity-90 transition-opacity duration-300"></div>
+                            <div class="absolute inset-0 flex translate-y-4 flex-col justify-end p-6 transition-transform duration-500 group-hover:translate-y-0">
+                                <p class="mb-1 text-center text-xs font-bold uppercase tracking-widest text-white/80">{member.role}</p>
+                                <h3 class="text-center text-xl font-bold leading-tight text-white drop-shadow-md">{member.name}</h3>
+                                <div class="h-0 overflow-hidden text-center opacity-0 transition-all duration-500 group-hover:h-auto group-hover:opacity-100"><p class="mt-2 text-sm text-slate-200">{member.bio}</p></div>
+                            </div>
+                        </button>
+                    ))}
+                </div>
+            ) : (
+                <div class="mx-auto max-w-xl rounded-2xl border border-white/60 bg-white/25 px-6 py-8 text-center backdrop-blur-md">
+                    <p class="font-medium text-[var(--ilsa-text-gray)]">Próximamente conocerás a las personas que integran esta área.</p>
+                </div>
+            )}
+        </section>
+    ))}
+</div>
+
+<script>
+    function initWorkTeamTabs() {
+        const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-work-team-tab]"));
+        const panels = Array.from(document.querySelectorAll<HTMLElement>("[data-work-team-panel]"));
+        const descriptions = Array.from(document.querySelectorAll<HTMLElement>("[data-work-team-description]"));
+
+        const showElement = (element: HTMLElement) => {
+            element.hidden = false;
+            element.classList.remove("opacity-100");
+            element.classList.add("opacity-0");
+            requestAnimationFrame(() => {
+                element.classList.remove("opacity-0");
+                element.classList.add("opacity-100");
+            });
+        };
+
+        const transitionElement = (element: HTMLElement, selected: boolean) => {
+            if (selected) {
+                showElement(element);
+                return;
+            }
+
+            element.classList.remove("opacity-100");
+            element.classList.add("opacity-0");
+            element.hidden = true;
+        };
+
+        const selectTab = (id: string, focus = false) => {
+            tabs.forEach((tab) => {
+                const selected = tab.dataset.workTeamTab === id;
+                tab.setAttribute("aria-selected", String(selected));
+                tab.tabIndex = selected ? 0 : -1;
+                tab.classList.toggle("bg-[var(--ilsa-blue)]", selected);
+                tab.classList.toggle("text-white", selected);
+                tab.classList.toggle("hover:border-white/60", !selected);
+                tab.classList.toggle("hover:bg-white/50", !selected);
+                tab.classList.toggle("text-[var(--ilsa-text-dark)]", !selected);
+                if (selected && focus) tab.focus();
+            });
+            panels.forEach((panel) => transitionElement(panel, panel.dataset.workTeamPanel === id));
+            descriptions.forEach((description) => transitionElement(description, description.dataset.workTeamDescription === id));
+        };
+
+        tabs.forEach((tab, index) => {
+            tab.addEventListener("click", () => selectTab(tab.dataset.workTeamTab!));
+            tab.addEventListener("keydown", (event) => {
+                if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+                event.preventDefault();
+                const nextIndex = event.key === "Home" ? 0 : event.key === "End" ? tabs.length - 1 : (index + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+                selectTab(tabs[nextIndex].dataset.workTeamTab!, true);
+            });
+        });
+    }
+
+    document.addEventListener("astro:page-load", initWorkTeamTabs);
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initWorkTeamTabs, { once: true });
+    else initWorkTeamTabs();
+</script>

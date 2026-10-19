@@ -8,6 +8,78 @@ export interface TeamMember {
     xUrl?: string;
 }
 
+export interface WorkTeamArea {
+    id: "investigadores" | "administracion" | "comunicaciones" | "acompanamiento";
+    title: string;
+    description: string;
+    members: TeamMember[];
+}
+
+const placeholderImage = "/person_place_holder.webp";
+
+export const workTeamAreas: WorkTeamArea[] = [
+    { id: "investigadores", title: "Investigadores", description: "Equipo de investigadores", members: [] },
+    {
+        id: "administracion",
+        title: "Administración",
+        description: "Equipo administrativo y contable",
+        members: [
+            {
+                id: "laura-blanco",
+                name: "Laura Blanco",
+                role: "Administración",
+                image: "/images/perfiles/Laura.webp",
+                bio: "Equipo administrativo y contable de ILSA.",
+                fullDescription: "Integrante del equipo administrativo y contable de ILSA.",
+            },
+            {
+                id: "margarita",
+                name: "Margarita Olivero",
+                role: "Administración",
+                image: "/images/perfiles/Margarita.webp",
+                bio: "Equipo administrativo y contable de ILSA.",
+                fullDescription: "Integrante del equipo administrativo y contable de ILSA.",
+            },
+        ],
+    },
+    {
+        id: "comunicaciones",
+        title: "Comunicaciones",
+        description: "Equipo de comunicaciones",
+        members: [{
+            id: "camilo-caicedo",
+            name: "Johan Camilo Caicedo",
+            role: "Estrategia Digital",
+            image: "/images/perfiles/Johan Camilo Caicedo.webp",
+            bio: "Diseñador y comunicador de ILSA.",
+            fullDescription: "Diseñador digital y multimedial de la Universidad Colegio Mayor de Cundinamarca, con formación complementaria en liderazgo e innovación en diseño (MIU y UNIR). Diseñador y comunicador de ILSA, encargado del diseño, coordinación y ejecución de la estrategia de comunicación digital y visual de la organización. Lidera la administración y optimización del ecosistema web institucional mediante arquitectura headless (Astro/WordPress), la producción de contenidos gráficos y editoriales (incluyendo publicaciones como El Otro Derecho), así como el registro fotográfico y audiovisual de eventos para el fortalecimiento de la identidad visual, la memoria institucional y la divulgación de la defensa de los derechos humanos.",
+        }],
+    },
+    {
+        id: "acompanamiento",
+        title: "Acompañamiento",
+        description: "Voluntarios, pasantes y practicantes",
+        members: [
+            {
+                id: "silvana-rivera-prada",
+                name: "Silvana Rivera Prada",
+                role: "Practicante de Comunicaciones",
+                image: "/images/perfiles/Silvana Rivera Prada.webp",
+                bio: "Estudiante de Política y Relaciones Internacionales.",
+                fullDescription: "Mi nombre es Silvana Rivera Prada, soy estudiante de Política y Relaciones Internacionales de la Universidad Sergio Arboleda. Llego a ILSA con muchas ganas de aprender y de aportar desde mi formación a la comunicación institucional y al fortalecimiento de las alianzas de la organización. Hacer parte de una entidad que trabaja por una sociedad y un derecho alternativos representa una oportunidad valiosa, tanto para mi crecimiento profesional como para los espacios de diálogo y construcción colectiva que impulsamos todos los días.",
+            },
+            {
+                id: "jose-luis-mendez-perez",
+                name: "José Luis Méndez Pérez",
+                role: "Practicante de Derecho",
+                image: "/images/perfiles/José Luis Méndez Pérez.webp",
+                bio: "Estudiante de Derecho de la Universidad Nacional.",
+                fullDescription: "Mi nombre es José Luis Méndez Pérez, soy estudiante de la Universidad Nacional. Desde que me sumé al equipo de ILSA, mi trabajo se ha enfocado en fortalecer la abogacía popular y el derecho de tierras, herramientas clave para la defensa de los territorios y las comunidades. Junto con Santiago Ariza, con quien comparto un camino de trabajo y formación desde la universidad, he desarrollado investigaciones sobre la consulta previa campesina y participado en los encuentros de territorialidades para impulsarla. Creo firmemente que el derecho debe estar al servicio de las luchas populares y de la transformación social, y hacer parte de esta organización es un paso fundamental en ese compromiso.",
+            },
+        ],
+    },
+];
+
 export const teamData: TeamMember[] = [
     {
         id: "freddy-ordonez-gomez",
