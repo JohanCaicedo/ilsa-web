@@ -111,6 +111,12 @@ const styles = variants[variant];
         });
     }
 
-    // Support Astro View Transitions if enabled later
+    // Support Astro View Transitions if enabled
     document.addEventListener("astro:page-load", setupAccordion);
+    // Fallback for static pages without View Transitions runtime
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", setupAccordion, { once: true });
+    } else {
+        setupAccordion();
+    }
 </script>

@@ -175,6 +175,12 @@ const activeRegions: Record<string, { desc: string; href?: string }> = {
         });
     }
 
-    // Asegurar que corre en Astro View Transitions y en carga inicial
+    // Support Astro View Transitions
     document.addEventListener("astro:page-load", initColombiaMap);
+    // Fallback for static pages without View Transitions runtime
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initColombiaMap, { once: true });
+    } else {
+        initColombiaMap();
+    }
 </script>

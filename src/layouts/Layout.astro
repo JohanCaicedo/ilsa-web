@@ -173,11 +173,12 @@ const containerClass = width === "narrow" ? "max-w-4xl" : "max-w-[1400px]";
     >
         <ProgressBar />
         <PageLoader />
-        <FloatingOrb color="var(--ilsa-blue-light)" size="100px" speed="30s" />
+        <FloatingOrb color="var(--ilsa-blue-light)" size="100px" speed="30s" persistId="orb-blue" />
         <FloatingOrb
             color="var(--ilsa-mujeres-light)"
             size="50px"
             speed="45s"
+            persistId="orb-pink"
         />
         <LiquidBackground />
 
@@ -185,7 +186,6 @@ const containerClass = width === "narrow" ? "max-w-4xl" : "max-w-[1400px]";
 
         <main
             class={`flex-1 w-full mx-auto px-4 md:px-8 mt-24 pb-8 md:mt-28 ${containerClass} relative z-10`}
-            transition:animate="fade"
         >
             {
                 computedBreadcrumbs.length > 0 && (
@@ -196,6 +196,6 @@ const containerClass = width === "narrow" ? "max-w-4xl" : "max-w-[1400px]";
         </main>
 
         <Footer />
-        <EasterEggManager client:load />
+        <EasterEggManager client:visible />
     </body>
 </html>

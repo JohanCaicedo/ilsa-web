@@ -11,6 +11,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://ilsa.org.co',
   output: 'server',
+  viewTransitions: true,
   // Desactiva la precarga global para eliminar la advertencia de recursos no usados
   prefetch: false,
   adapter: cloudflare({

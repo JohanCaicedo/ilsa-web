@@ -116,7 +116,7 @@ const allMembers = [...teamData, ...boardData];
     // We pass the data from server to client safely
     const membersData = allMembers;
 
-    document.addEventListener("astro:page-load", () => {
+    function initTeamModal() {
         const modal = document.getElementById("team-modal");
         const cards = document.querySelectorAll(
             ".interactive-card[data-team-id]",
@@ -189,5 +189,14 @@ const allMembers = [...teamData, ...boardData];
                 closeModal();
             }
         });
-    });
+    }
+
+    // Support Astro View Transitions
+    document.addEventListener("astro:page-load", initTeamModal);
+    // Fallback for static pages without View Transitions runtime
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initTeamModal, { once: true });
+    } else {
+        initTeamModal();
+    }
 </script>
