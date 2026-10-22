@@ -6,7 +6,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "bunx wrangler pages dev dist",
-    "astro": "astro"
+    "astro": "astro",
+    "type-check": "tsc --noEmit",
+    "type-check:a11y": "node src/lib/a11y.ts",
+    "lint:design-tokens": "eslint src --ext .astro,.ts,.tsx,.js,.jsx"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.5",

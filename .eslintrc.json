@@ -1,0 +1,30 @@
+{
+  "root": true,
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "rules": {
+    "no-console": ["warn", { "allow": ["error", "warn"] }],
+    "no-debugger": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["src/**/*.astro"],
+      "parser": "astro-eslint-parser",
+      "rules": {
+        "no-undef": "off"
+      }
+    },
+    {
+      "files": ["src/**/*.ts", "src/**/*.tsx"],
+      "rules": {}
+    }
+  ]
+}

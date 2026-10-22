@@ -1,0 +1,25 @@
+{
+  "extends": ["stylelint-config-standard", "stylelint-config-twocss"],
+  "rules": {
+    "color-no-invalid-hex": true,
+    "custom-property-empty-line-before": null,
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        "ignorePseudoClasses": ["global", "external"]
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["src/styles/**/*.css", "src/styles/**/*.scss"],
+      "rules": {
+        "declaration-property-value-disallowed-list": {
+          "/^border/": ["none"],
+          "/^margin/": ["0"],
+          "/^padding/": ["0"]
+        }
+      }
+    }
+  ]
+}
