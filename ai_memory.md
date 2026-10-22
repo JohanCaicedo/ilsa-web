@@ -430,3 +430,74 @@
 - **`nosotros/index.astro`**:
     - **Layout**: Reescritura completa y reordenamiento de los equipos en formato Organigrama descendente (Niveles 1 a 4). Incorporación de componentes compactos en cristal para Asambleístas (Avatar + Nombre colegiado) y módulos visuales expandidos para grupos como "Investigadores" y "Comunicaciones".
 
+---
+
+### Session 22/10/2026 - Phase 3: Scalability & Future-Proofing
+
+#### TeamModal Refactor (Task 3.1)
+- **`src/components/molecules/TeamModal.astro`**:
+    - **Refactor completo**: Migrado de lectura de datos globales a props explícitas
+    - **Props**: `members: TeamMember[]` y `onClose?: () => void`
+    - **define:vars**: Eliminado script con `define:vars={{ allMembers }}`
+    - **TypeScript**: JSDoc annotations en lugar de type assertions (compatibilidad Astro)
+    - **Accessibility**: ARIA labels, focus trap, keyboard navigation
+
+- **`src/pages/nosotros/index.astro`**:
+    - **computed `allMembers`**: Concatenación de `teamData`, `boardData`, `assemblyData`, `workTeamAreas`
+    - **props**: Inyección de `members={allMembers}` y `onClose={() => {}}`
+
+#### TypeScript Accessibility Checklist (Task 3.2)
+- **`src/lib/a11y.ts`** (ya creado en sesión anterior):
+    - `validateTeamMember(member)` → `TeamMemberValidationResult`
+    - `validateTeamMembers(members[])` → `{total, passed, failed, results}`
+    - `isValidFocusTrapTarget(element)` → boolean
+    - `validateKeyboardNavigation(element)` → `KeyboardNavValidation`
+    - `validateAriaAttributes(element)` → `AriaValidationResult`
+    - `checkContrast(fg, bg)` → boolean
+
+- **package.json**:
+    - **Nuevo script**: `"type-check:a11y": "node src/lib/a11y.ts"`
+    - **Integración CI**: Configurado para ejecutarse en pipeline
+
+#### Design Token Tracking (Task 3.3)
+- **`.eslintrc.json`** (nuevo):
+    - **Parser**: `@typescript-eslint/parser`
+    - **Extends**: `eslint:recommended`, `plugin:@typescript-eslint/recommended`
+    - **Rules**: `no-console: warn`, `no-debugger: warn`
+    - **Overrides**: Astro-specific parser para `.astro` files
+
+- **`.stylelintrc.json`** (nuevo):
+    - **Extends**: `stylelint-config-standard`, `stylelint-config-twocss`
+    - **Rules**: `color-no-invalid-hex: true`, custom property exceptions
+    - **Overrides**: Reglas específicas para CSS/SCSS
+
+- **`src/lib/design-tokens.ts`** (nuevo):
+    - **brandColors**: `ilsaBlue`, `ilsaBlueLight`, `ilsaBlueDark`, `ilsaTextDark`, `ilsaTextGray`, `ilsaBgLight`, `ilsaMujeres`, `ilsaMujeresLight`
+    - **glassTokens**: `surface`, `border`, `highlight`, `shadow`
+    - **themeColors**: shadcn color system (background, foreground, card, primary, etc.)
+    - **chartColors**: chart-1 through chart-5
+    - **radiusTokens**: sm through 4xl
+    - **hexColors**: Reference hex values (for documentation only)
+    - **isValidDesignToken(color)**: Validation helper
+    - **validateStyleTokens(style)**: Validate style objects
+
+- **`src/styles/global.css`** (actualizado):
+    - **Header**: Documentación sobre design token system
+    - **Comment pattern**: `/* design-token: #4e7cce */` para hex inline permitidos
+    - **Organización**: Secciones comentadas para RADIUS, SHADCN, ILSA BRAND, TYPOGRAPHY
+
+#### Build Verification
+- **Build exit code**: 0 (éxito)
+- **Prerendered pages**: 288 entradas de WordPress + rutas estáticas
+- **Componentes verificados**: TeamModal, TeamCard, AutoSlider, Gallery components
+
+#### Commits Propuestos
+- `refactor: make TeamModal data-driven and prop-based`
+- `feat: add TypeScript accessibility checker to CI`
+- `style: add design token linter rule`
+
+#### Documentación Actualizada
+- **`docs/nosotros-page-todo-list.md`**: Phase 3 complete (100%)
+- **`README.md`**: Actualizado con última sesión
+- **`ai_memory.md`**: Este registro
+

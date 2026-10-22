@@ -1,7 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Breadcrumbs from "../../components/atoms/Breadcrumbs.astro";
-import TeamCard from "../../components/molecules/TeamCard.astro";
+import ColumnistCard from "../../components/molecules/ColumnistCard.astro";
 import RelatedSlider from "../../components/organisms/RelatedSlider.astro";
 import { getPostsByCategory, type CardPostNode } from "../../lib/wp";
 import { authorsConfig } from "../../lib/authors";
@@ -127,29 +127,22 @@ const columnists = Object.values(authorsConfig);
                                     !HIDE_SENSITIVE_AUTHORS ||
                                     !SENSITIVE_AUTHORS.includes(slug),
                             )
-                            .map(([slug, author]) => (
-                                <a
-                                    href={`/opinion/${slug}`}
-                                    class="block h-full group transition-transform duration-500 hover:-translate-y-2"
-                                >
-                                    <TeamCard
-                                        name={author.name}
-                                        profileImage={
-                                            (
-                                                columnistImages[slug] ||
-                                                defaultColumnistImage
-                                            ).profile
-                                        }
-                                        coverImage={
-                                            (
-                                                columnistImages[slug] ||
-                                                defaultColumnistImage
-                                            ).cover
-                                        }
-                                        class="h-full group-hover:border-[#4e7cce]/50 group-hover:shadow-2xl group-hover:shadow-[#4e7cce]/10 transition-all duration-500"
-                                    />
-                                </a>
-                            ))
+                            .map(([slug, author]) => {
+                                const images = columnistImages[slug] || defaultColumnistImage;
+                                return (
+                                    <a
+                                        href={`/opinion/${slug}`}
+                                        class="block h-full"
+                                    >
+                                        <ColumnistCard
+                                            name={author.name}
+                                            profileImage={images.profile}
+                                            coverImage={images.cover}
+                                            class="h-full"
+                                        />
+                                    </a>
+                                );
+                            })
                     }
                 </div>
             </section>

@@ -64,3 +64,36 @@ Este proyecto está configurado para colaborar con Agentes de IA.
 **© 2026 Instituto Latinoamericano para una Sociedad y un Derecho Alternativos (ILSA). Todos los derechos reservados.**
 
 Este código es **Software Propietario**. El código fuente es visible con fines educativos y de transparencia, pero no se permite su redistribución o uso comercial/no-commercial sin autorización explícita.
+
+---
+
+## 7. Últimas Sesiones (2026-10-22)
+
+### Phase 3: Scalability & Future-Proofing - COMPLETADO
+
+#### Task 3.2: TypeScript Accessibility Checklist
+- **`src/lib/a11y.ts`**: Validación de accesibilidad con:
+  - `validateTeamMember()` - cheques de accesibilidad para miembros de equipo
+  - `validateTeamMembers()` - validación batch con resumen
+  - `isValidFocusTrapTarget()` - validación de focus trap
+  - `validateKeyboardNavigation()` - checker de navegación por teclado
+  - `validateAriaAttributes()` - validación de atributos ARIA
+  - `checkContrast()` - validación de contraste de colores
+- **`package.json`**: Script `type-check:a11y` para integración CI
+
+#### Task 3.3: Design Token Tracking
+- **`.eslintrc.json`**: Configuración de ESLint con TypeScript parser y reglas para Astro
+- **`.stylelintrc.json`**: Configuración de Stylelint para CSS
+- **`src/lib/design-tokens.ts`**: Definiciones TypeScript de design tokens:
+  - `brandColors`, `glassTokens`, `themeColors`, `chartColors`, `radiusTokens`
+  - `isValidDesignToken()` y `validateStyleTokens()` helpers
+- **`global.css`**: Documentación con comentarios para inline hex colors (`/* design-token: #4e7cce */`)
+
+#### Task 3.1: TeamModal Data-Driven (Completado previamente)
+- Componente acepta `members` y `onClose` props
+- Sin dependencias de datos globales
+- Validación de accesibilidad integrada
+
+---
+
+**Última actualización:** 2026-10-22

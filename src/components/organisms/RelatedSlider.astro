@@ -32,11 +32,18 @@ const { posts } = Astro.props;
     data-slider-track
   >
     {
-      posts.map((post) => {
+      posts?.map((post) => {
+        // Skip undefined/null posts
+        if (!post) return null;
+
         const img =
           post.featuredImage?.node?.sourceUrl ||
           "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect fill='%23e5e7eb' width='400' height='400'/%3E%3C/svg%3E";
-        const authorName = post.categories?.nodes[0]?.name || "Opinión";
+
+        // Skip posts without required fields
+        if (!post.categories?.nodes?.[0]?.name || !post.uri) return null;
+
+        const authorName = post.categories.nodes[0].name;
         const formattedDate = new Date(post.date).toLocaleDateString("es-CO", {
           day: "numeric",
           month: "short",
