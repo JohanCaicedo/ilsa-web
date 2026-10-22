@@ -1,0 +1,77 @@
+---
+/**
+ * PresenceSection Component - /nosotros page
+ * Contains Colombia map and geographic slider
+ */
+import ColombiaMap from "../../organisms/ColombiaMap.astro";
+import AutoSlider from "../../templates/AutoSlider.astro";
+
+interface Props {
+    geoImages: string[];
+}
+
+const { geoImages } = Astro.props;
+---
+
+<section
+    class="max-w-7xl mx-auto mb-24 text-center"
+>
+    <!-- Section Header -->
+    <div class="mb-12">
+        <h2
+            class="text-3xl md:text-4xl font-bold text-center text-[#3d3d47] mb-4"
+        >
+            Presencia Regional
+        </h2>
+        <div class="w-16 h-1 bg-[#4e7cce] mx-auto rounded-full"></div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+        <!-- Left: Map -->
+        <div class="flex flex-col items-center">
+            <ColombiaMap />
+        </div>
+
+        <!-- Right: Content + Slider -->
+        <div class="text-left">
+            <h3 class="text-2xl font-bold text-[#3d3d47] mb-4">
+                Trabajo en América Latina y el Caribe
+            </h3>
+            <p class="text-[#3d3d47]/70 mb-6 leading-relaxed">
+                ILSA mantiene una presencia activa en diversos países de la
+                región, acompañando procesos de justicia social y derechos
+                humanos. Nuestra sede principal está en Bogotá, Colombia, pero
+                nuestro alcance es continental.
+            </p>
+            <div class="flex flex-wrap gap-3 mb-6">
+                <span
+                    class="px-4 py-2 rounded-full bg-[#4e7cce]/10 text-[#4e7cce] text-sm font-medium"
+                >
+                    Colombia
+                </span>
+                <span
+                    class="px-4 py-2 rounded-full bg-[#4e7cce]/10 text-[#4e7cce] text-sm font-medium"
+                >
+                    Brasil
+                </span>
+                <span
+                    class="px-4 py-2 rounded-full bg-[#4e7cce]/10 text-[#4e7cce] text-sm font-medium"
+                >
+                    México
+                </span>
+                <span
+                    class="px-4 py-2 rounded-full bg-[#4e7cce]/10 text-[#4e7cce] text-sm font-medium"
+                >
+                    Argentina
+                </span>
+            </div>
+
+            <!-- Carrusel debajo, ancho completo -->
+            <AutoSlider
+                class="h-[280px] md:h-[350px] rounded-3xl shadow-lg border border-white/50"
+                slides={geoImages}
+                alt="Ubicación Geográfica ILSA"
+            />
+        </div>
+    </div>
+</section>

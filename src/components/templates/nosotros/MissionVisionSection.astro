@@ -1,0 +1,114 @@
+---
+/**
+ * MissionVisionSection Component - /nosotros page
+ * Contains mission and vision tabs with sliders
+ */
+import AutoSlider from "../../templates/AutoSlider.astro";
+
+interface Props {
+    missionImages: string[];
+    visionImages: string[];
+}
+
+const { missionImages, visionImages } = Astro.props;
+---
+
+<section class="grid md:grid-cols-2 gap-12 mb-32 items-center">
+    <!-- Mission Content -->
+    <div class="order-2 md:order-1">
+        <p class="text-[#4e7cce] font-bold text-sm tracking-widest uppercase mb-2">
+            Qué Hacemos
+        </p>
+        <h2
+            class="text-3xl md:text-4xl font-bold text-[#3d3d47] mb-6"
+            id="mision"
+        >
+            Nuestra Misión
+        </h2>
+        <div class="w-16 h-1 bg-[#4e7cce] mb-6 rounded-full"></div>
+        <p class="text-[#3d3d47]/70 leading-relaxed mb-6">
+            Promover, defender e implementar los derechos humanos,
+            particularmente los derechos económicos, sociales, culturales y
+            ambientales (DESCA), a través de la investigación, la formación y
+            el acompañamiento a organizaciones populares y movimientos sociales
+            en América Latina y el Caribe.
+        </p>
+        <ul class="space-y-3 text-[#3d3d47]/80">
+            <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-[#4e7cce] mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Investigación crítica en derechos humanos</span>
+            </li>
+            <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-[#4e7cce] mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Formación de líderes y organizaciones</span>
+            </li>
+            <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-[#4e7cce] mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Acompañamiento jurídico y psicosocial</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Mission Image -->
+    <AutoSlider
+        class="order-1 md:order-2 h-[450px] rounded-[2.5rem] shadow-xl shadow-blue-900/10"
+        slides={missionImages}
+        alt="Trabajo comunitario de ILSA con movimientos sociales"
+    />
+</section>
+
+<section class="mb-32 max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+        <!-- Vision Image -->
+        <AutoSlider
+            class="h-[450px] rounded-[2.5rem] shadow-xl shadow-purple-900/10"
+            slides={visionImages}
+            alt="Territorios y comunidades que defiende ILSA"
+        />
+
+        <!-- Vision Content -->
+        <div>
+            <p class="text-[#5e3b69] font-bold text-sm tracking-widest uppercase mb-2">
+                Hacia Dónde Vamos
+            </p>
+            <h2
+                class="text-3xl md:text-4xl font-bold text-[#3d3d47] mb-6"
+                id="vision"
+            >
+                Nuestra Visión
+            </h2>
+            <div class="w-16 h-1 bg-[#5e3b69] mb-6 rounded-full"></div>
+            <p class="text-[#3d3d47]/70 leading-relaxed mb-6">
+                Aspiramos a una América Latina donde los derechos humanos sean
+                efectivos, donde las comunidades tengan autonomía y donde la
+                justicia social sea una realidad cotidiana. Trabajamos por un
+                continente donde el derecho sea verdaderamente herramienta de
+                liberación y transformación.
+            </p>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="p-4 rounded-xl bg-[#5e3b69]/5 border border-[#5e3b69]/10">
+                    <p class="text-2xl font-bold text-[#5e3b69]">45+</p>
+                    <p class="text-sm text-[#3d3d47]/70">Años de trayectoria</p>
+                </div>
+                <div class="p-4 rounded-xl bg-[#5e3b69]/5 border border-[#5e3b69]/10">
+                    <p class="text-2xl font-bold text-[#5e3b69]">12</p>
+                    <p class="text-sm text-[#3d3d47]/70">Países con presencia</p>
+                </div>
+                <div class="p-4 rounded-xl bg-[#5e3b69]/5 border border-[#5e3b69]/10">
+                    <p class="text-2xl font-bold text-[#5e3b69]">500+</p>
+                    <p class="text-sm text-[#3d3d47]/70">Organizaciones aliadas</p>
+                </div>
+                <div class="p-4 rounded-xl bg-[#5e3b69]/5 border border-[#5e3b69]/10">
+                    <p class="text-2xl font-bold text-[#5e3b69]">50k+</p>
+                    <p class="text-sm text-[#3d3d47]/70">Personas acompañadas</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

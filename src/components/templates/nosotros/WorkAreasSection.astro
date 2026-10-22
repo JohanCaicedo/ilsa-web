@@ -1,0 +1,95 @@
+---
+/**
+ * WorkAreasSection Component - /nosotros page
+ * Contains work areas accordion and campos slider
+ */
+import AccordionItem from "../../atoms/AccordionItem.astro";
+import AutoSlider from "../../templates/AutoSlider.astro";
+
+interface Props {
+    camposImages: string[];
+}
+
+const { camposImages } = Astro.props;
+
+const workAreas = [
+    {
+        id: "investigacion",
+        title: "Investigación",
+        content: "Desarrollamos investigaciones rigurosas sobre derechos humanos, justicia social y alternativas jurídicas desde una perspectiva crítica latinoamericana.",
+    },
+    {
+        id: "formacion",
+        title: "Formación",
+        content: "Capacitamos líderes comunitarios, defensores de derechos humanos y operadores jurídicos en temas de derechos DESCA y litigio estratégico.",
+    },
+    {
+        id: "acompanamiento",
+        title: "Acompañamiento",
+        content: "Brindamos asesoría y acompañamiento jurídico a organizaciones populares, comunidades víctimas y movimientos sociales en la defensa de sus derechos.",
+    },
+    {
+        id: "publicaciones",
+        title: "Publicaciones",
+        content: "Producimos libros, artículos y materiales pedagógicos que contribuyen al debate académico y popular sobre justicia social en la región.",
+    },
+];
+---
+
+<section
+    class="mb-32 max-w-7xl mx-auto rounded-[2.5rem] border border-white/60 bg-white/40 p-6 backdrop-blur-md md:p-10 lg:p-12"
+>
+    <!-- Section Header -->
+    <div class="text-center mb-12">
+        <h2
+            class="text-3xl md:text-4xl font-bold text-center text-[#3d3d47] mb-4"
+            id="equipo-trabajo"
+        >
+            Áreas de Trabajo
+        </h2>
+        <div class="w-16 h-1 bg-[#4e7cce] mx-auto rounded-full"></div>
+    </div>
+
+    <div
+        class="flex flex-col md:flex-row items-center gap-12 lg:gap-16 p-6 md:p-12 rounded-[2.5rem] bg-white/50 backdrop-blur-3xl border border-white/60 shadow-xl shadow-slate-200/50"
+    >
+        <div class="w-full md:w-5/12 shrink-0">
+            <AutoSlider
+                class="aspect-square md:aspect-[4/5] rounded-2xl shadow-2xl shadow-blue-900/10"
+                slides={camposImages}
+                alt="Campos de acción e intervención territorial de ILSA"
+            />
+        </div>
+
+        <!-- Right: Content -->
+        <div class="w-full md:w-7/12">
+            <p
+                class="text-[#4e7cce] font-bold text-sm tracking-widest uppercase mb-2"
+            >
+                Horizontes de Trabajo
+            </p>
+            <h2
+                class="text-3xl md:text-4xl font-bold text-[#3d3d47] mb-6"
+            >
+                Campos de Acción Institucional 2026-2027
+            </h2>
+            <p class="text-[#3d3d47]/70 text-base leading-relaxed mb-8">
+                Our work is organized around four strategic areas that guide our
+                interventions and maximize our impact in the region.
+            </p>
+
+            <!-- Accordion -->
+            <div class="space-y-4">
+                {
+                    workAreas.map((area) => (
+                        <AccordionItem
+                            id={area.id}
+                            title={area.title}
+                            content={area.content}
+                        />
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+</section>

@@ -122,25 +122,25 @@
 **Est:** 1-2 hours | **File:** `src/lib/pages/nosotros-gallery.ts` (create)
 
 **File Creation:**
-- [ ] Create `src/lib/pages/nosotros-gallery.ts`
-- [ ] Define `GalleryConfig` and `ImageSlide` interfaces
-- [ ] Move image data from:
+- [x] Create `src/lib/pages/nosotros-gallery.ts`
+- [x] Define `GalleryConfig` and `ImageSlide` interfaces
+- [x] Move image data from:
   - `heroImages` → hero config
   - `geoImages` → geo config
   - `missionImages` → mission config
   - `visionImages` → vision config
   - `camposImages` → campos config
-- [ ] Export `galeriaConfig` array and derived object
-- [ ] Add type documentation
+- [x] Export `galeriaConfig` array and derived object
+- [x] Add type documentation
 
 **File Updates:**
-- [ ] Update `src/pages/nosotros/index.astro` to import galeria config
-- [ ] Remove 5 static image arrays (lines 17-51)
-- [ ] Replace with destructure: `const { hero, geo, mission, vision, campos } = galerias`
-- [ ] Replace image references with `hero.images`, `geo.images`, etc.
-- [ ] Clean up imports (remove unused variables)
-- [ ] Verify all images display correctly
-- [ ] Test slider regeneration
+- [x] Update `src/pages/nosotros/index.astro` to import galeria config
+- [x] Remove 5 static image arrays (lines 17-51)
+- [x] Replace with destructure: `const { hero, geo, mission, vision, campos } = galerias`
+- [x] Replace image references with `hero.images`, `geo.images`, etc.
+- [x] Clean up imports (remove unused variables)
+- [x] Verify all images display correctly
+- [x] Test slider regeneration
 - [ ] Commit with message: `"refactor: centralize galeria config into lib layer"`
 
 ---
