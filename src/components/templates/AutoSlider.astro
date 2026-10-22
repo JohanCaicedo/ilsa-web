@@ -1,0 +1,106 @@
+---
+/**
+ * AutoSlider Component
+ * A reusable image slider with automatic cycling and smooth transitions.
+ * Extracted from src/pages/nosotros/index.astro for reusability.
+ */
+import SmartImage from "../atoms/SmartImage.astro";
+
+interface Props {
+    /** CSS classes to apply to the slider container */
+    class?: string;
+    /** Array of image source paths */
+    slides: string[];
+    /** Alt text for all images */
+    alt?: string;
+    /** Delay between slides in milliseconds (default: 4000) */
+    autoplayDelay?: number;
+    /** Image width (default: 1200) */
+    width?: number;
+    /** Image height (default: 500) */
+    height?: number;
+    /** Whether to prioritize loading the first image (default: true) */
+    priority?: boolean;
+}
+
+const {
+    class: className = "",
+    slides = [],
+    alt = "Imagen de galería",
+    autoplayDelay = 4000,
+    width = 1200,
+    height = 500,
+    priority = true,
+} = Astro.props;
+
+// Don't render slider if there's only one or no images
+const shouldUseSlider = slides.length > 1;
+---
+
+<auto-slider
+    class:list={["relative block w-full h-[400px] md:h-[500px] rounded-[2.5rem] overflow-hidden shadow-2xl shadow-blue-900/10 group", className]}
+    data-autoplay-delay={autoplayDelay}
+    data-use-slider={shouldUseSlider}
+>
+    <div
+        class="absolute inset-0 bg-gradient-to-t from-[#183069]/60 to-[#4e7cce]/20 mix-blend-multiply z-10 pointer-events-none"
+    >
+    </div>
+    {
+        slides.map((src, index) => (
+            <SmartImage
+                src={src}
+                alt={alt}
+                width={width}
+                height={height}
+                class={`absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 ${index === 0 ? "opacity-100" : "opacity-0"}`}
+                data-slider-image
+                priority={priority && index === 0}
+            />
+        ))
+    }
+</auto-slider>
+
+<script>
+    class AutoSlider extends HTMLElement {
+        connectedCallback() {
+            const imgs = this.querySelectorAll("img[data-slider-image]");
+            const useSlider = this.dataset.useSlider === "true";
+            const autoplayDelay = parseInt(this.dataset.autoplayDelay || "4000", 10);
+
+            if (imgs.length <= 1 || !useSlider) return;
+
+            let currentIndex = 0;
+            let timeoutId: number;
+
+            const nextSlide = () => {
+                const prev = imgs[currentIndex];
+                prev.classList.remove("opacity-100");
+                prev.classList.add("opacity-0");
+
+                currentIndex = (currentIndex + 1) % imgs.length;
+
+                const next = imgs[currentIndex];
+                next.classList.remove("opacity-0");
+                next.classList.add("opacity-100");
+
+                timeoutId = window.setTimeout(nextSlide, autoplayDelay + Math.random() * 3000);
+            };
+
+            // Start autoplay after initial delay
+            timeoutId = window.setTimeout(nextSlide, autoplayDelay + Math.random() * 3000);
+
+            // Clean up on disconnect
+            this.disconnectedCallback = () => {
+                if (timeoutId) {
+                    clearTimeout(timeoutId);
+                }
+            };
+        }
+    }
+
+    // Define the custom element if not already defined
+    if (!customElements.get("auto-slider")) {
+        customElements.define("auto-slider", AutoSlider);
+    }
+</script>

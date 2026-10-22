@@ -9,6 +9,7 @@ import Breadcrumbs from "../../components/atoms/Breadcrumbs.astro";
 import Button from "../../components/Button.astro";
 import GradientText from "../../components/atoms/GradientText.astro";
 import SmartImage from "../../components/atoms/SmartImage.astro";
+import AutoSlider from "../../components/templates/AutoSlider.astro";
 import HistoryTimeline from "../../components/organisms/HistoryTimeline.astro";
 import { wpQuery } from "../../lib/wp";
 import { teamData, boardData, assemblyData } from "../../lib/team";
@@ -52,34 +53,47 @@ const camposImages = [
 
 export const prerender = true;
 
+// Edge Caching (ISR): Serve from Edge cache for 1 hr, revalidate in background for 1 day
+// Content is static (team data from lib/team.ts), only SEO metadata comes from WordPress
+Astro.response.headers.set(
+    "Cache-Control",
+    "public, s-maxage=3600, stale-while-revalidate=86400",
+);
+
 const breadcrumbItems = [{ label: "Nosotros", href: "/nosotros" }];
 
-// Fetch SEO Data specifically for this page
-const data = await wpQuery({
-    query: `
-    query GetNosotrosSEO {
-      page(id: "/nosotros", idType: URI) {
-        seo {
-          title
-          metaDesc
-          canonical
-          opengraphTitle
-          opengraphDescription
-          opengraphImage {
-            sourceUrl
-          }
-          twitterTitle
-          twitterDescription
-          twitterImage {
-             sourceUrl
+// Fetch SEO Data specifically for this page (graceful degradation if WP unavailable)
+let seoData: SeoData | undefined;
+try {
+    const data = await wpQuery({
+        query: `
+        query GetNosotrosSEO {
+          page(id: "/nosotros", idType: URI) {
+            seo {
+              title
+              metaDesc
+              canonical
+              opengraphTitle
+              opengraphDescription
+              opengraphImage {
+                sourceUrl
+              }
+              twitterTitle
+              twitterDescription
+              twitterImage {
+                 sourceUrl
+              }
+            }
           }
         }
-      }
-    }
-  `,
-});
-
-const seoData: SeoData = data?.page?.seo;
+      `,
+    });
+    seoData = data?.page?.seo;
+} catch (error) {
+    // Graceful degradation: page works without SEO data from WordPress
+    console.error("[nosotros] Failed to fetch SEO data from WordPress:", error);
+    seoData = undefined;
+}
 ---
 
 <Layout seo={seoData} breadcrumbs={breadcrumbItems}>
@@ -143,27 +157,11 @@ const seoData: SeoData = data?.page?.seo;
                 </p>
 
                 <!-- Hero Image -->
-                <auto-slider
-                    class="relative block w-full h-[400px] md:h-[500px] mb-16 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-blue-900/10 group"
-                >
-                    <div
-                        class="absolute inset-0 bg-gradient-to-t from-[#183069]/60 to-[#4e7cce]/20 mix-blend-multiply z-10 pointer-events-none"
-                    >
-                    </div>
-                    {
-                        heroImages.map((src, index) => (
-                            <SmartImage
-                                src={src}
-                                alt="Territorio y Naturaleza"
-                                width={1200}
-                                height={500}
-                                class={`absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 ${index === 0 ? "opacity-100" : "opacity-0"}`}
-                                data-slider-image
-                                priority={index === 0}
-                            />
-                        ))
-                    }
-                </auto-slider>
+                <AutoSlider
+                    class="mb-16"
+                    slides={heroImages}
+                    alt="Territorio y Naturaleza"
+                />
 
                 <!-- Feature Grid -->
                 <div class="grid md:grid-cols-3 gap-8 w-full text-left">
@@ -292,31 +290,11 @@ const seoData: SeoData = data?.page?.seo;
                     </div>
 
                     <!-- Carrusel debajo, ancho completo -->
-                    <auto-slider
-                        class="relative block w-full h-[280px] md:h-[350px] rounded-3xl overflow-hidden shadow-lg border border-white/50 group"
-                    >
-                        <div
-                            class="absolute inset-0 bg-[#4e7cce]/30 z-10 mix-blend-multiply pointer-events-none"
-                        >
-                        </div>
-                        <div
-                            class="absolute inset-0 opacity-80 group-hover:opacity-100 transition-opacity duration-500"
-                        >
-                            {
-                                geoImages.map((src, index) => (
-                                    <SmartImage
-                                        src={src}
-                                        alt="Ubicación Geográfica ILSA"
-                                        width={1200}
-                                        height={500}
-                                        class={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${index === 0 ? "opacity-100" : "opacity-0"}`}
-                                        data-slider-image
-                                        priority={index === 0}
-                                    />
-                                ))
-                            }
-                        </div>
-                    </auto-slider>
+                    <AutoSlider
+                        class="h-[280px] md:h-[350px] rounded-3xl shadow-lg border border-white/50"
+                        slides={geoImages}
+                        alt="Ubicación Geográfica ILSA"
+                    />
                 </div>
             </section>
 
@@ -363,50 +341,18 @@ const seoData: SeoData = data?.page?.seo;
                 </div>
 
                 <!-- Mission Image -->
-                <auto-slider
-                    class="order-1 md:order-2 block w-full h-[450px] rounded-[2.5rem] overflow-hidden shadow-xl shadow-blue-900/10 relative group"
-                >
-                    <div
-                        class="absolute inset-0 bg-gradient-to-tr from-[#4e7cce]/40 to-[#4e7cce]/10 mix-blend-multiply z-10 pointer-events-none"
-                    >
-                    </div>
-                    {
-                        missionImages.map((src, index) => (
-                            <SmartImage
-                                src={src}
-                                alt="Trabajo comunitario de ILSA con movimientos sociales"
-                                width={800}
-                                height={450}
-                                class={`absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 ${index === 0 ? "opacity-100" : "opacity-0"}`}
-                                data-slider-image
-                                priority={index === 0}
-                            />
-                        ))
-                    }
-                </auto-slider>
+                <AutoSlider
+                    class="order-1 md:order-2 h-[450px] rounded-[2.5rem] shadow-xl shadow-blue-900/10"
+                    slides={missionImages}
+                    alt="Trabajo comunitario de ILSA con movimientos sociales"
+                />
 
                 <!-- Vision Image -->
-                <auto-slider
-                    class="block w-full h-[450px] rounded-[2.5rem] overflow-hidden shadow-xl shadow-purple-900/10 relative group"
-                >
-                    <div
-                        class="absolute inset-0 bg-gradient-to-bl from-[#5e3b69]/40 to-[#4e7cce]/20 mix-blend-multiply z-10 pointer-events-none"
-                    >
-                    </div>
-                    {
-                        visionImages.map((src, index) => (
-                            <SmartImage
-                                src={src}
-                                alt="Territorios y comunidades que defiende ILSA"
-                                width={800}
-                                height={450}
-                                class={`absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 ${index === 0 ? "opacity-100" : "opacity-0"}`}
-                                data-slider-image
-                                priority={index === 0}
-                            />
-                        ))
-                    }
-                </auto-slider>
+                <AutoSlider
+                    class="h-[450px] rounded-[2.5rem] shadow-xl shadow-purple-900/10"
+                    slides={visionImages}
+                    alt="Territorios y comunidades que defiende ILSA"
+                />
 
                 <!-- Vision Content -->
                 <div>
@@ -452,27 +398,11 @@ const seoData: SeoData = data?.page?.seo;
                     class="flex flex-col md:flex-row items-center gap-12 lg:gap-16 p-6 md:p-12 rounded-[2.5rem] bg-white/50 backdrop-blur-3xl border border-white/60 shadow-xl shadow-slate-200/50"
                 >
                     <div class="w-full md:w-5/12 shrink-0">
-                        <auto-slider
-                            class="relative block group rounded-2xl overflow-hidden shadow-2xl shadow-blue-900/10 aspect-square md:aspect-[4/5]"
-                        >
-                            <div
-                                class="absolute inset-0 bg-[#4e7cce]/30 mix-blend-multiply group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none"
-                            >
-                            </div>
-                            {
-                                camposImages.map((src, index) => (
-                                    <SmartImage
-                                        src={src}
-                                        alt="Campos de acción e intervención territorial de ILSA"
-                                        width={800}
-                                        height={900}
-                                        class={`absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-all duration-1000 ${index === 0 ? "opacity-100" : "opacity-0"}`}
-                                        data-slider-image
-                                        priority={index === 0}
-                                    />
-                                ))
-                            }
-                        </auto-slider>
+                        <AutoSlider
+                            class="aspect-square md:aspect-[4/5] rounded-2xl shadow-2xl shadow-blue-900/10"
+                            slides={camposImages}
+                            alt="Campos de acción e intervención territorial de ILSA"
+                        />
                     </div>
 
                     <!-- Right: Content -->
@@ -947,30 +877,4 @@ const seoData: SeoData = data?.page?.seo;
         </div>
         <TeamModal />
     </div>
-    <script>
-        class AutoSlider extends HTMLElement {
-            connectedCallback() {
-                const imgs = this.querySelectorAll("img[data-slider-image]");
-                if (imgs.length <= 1) return;
-                let currentIndex = 0;
-
-                const nextSlide = () => {
-                    const prev = imgs[currentIndex];
-                    prev.classList.remove("opacity-100");
-                    prev.classList.add("opacity-0");
-
-                    currentIndex = (currentIndex + 1) % imgs.length;
-
-                    const next = imgs[currentIndex];
-                    next.classList.remove("opacity-0");
-                    next.classList.add("opacity-100");
-
-                    setTimeout(nextSlide, 4000 + Math.random() * 3000);
-                };
-
-                setTimeout(nextSlide, 4000 + Math.random() * 3000);
-            }
-        }
-        customElements.define("auto-slider", AutoSlider);
-    </script>
 </Layout>
