@@ -11,7 +11,15 @@ import GradientText from "../../components/atoms/GradientText.astro";
 import SmartImage from "../../components/atoms/SmartImage.astro";
 import HistoryTimeline from "../../components/organisms/HistoryTimeline.astro";
 import { wpQuery } from "../../lib/wp";
-import { teamData, boardData, assemblyData } from "../../lib/team";
+import { teamData, boardData, assemblyData, workTeamAreas } from "../../lib/team";
+
+// Combinar todos los datos para el modal
+const allMembers = [
+    ...teamData,
+    ...boardData,
+    ...assemblyData,
+    ...workTeamAreas.flatMap((area) => area.members),
+];
 import type { SeoData } from "../../lib/seo";
 
 const heroImages = [
@@ -945,7 +953,10 @@ const seoData: SeoData = data?.page?.seo;
                 </div>
             </section>
         </div>
-        <TeamModal />
+        <TeamModal
+            members={allMembers}
+            onClose={() => { }}
+        />
     </div>
     <script>
         class AutoSlider extends HTMLElement {

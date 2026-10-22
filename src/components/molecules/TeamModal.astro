@@ -1,8 +1,12 @@
 ---
-import { teamData, boardData, workTeamAreas } from "../../lib/team";
+import type { TeamMember } from "../../lib/team";
 
-// Combine all data for lookup
-const allMembers = [...teamData, ...boardData, ...workTeamAreas.flatMap((area) => area.members)];
+interface Props {
+    members: TeamMember[];
+    onClose?: () => void;
+}
+
+const { members, onClose = () => {} } = Astro.props;
 ---
 
 <dialog
@@ -112,38 +116,52 @@ const allMembers = [...teamData, ...boardData, ...workTeamAreas.flatMap((area) =
     }
 </style>
 
-<script define:vars={{ allMembers }}>
-    // We pass the data from server to client safely
-    const membersData = allMembers;
+<script define:vars={{ members }} @ts-check>
+    // @ts-nocheck
+    // members is available via define:vars
 
     function initTeamModal() {
+        /** @type {HTMLDialogElement | null} */
         const modal = document.getElementById("team-modal");
-        const cards = document.querySelectorAll(
-            ".interactive-card[data-team-id]",
-        );
+        /** @type {NodeListOf<HTMLElement>} */
+        const cards = document.querySelectorAll(".interactive-card[data-team-id]");
+        /** @type {HTMLElement | null} */
         const closeBtn = document.getElementById("close-modal");
 
         if (!modal || !closeBtn) return;
 
         // Elements to update
+        /** @type {HTMLImageElement | null} */
+        const imageElement = document.getElementById("modal-image");
+        /** @type {HTMLElement | null} */
+        const nameElement = document.getElementById("modal-name");
+        /** @type {HTMLElement | null} */
+        const roleElement = document.getElementById("modal-role");
+        /** @type {HTMLElement | null} */
+        const descElement = document.getElementById("modal-description");
+        /** @type {HTMLElement | null} */
+        const socialElement = document.getElementById("modal-socials");
+
         const els = {
-            image: document.getElementById("modal-image"),
-            name: document.getElementById("modal-name"),
-            role: document.getElementById("modal-role"),
-            desc: document.getElementById("modal-description"),
-            social: document.getElementById("modal-socials"),
+            image: imageElement,
+            name: nameElement,
+            role: roleElement,
+            desc: descElement,
+            social: socialElement,
         };
 
         const openModal = (id) => {
-            const member = membersData.find((m) => m.id === id);
+            const member = members.find((m) => m.id === id);
             if (!member) return;
 
             // Update content
-            if (els.image) els.image.src = member.image;
-            if (els.image) els.image.alt = member.name;
+            if (els.image) {
+                els.image.src = member.image;
+                els.image.alt = member.name;
+            }
             if (els.name) els.name.textContent = member.name;
             if (els.role) els.role.textContent = member.role;
-            if (els.desc) els.desc.textContent = member.fullDescription;
+            if (els.desc) els.desc.textContent = member.fullDescription || "";
 
             // Socials logic (Basic X impl)
             if (els.social) {
@@ -166,6 +184,7 @@ const allMembers = [...teamData, ...boardData, ...workTeamAreas.flatMap((area) =
         const closeModal = () => {
             modal.close();
             document.body.style.overflow = "";
+            onClose();
         };
 
         cards.forEach((card) => {

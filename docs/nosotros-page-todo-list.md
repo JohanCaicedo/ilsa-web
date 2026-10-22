@@ -177,12 +177,12 @@
    - Test accordion interaction
 
 **File Updates:**
-- [ ] Replace extracted sections with component imports in `src/pages/nosotros/index.astro`
-- [ ] Reduce main page to <300 lines
-- [ ] Test integrated page rendering
-- [ ] Verify no regressions in section transitions
-- [ ] Check performance (build time, LCP)
-- [ ] Commit with message: `"refactor: extract page sections into reusable components"`
+- [x] Replace extracted sections with component imports in `src/pages/nosotros/index.astro`
+- [x] Reduce main page to <300 lines
+- [x] Test integrated page rendering
+- [x] Verify no regressions in section transitions
+- [x] Check performance (build time, LCP)
+- [x] Commit with message: `"refactor: extract page sections into reusable components"`
 
 ---
 
@@ -267,7 +267,7 @@
 
 ### Phase 2 Complete When:
 - ✅ Team cards reuse single component
-- ✅ No duplicate rendering logic (184 lines eliminated)
+- ✅ No duplicate rendering logic eliminated
 - ✅ Image config centralized (~25 lines reduced)
 - ✅ Image sections decomposed (4 components created)
 - ✅ Main page reduced to <400 lines
@@ -310,8 +310,8 @@ After all phases complete, verify:
 |-------|-------|-----------|-----------|---|
 | Phase 0: Setup | 4 tasks | 0 | 4 | 0% |
 | **Phase 1** | 3 tasks | 0 | 3 | 0% |
-| **Phase 2** | 3 tasks | 0 | 3 | 0% |
-| **Phase 3** | 3 tasks | 0 | 3 | 0% |
+| **Phase 2** | 3 tasks | 3 | 0 | 100% |
+| **Phase 3** | 3 tasks | 1 | 2 | 33% |
 | **Total** | 12 tasks | 0 | 12 | 0% |
 
 **Session Progress Indicators:**
