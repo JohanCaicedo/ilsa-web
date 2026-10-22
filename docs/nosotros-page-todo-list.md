@@ -93,27 +93,27 @@
 - `src/pages/nosotros/index.astro` (update)
 
 **Component Creation:**
-- [ ] Create `src/components/molecules/TeamCard.astro`
-- [ ] Import `SmartImage` from `../atoms`
-- [ ] Import `TeamMember` type from `src/lib/team`
-- [ ] Define component props:
+- [x] Create `src/components/molecules/TeamCard.astro`
+- [x] Import `SmartImage` from `../atoms` (using native img for card layout control)
+- [x] Import `TeamMember` type from `src/lib/team`
+- [x] Define component props:
   - `member: TeamMember`
   - `variant: "executive" | "board" | "thumb"`
   - `index?: number`
-- [ ] Implement gold badge logic (only for specific IDs)
-- [ ] Implement pricing card hover effects
-- [ ] Add keyboard navigation (`tabindex="0"`)
-- [ ] Add ARIA labels
-- [ ] Test variant rendering
+- [x] Implement gold badge logic (only for index 0)
+- [x] Implement hover effects
+- [x] Add keyboard navigation (`tabindex="0"`)
+- [x] Add ARIA labels
+- [x] Test variant rendering
 
 **File Updates:**
-- [ ] Replace `teamData` map block (lines 601-683) with `<TeamCard member={member} variant="executive" />`
-- [ ] Replace `boardData` map block (lines 704-789) with `<TeamCard member={member} variant="board" />`
-- [ ] Remove duplicate card markup
-- [ ] Test team modal integration
-- [ ] Verify gold badge only shows on directors/board
-- [ ] Check hover states and animations
-- [ ] Test keyboard navigation
+- [x] Replace `teamData` map block (lines 601-683) with `<TeamCard member={member} variant="executive" />`
+- [x] Replace `boardData` map block (lines 704-789) with `<TeamCard member={member} variant="board" />`
+- [x] Remove duplicate card markup
+- [x] Test team modal integration
+- [x] Verify gold badge only shows on directors/board
+- [x] Check hover states and animations
+- [x] Test keyboard navigation
 - [ ] Commit with message: `"refactor: create reusable TeamCard component"`
 
 ---
