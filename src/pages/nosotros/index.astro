@@ -1,11 +1,9 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import AccordionItem from "../../components/atoms/AccordionItem.astro";
-import DirectorCard from "../../components/molecules/DirectorCard.astro";
 import TeamModal from "../../components/molecules/TeamModal.astro";
 import WorkTeamTabs from "../../components/molecules/WorkTeamTabs.astro";
 import ColombiaMap from "../../components/organisms/ColombiaMap.astro";
-import Breadcrumbs from "../../components/atoms/Breadcrumbs.astro";
 import Button from "../../components/Button.astro";
 import GradientText from "../../components/atoms/GradientText.astro";
 import SmartImage from "../../components/atoms/SmartImage.astro";
@@ -13,7 +11,6 @@ import HistoryTimeline from "../../components/organisms/HistoryTimeline.astro";
 import { wpQuery } from "../../lib/wp";
 import { teamData, boardData, assemblyData, workTeamAreas } from "../../lib/team";
 
-// Combinar todos los datos para el modal
 const allMembers = [
     ...teamData,
     ...boardData,
