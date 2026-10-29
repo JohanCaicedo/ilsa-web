@@ -1,0 +1,130 @@
+---
+import SmartImage from "../atoms/SmartImage.astro";
+import { cn } from "../../lib/utils";
+
+interface Props {
+    name: string;
+    role: string;
+    image: string;
+    bio?: string;
+    id?: string;
+    variant?: "default" | "highlight";
+    index?: number;
+}
+
+const {
+    name,
+    role,
+    image,
+    bio,
+    id,
+    variant = "default",
+    index,
+} = Astro.props;
+
+const isHighlight = variant === "highlight";
+
+// Estilos por variante
+const getVariantStyles = () => {
+    return {
+        card: cn(
+            "interactive-card relative group rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl cursor-pointer h-[400px] md:h-[450px] w-full focus-visible:ring-2 focus-visible:ring-[#4e7cce] focus-visible:ring-offset-2 outline-none",
+            index === 0
+                ? "ring-2 ring-white/40 shadow-[#4e7cce]/20"
+                : ""
+        ),
+        img: "h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110",
+        name: cn(
+            "font-bold text-center text-white leading-tight drop-shadow-md",
+            name.length > 20 ? "text-lg md:text-xl" : "text-xl md:text-2xl"
+        ),
+        role: cn(
+            "font-bold text-xs tracking-widest uppercase mb-1 opacity-80 group-hover:opacity-100 text-center shrink-0",
+            isHighlight ? "text-[#a1c4ff]" : "text-[#efefef]"
+        ),
+        gradient: cn(
+            "from-[#0b1b42] via-[#102352]/50 to-transparent",
+            !isHighlight && "from-[#183069] via-[#183069]/40 to-transparent"
+        ),
+        roleColor: isHighlight ? "text-[#a1c4ff]" : "text-[#efefef]",
+    };
+};
+
+const styles = getVariantStyles();
+---
+
+<article
+    class={styles.card}
+    data-team-id={id}
+    tabindex="0"
+    role="button"
+    aria-label={`Ver información de ${name}`}
+>
+        <SmartImage
+        src={image}
+        alt={name}
+        width="400"
+        height={isHighlight ? 450 : 450}
+        class={styles.img}
+        loading="lazy"
+        shouldOptimize={false}
+    />
+
+    {/* Insignia elegante "Liquid Glass" exclusiva para highlight */}
+    {isHighlight && (
+        <div class="absolute top-4 right-4 z-20 bg-white/20 backdrop-blur-md border border-white/40 rounded-full p-2.5 shadow-lg group-hover:bg-white/30 transition-colors duration-300 pointer-events-none">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                class="drop-shadow-[0_0_8px_rgba(250,204,21,0.6)]"
+            >
+                <defs>
+                    <linearGradient
+                        id="gold-grad"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                    >
+                        <stop
+                            offset="0%"
+                            stop-color="#FEF08A"
+                        />
+                        <stop
+                            offset="40%"
+                            stop-color="#F59E0B"
+                        />
+                        <stop
+                            offset="100%"
+                            stop-color="#A16207"
+                        />
+                    </linearGradient>
+                </defs>
+                <polygon
+                    fill="url(#gold-grad)"
+                    stroke="#FEF08A"
+                    stroke-width="1.5"
+                    stroke-linejoin="round"
+                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                />
+            </svg>
+        </div>
+    )}
+
+    <div
+        class={`absolute inset-0 bg-gradient-to-t opacity-90 transition-opacity duration-300 ${styles.gradient}`}
+    />
+    <div class="absolute inset-0 flex flex-col justify-end p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+        <p class={styles.role}>{role}</p>
+        <div class="h-14 md:h-16 flex items-center justify-center w-full mb-2 shrink-0">
+            <h3 class={styles.name}>{name}</h3>
+        </div>
+        <div class="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 opacity-0 group-hover:opacity-100 text-center">
+            <p class="text-slate-300 text-sm mt-2">
+                {bio || ""}
+            </p>
+        </div>
+    </div>
+</article>

@@ -46,6 +46,7 @@ const { members, onClose = () => {} } = Astro.props;
                     id="modal-image"
                     src=""
                     alt=""
+                    loading="eager"
                     class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
                 />
              </div>
@@ -124,7 +125,7 @@ const { members, onClose = () => {} } = Astro.props;
         /** @type {HTMLDialogElement | null} */
         const modal = document.getElementById("team-modal");
         /** @type {NodeListOf<HTMLElement>} */
-        const cards = document.querySelectorAll(".interactive-card[data-team-id]");
+        const cards = document.querySelectorAll("article[data-team-id]");
         /** @type {HTMLElement | null} */
         const closeBtn = document.getElementById("close-modal");
 
@@ -156,8 +157,28 @@ const { members, onClose = () => {} } = Astro.props;
 
             // Update content
             if (els.image) {
-                els.image.src = member.image;
-                els.image.alt = member.name;
+                // Force image reload by clearing src first when changing member
+                const currentSrc = els.image.src;
+                if (currentSrc && currentSrc.includes(member.image) && els.image.complete) {
+                    // Same image, no change needed
+                } else if (currentSrc && currentSrc !== member.image) {
+                    // Different image - force reload
+                    els.image.src = "";
+                    els.image.onload = () => {
+                        els.image.src = member.image;
+                        els.image.alt = member.name;
+                    };
+                    // Fallback if onload doesn't fire (cached images)
+                    setTimeout(() => {
+                        if (els.image.src !== member.image) {
+                            els.image.src = member.image;
+                            els.image.alt = member.name;
+                        }
+                    }, 100);
+                } else {
+                    els.image.src = member.image;
+                    els.image.alt = member.name;
+                }
             }
             if (els.name) els.name.textContent = member.name;
             if (els.role) els.role.textContent = member.role;

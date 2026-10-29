@@ -13,6 +13,7 @@ const { type = "article" } = Astro.props;
     id="page-loader"
     class="fixed top-24 left-0 right-0 bottom-0 z-20 bg-[var(--ilsa-bg-light)] opacity-0 pointer-events-none transition-opacity duration-500"
     aria-hidden="true"
+    style="pointer-events: none;"
 >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 h-full">
         {
@@ -53,36 +54,46 @@ const { type = "article" } = Astro.props;
 
 <script>
     let timeoutId: number | undefined;
+    let fallbackTimeoutId: number | undefined;
 
     function showLoader() {
-        // Query the DOM dynamically to avoid stale references after View Transitions DOM swap
         const loader = document.getElementById("page-loader");
         if (loader) {
             clearTimeout(timeoutId);
+            clearTimeout(fallbackTimeoutId);
             loader.classList.remove("opacity-0", "pointer-events-none");
             loader.classList.add("opacity-100");
+            loader.style.pointerEvents = "auto";
             loader.setAttribute("aria-hidden", "false");
+
+            // Failsafe: force hide after 3s even if astro:page-load never fires
+            fallbackTimeoutId = window.setTimeout(() => {
+                hideLoader();
+            }, 3000);
         }
     }
 
     function hideLoader() {
-        // Query the DOM dynamically to avoid stale references after View Transitions DOM swap
         const loader = document.getElementById("page-loader");
         if (loader) {
-            timeoutId = setTimeout(() => {
+            clearTimeout(fallbackTimeoutId);
+            timeoutId = window.setTimeout(() => {
                 loader.classList.remove("opacity-100");
                 loader.classList.add("opacity-0", "pointer-events-none");
+                loader.style.pointerEvents = "none";
                 loader.setAttribute("aria-hidden", "true");
-            }, 300) as unknown as number;
+            }, 300);
         }
     }
 
     // Astro View Transitions Events
-    document.addEventListener("astro:before-preparation", () => {
-        showLoader();
-    });
+    document.addEventListener("astro:before-preparation", showLoader);
+    document.addEventListener("astro:page-load", hideLoader);
 
-    document.addEventListener("astro:page-load", () => {
+    // Extra safety: hide on DOMContentLoaded in case View Transitions aren't used
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", hideLoader, { once: true });
+    } else {
         hideLoader();
-    });
+    }
 </script>

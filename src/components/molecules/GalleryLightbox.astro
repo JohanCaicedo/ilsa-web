@@ -258,5 +258,8 @@
         _boundOpenLightbox!: EventListener;
     }
 
-    customElements.define("gallery-lightbox", GalleryLightboxElement);
+    // Idempotent definition
+    if (!customElements.get("gallery-lightbox")) {
+        customElements.define("gallery-lightbox", GalleryLightboxElement);
+    }
 </script>

@@ -33,7 +33,7 @@ const uniqueId = id || `lg-${Math.random().toString(36).substr(2, 9)}`;
         use3D && (
             <div class="glass-webgl-layer">
                 <Liquid3D
-                    client:only="react"
+                    client:visible
                     intensity={intensity}
                     frosted={frosted}
                 />

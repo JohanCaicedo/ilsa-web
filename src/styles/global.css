@@ -339,3 +339,24 @@ html.is-ios .bg-noise-layer {
   backface-visibility: hidden;
   will-change: transform, opacity;
 }
+
+/* ==============================================================
+ * 🛡️ GLOBAL SAFEGUARDS - Prevent invisible overlays from blocking clicks
+ * ============================================================== */
+
+/* Ensure elements with opacity-0 + pointer-events-none truly don't catch clicks */
+.pointer-events-none {
+  pointer-events: none !important;
+}
+
+/* Force PageLoader to never block when hidden (defense in depth) */
+#page-loader.opacity-0 {
+  pointer-events: none !important;
+  visibility: hidden;
+}
+
+/* Debug helper: uncomment to visualize click blockers
+*[style*="z-index"]:not([style*="z-index: 0"]) {
+  outline: 1px dashed red;
+}
+*/

@@ -17,3 +17,5 @@ He terminado la sesión de trabajo por hoy. Por favor, ejecuta el Protocolo de F
     Mensaje de Commit: Entrégame el texto para el commit de Git (solo el texto, bajo el estándar de Conventional Commits) que resuma con precisión los hitos de esta sesión.
 
 Una vez hecho esto, confirma que el estado del proyecto ha sido guardado correctamente.
+
+No ejecutar "git push"

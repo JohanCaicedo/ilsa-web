@@ -20,17 +20,17 @@ const stages = [
   },
   {
     number: "03",
-    title: "Práctica Crítica y Despliegue",
+    title: "Trabajo en los territorios",
     color: "#e9b384",
-    text: "Desde entonces, ILSA ha promovido una práctica crítica del derecho y una concepción integral de los derechos humanos mediante labores pedagógicas, acompañamiento jurídico y fortalecimiento organizativo junto a asociaciones campesinas, pueblos indígenas, comunidades negras, procesos de mujeres, víctimas del conflicto y población firmante de paz. Su trabajo se ha desplegado en distintas regiones de Colombia y a nivel regional a través de redes como CLACSO y la Comunidad Latinoamericana de Empoderamiento Jurídico.",
+    text: "Desde entonces, ILSA impulsa una práctica crítica del derecho y una visión integral de los derechos humanos. Lo hace con formación, acompañamiento jurídico y fortalecimiento organizativo junto a asociaciones campesinas, pueblos indígenas, comunidades negras, procesos de mujeres, víctimas del conflicto y población firmante de paz. Su trabajo llega a distintas regiones de Colombia y a la región a través de redes como CLACSO y la Comunidad Latinoamericana de Empoderamiento Jurídico.",
     image: "/images/evento-cartagena/evento-cartagena (18).jpg",
-    imageAlt: "Práctica Crítica y Despliegue en Territorio",
+    imageAlt: "Trabajo en los Territorios",
   },
   {
     number: "04",
     title: "Plan Estratégico 2025-2027",
     color: "#64748b",
-    text: "ILSA definió para el periodo 2025-2027 cuatro campos de acción: Conflicto interno y política de paz; Producción del territorio y conflictividades; Democracias contemporáneas, luchas sociales y derechos humanos; y Género, derechos de las mujeres y diversidades. Los adelanta a través de servicio legal, advocacy, ecología de saberes, investigación, alianzas estratégicas y comunicaciones.",
+    text: "Para el periodo 2025-2027, ILSA definió cuatro campos de acción: Conflicto interno y política de paz; Producción del territorio y conflictividades; Democracias contemporáneas, luchas sociales y derechos humanos; y Género, derechos de las mujeres y diversidades. Los desarrolla mediante servicio legal, incidencia, ecología de saberes, investigación, alianzas estratégicas y comunicaciones.",
     image: "",
     imageAlt: "",
   },
@@ -390,5 +390,8 @@ const stages = [
     }
   }
 
-  customElements.define('history-slider', HistorySlider);
+  // Idempotent definition
+  if (!customElements.get('history-slider')) {
+    customElements.define('history-slider', HistorySlider);
+  }
 </script>
