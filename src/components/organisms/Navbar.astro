@@ -169,6 +169,7 @@ const navStructure = [
                     id="menuToggle"
                     class="text-slate-700 hover:text-[#4a7dbf] transition-colors p-3 relative z-[60]"
                     aria-label="Abrir menú"
+                    aria-expanded="false"
                 >
                     <svg
                         class="w-7 h-7"
@@ -186,65 +187,112 @@ const navStructure = [
         </nav>
     </LiquidContainer>
 
-    <!-- Mobile Menu Overlay (Separado para no heredar el liquid container de forma extraña) -->
+    <!-- Mobile Menu Overlay - Full Screen Liquid Glass -->
     <div
         id="mobileMenu"
-        class="absolute hidden top-[calc(100%+1rem)] right-0 left-0 mx-4 max-h-[80vh] overflow-y-auto bg-white/98 backdrop-blur-2xl border border-white/60 rounded-3xl p-8 flex flex-col items-center gap-6 shadow-2xl shadow-slate-300/50 z-[100] animate-in fade-in slide-in-from-top-4 duration-300 ios-glass-fix touch-scroll"
+        class="fixed inset-0 z-[100] hidden flex-col bg-white/10 backdrop-blur-3xl border border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.12)] p-6 md:p-10 overflow-y-auto transition-all duration-500 ease-out ios-glass-fix touch-scroll"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menú principal"
     >
-        {
-            navStructure.map((item) => (
-                <div class="w-full text-center">
-                    {item.type === "link" ? (
-                        <a
-                            class="block py-2 text-lg font-bold text-slate-800 hover:text-[#4a7dbf]"
-                            href={item.href}
-                        >
-                            {item.text}
-                        </a>
-                    ) : (
-                        <div class="flex flex-col gap-2">
-                            {item.href ? (
-                                <a
-                                    href={item.href}
-                                    class="block py-1 text-xs font-black uppercase tracking-widest text-[#4a7dbf] hover:text-[#375a9e] mt-2 underline decoration-2 underline-offset-4"
+        <!-- Header: Logo + Close Button -->
+        <div class="flex justify-between items-center mb-10">
+            <a href="/" class="shrink-0" aria-label="ILSA Home">
+                <img
+                    src="https://api.ilsa.org.co/wp-content/uploads/2025/08/ILSA-Logo-2025-16.svg"
+                    alt="ILSA Logo"
+                    class="h-10 w-auto object-contain"
+                />
+            </a>
+            <button
+                id="closeMenu"
+                class="p-2 text-slate-600 hover:text-slate-900 transition-colors rounded-lg hover:bg-white/50"
+                aria-label="Cerrar menú"
+            >
+                <svg
+                    class="w-7 h-7"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    viewBox="0 0 24 24"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="M18 6L6 18M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Navigation Accordion -->
+        <nav class="flex-1 flex flex-col gap-4" id="mobileNav">
+            {
+                navStructure.map((item, index) => (
+                    <div class="mobile-nav-item" style={`--delay: ${index * 80}ms`}>
+                        {item.type === "link" ? (
+                            <a
+                                href={item.href}
+                                class="block py-4 text-2xl font-bold text-slate-900 hover:text-[#4a7dbf] transition-colors border-b border-white/30"
+                            >
+                                {item.text}
+                            </a>
+                        ) : (
+                            <details class="group" open={false}>
+                                <summary
+                                    class="flex justify-between items-center py-4 text-2xl font-bold text-slate-900 list-none cursor-pointer border-b border-white/30 focus:outline-none focus:ring-2 focus:ring-[#4e7cce] focus:ring-offset-2 focus:ring-offset-white/10"
                                 >
                                     {item.text}
-                                </a>
-                            ) : (
-                                <span class="block py-1 text-xs font-black uppercase tracking-widest text-[#4a7dbf]/60 mt-2">
-                                    {item.text}
-                                </span>
-                            )}
-                            {item.items?.map((sub) => (
-                                <a
-                                    class="block py-1 text-base text-slate-600 hover:text-[#4a7dbf]"
-                                    href={sub.href}
-                                >
-                                    {sub.label}
-                                </a>
-                            ))}
-                        </div>
-                    )}
-                </div>
-            ))
-        }
+                                    <svg
+                                        class="w-6 h-6 text-slate-500 transition-transform duration-300 group-open:rotate-180 flex-shrink-0 ml-4"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        viewBox="0 0 24 24"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path d="M6 9l6 6 6-6"></path>
+                                    </svg>
+                                </summary>
+                                <div class="pl-2 mt-4 flex flex-col gap-2 border-l border-white/30 animate-in fade-in slide-in-from-top-2 duration-300">
+                                    {item.href ? (
+                                        <a
+                                            href={item.href}
+                                            class="text-lg text-[#4a7dbf] hover:text-[#375a9e] font-medium pb-2 border-b border-white/20"
+                                        >
+                                            Ver todo →
+                                        </a>
+                                    ) : null}
+                                    {item.items?.map((sub) => (
+                                        <a
+                                            href={sub.href}
+                                            class="py-2 text-lg text-slate-700 hover:text-[#4a7dbf] transition-colors"
+                                        >
+                                            {sub.label}
+                                        </a>
+                                    ))}
+                                </div>
+                            </details>
+                        )}
+                    </div>
+                ))
+            }
+        </nav>
 
-        <div class="w-full h-px bg-slate-100 my-2"></div>
-
-        <div class="flex flex-col gap-3 w-full">
+        <!-- Footer CTAs -->
+        <div class="mt-8 pt-8 border-t border-white/30 flex flex-col gap-3">
             <NavButton
                 variant="secondary"
                 href="/actividades"
-                class="w-full justify-center"
+                class="w-full justify-center py-4 text-lg"
             >
                 Actividades
             </NavButton>
             <div
-                class="rainbow w-full relative z-0 bg-white/15 overflow-hidden p-[1px] flex items-center justify-center rounded-full hover:scale-105 hover:shadow-[0_0_20px_rgba(78,124,206,0.6)] transition duration-300 active:scale-100 group"
+                class="rainbow w-full relative z-0 bg-white/15 overflow-hidden p-[1px] flex items-center justify-center rounded-full hover:scale-[1.02] hover:shadow-[0_0_24px_rgba(78,124,206,0.5)] transition duration-300 active:scale-100 group"
             >
                 <a
                     href="/donaciones"
-                    class="w-full px-4 text-sm py-3 text-white rounded-full font-medium bg-gray-900/90 backdrop-blur block text-center relative z-10"
+                    class="w-full px-6 py-4 text-lg text-white rounded-full font-medium bg-slate-900/90 backdrop-blur block text-center relative z-10"
                 >
                     Donaciones
                 </a>
@@ -261,36 +309,54 @@ const navStructure = [
     // Flag to ensure we only register the global listener once.
     if (!(window as any).hasNavbarListenerRegistered) {
         document.addEventListener("click", (e) => {
-            const isMenuToggle = !!(e.target as Element).closest("#menuToggle");
-
-            // Re-fetch mobileMenu dynamically so we always grab the active DOM's menu
-            // and not a detached phantom node from the previous route.
             const mobileMenu = document.getElementById("mobileMenu");
+            const menuToggle = document.getElementById("menuToggle");
+            const closeMenu = document.getElementById("closeMenu");
 
             if (!mobileMenu) return;
 
-            // 1. If clicking the hamburger icon
+            const isMenuToggle = !!(e.target as Element).closest("#menuToggle");
+            const isCloseBtn = !!(e.target as Element).closest("#closeMenu");
+            const isClickInsideMenu = !!(e.target as Element).closest("#mobileMenu");
+
+            // 1. Open menu
             if (isMenuToggle) {
-                if (mobileMenu.classList.contains("hidden")) {
-                    mobileMenu.classList.remove("hidden");
-                    mobileMenu.classList.add("flex");
-                    document.body.style.overflow = "hidden"; // Prevent background scroll
-                } else {
-                    mobileMenu.classList.add("hidden");
-                    mobileMenu.classList.remove("flex");
-                    document.body.style.overflow = ""; // Restore background scroll
-                }
+                mobileMenu.classList.remove("hidden");
+                mobileMenu.classList.add("flex");
+                document.body.style.overflow = "hidden";
+                menuToggle?.setAttribute("aria-expanded", "true");
+                menuToggle?.setAttribute("aria-label", "Cerrar menú");
                 return;
             }
 
-            // 2. If clicking anywhere inside the mobile menu link area (close the menu)
-            const isMobileLink = !!(e.target as Element).closest(
-                "#mobileMenu a",
-            );
+            // 2. Close via X button
+            if (isCloseBtn) {
+                mobileMenu.classList.add("hidden");
+                mobileMenu.classList.remove("flex");
+                document.body.style.overflow = "";
+                menuToggle?.setAttribute("aria-expanded", "false");
+                menuToggle?.setAttribute("aria-label", "Abrir menú");
+                return;
+            }
+
+            // 3. Close on link click (navigation)
+            const isMobileLink = !!(e.target as Element).closest("#mobileMenu a");
             if (isMobileLink && !mobileMenu.classList.contains("hidden")) {
                 mobileMenu.classList.add("hidden");
                 mobileMenu.classList.remove("flex");
                 document.body.style.overflow = "";
+                menuToggle?.setAttribute("aria-expanded", "false");
+                menuToggle?.setAttribute("aria-label", "Abrir menú");
+                return;
+            }
+
+            // 4. Close on click outside (backdrop)
+            if (!isClickInsideMenu && !isMenuToggle && !mobileMenu.classList.contains("hidden")) {
+                mobileMenu.classList.add("hidden");
+                mobileMenu.classList.remove("flex");
+                document.body.style.overflow = "";
+                menuToggle?.setAttribute("aria-expanded", "false");
+                menuToggle?.setAttribute("aria-label", "Abrir menú");
             }
         });
 
