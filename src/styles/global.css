@@ -355,6 +355,15 @@ html.is-ios .bg-noise-layer {
   visibility: hidden;
 }
 
+/* Scrollbar hiding utility */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* Debug helper: uncomment to visualize click blockers
 *[style*="z-index"]:not([style*="z-index: 0"]) {
   outline: 1px dashed red;

@@ -1,0 +1,142 @@
+---
+import { FileText, Eye, Download, Loader2, AlertCircle } from "lucide-react";
+import { cn } from "../../lib/utils";
+
+interface Props {
+  /** URL del archivo PDF */
+  src: string;
+  /** Título principal del documento */
+  title: string;
+  /** Descripción opcional */
+  description?: string;
+  /** Texto del badge superior (por defecto: "Documento Oficial") */
+  badge?: string;
+  /** Nombre personalizado para la descarga */
+  downloadName?: string;
+  /** Mostrar u ocultar el botón de descarga */
+  showDownload?: boolean;
+  /** Clases CSS adicionales */
+  class?: string;
+}
+
+const {
+  src,
+  title,
+  description,
+  badge = "Documento Oficial",
+  downloadName,
+  showDownload = true,
+  class: className = "",
+} = Astro.props;
+
+// PDF.js viewer parameters to hide native toolbar
+const iframeSrc = `${src}#toolbar=0&navpanes=0&scrollbar=0`;
+
+// Unique ID for focus management
+const viewerId = `pdf-viewer-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<div
+  id={viewerId}
+  class={cn(
+    "w-full overflow-hidden bg-[var(--glass-surface)] backdrop-blur-[16px] border border-[var(--glass-border)] shadow-xl shadow-[var(--glass-shadow)] transition-all duration-300 rounded-[var(--radius-2xl)]",
+    className
+  )}
+>
+  <!-- Encabezado -->
+  <header class="p-6 md:p-8 border-b border-[var(--glass-border)] bg-white/30 backdrop-blur-sm flex flex-col items-center text-center gap-4">
+    <div class="space-y-1">
+      {badge && (
+        <span class="inline-flex items-center gap-1.5 bg-[var(--ilsa-blue)]/10 text-[var(--ilsa-blue-dark)] text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full border border-[var(--ilsa-blue)]/20 mb-1">
+          <FileText className="w-3.5 h-3.5" aria-hidden="true" />
+          <span>{badge}</span>
+        </span>
+      )}
+<h2 class="text-lg md:text-xl font-black text-center text-[var(--ilsa-text-dark)] tracking-tight leading-snug">
+  {title}
+</h2>
+      {description && (
+        <p class="text-[var(--ilsa-text-gray)] text-sm font-medium max-w-2xl">
+          {description}
+        </p>
+      )}
+    </div>
+
+    <!-- Botones de Acción - Stacked vertically -->
+    <div class="flex flex-col w-full gap-3">
+      {showDownload && (
+        <a
+          href={src}
+          download={downloadName || title}
+          class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#4E7CCE] text-white rounded-[var(--radius-xl)] font-semibold hover:bg-[#3d68b8] transition-all duration-300 shadow-md shadow-[#4E7CCE]/20 hover:scale-105 active:scale-95 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4E7CCE] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+          aria-label={`Descargar ${title}`}
+        >
+          <Download className="w-4 h-4" aria-hidden="true" />
+          <span>Descargar</span>
+        </a>
+      )}
+      <a
+        href={src}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white/80 backdrop-blur-sm border border-white/80 text-[var(--ilsa-text-dark)] rounded-[var(--radius-xl)] font-semibold hover:bg-white transition-all duration-300 shadow-sm hover:shadow-md text-sm hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ilsa-blue)] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+      >
+        <Eye className="w-4 h-4" aria-hidden="true" />
+        <span>Ver</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Contenedor del PDF (iFrame limpio enmascarado) - smaller -->
+  <div class="relative w-full aspect-[4/3] md:aspect-[16/9] bg-[var(--ilsa-bg-light)]/50 pdf-viewer" style="max-height: 300px;">
+    <iframe
+      src={iframeSrc}
+      title={title}
+      class="w-full h-full border-0"
+      loading="lazy"
+      allow="fullscreen"
+    ></iframe>
+
+    <!-- Error state -->
+    <div
+      id={`${viewerId}-error`}
+      class="pdf-viewer-error absolute inset-0 flex items-center justify-center bg-[var(--ilsa-bg-light)]/50 z-10 hidden p-6"
+      role="alert"
+    >
+      <div class="text-center max-w-sm">
+        <AlertCircle className="w-10 h-10 text-red-500 mx-auto mb-3" aria-hidden="true" />
+        <p class="text-[var(--ilsa-text-dark)] font-medium mb-2">No se pudo cargar el PDF</p>
+        <p class="text-[var(--ilsa-text-gray)] text-sm mb-4">El visor integrado no está disponible para este documento.</p>
+        <a
+          href={src}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-4 py-2 bg-[var(--ilsa-blue)] text-white rounded-[var(--radius-md)] font-medium hover:bg-[var(--ilsa-blue-dark)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ilsa-blue)] focus-visible:ring-offset-2"
+        >
+          <Eye className="w-4 h-4" aria-hidden="true" />
+          <span>Abrir en nueva pestaña</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+  /* Ensure iframe respects rounded corners in all browsers */
+  .pdf-viewer iframe {
+    border-radius: inherit;
+  }
+
+  /* Smooth transitions for loading/error states */
+  .pdf-viewer-loader,
+  .pdf-viewer-error {
+    transition: opacity 200ms ease, visibility 200ms ease;
+  }
+
+  .pdf-viewer-loader.hidden,
+  .pdf-viewer-error.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+</style>

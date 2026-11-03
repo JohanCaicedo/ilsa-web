@@ -1,0 +1,323 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import SmartImage from "../../../components/atoms/SmartImage.astro";
+import GradientText from "../../../components/atoms/GradientText.astro";
+import YoutubeEmbed from "../../../components/atoms/YoutubeEmbed.astro";
+import GalleryLightbox from "../../../components/molecules/GalleryLightbox.astro";
+import PdfViewer from "../../../components/molecules/PdfViewer.astro";
+import { Video, FileText, Download, Camera, Shield } from "lucide-react";
+import type { SeoData } from "../../../lib/seo";
+
+// Contenido editorial local: Cloudflare Pages lo entrega estáticamente.
+export const prerender = true;
+
+const breadcrumbs = [
+    { label: "Noticias", href: "/noticias" },
+    { label: "Especiales", href: "/noticias/especiales" },
+    { label: "La Protesta no es una Amenaza", href: "/noticias/especiales/la-protesta-no-es-una-amenaza" },
+];
+
+const seoData: SeoData = {
+    title: "La Protesta no es una Amenaza — Reporte Especial ILSA",
+    metaDesc:
+        "Audiencia PLE 041/2026: Congreso debate ley de protesta. Víctimas, ILSA y expertos exigen garantías reales, no criminalización.",
+    opengraphTitle:
+        "La Protesta no es una Amenaza — Reporte Especial ILSA",
+    opengraphDescription:
+        "El 23 de octubre la audiencia del PLE 041/2026 puso en el centro la deuda del Congreso: regular la protesta sin que cueste vidas. Cuatro proyectos, dos visiones.",
+    opengraphImage: {
+        sourceUrl: "https://api.ilsa.org.co/wp-content/uploads/2026/11/Protesta-ID.webp",
+    },
+    twitterImage: {
+        sourceUrl: "https://api.ilsa.org.co/wp-content/uploads/2026/11/Protesta-ID.webp",
+    },
+};
+
+const galleryImages = Array.from({ length: 34 }, (_, i) => {
+    const num = i + 1;
+    const filename = `Audiencia-${num}`;
+    return {
+        src: `https://api.ilsa.org.co/wp-content/uploads/2026/11/${filename}.webp`,
+        alt: filename,
+    };
+});
+---
+
+<Layout
+    title="Especial: La Protesta no es una Amenaza — ILSA"
+    width="wide"
+    seo={seoData}
+    breadcrumbs={breadcrumbs}
+>
+    <div class="relative min-h-screen pb-32">
+        <!-- Background Atmosphere -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+            <div
+                class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[var(--ilsa-blue-light)]/10 rounded-full blur-[120px] animate-blob"
+            >
+            </div>
+            <div
+                class="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[var(--ilsa-mujeres-light)]/10 rounded-full blur-[100px] animate-blob animation-delay-2000"
+            >
+            </div>
+        </div>
+
+        <div class="relative z-10 pt-8 max-w-5xl mx-auto px-4 md:px-8">
+            <!-- HERO SECTION -->
+            <div class="text-center mb-16 space-y-6 stagger-1">
+                <div
+                    class="inline-flex items-center justify-center gap-3 px-5 py-2.5 rounded-full bg-white/60 backdrop-blur-md border border-[var(--ilsa-blue-dark)]/25 shadow-sm mx-auto"
+                >
+                    <span class="relative flex h-2.5 w-2.5">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--ilsa-blue-dark)] opacity-40"
+                        ></span>
+                        <span
+                            class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--ilsa-blue-dark)]"
+                        ></span>
+                    </span>
+                    <span
+                        class="text-xs font-bold text-[var(--ilsa-blue-dark)] uppercase tracking-[0.2em]"
+                    >
+                        Reporte Especial
+                    </span>
+                </div>
+
+                <h1 class="text-center leading-tight">
+                    <!-- Mobile: two lines (La protesta / no es una amenaza) -->
+                    <GradientText
+                        text="La protesta"
+                        size="text-3xl md:text-4xl lg:text-5xl xl:text-5xl"
+                        weight="font-black"
+                        from="#eb470d"
+                        to="#f4668a"
+                        as="span"
+                        class="block md:hidden"
+                    />
+                    <GradientText
+                        text="no es una amenaza"
+                        size="text-lg md:text-xl lg:text-2xl xl:text-2xl"
+                        weight="font-medium"
+                        from="#eb470d"
+                        to="#f4668a"
+                        as="span"
+                        class="block mt-1 md:hidden"
+                    />
+                    <!-- Desktop: single line (La protesta no es una amenaza) -->
+                    <GradientText
+                        text="La protesta no es una amenaza"
+                        size="text-3xl md:text-4xl lg:text-5xl xl:text-5xl"
+                        weight="font-black"
+                        from="#eb470d"
+                        to="#f4668a"
+                        as="span"
+                        class="hidden md:block"
+                    />
+                </h1>
+
+                <p
+                    class="text-lg md:text-xl text-center text-slate-600 max-w-3xl mx-auto text-balance leading-relaxed font-light mt-4"
+                >
+                    La audiencia del PLE 041/2026 puso en centro la deuda histórica del Congreso regular la protesta social sin cueste más vidas ni derechos fundamentales
+                </p>
+            </div>
+
+            <!-- HERO IMAGE -->
+            <div class="stagger-2 w-full mb-24 aspect-[9/16] md:aspect-[16/9] rounded-3xl overflow-hidden shadow-xl border border-white/80 relative">
+                <SmartImage
+                    src="https://api.ilsa.org.co/wp-content/uploads/2026/10/La-protesta-no-es-una-amenaza.jpg"
+                    alt="Ilustración: La protesta no es una amenaza — Ilustración de ILSA"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    priority={true}
+                    width={675}
+                    height={1200}
+                />
+                <!-- Download Afiches Button + Tooltip -->
+                <div class="absolute bottom-4 right-4 flex items-center gap-3">
+                    <!-- Tooltip always visible on the left of button -->
+                    <span class="px-3 py-1.5 bg-slate-900 text-white text-xs rounded-lg shadow-lg whitespace-nowrap">
+                        Autoría: ILSA
+                    </span>
+                    <!-- Download button (only this triggers download) -->
+                    <a
+                        href="https://pub-8aec768733474013aace13d54151ba67.r2.dev/%5BILSA%5D%20Protesta%20afiche.zip"
+                        download
+                        class="bg-white/90 backdrop-blur-sm border border-white/80 px-4 py-2 rounded-xl text-sm text-slate-800 font-medium hover:bg-[var(--ilsa-blue)] hover:text-white hover:border-[var(--ilsa-blue)] transition-all duration-300 flex items-center gap-2 shadow-lg"
+                    >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        Descargar afiches
+                    </a>
+                </div>
+            </div>
+
+            <!-- INTRODUCTORY TEXT BLOCK -->
+            <section class="stagger-3 max-w-3xl mx-auto mb-24 px-4">
+                <div class="bg-white/60 backdrop-blur-3xl border border-white/80 shadow-xl shadow-slate-200/50 rounded-[3rem] p-8 md:p-12">
+                    <p class="text-base text-center md:text-lg text-slate-700 leading-relaxed text-balance mb-6 font-light">
+                        El 23 de octubre la audiencia pública del PLE 041/2026 reunió en el Congreso a víctimas, organizaciones sociales y expertos: el legislativo arrastra una deuda histórica y regular la protesta no puede seguir costando vidas ni vulnerando derechos fundamentales.
+                    </p>
+                    <p class="text-base text-center md:text-lg text-slate-700 leading-relaxed text-balance font-light">
+                        Cuatro proyectos de ley se debaten simultáneamente: dos amplían garantías democráticas y dos pretenden restringirlas. El nudo central radica en la fuerza como última ratio, la presunción de pacificidad, la protección del anonimato y el veto a la estigmatización estatal.
+                    </p>
+                </div>
+            </section>
+
+            <!-- INSTAGRAM VIDEO SECTION -->
+            <section class="max-w-2xl mx-auto mb-8 px-4">
+                <div class="text-center mb-8">
+                    <div
+                        class="inline-flex items-center gap-2 bg-[var(--ilsa-blue)]/5 text-[var(--ilsa-blue-dark)] text-xs font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full mb-3 border border-[var(--ilsa-blue)]/10 mx-auto"
+                    >
+                        <Video className="w-3.5 h-3.5" />
+                        Intervención ILSA
+                    </div>
+                    <h2 class="text-2xl md:text-3xl font-black text-slate-800 tracking-tight text-center">
+                        Intervención de Juanita Villamil
+                    </h2>
+                    <h3 class="text-base md:text-lg text-slate-600 tracking-tight text-center mt-1">
+                        Audiencia Pública Proyecto de Ley Estatutaria No. 041 de 2026
+                    </h3>
+                    <p class="text-slate-500 text-sm mt-1 max-w-xl mx-auto">
+                        Juanita Villamil (ILSA): el Congreso debe una ley que proteja, no que castigue. Diálogo, presunción de pacificidad, disrupción legítima y fin a la estigmatización: cuatro líneas rojas innegociables hoy
+                    </p>
+                </div>
+
+                <div class="relative bg-white/50 backdrop-blur-3xl border border-white/60 shadow-xl rounded-3xl overflow-hidden p-2 md:p-3">
+                    <div class="rounded-2xl bg-slate-100/50 border border-slate-200/50 px-6 py-3 flex items-center justify-center min-w-[280px]">
+                        <span class="text-slate-400 text-sm font-medium">Próximamente</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FULL YOUTUBE LIVE SECTION -->
+            <section class="max-w-4xl mx-auto mb-8 px-4">
+                <div class="text-center mb-12">
+                    <div
+                        class="inline-flex items-center gap-2 bg-red-500/5 text-red-700 text-xs font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full mb-3 border border-red-500/10 mx-auto"
+                    >
+                        <Video className="w-3.5 h-3.5" />
+                        Transmisión en vivo
+                    </div>
+                    <h2 class="text-2xl md:text-3xl font-black text-slate-800 tracking-tight text-center">
+                        Audiencia pública completa
+                    </h2>
+                                        <h3 class="text-lg md:text-xl text-slate-600 tracking-tight text-center mt-1">
+                        Proyecto de Ley Estatutaria No. 041 de 2026
+                    </h3>
+
+                </div>
+
+                <div class="relative bg-white/50 backdrop-blur-3xl border border-white/60 shadow-xl rounded-3xl overflow-hidden p-2 md:p-3">
+                    <div class="rounded-2xl overflow-hidden bg-slate-900 aspect-video">
+                        <YoutubeEmbed
+                            videoId="trzDcjlvscM"
+                            title?="Audiencia Pública PLE 041/2026 - Transmisión completa"
+                            class="w-full h-full"
+                        />
+                    </div>
+                </div>
+            </section>
+
+            <!-- PHOTO GALLERY -->
+            <section class="mb-24 pt-10 relative">
+                <div class="text-center mb-8">
+                    <div
+                        class="inline-flex items-center gap-2 bg-emerald-500/5 text-emerald-700 text-xs font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full border border-emerald-500/10 mx-auto"
+                    >
+                        <Camera className="w-3.5 h-3.5" />
+                        Galería fotográfica
+                    </div>
+                </div>
+                <GalleryLightbox>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 px-4 md:px-0">
+                        {
+                            galleryImages.map((img, idx) => (
+                                <button
+                                    type="button"
+                                    class="gallery-thumb break-inside-avoid relative rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 group border border-white/80 bg-white/50 backdrop-blur-sm cursor-zoom-in block w-full aspect-[4/3] text-left"
+                                    data-index={idx}
+                                    aria-label={`Ver foto ${idx + 1} de la galería documental`}
+                                >
+                                    <SmartImage
+                                        src={img.src}
+                                        alt={img.alt}
+                                        class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-103"
+                                        width={500}
+                                        height={375}
+                                    />
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none" />
+                                    <div class="absolute bottom-4 left-4 right-4 text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 truncate">
+                                        {img.alt}
+                                    </div>
+                                    <div class="absolute top-3 right-3 bg-white/80 backdrop-blur-sm rounded-full p-2.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-md">
+                                        <svg class="w-4 h-4 text-slate-700" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                                        </svg>
+                                    </div>
+                                </button>
+                            ))
+                        }
+                    </div>
+                </GalleryLightbox>
+            </section>
+
+            <!-- DOWNLOAD ACTION -->
+            <section class="max-w-4xl mx-auto mb-14 px-4 text-center">
+                <a
+                    href="https://pub-8aec768733474013aace13d54151ba67.r2.dev/%5BILSA%5D%20Audiencia%20del%20PLE%200412026.zip"
+                    class="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#4E7CCE] text-white rounded-2xl font-bold hover:bg-[#3d68b8] transition-all duration-300 shadow-lg shadow-[#4E7CCE]/25 transform hover:scale-105"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <Download className="w-5 h-5" />
+                    <span class="text-sm">Descargar galería</span>
+                </a>
+            </section>
+
+            <!-- PDF DOCUMENT SECTION -->
+            <section class="max-w-4xl mx-auto mb-8 px-4 text-center">
+                <PdfViewer
+                    src="https://api.ilsa.org.co/wp-content/uploads/2026/10/Observaciones-para-la-Audiencia-Publica-PLE-Protesta-Social.docx.pdf"
+                    title="Observaciones para la Audiencia Pública PLE Protesta Social"
+                    description="Instituto Latinoamericano para una Sociedad y un Derecho Alternativos (ILSA)"
+                    downloadName="Observaciones-PLE-Protesta-Social-ILSA.pdf"
+
+                />
+            </section>
+
+            <!-- DIVIDER -->
+            <div class="max-w-xs mx-auto mb-8 flex items-center gap-3">
+                <div class="flex-1 h-px bg-gradient-to-r from-transparent to-[var(--ilsa-blue-dark)]/20" />
+                <div class="w-1.5 h-1.5 rounded-full bg-[var(--ilsa-mujeres)]/40" />
+                <div class="flex-1 h-px bg-gradient-to-l from-transparent to-[var(--ilsa-blue-dark)]/20" />
+            </div>
+
+            <!-- COPYRIGHT NOTE -->
+            <p class="text-center text-xs text-slate-500 max-w-3xl mx-auto">
+                Licencia: CC BY-NC 4.0 — Este contenido puede compartirse y adaptarse para fines no comerciales, siempre que se cite a ILSA como autor.
+            </p>
+
+
+        </div>
+    </div>
+
+    <style>
+        /* Page-specific stagger animations */
+        @keyframes enter {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stagger-1 { animation: enter 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+        .stagger-2 { animation: enter 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 200ms; opacity: 0; }
+        .stagger-3 { animation: enter 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 400ms; opacity: 0; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .stagger-1, .stagger-2, .stagger-3 { opacity: 1; animation: none; }
+            .animate-blob { animation: none; }
+            img { transition: none !important; }
+        }
+    </style>
+</Layout>

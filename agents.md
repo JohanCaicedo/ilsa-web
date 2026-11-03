@@ -12,6 +12,8 @@ Actúa como un experto en Astro 5.1 y Tailwind 4.0. Tu objetivo es mantener la c
 ## 2. Inventario de Componentes Existentes (¡NO DUPLICAR!)
 Antes de crear UI, verifica si puedes usar o extender estos archivos:
 
+## 3. Nunca ejecutar npm run build 
+
 ### Átomos (Atoms) - src/components/atoms/
 - **Botones**: `Button.astro`, `navbar/NavButton.astro`.
 - **Navegación**: `navbar/NavLink.astro`, `navbar/NavDropdown.astro`, `Breadcrumbs.astro`.

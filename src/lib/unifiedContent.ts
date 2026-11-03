@@ -104,6 +104,12 @@ const especialesMeta: Record<string, Partial<LocalSpecialPage>> = {
         date: "2026-09-26T12:00:00.000Z",
         image: "https://api.ilsa.org.co/wp-content/uploads/2026/09/Cominicado-II-Encuentro-de-territorialidades-campesinas.webp",
     },
+    "la-protesta-no-es-una-amenaza": {
+        title: "La protesta no es una amenaza",
+        author: "ILSA",
+        date: "2026-10-23T12:00:00.000Z",
+        image: "https://api.ilsa.org.co/wp-content/uploads/2026/11/Protesta-ID.webp",
+    },
 };
 
 /** Converts a kebab-case slug to a human-readable title (fallback). */

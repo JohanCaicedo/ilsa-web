@@ -1,0 +1,31 @@
+---
+import TeamCard from "../molecules/TeamCard.astro";
+import { cn } from "../../lib/utils";
+
+interface Props {
+  columnists: {
+    name: string;
+    profileImage: string;
+    coverImage: string;
+  }[];
+  className?: string;
+}
+
+const { columnists, className } = Astro.props;
+---
+
+<div
+  class={cn(
+    "grid gap-6 sm:grid-cols-2 lg:grid-cols-3 p-4 md:p-8",
+    className
+  )}
+>
+  {columnists.map((columnist) => (
+    <TeamCard
+      key?={columnist.name}
+      name={columnist.name}
+      profileImage={columnist.profileImage}
+      coverImage={columnist.coverImage}
+    />
+  ))}
+</div>
