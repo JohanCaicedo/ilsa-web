@@ -46,14 +46,24 @@ export const workTeamAreas: WorkTeamArea[] = [
         id: "comunicaciones",
         title: "Comunicaciones",
         description: "Equipo de comunicaciones",
-        members: [{
-            id: "camilo-caicedo",
-            name: "Johan Camilo Caicedo",
-            role: "Estrategia Digital",
-            image: "/images/perfiles/Johan Camilo Caicedo.webp",
-            bio: "Diseñador y comunicador de ILSA.",
-            fullDescription: "Diseñador digital y multimedial de la Universidad Colegio Mayor de Cundinamarca, con formación complementaria en liderazgo e innovación en diseño (MIU y UNIR). Diseñador y comunicador de ILSA, encargado del diseño, coordinación y ejecución de la estrategia de comunicación digital y visual de la organización. Lidera la administración y optimización del ecosistema web institucional mediante arquitectura headless (Astro/WordPress), la producción de contenidos gráficos y editoriales (incluyendo publicaciones como El Otro Derecho), así como el registro fotográfico y audiovisual de eventos para el fortalecimiento de la identidad visual, la memoria institucional y la divulgación de la defensa de los derechos humanos.",
-        }],
+        members: [
+            {
+                id: "camilo-caicedo",
+                name: "Johan Camilo Caicedo",
+                role: "Estrategia Digital",
+                image: "/images/perfiles/Johan Camilo Caicedo.webp",
+                bio: "Diseñador y comunicador de ILSA.",
+                fullDescription: "Diseñador digital y multimedial de la Universidad Colegio Mayor de Cundinamarca, con formación complementaria en liderazgo e innovación en diseño (MIU y UNIR). Diseñador y comunicador de ILSA, encargado del diseño, coordinación y ejecución de la estrategia de comunicación digital y visual de la organización. Lidera la administración y optimización del ecosistema web institucional mediante arquitectura headless (Astro/WordPress), la producción de contenidos gráficos y editoriales (incluyendo publicaciones como El Otro Derecho), así como el registro fotográfico y audiovisual de eventos para el fortalecimiento de la identidad visual, la memoria institucional y la divulgación de la defensa de los derechos humanos.",
+            },
+            {
+                id: "juliana-duarte-ospina",
+                name: "Juliana Duarte Ospina",
+                role: "Comunicaciones",
+                image: "https://api.ilsa.org.co/wp-content/uploads/2026/11/IMG_5501.jpg",
+                bio: "Investigadora social, migrante, cocinera y dibujante.",
+                fullDescription: "Investigadora social, migrante, cocinera y dibujante. Socióloga y Magíster en Geografía (Universidad Nacional de Colombia), con maestría en Estudios Latinoamericanos (CEDLA - Universidad de Ámsterdam) y actualmente, estudiante de doctorado en la UNAM. Investigadora en temas de defensa territorial, memoria colectiva y justicia transicional con trayectoria en Colombia junto a pueblos indígenas, comunidades campesinas, organizaciones sociales y ONG. Fue investigadora de la Comisión de la Verdad para el Magdalena Medio y Santander. Especialista en metodologías participativas, afectivas y etnografía de los alimentos. Su labor e investigación apoyan la experiencia migrante, la creación gráfica y el trabajo de cocina y cuidado, convicción que posiciona la comida como archivo emocional, memoria y espacio de arraigo.\n\n<a href=\"https://www.behance.net/lajulitadibuja\" target=\"_blank\" rel=\"noopener noreferrer\">Portafolio de ilustraciones</a> | <a href=\"https://labitacoradelajulita.wordpress.com\" target=\"_blank\" rel=\"noopener noreferrer\">Blog</a> | <a href=\"https://www.flickr.com/photos/ocelotl10\" target=\"_blank\" rel=\"noopener noreferrer\">Fotografía</a>",
+            },
+        ],
     },
     {
         id: "acompanamiento",
