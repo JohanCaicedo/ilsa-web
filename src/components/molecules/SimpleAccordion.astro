@@ -5,10 +5,11 @@ interface Props {
     title: string;
     isOpen?: boolean;
     class?: string;
+    id?: string;
 }
 
-const { title, isOpen = false, class: className } = Astro.props;
-const id = `acc-${Math.random().toString(36).substr(2, 9)}`;
+const { title, isOpen = false, class: className, id: customId } = Astro.props;
+const id = customId || `acc-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
 <div
@@ -57,70 +58,102 @@ const id = `acc-${Math.random().toString(36).substr(2, 9)}`;
 </div>
 
 <script>
-    // Define the handler function separately so it doesn't get redefined on every page load
-    const handleAccordionClick = (e: Event) => {
-        const target = e.target as HTMLElement;
-        const trigger = target.closest(".accordion-trigger") as HTMLElement;
+    // This script only runs on the client
+    if (typeof window === 'undefined') {
+        // Server-side: do nothing
+    } else {
+        // Define the handler function separately so it doesn't get redefined on every page load
+        const handleAccordionClick = (e: Event) => {
+            const target = e.target as HTMLElement;
+            const trigger = target.closest(".accordion-trigger") as HTMLElement;
 
-        if (!trigger) return;
+            if (!trigger) return;
 
-        const item = trigger.closest(".accordion-item");
-        if (!item) return;
+            const item = trigger.closest(".accordion-item");
+            if (!item) return;
 
-        const isOpen = item.getAttribute("data-open") === "true";
-        const contentInner = item.querySelector(
-            ".accordion-content",
-        ) as HTMLElement;
-        const iconInner = item.querySelector(".icon-plus");
+            const isOpen = item.getAttribute("data-open") === "true";
+            const contentInner = item.querySelector(
+                ".accordion-content",
+            ) as HTMLElement;
+            const iconInner = item.querySelector(".icon-plus");
 
-        if (isOpen) {
-            // CLOSE
-            item.setAttribute("data-open", "false");
-            trigger.setAttribute("aria-expanded", "false");
-            trigger.classList.remove("active");
-            iconInner?.classList.remove("rotate-45");
-            if (contentInner) contentInner.style.maxHeight = "0px";
-        } else {
-            // OPEN
-            item.setAttribute("data-open", "true");
-            trigger.setAttribute("aria-expanded", "true");
-            trigger.classList.add("active");
-            iconInner?.classList.add("rotate-45");
-            if (contentInner)
-                contentInner.style.maxHeight = contentInner.scrollHeight + "px";
-        }
-    };
-
-    function setupAccordions() {
-        // Initialize state for elements present in DOM (e.g. server-rendered open items)
-        document.querySelectorAll(".accordion-item").forEach((item) => {
-            // Only initialize if not already done (though for simple styling it's cheap to redo)
-            if (item.getAttribute("data-open") === "true") {
-                const trigger = item.querySelector(".accordion-trigger");
-                const icon = item.querySelector(".icon-plus");
-                const content = item.querySelector(
-                    ".accordion-content",
-                ) as HTMLElement;
-
-                trigger?.classList.add("active");
-                icon?.classList.add("rotate-45");
-                if (content)
-                    content.style.maxHeight = content.scrollHeight + "px";
+            if (isOpen) {
+                // CLOSE
+                item.setAttribute("data-open", "false");
+                trigger.setAttribute("aria-expanded", "false");
+                trigger.classList.remove("active");
+                iconInner?.classList.remove("rotate-45");
+                if (contentInner) contentInner.style.maxHeight = "0px";
+            } else {
+                // OPEN
+                item.setAttribute("data-open", "true");
+                trigger.setAttribute("aria-expanded", "true");
+                trigger.classList.add("active");
+                iconInner?.classList.add("rotate-45");
+                if (contentInner)
+                    contentInner.style.maxHeight = contentInner.scrollHeight + "px";
             }
-        });
+        };
+
+        function setupAccordions() {
+            // Initialize state for elements present in DOM (e.g. server-rendered open items)
+            document.querySelectorAll(".accordion-item").forEach((item) => {
+                // Only initialize if not already done (though for simple styling it's cheap to redo)
+                if (item.getAttribute("data-open") === "true") {
+                    const trigger = item.querySelector(".accordion-trigger");
+                    const icon = item.querySelector(".icon-plus");
+                    const content = item.querySelector(
+                        ".accordion-content",
+                    ) as HTMLElement;
+
+                    trigger?.classList.add("active");
+                    icon?.classList.add("rotate-45");
+                    if (content)
+                        content.style.maxHeight = content.scrollHeight + "px";
+                }
+            });
+        }
+
+        // Attach the event listener ONCE to the document (delegation)
+        // We check if it's already attached to avoid duplicates in dev/hot-reload
+        if (!window.hasAccordionListener) {
+            document.addEventListener("click", handleAccordionClick);
+            window.hasAccordionListener = true;
+        }
+
+        // Re-run setup on every navigation to handle new DOM elements
+        document.addEventListener("astro:page-load", setupAccordions);
+
+        // Also run immediately in case the script loads after the event
+        setupAccordions();
+
+        // Function to scroll to and open a specific accordion
+        if (!window.scrollToFootnote) {
+            window.scrollToFootnote = (id: string) => {
+                const accordion = document.getElementById(id);
+                if (!accordion) return;
+
+                accordion.scrollIntoView({ behavior: "smooth", block: "center" });
+
+                setTimeout(() => {
+                    const trigger = accordion.querySelector(".accordion-trigger") as HTMLElement;
+                    const content = accordion.querySelector(".accordion-content") as HTMLElement;
+                    const icon = accordion.querySelector(".icon-plus") as HTMLElement;
+
+                    const isOpen = accordion.getAttribute("data-open") === "true";
+
+                    if (!isOpen) {
+                        accordion.setAttribute("data-open", "true");
+                        trigger?.setAttribute("aria-expanded", "true");
+                        trigger?.classList.add("active");
+                        icon?.classList.add("rotate-45");
+                        if (content) {
+                            content.style.maxHeight = content.scrollHeight + "px";
+                        }
+                    }
+                }, 100);
+            };
+        }
     }
-
-    // Attach the event listener ONCE to the document (delegation)
-    // We check if it's already attached to avoid duplicates in dev/hot-reload
-    const win = window as any;
-    if (!win.hasAccordionListener) {
-        document.addEventListener("click", handleAccordionClick);
-        win.hasAccordionListener = true;
-    }
-
-    // Re-run setup on every navigation to handle new DOM elements
-    document.addEventListener("astro:page-load", setupAccordions);
-
-    // Also run immediately in case the script loads after the event
-    setupAccordions();
 </script>
