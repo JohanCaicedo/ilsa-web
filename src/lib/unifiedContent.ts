@@ -110,12 +110,12 @@ const especialesMeta: Record<string, Partial<LocalSpecialPage>> = {
         date: "2026-10-23T12:00:00.000Z",
         image: "https://api.ilsa.org.co/wp-content/uploads/2026/11/Protesta-ID.webp",
     },
-    // "cien-dias-bajo-presion": {
-    //     title: "Cien días bajo presión: Auditoría democrática de los primeros 100 días del gobierno de Abelardo de la Espriella",
-    //     author: "Observatorio de la Democracia - ILSA",
-    //     date: "2026-11-10T12:00:00.000Z",
-    //     image: "https://api.ilsa.org.co/wp-content/uploads/2026/11/image1.jpg",
-    // },
+    "cien-dias-bajo-presion": {
+        title: "Cien días bajo presión: Auditoría democrática de los primeros 100 días del gobierno de Abelardo de la Espriella",
+        author: "Observatorio de la Democracia - ILSA",
+        date: "2026-11-10T12:00:00.000Z",
+        image: "https://api.ilsa.org.co/wp-content/uploads/2026/11/image1.jpg",
+    },
 };
 
 /** Converts a kebab-case slug to a human-readable title (fallback). */

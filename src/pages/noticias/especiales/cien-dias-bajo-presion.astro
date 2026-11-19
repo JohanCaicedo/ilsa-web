@@ -1,0 +1,1123 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import GradientText from "../../../components/atoms/GradientText.astro";
+import ReadingProgress from "../../../components/atoms/ReadingProgress.astro";
+import ShareButtons from "../../../components/atoms/ShareButtons.astro";
+import SimpleAccordion from "../../../components/molecules/SimpleAccordion.astro";
+import SemaphoreChart from "../../../components/molecules/SemaphoreChart.astro";
+import { MapPin, Calendar, ExternalLink, AlertTriangle, FileText, Download } from "lucide-react";
+import type { SeoData } from "../../../lib/seo";
+
+export const prerender = true;
+
+const breadcrumbs = [
+    { label: "Noticias", href: "/noticias" },
+    { label: "Especiales", href: "/noticias" },
+    {
+        label: "Cien días bajo presión",
+        href: "/noticias/especiales/cien-dias-bajo-presion",
+    },
+];
+
+const seoData: SeoData = {
+    title: "Cien días bajo presión: Auditoría democrática de los primeros 100 días del gobierno de Abelardo de la Espriella | ILSA",
+    metaDesc:
+        "Informe del Observatorio de la Democracia de ILSA: análisis de 256 episodios en los primeros 100 días del gobierno de Abelardo de la Espriella. 64,1% valorados como riesgo institucional grave o erosión democrática.",
+    opengraphTitle: "Cien días bajo presión: Auditoría democrática en Colombia",
+    opengraphDescription:
+        "El Observatorio de la Democracia de ILSA documenta seis patrones de presión democrática en los primeros 100 días del gobierno de Abelardo de la Espriella.",
+    opengraphImage: {
+        sourceUrl: "https://api.ilsa.org.co/wp-content/uploads/2026/11/image1.jpg",
+    },
+    twitterImage: {
+        sourceUrl: "https://api.ilsa.org.co/wp-content/uploads/2026/11/image1.jpg",
+    },
+    readingTime: 25,
+};
+
+const footnotes = [
+    {
+        id: 1,
+        text: 'Freedom House, “Freedom in the World 2026: The Growing Shadow of Autocracy”, 19 de marzo de 2026, https://freedomhouse.org/article/new-report-global-freedom-declined-20th-consecutive-year-2025; International IDEA, “The Global State of Democracy 2025: Democracy on the Move”, https://www.idea.int/publications/catalogue/html/global-state-democracy-2025-democracy-move. Véase ILSA, Cien días bajo presión (2026), Presentación.',
+    },
+    {
+        id: 2,
+        text: 'ILSA, Observatorio de la Democracia, Cien días bajo presión. Auditoría Democrática en Colombia (noviembre de 2026), capítulo 3.',
+    },
+    {
+        id: 3,
+        text: 'ILSA, Observatorio de la Democracia, Cien días bajo presión. Auditoría Democrática en Colombia (noviembre de 2026), apartado 1.1.',
+    },
+    {
+        id: 4,
+        text: 'ILSA, Observatorio de la Democracia, Cien días bajo presión. Auditoría Democrática en Colombia (noviembre de 2026), apartado 1.8.',
+    },
+    {
+        id: 5,
+        text: 'ILSA, Observatorio de la Democracia, Memorando 1. Propuesta de creación del Grupo de Auditoría Democrática, 17 de agosto de 2026, con sus anexos: Informe 0, Línea de base con corte al 1 de agosto de 2026, e Informe 1, La posesión frente al modelo, 7 de agosto de 2026. Véase ILSA, Cien días bajo presión (2026), Cómo se construye el análisis y capítulo 1.',
+    },
+    {
+        id: 6,
+        text: 'ILSA, Observatorio de la Democracia, Cien días bajo presión. Auditoría Democrática en Colombia (noviembre de 2026), apartados 1.1 a 1.8.',
+    },
+    {
+        id: 7,
+        text: 'Infobae, “Abelardo de la Espriella posesionó a los nuevos magistrados del CNE y cuestionó al Gobierno Petro: “Intentaron alterar la voluntad popular””, 1 de septiembre de 2026, https://www.infobae.com/colombia/2026/09/01/abelardo-de-la-espriella-posesiono-a-los-nuevos-magistrados-del-cne-y-cuestiono-al-gobierno-petro-intentaron-alterar-la-voluntad-popular/. Véase ILSA, Cien días bajo presión (2026), apartado 2.1.',
+    },
+    {
+        id: 8,
+        text: 'La Silla Vacía, “Abelardo ya firmó el decreto que modifica las reglas para la protesta”, https://www.lasillavacia.com/en-vivo/abelardo-ya-firmo-el-decreto-que-modifica-las-reglas-para-la-protesta/; Ministerio de Cultura, palabras del presidente en el Claustro de Santa Clara, 15 de octubre de 2026, https://www.mincultura.gov.co/noticias/Documents/2026/palabras-presidente-claustro-santa-clara.pdf; La Silla Vacía, “Abelardo le cambiará el nombre al MinCultura y explica batalla cultural”, https://www.lasillavacia.com/en-vivo/abelardo-le-cambiara-el-nombre-al-mincultura-y-explica-batalla-cultural/. Véase ILSA, Cien días bajo presión (2026), apartado 2.1.',
+    },
+    {
+        id: 9,
+        text: 'Caracol Radio, “La lista que De la Espriella, como candidato, envió al quitavisas de EE. UU.: dos ya no tienen visa”, 29 de septiembre de 2026, https://caracol.com.co/2026/09/29/la-lista-que-de-la-espriella-como-candidato-envio-al-quitavisas-de-eeuu-dos-ya-no-tienen-visa/; La Silla Vacía, “Con Torres y Peralta, Abelardo abre lista de visas revocadas en EE. UU.”, 28 de septiembre de 2026, https://www.lasillavacia.com/en-vivo/con-torres-y-peralta-abelardo-estrena-lista-de-visas-revocadas-en-ee-uu/. Véase ILSA, Cien días bajo presión (2026), apartados 7.4 y 9.3.',
+    },
+    {
+        id: 10,
+        text: 'La Silla Vacía, “El Dane cancela sus ruedas de prensa por directiva presidencial”, 9 de septiembre de 2026, https://www.lasillavacia.com/en-vivo/el-dane-cancela-sus-ruedas-de-prensa-por-directiva-presidencial/; La Silla Vacía, “Abelardo va por la cabeza de la Andi y pone a prueba a los empresarios”, https://www.lasillavacia.com/silla-nacional/abelardo-va-por-la-cabeza-de-la-andi-y-pone-a-prueba-a-los-empresarios/. Véase ILSA, Cien días bajo presión (2026), apartado 2.2.',
+    },
+    {
+        id: 11,
+        text: 'FLIP, “Presidente de la Junta de Ecopetrol califica a medios como enemigos del Gobierno”, 5 de octubre de 2026, https://www.flip.org.co/pronunciamientos/presidente-de-la-junta-de-ecopetrol-califica-a-medios-como-enemigos-del-gobierno; La Silla Vacía, “Gremios, medios y Congreso alineados al poder de intimidación de Abelardo”, 1 de octubre de 2026, https://www.lasillavacia.com/silla-nacional/gremios-medios-y-congreso-alineados-al-poder-de-intimidacion-de-abelardo/; FLIP, “FLIP y organizaciones aliadas instan al presidente de la República a respetar la libertad de prensa y a garantizar el derecho de la ciudadanía a estar informada”, https://www.flip.org.co/pronunciamientos/flip-y-organizaciones-aliadas-instan-al-presidente-de-la-republica-a-respetar-la-libertad-de-prensa-y-a-garantizar-el-derecho-de-la-ciudadania-a-estar-informada; Cámara de Representantes, Proyecto de Ley de Rescate Económico, artículo 8, pp. 221–222, https://www.camara.gov.co/wp-content/uploads/2026/10/proyectos-ley/documentos/proyecto-36548/PROYECTO-DE-LEY-Rescate-Economico-2026-VSD-RADICADA-1.pdf#page=221. Véase ILSA, Cien días bajo presión (2026), apartados 1.3 y 2.2.',
+    },
+    {
+        id: 12,
+        text: 'Caracol Radio, “Caracol Radio recibió alerta de las autoridades ante amenaza de atentado”, 8 de noviembre de 2026, https://caracol.com.co/2026/11/08/caracol-radio-recibio-alerta-de-las-autoridades-ante-amenaza-de-atentado/; FLIP, “Rechazamos la amenaza de atentados contra las instalaciones de medios en Bogotá”, https://www.flip.org.co/pronunciamientos/rechazamos-la-amenaza-de-atentados-contra-las-instalaciones-de-medios-en-bogota. Véase ILSA, Cien días bajo presión (2026), apartado 2.5.',
+    },
+    {
+        id: 13,
+        text: 'La Silla Vacía, “Catálogo del retiro de obras en el Museo Nacional del Gobierno de De la Espriella”, https://www.lasillavacia.com/silla-nacional/catalogo-del-retiro-de-obras-en-el-museo-nacional-del-gobierno-de-la-espriella/; El Espectador, nota sobre el rechazo de la Defensoría a la intervención del Esmad en el plantón del Museo Nacional, https://www.elespectador.com/judicial/defensoria-rechaza-intervencion-del-esmad-en-protesta-en-museo-nacional-por-retiro-de-obras/; La Silla Vacía, nota sobre la devolución de las obras retiradas del Museo Nacional, 30 de octubre de 2026, https://www.lasillavacia.com/en-vivo/mincultura-devolvio-las-obras-retiradas-del-museo-nacional/; La Silla Vacía, nota sobre la impugnación del fallo que ordenó reintegrar las obras, https://www.lasillavacia.com/en-vivo/gobierno-impugno-fallo-que-ordeno-reintegrar-obras-al-museo-nacional/. Véase ILSA, Cien días bajo presión (2026), apartado 2.1.',
+    },
+    {
+        id: 14,
+        text: 'El País, nota sobre la paralización del proyecto de reparación a víctimas de la Unión Patriótica ordenado por la Corte Interamericana, 22 de octubre de 2026, https://elpais.com/america-colombia/2026-10-22/el-gobierno-paraliza-un-proyecto-de-reparacion-a-victimas-de-la-union-patriotica-que-ordeno-la-corte-interamericana-de-derechos-humanos.html; El Espectador, nota sobre la solicitud de la Defensoría a MinCultura por las piezas retiradas del Museo Nacional, https://www.elespectador.com/judicial/defensoria-del-pueblo-pide-respuestas-a-mincultura-sobre-piezas-retiradas-del-museo-nacional/. Véase ILSA, Cien días bajo presión (2026), apartado 4.2.',
+    },
+    {
+        id: 15,
+        text: 'La FM, nota sobre la activación de la Fuerza de Tarea Urano, 5 de octubre de 2026, https://www.lafm.com.co/orden-publico/abelardo-de-la-espriella-activo-fuerza-de-tarea-urano-dijo-que-quienes-roben-hidrocarburos-son-terroristas-413052; Publicación en la red social X, registro del presidente en el Catatumbo, 6 de octubre de 2026, https://x.com/Orlando71156528/status/2107478447274516899; Presidencia de la República, anuncio del Decreto 1368 de 2026 sobre permisos de porte de armas, 8 de septiembre de 2026, https://www.presidencia.gov.co/prensa/Paginas/Presidente-De-La-Espriella-levanta-suspension-de-los-permisos-para-el-porte-260908.aspx. Véase ILSA, Cien días bajo presión (2026), apartados 1.5 y 6.3.',
+    },
+    {
+        id: 16,
+        text: 'EFE, nota sobre la orden judicial relativa a las publicaciones presidenciales de cadáveres, 10 de septiembre de 2026, https://efe.com/mundo/2026-09-10/juez-ordena-de-la-espriella-publicaciones-cadaveres/. Véase ILSA, Cien días bajo presión (2026), apartados 1.5 y 6.3.',
+    },
+    {
+        id: 17,
+        text: 'La Silla Vacía, “El presidente Abelardo de la Espriella firmó el decreto 1525 de 2026”, 14 de octubre de 2026, https://www.lasillavacia.com/?p=454619; Cambio, “Decreto de protestas: Gobierno de Abelardo de la Espriella propone intervenir sin agotar el diálogo”, septiembre de 2026, https://cambiocolombia.com/poder/articulo/2026/9/decreto-de-protestas-gobierno-de-abelardo-de-la-espriella-propone-intervenir-sin-agotar-el-dialogo.',
+    },
+    {
+        id: 18,
+        text: 'Cambio, nota sobre el choque entre la Policía y la Defensoría en el PMU durante las protestas, octubre de 2026, https://cambiocolombia.com/pais/articulo/2026/10/el-detras-de-camaras-del-pmu-policia-y-defensoria-del-pueblo-chocaron-por-los-procedimientos-durante-las-protestas. Véase ILSA, Cien días bajo presión (2026), apartado 5.2.',
+    },
+    {
+        id: 19,
+        text: 'El Espectador, “Juez envía a la cárcel a policías imputados por homicidio y tortura de Donovan Balanta”, 26 de octubre de 2026, https://www.elespectador.com/bogota/juez-envia-a-la-carcel-a-policias-imputados-por-homicidio-y-tortura-de-donovan-balanta/; Alcaldía de Bogotá, información sobre las capturas en el caso de Donovan Balanta, 20 de octubre de 2026, https://bogota.gov.co/mi-ciudad/seguridad/2026-10/bogota-avanza-en-el-caso-de-donovan-balanta-paz-con-cuatro-capturas. Véase ILSA, Cien días bajo presión (2026), apartado 5.1.',
+    },
+    {
+        id: 20,
+        text: 'Cámara de Representantes, Proyecto de Ley de Rescate Económico, artículo 7, pp. 219–221, https://www.camara.gov.co/wp-content/uploads/2026/10/proyectos-ley/documentos/proyecto-36548/PROYECTO-DE-LEY-Rescate-Economico-2026-VSD-RADICADA-1.pdf#page=219; Decreto 1599 de 2026, Presupuesto General de la Nación 2027, artículo 85, https://normograma.mintic.gov.co/mintic/compilacion/docs/decreto_1599_2026.htm; Cambio, “Menos controles para gastar la plata del terremoto: lo que denuncia Catherine Juvinao sobre el Fondo Milagro”, noviembre de 2026, https://cambiocolombia.com/poder/articulo/2026/11/menos-controles-para-gastar-la-plata-del-terremoto-lo-que-denuncia-juvinao-sobre-el-fondo-milagro. Véase ILSA, Cien días bajo presión (2026), apartados 1.6, 2.3 y 8.3.',
+    },
+    {
+        id: 21,
+        text: 'El Tiempo, nota sobre la decisión judicial que mantuvo suspendida la fumigación aérea con glufosinato en Putumayo, 22 de septiembre de 2026, https://www.eltiempo.com/justicia/conflicto-y-narcotrafico/primicia-juez-mantiene-suspendida-fumigacion-aerea-con-glufosinato-en-putumayo-y-pone-la-lupa-sobre-requisitos-del-piloto-3588109; Blu Radio, “De la Espriella revela imágenes de extradición de alias Araña y envía mensaje a Iván Márquez”, 25 de septiembre de 2026, https://www.bluradio.com/nacion/de-la-espriella-revela-imagenes-de-extradicion-de-arana-y-envia-mensaje-a-ivan-marquez-rg10. Véase ILSA, Cien días bajo presión (2026), apartados 1.6 y 9.3.',
+    },
+    {
+        id: 22,
+        text: 'La FM, nota sobre la parálisis presupuestal de la Comisión de Acusación, https://www.lafm.com.co/politica/comision-de-acusacion-lleva-paralizada-mas-de-un-mes-por-falta-de-presupuesto; Cambio, nota sobre la solicitud del Gobierno de aplazar la sesión de control sobre la reconstrucción y el Fondo Milagro, octubre de 2026, https://cambiocolombia.com/poder/articulo/2026/10/gobierno-de-la-espriella-pidio-al-congreso-aplazar-sesion-de-seguimiento-sobre-la-reconstruccion-y-el-fondo-milagro. Véase ILSA, Cien días bajo presión (2026), apartado 5.2.',
+    },
+    {
+        id: 23,
+        text: 'Cámara de Representantes, Proyecto de Ley de Rescate Económico radicado (disposiciones tributarias y artículo 16), https://www.camara.gov.co/wp-content/uploads/2026/10/proyectos-ley/documentos/proyecto-36548/PROYECTO-DE-LEY-Rescate-Economico-2026-VSD-RADICADA-1.pdf; La Silla Vacía, “JEP reduce protección a víctimas, sedes y contratos por presupuesto”, https://www.lasillavacia.com/en-vivo/jep-reduce-proteccion-a-victimas-sedes-y-contratos-por-presupuesto/; Diario del Cesar, “Cambio de operadores paraliza los 50 CDI en el Cesar”, https://www.diariodelcesar.com/archivos/350967/cambio-de-operadores-paraliza-los-50-cdi-en-el-cesar/; Blu Radio, “Por demoras, piden a la UNGRD reabrir registro de damnificados y agilizar ayudas por terremoto”, https://www.bluradio.com/nacion/por-demoras-piden-a-la-ungrd-reabrir-registro-de-damnificados-y-agilizar-ayudas-por-terremoto-rg10. Véase ILSA, Cien días bajo presión (2026), apartados 1.7, 2.3 y capítulo 8.',
+    },
+    {
+        id: 24,
+        text: 'World Inequality Lab, World Inequality Report 2026, ficha de Colombia, p. 167, https://wir2026.wid.world/download/. Véase ILSA, Cien días bajo presión (2026), apartado 6.1.',
+    },
+    {
+        id: 25,
+        text: 'Las fuentes de los episodios mencionados están en las notas de los apartados 3.1 a 3.6. Véase ILSA, Cien días bajo presión (2026), apartado 1.8.',
+    },
+    {
+        id: 26,
+        text: 'Cancillería, respuesta al control político de la Cámara de Representantes, pp. 3–4 y 28, septiembre de 2026, https://www.camara.gov.co/wp-content/uploads/2026/09/control_politico/respuestas/8086/RESPUESTA-DE-LA-CANCILLERIA.pdf; Cancillería, “Colombia reconoce la soberanía de Israel sobre los Altos del Golán”, https://www.cancilleria.gov.co/sala-de-prensa/noticias/colombia-reconoce-la-soberania-de-israel-sobre-los-altos-del-golan; Consejo de Seguridad de las Naciones Unidas, Resolución 497 de 1981, https://www.un.org/unispal/document/auto-insert-180751/; El Espectador, “Colombia inauguró la embajada en Jerusalén: es el décimo país en hacerlo”, https://www.elespectador.com/mundo/mas-paises/colombia-inauguro-la-embajada-en-jerusalen-es-el-decimo-pais-en-hacerlo/; Cancillería, “Colombia retira declaración de intervención en el caso Aplicación de la Convención para la Prevención y la Sanción del Delito de Genocidio en la Franja de Gaza (Sudáfrica v. Israel)”, https://cancilleria.gov.co/sala-de-prensa/noticias/colombia-retira-declaracion-de-intervencion-en-el-caso-aplicacion-de-la-convencion-para-la-prevencion-y-la-sancion-del-delito-de-genocidio-en-la-franja-de-gaza-sudafrica-v-israel; La Silla Vacía, “Colombia se sale del Grupo de La Haya: Bula dice que ataca a Israel”, https://www.lasillavacia.com/en-vivo/colombia-se-sale-del-grupo-de-la-haya-bula-dice-que-ataca-a-israel/; Caracol Radio, “Colombia vota en contra de resolución presentada por Cuba en la ONU contra el embargo de Washington”, 28 de octubre de 2026, https://caracol.com.co/2026/10/28/colombia-vota-en-contra-de-resolucion-presentada-por-cuba-en-la-onu-contra-el-embargo-de-washington/. Véase ILSA, Cien días bajo presión (2026), capítulo 9.',
+    },
+    {
+        id: 27,
+        text: 'El Tiempo, “Ley antimermelada, Estatuto Antiterrorista y capital alterna: las iniciativas del Gobierno pendientes por impulsar en la recta final del Congreso”, 10 de noviembre de 2026, https://www.eltiempo.com/politica/congreso/ley-antimermelada-estatuto-antiterrorista-y-capital-alterna-las-iniciativas-del-gobierno-pendientes-por-impulsar-en-la-recta-final-del-congreso-3599895.',
+    },
+    {
+        id: 28,
+        text: 'Colombia Prensa, “Congreso espera radicación del Estatuto Antiterrorista con advertencias de órganos judiciales y de derechos humanos”, 27 de octubre de 2026, https://colombiaprensa.com.co/congreso-espera-radicacion-del-estatuto-antiterrorista-con-advertencias-de-organos-judiciales-y-de-derechos-humanos/.',
+    },
+    {
+        id: 29,
+        text: 'France 24 / AFP, “La Corte Suprema de Colombia cuestiona un proyecto antiterrorista de De la Espriella”, 21 de octubre de 2026, https://www.france24.com/es/minuto-a-minuto/20261021-la-corte-suprema-de-colombia-cuestiona-un-proyecto-antiterrorista-de-de-la-espriella; Hoy Diario del Magdalena, “Congreso a la espera de la radicación del estatuto antiterrorista”, octubre de 2026, https://www.hoydiariodelmagdalena.com.co/archivos/1311458/congreso-a-la-espera-de-la-radicacion-del-estatuto-antiterrorista.',
+    },
+    {
+        id: 30,
+        text: 'Laura Bonilla, “El grave caballo de Troya que implica el proyecto de estatuto antiterrorista del gobierno De la Espriella”, Fundación Paz y Reconciliación (Pares), 9 de octubre de 2026, https://www.pares.com.co/el-grave-caballo-de-troya-que-implica-el-proyecto-de-estatuto-antiterrorista-del-gobierno-de-la-espriella/.',
+    },
+    {
+        id: 31,
+        text: 'Rubén Darío Acosta Ortiz, “Estatuto Antiterrorista en Colombia: ¿seguridad con garantías o excepción permanente?”, CESJUL, 14 de octubre de 2026, https://cesjul.org/estatuto-antiterrorista-en-colombia-seguridad-con-garantias-o-excepcion-permanente/.',
+    },
+    {
+        id: 32,
+        text: 'La Silla Vacía, “Las claves del Estatuto Antiterrorista del gobierno De la Espriella”, 15 de octubre de 2026, https://www.lasillavacia.com/silla-nacional/las-claves-del-estatuto-antiterrorista-del-gobierno-de-la-espriella/.',
+    },
+    {
+        id: 33,
+        text: 'Clara López Obregón, “Nadie está a salvo cuando el Estado puede castigar al inocente”, Confidencial Colombia, 10 de octubre de 2026. confidencialnoticias.com/opinion/nadie-esta-a-salvo-cuando-el-estado-puede-castigar-al-inocente-clara-lopez-obregon/?shem=aimgspe.',
+    },
+    {
+        id: 34,
+        text: 'Laura Bonilla, “El grave caballo de Troya que implica el proyecto de estatuto antiterrorista del gobierno De la Espriella”, Fundación Paz y Reconciliación (Pares), 9 de octubre de 2026, https://www.pares.com.co/el-grave-caballo-de-troya-que-implica-el-proyecto-de-estatuto-antiterrorista-del-gobierno-de-la-espriella/.',
+    },
+    {
+        id: 35,
+        text: 'La Silla Vacía, nota sobre el concepto de la Corte Suprema de Justicia, 20 de octubre de 2026, https://www.lasillavacia.com/?p=456576; France 24 / AFP, 21 de octubre de 2026.',
+    },
+    {
+        id: 36,
+        text: 'Laura Bonilla, “El grave caballo de Troya que implica el proyecto de estatuto antiterrorista del gobierno De la Espriella”, Fundación Paz y Reconciliación (Pares), 9 de octubre de 2026, https://www.pares.com.co/el-grave-caballo-de-troya-que-implica-el-proyecto-de-estatuto-antiterrorista-del-gobierno-de-la-espriella/.',
+    },
+    {
+        id: 37,
+        text: 'Fundación Pares, “Cien días de Abelardo de la Espriella: los riesgos del estatuto antiterrorista”, 12 de noviembre de 2026, https://www.pares.com.co/cien-dias-de-abelardo-de-la-espriella-los-riesgos-del-estatuto-antiterrorista/.',
+    },
+    {
+        id: 38,
+        text: 'La Silla Vacía, “Mininterior presentará un estatuto antiterrorista ante el Congreso”, https://www.lasillavacia.com/en-vivo/mininterior-presentara-un-estatuto-antiterrorista-ante-el-congreso/.',
+    },
+    {
+        id: 39,
+        text: 'Rubén Darío Acosta Ortiz, “Estatuto Antiterrorista en Colombia: ¿seguridad con garantías o excepción permanente?”, CESJUL, 14 de octubre de 2026, https://cesjul.org/estatuto-antiterrorista-en-colombia-seguridad-con-garantias-o-excepcion-permanente/.',
+    },
+    {
+        id: 40,
+        text: 'Abelardo Forero Benavides, Colombia, un drama: memorias de un pacifista en un país en llamas, Universidad de los Andes, 2025, pp. 157–158 y 199–211.',
+    },
+    {
+        id: 41,
+        text: 'Corte Interamericana de Derechos Humanos, Integrantes y Militantes de la Unión Patriótica vs. Colombia, sentencia de 27 de julio de 2022, párrs. 412–414, https://www.unidadvictimas.gov.co/wp-content/uploads/2024/04/Sentencia27JULIO2022-CasoIntegrantesMilitantesUP.pdf. Véase ILSA, Cien días bajo presión (2026), apartado 4.2.',
+    },
+    {
+        id: 42,
+        text: 'Comisión para el Esclarecimiento de la Verdad, Hay futuro si hay verdad. Hallazgos y recomendaciones para la no repetición, 2022, https://www.comisiondelaverdad.co/sites/default/files/descargables/2022-08/FINAL%20CEV_HALLAZGOS_IMPRESION_2022.pdf. Véase ILSA, Cien días bajo presión (2026), apartado 4.1.',
+    },
+    {
+        id: 43,
+        text: 'La Silla Vacía, nota sobre la devolución de las obras retiradas del Museo Nacional, 30 de octubre de 2026, https://www.lasillavacia.com/en-vivo/mincultura-devolvio-las-obras-retiradas-del-museo-nacional/.',
+    },
+    {
+        id: 44,
+        text: 'El Tiempo, nota sobre la decisión judicial que mantuvo suspendida la fumigación aérea con glufosinato en Putumayo, 22 de septiembre de 2026, https://www.eltiempo.com/justicia/conflicto-y-narcotrafico/primicia-juez-mantiene-suspendida-fumigacion-aerea-con-glufosinato-en-putumayo-y-pone-la-lupa-sobre-requisitos-del-piloto-3588109.',
+    },
+    {
+        id: 45,
+        text: 'Cambio, nota sobre la revocatoria de la licitación de medicamentos de la Policía, octubre de 2026, https://cambiocolombia.com/poder/articulo/2026/10/tras-investigacion-de-cambio-policia-revoca-licitacion-de-medicamentos-por-cuestionamientos-publicos.',
+    },
+    {
+        id: 46,
+        text: 'El Espectador, “Juez envía a la cárcel a policías imputados por homicidio y tortura de Donovan Balanta”, 26 de octubre de 2026, https://www.elespectador.com/bogota/juez-envia-a-la-carcel-a-policias-imputados-por-homicidio-y-tortura-de-donovan-balanta/.',
+    },
+    {
+        id: 47,
+        text: 'Cambio, “La fundación de la primera dama tiene 48 horas para responder por donaciones del terremoto”, noviembre de 2026, https://cambiocolombia.com/poder/articulo/2026/11/fundacion-primera-dama-48-horas-donaciones-terremoto.',
+    },
+    {
+        id: 48,
+        text: 'Cambio, nota sobre la votación de la moción de censura contra el ministro de Vivienda, septiembre de 2026, https://cambiocolombia.com/poder/articulo/2026/9/senado-nego-mocion-de-censura-a-ministro-de-vivienda-por-su-viaje-a-santa-marta-61-votos-contra-27-tumbaron-la-medida.',
+    },
+    {
+        id: 49,
+        text: 'La Silla Vacía, nota sobre el concepto de la Corte Suprema de Justicia acerca del Estatuto Antiterrorista, 20 de octubre de 2026, https://www.lasillavacia.com/?p=456576.',
+    },
+    {
+        id: 50,
+        text: 'ILSA, Cien días bajo presión (2026), capítulos 5 y 11.',
+    },
+    {
+        id: 51,
+        text: 'ILSA, Observatorio de la Democracia, Cien días bajo presión. Auditoría Democrática en Colombia (noviembre de 2026), apartados 1.1 a 1.8 y capítulo 5.',
+    },
+];
+
+const semaphoreData = {
+    compatible: 28,
+    alerta: 64,
+    riesgoGrave: 117,
+    erosion: 47,
+    total: 256,
+};
+
+const keyFigures = [
+    { value: "297", label: "Fichas documentadas" },
+    { value: "256", label: "Episodios en el balance" },
+    { value: "64,1%", label: "Riesgo grave o erosión" },
+    { value: "4/6", label: "Episodios de erosión en oposición" },
+];
+---
+
+<Layout
+    title="Especial: Cien días bajo presión - ILSA"
+    width="wide"
+    seo={seoData}
+    breadcrumbs={breadcrumbs}
+>
+    <ReadingProgress />
+
+    <div class="relative min-h-screen pb-32">
+        <!-- Blobs decorativos de fondo (Liquid Glass Accent) -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+            <div
+                class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-orange-500/5 rounded-full blur-[120px] animate-blob"
+            ></div>
+            <div
+                class="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[var(--ilsa-blue-light)]/10 rounded-full blur-[100px] animate-blob animation-delay-2000"
+            ></div>
+            <!-- Additional subtle glow for hero -->
+            <div
+                class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-b from-orange-500/10 via-transparent to-transparent rounded-full blur-[150px]"
+            ></div>
+        </div>
+
+        <div class="relative z-10 pt-8 max-w-5xl mx-auto px-4 md:px-8">
+            <!-- Hero Title & Badge -->
+            <div class="text-center mb-16 md:mb-20 space-y-6">
+                <div
+                    class="inline-flex items-center justify-center gap-3 px-6 py-3 rounded-full bg-white/70 backdrop-blur-md border border-orange-500/30 shadow-md shadow-orange-500/10 mx-auto"
+                >
+                    <span class="relative flex h-2.5 w-2.5">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-500 opacity-40"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-orange-500"></span>
+                    </span>
+                    <span class="text-xs font-bold text-orange-600 uppercase tracking-[0.2em]">
+                        Informe Especial · Observatorio de la Democracia ILSA
+                    </span>
+                </div>
+
+                <h1 class="text-4xl md:text-6xl lg:text-7xl text-center font-black drop-shadow-sm leading-[1.05] text-balance mx-auto text-slate-900 tracking-tight">
+                    <GradientText
+                        text="Cien días bajo presión"
+                        size="text-4xl md:text-5xl lg:text-6xl"
+                        weight="font-black"
+                        from="rgb(249, 115, 22)"
+                        to="rgb(194, 65, 12)"
+                        as="span"
+                    />
+                </h1>
+
+                <p class="text-lg md:text-xl lg:text-2xl text-center text-slate-600 max-w-3xl mx-auto text-balance leading-relaxed font-light mt-4">
+            Una auditoría democrática de los primeros cien días del gobierno del presidente Abelardo de la Espriella en Colombia
+        </p>
+        <p class="text-lg md:text-xl lg:text-2xl text-center text-slate-600 max-w-3xl mx-auto text-balance leading-relaxed font-light mt-2">
+            <b>Dirección y coordinación:</b> Clara López Obregón
+        </p>
+
+                <!-- Metadata Row -->
+                <div class="flex flex-wrap items-center justify-center gap-4 md:gap-6 pt-6 text-sm text-slate-500 font-medium">
+                    <div class="flex items-center gap-2 bg-white/60 px-4 py-2.5 rounded-full border border-white/70 backdrop-blur-sm shadow-sm">
+                        <MapPin className="w-4 h-4 text-orange-600" />
+                        <span>Colombia</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-white/60 px-4 py-2.5 rounded-full border border-white/70 backdrop-blur-sm shadow-sm">
+                        <Calendar className="w-4 h-4 text-orange-600" />
+                        <span>Periodo: 7 agosto – 10 noviembre 2026</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-white/60 px-4 py-2.5 rounded-full border border-white/70 backdrop-blur-sm shadow-sm">
+                        <FileText className="w-4 h-4 text-[var(--ilsa-blue)]" />
+                        <span>Versión de divulgación</span>
+                    </div>
+                </div>
+                
+                <!-- Share Buttons Section -->
+                <div class="pt-6 flex justify-center">
+                    <ShareButtons
+                        url="https://ilsa.org.co/noticias/especiales/cien-dias-bajo-presion"
+                        title="Cien días bajo presión: Auditoría democrática de los primeros 100 días del gobierno de Abelardo de la Espriella | ILSA"
+                    />
+                </div>
+            </div>
+
+            <!-- Main Liquid Glass Container -->
+            <div class="bg-white/50 backdrop-blur-3xl border border-white/60 shadow-2xl shadow-slate-200/50 rounded-[3rem] p-6 md:p-10 lg:p-14 space-y-12">
+
+                <!-- Key Figures Bar - Enhanced Data Visualization -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-2 relative" data-animate="stagger">
+                    {keyFigures.map((figure, index) => (
+                        <div class="relative group text-center p-4 md:p-5 lg:p-6 bg-white/50 backdrop-blur-sm border border-white/70 rounded-2xl transition-all duration-300 hover:border-orange-200/50 hover:shadow-lg hover:shadow-orange-100/50 hover:-translate-y-1" style={{animationDelay: `${index * 100}ms`}}>
+                            <!-- Accent bar top -->
+                            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-0 group-hover:w-3/4 h-1 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full transition-all duration-300 origin-center"></div>
+                            <div class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black leading-[1.05] bg-gradient-to-r from-orange-600 via-orange-500 to-red-600 bg-clip-text text-transparent">
+                                {figure.value}
+                            </div>
+                            <div class="text-xs sm:text-sm text-slate-500 font-medium uppercase tracking-wide mt-2 leading-snug">{figure.label}</div>
+                            <!-- Subtle icon indicator -->
+                            <div class="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-orange-500/30">
+                                <span class="text-[10px] font-bold">▲</span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                <!-- Semaphore Chart -->
+                <SemaphoreChart data={semaphoreData} />
+
+                <!-- Separador -->
+                <div class="relative py-4 my-4 border-t border-slate-200/60">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-px bg-gradient-to-r from-transparent via-orange-400 to-transparent"></div>
+                </div>
+
+                <!-- Chapter 1: Por qué esta alerta -->
+                <section id="capitulo-1" class="space-y-8">
+                    <h2 class="text-3xl md:text-4xl font-black text-slate-900 text-center">
+                        <span class="text-orange-600">1.</span> Por qué esta alerta
+                    </h2>
+
+                    <div class="max-w-3xl mx-auto space-y-6 text-slate-700 font-light text-lg leading-relaxed text-pretty text-left">
+                        <p class="font-normal text-slate-800 max-w-2xl mx-auto">
+                             Las democracias de nuestro tiempo rara vez caen de un golpe. Se desgastan desde adentro, bajo gobiernos elegidos, mientras las elecciones se siguen celebrando, el Congreso sesiona y los tribunales fallan. El deterioro no llega con el cierre de las instituciones sino con algo más difícil de ver: se presenta al adversario como enemigo, se castiga la independencia, se borran memorias incómodas y se concentran las decisiones. Cada medida, por separado, parece legal, temporal o necesaria. Sumadas, cambian la naturaleza del régimen.
+                        </p>
+
+                        <p>
+                            Colombia no es una excepción en un mundo que retrocede. Según Freedom House, 2025 fue el vigésimo año consecutivo de declive de la libertad global: 54 países retrocedieron y solo 35 mejoraron. International IDEA ubicó ese año su indicador de representación en el nivel más bajo desde 2001 y registró retrocesos de la libertad de prensa en 43 países.<a href="#fn-1" class="footnote-ref" id="fn-ref-1"><sup>[1]</sup></a>
+                        </p>
+
+                        <p class="font-medium text-slate-800">
+                            Este documento resume, en lenguaje accesible, el primer informe del Observatorio de la Democracia del Instituto Latinoamericano para una Sociedad y un Derecho Alternativos (ILSA), <em class="italic">Cien días bajo presión</em><a href="#fn-2" class="footnote-ref" id="fn-ref-2"><sup>[2]</sup></a>, que examinó los primeros cien días del gobierno de Abelardo de la Espriella, entre el 7 de agosto y el 10 de noviembre de 2026<a href="#fn-3" class="footnote-ref" id="fn-ref-3"><sup>[3]</sup></a>. Su conclusión es una advertencia: <strong class="font-black text-orange-600">la erosión democrática está en curso y está tomando impulso.</strong>
+                        </p>
+
+                        <p>
+                            Tomar impulso significa que la presión está cambiando de forma. En las primeras semanas predominó la palabra: los señalamientos que presentan a la oposición, la protesta y la memoria como amenazas terroristas. Luego vinieron los actos: retiro de piezas de un museo, cancelación de ruedas de prensa técnicas, salidas de periodistas y funcionarios, exhibición de cuerpos tras los operativos. Ahora llega la tercera fase, la más delicada: <strong class="font-semibold">convertir esa visión en instrumentos legales.</strong> El nuevo protocolo de protesta, las facultades extraordinarias que pide el proyecto de Ley de Rescate, el control previo de la Presidencia sobre la pauta oficial y, sobre todo, el proyecto de Estatuto Antiterrorista darían permanencia jurídica a lo que hasta ahora han sido prácticas. Lo que hoy puede corregir un juez mañana podría estar autorizado por la ley.
+                        </p>
+
+                        <p class="font-medium text-slate-800">
+                            La advertencia no es una profecía. El desenlace no está escrito: jueces, órganos de control, periodistas, organizaciones y ciudadanos han conseguido correcciones concretas en estos cien días. Pero las defensas democráticas funcionan mejor cuando se activan a tiempo. Por eso esta alerta se emite ahora.
+                        </p>
+                    </div>
+
+                    <!-- Caja de metodología (Accordion) -->
+                    <SimpleAccordion title="Sobre este documento" class="border-orange-200/50">
+                        <div class="bg-orange-50/50 border border-orange-200/50 rounded-2xl p-6 md:p-8 space-y-4">
+                            <h3 class="text-lg font-bold text-orange-700 flex items-center gap-2">
+                                <AlertTriangle className="w-5 h-5" />
+                                Sobre este documento
+                            </h3>
+                            <div class="text-sm text-slate-600 space-y-2">
+                                <p>Es la versión de divulgación del informe <em>Cien días bajo presión. Auditoría Democrática en Colombia</em>, del Observatorio de la Democracia de ILSA, con corte documental al 10 de noviembre de 2026. El capítulo 4, sobre el proyecto de Estatuto Antiterrorista, se amplió con fuentes públicas consultadas el 14 de noviembre de 2026 y se basa en el borrador conocido públicamente, porque el texto aún no había sido radicado.</p>
+                                <p>Cada episodio del informe completo conserva su identificador, fuentes y valoración. ILSA habilitará en su página web, <a href="https://www.ilsa.org.co" target="_blank" rel="noopener noreferrer" class="text-orange-600 underline hover:text-orange-700">www.ilsa.org.co</a>, una sección para consultar los episodios y sus actualizaciones, y para aportar información y propuestas. Las notas citan las fuentes originales y remiten al apartado correspondiente del informe completo.</p>
+                            </div>
+                        </div>
+                    </SimpleAccordion>
+                </section>
+
+                <!-- Separador -->
+                <div class="relative py-4 my-4 border-t border-slate-200/60">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-px bg-gradient-to-r from-transparent via-orange-400 to-transparent"></div>
+                </div>
+
+                <!-- Chapter 2: Cómo se erosiona una democracia -->
+                <section id="capitulo-2" class="space-y-8">
+                    <h2 class="text-3xl md:text-4xl font-black text-slate-900 text-center">
+                        <span class="text-orange-600">2.</span> Cómo se erosiona una democracia
+                    </h2>
+
+                    <div class="max-w-3xl mx-auto space-y-6 text-slate-700 font-light text-lg leading-relaxed text-pretty">
+                        <p>
+                            La erosión democrática se parece a la de un terreno firme que pierde cohesión por la acción persistente del agua y del viento: el deterioro avanza antes de que aparezcan las grietas. Las instituciones conservan su forma mientras las presiones reiteradas debilitan las garantías y los límites al poder.
+                        </p>
+
+                        <p>Para hacer visible ese proceso, el Observatorio trabaja con cuatro ideas sencillas.</p>
+
+                        <ul class="space-y-3 pl-6 list-disc">
+                            <li><strong>El episodio</strong> es la unidad básica: una declaración, decisión, práctica u omisión identificable, con fecha, autor y fuentes.</li>
+                            <li><strong>La dimensión</strong> indica qué garantía está en juego. El Observatorio sigue doce: elecciones, justicia, Congreso, oposición, prensa, fuerza pública y protesta, estados de excepción, igualdad y diversidad, administración y órganos autónomos, obligaciones internacionales y paz, Estado social y lenguaje.</li>
+                            <li><strong>El patrón</strong> aparece cuando una forma de actuar se repite, alcanza a distintos destinatarios y se conecta con decisiones semejantes en otros ámbitos.</li>
+                            <li><strong>La trayectoria</strong> muestra cómo esa práctica empieza, se amplía, encuentra límites o se revierte.</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-slate-900 pt-4">Palabra, diseño y acto</h3>
+
+                        <p>
+                            No todo pesa igual. El Observatorio distingue la <strong>palabra</strong> (un discurso, un señalamiento), el <strong>diseño</strong> (un proyecto de ley o de decreto), el <strong>acto</strong> (una decisión ejecutada) y la <strong>respuesta</strong> a un límite (acatar o desafiar a un juez). Una promesa no prueba su cumplimiento y un proyecto no es una norma vigente. Pero la palabra oficial importa: en Colombia, el señalamiento desde el poder ha precedido a la violencia.
+                        </p>
+
+                        <h3 class="text-xl font-bold text-slate-900 pt-4">Dos mecanismos que conectan todo</h3>
+
+                        <p>
+                            El primero son los <strong>cambios administrativos dispersos</strong>: una autorización previa para hablar con la prensa, una reorganización, un recorte. Cada medida tiene su propio objeto, pero su combinación transforma el funcionamiento de una institución sin suprimir formalmente sus competencias. El segundo es la <strong>intimidación</strong>, que busca obediencia por anticipado: el señalamiento, la exclusión y la posibilidad de perder acceso, recursos o empleo enseñan a callar a quienes observan. El lenguaje y los símbolos atraviesan ambos mecanismos: preparan la deslegitimación de una persona o un colectivo, o presentan una restricción como defensa de la nación.
+                        </p>
+
+                        <h3 class="text-xl font-bold text-slate-900 pt-4">El semáforo</h3>
+
+                        <p>Cada episodio recibe una de cuatro valoraciones: <strong class="text-green-700">compatible</strong>, cuando preserva las garantías; <strong class="text-yellow-700">alerta</strong>, cuando señala un posible deterioro; <strong class="text-orange-600">riesgo institucional grave</strong>, cuando hay una amenaza concreta y sustentada; y <strong class="text-orange-700">erosión democrática</strong>, cuando hay una reducción efectiva de garantías ligada a una práctica de subordinación.</p>
+
+                        <h3 class="text-xl font-bold text-slate-900 pt-4">Reglas de lectura</h3>
+
+                        <ul class="space-y-2 pl-6 list-disc text-slate-700">
+                            <li>El semáforo describe el expediente reunido; no mide "cuánta democracia se ha perdido" ni es una muestra estadística del país.</li>
+                            <li>El color no identifica al responsable: el expediente distingue entre actuaciones del Ejecutivo, de otras autoridades, de particulares y de grupos armados.</li>
+                            <li>Para examinar los efectos públicos de una actuación no hace falta probar la intención del gobernante. Cuando se infiere un mecanismo, se exponen los hechos que lo sostienen.</li>
+                            <li>Quien es investigado se presume inocente, y el mismo rasero constitucional se aplica a aliados y adversarios, también al gobierno anterior.</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-slate-900 pt-4">Cómo se hizo este informe</h3>
+
+                        <p>
+                            Este documento descansa en un trabajo de investigación sistemático. Entre la posesión presidencial del 7 de agosto y el 10 de noviembre de 2026, el equipo del Observatorio documentó <strong>297 fichas</strong> de episodios a partir de fuentes públicas verificables: normas y actos administrativos, decisiones judiciales, documentos oficiales y prensa. Cada ficha tiene fecha, autor, fuentes e identificador estable. <strong>256 integran el balance</strong>; las otras 41 se conservan para seguimiento y trazabilidad, sin sumarse a él. Cada episodio se contrastó con explicaciones alternativas, y la solidez de su evidencia se registró en cuatro niveles: indicio identificable, fuente idónea, dos fuentes independientes o documento primario. Varias noticias que repiten una misma denuncia no cuentan como corroboración independiente. Las valoraciones se revisan cuando aparece información nueva, sin borrar la anterior.
+                        </p>
+
+                        <p class="font-medium">
+                            <strong>De las hipótesis a los patrones.</strong> Los patrones que presenta este documento tienen su antecedente en cinco patrones de riesgo que el Observatorio formuló como hipótesis antes de la posesión, en su línea de base con corte al 1 de agosto, a partir de programas, discursos y decisiones de la transición, y que contrastó luego con la posesión presidencial. El seguimiento de los episodios corroboró esas hipótesis, precisó sus mecanismos y las reorganizó en los seis patrones actuales, y detectó los dos mecanismos que los conectan. En el próximo corte, una codificación independiente, hecha sin conocer la clasificación de la dirección del Observatorio, verificará patrones y mecanismos con los episodios nuevos.
+                        </p>
+
+                        <p class="text-sm text-slate-500">
+                            La metodología completa, con sus definiciones, reglas de conteo y tablas por dimensión, se encuentra en el anexo metodológico del informe <em>Cien días bajo presión</em>, que puede consultarse en <a href="https://www.ilsa.org.co" target="_blank" rel="noopener noreferrer" class="text-orange-600 underline">www.ilsa.org.co</a> junto con la matriz de episodios.<a href="#fn-4" class="footnote-ref" id="fn-ref-4"><sup>[4]</sup></a><a href="#fn-5" class="footnote-ref" id="fn-ref-5"><sup>[5]</sup></a><a href="#fn-6" class="footnote-ref" id="fn-ref-6"><sup>[6]</sup></a>
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Separador -->
+                <div class="relative py-4 my-4 border-t border-slate-200/60">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-px bg-gradient-to-r from-transparent via-orange-400 to-transparent"></div>
+                </div>
+
+                <!-- Chapter 3: Lo que encontramos: seis patrones de presión -->
+                <section id="capitulo-3" class="space-y-10">
+                    <h2 class="text-3xl md:text-4xl font-black text-slate-900 text-center">
+                        <span class="text-orange-600">3.</span> Lo que encontramos: seis patrones de presión
+                    </h2>
+
+                    <div class="max-w-3xl mx-auto space-y-6 text-slate-700 font-light text-lg leading-relaxed text-pretty">
+                        <p>
+                            Los episodios no son hechos aislados. Se agrupan en <strong>seis patrones</strong>, formas de actuar que se repiten, alcanzan a distintos destinatarios y se refuerzan entre sí, y los conectan los dos mecanismos descritos en el capítulo anterior: los cambios administrativos dispersos y la intimidación. La política exterior no constituye un patrón aparte, pero en ella operan varios de ellos, como se ve al final de este capítulo.
+                        </p>
+                    </div>
+
+                    <!-- Patrón 1 -->
+                    <article class="bg-white/40 backdrop-blur-sm border border-white/60 rounded-2xl p-6 md:p-8 space-y-4" data-animate="slide-up" style="--delay: 0ms;">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="w-10 h-10 flex items-center justify-center bg-orange-100 text-orange-600 rounded-xl font-black text-xl">1</span>
+                            <h3 class="text-2xl font-black text-slate-900">El adversario convertido en enemigo</h3>
+                        </div>
+                        <div class="text-slate-700 font-light text-lg leading-relaxed space-y-4">
+                            <p>
+                                El 1 de septiembre, al posesionar a los magistrados del Consejo Nacional Electoral, el presidente atribuyó al gobierno anterior intentos de alterar la voluntad popular mediante vínculos con estructuras terroristas. Lo hizo ante el órgano que resuelve las controversias de la competencia política, y contra la fuerza que hoy ejerce la oposición.<a href="#fn-7" class="footnote-ref" id="fn-ref-7"><sup>[7]</sup></a>
+                            </p>
+                            <p>
+                                El señalamiento se extendió luego a la protesta. Ante un bloqueo en la avenida Circunvalar de Bogotá, el presidente habló de "terrorismo urbano" y llamó "bandidos" a quienes participaban; volvió a usar esa expresión para los incidentes de las marchas del 14 de octubre. Y alcanzó a la memoria: el discurso del sector Cultura del 15 de octubre asoció a la apología del terrorismo los homenajes que ordenó retirar, entre ellos los de Carlos Pizarro, presentados como una "oda al terrorismo" sin mencionar su tránsito a la vida civil.<a href="#fn-8" class="footnote-ref" id="fn-ref-8"><sup>[8]</sup></a>
+                            </p>
+                            <p class="font-medium text-slate-800">
+                                Oposición, protesta y memoria quedan así bajo una misma sospecha. Un bloqueo puede generar responsabilidades que deben individualizarse; una calificación general, en cambio, convierte a quienes reclaman en enemigos que hay que neutralizar. Por eso la dimensión de oposición es la más golpeada del expediente: <strong class="text-orange-600">cuatro de sus seis episodios son de erosión</strong>.
+                            </p>
+                        </div>
+                    </article>
+
+                    <!-- Patrón 2 -->
+                    <article class="bg-white/40 backdrop-blur-sm border border-white/60 rounded-2xl p-6 md:p-8 space-y-4" data-animate="slide-up" style="--delay: 100ms;">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="w-10 h-10 flex items-center justify-center bg-orange-100 text-orange-600 rounded-xl font-black text-xl">2</span>
+                            <h3 class="text-2xl font-black text-slate-900">El costo de la independencia y el aprendizaje de la autocensura</h3>
+                        </div>
+                        <div class="text-slate-700 font-light text-lg leading-relaxed space-y-4">
+                            <p>
+                                El segundo patrón hace que actuar con independencia cueste acceso, empleo o interlocución, y cada costo advierte a los demás. La lista que el entonces candidato envió al subsecretario de Estado de Estados Unidos, Christopher Landau, fue seguida de la revocación de visas a algunas de las personas incluidas, aunque no está probado que cada revocación responda a esa lista.
+                            </p>
+                            <p>
+                                La presión alcanza a la información técnica y al disenso gremial. En septiembre el DANE canceló su rueda de prensa sobre inflación en aplicación de una directiva presidencial que exige visto bueno para hablar con la prensa; después salió su director, Ricardo Valencia. Según La Silla Vacía, el veto a Bruce Mac Master se acompañó de llamadas que condicionaban el acceso de la ANDI al Gobierno a su salida de la presidencia del gremio; el Ejecutivo negó haber intervenido.<a href="#fn-9" class="footnote-ref" id="fn-ref-9"><sup>[9]</sup></a><a href="#fn-10" class="footnote-ref" id="fn-ref-10"><sup>[10]</sup></a>
+                            </p>
+
+                            <div class="bg-orange-50/50 border border-orange-200/50 rounded-xl p-4 space-y-2">
+                                <h4 class="font-bold text-orange-700">La prensa está bajo presión en tres frentes:</h4>
+                                <ul class="space-y-1 pl-5 list-disc text-sm">
+                                    <li>El presidente de la Junta Directiva de Ecopetrol calificó como enemigos del Gobierno a La Silla Vacía, a su directora Juanita León y a la revista Cambio.</li>
+                                    <li>Camila Zuluaga, Ana Cristina Restrepo y Vladdo fueron cesados por sus empleadores, y los funcionarios se retiraron del Festival de las Ideas.</li>
+                                    <li>Las instrucciones que centralizan entrevistas y vocerías dejan menos fuentes capaces de explicar y controvertir la versión oficial. Y el artículo 8 del proyecto de Ley de Rescate exige el visto bueno previo y escrito del DAPRE para la pauta oficial del gobierno nacional.<a href="#fn-11" class="footnote-ref" id="fn-ref-11"><sup>[11]</sup></a></li>
+                                </ul>
+                            </div>
+
+                            <p>
+                                Sin atribuir cada salida a una orden presidencial, la secuencia permite inferir un mecanismo de presión. La Fundación para la Libertad de Prensa (FLIP) ha advertido sobre censura indirecta.
+                            </p>
+
+                            <p>
+                                Aparte de este patrón, la prensa enfrenta también la coacción de los grupos armados. La noche del 7 de noviembre, Caracol Televisión evacuó su sede tras una alerta de posible atentado del ELN contra ese canal y RCN. Esa amenaza restringe la información de todos y exige investigación y protección; ninguna amenaza armada, sin embargo, justifica atribuir colaboración criminal a la oposición.<a href="#fn-12" class="footnote-ref" id="fn-ref-12"><sup>[12]</sup></a>
+                            </p>
+                        </div>
+                    </article>
+
+                    <!-- Patrón 3 -->
+                    <article class="bg-white/40 backdrop-blur-sm border border-white/60 rounded-2xl p-6 md:p-8 space-y-4" data-animate="slide-up" style="--delay: 200ms;">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="w-10 h-10 flex items-center justify-center bg-orange-100 text-orange-600 rounded-xl font-black text-xl">3</span>
+                            <h3 class="text-2xl font-black text-slate-900">La guerra cultural como intervención sobre derechos y memorias</h3>
+                        </div>
+                        <div class="text-slate-700 font-light text-lg leading-relaxed space-y-4">
+                            <p>
+                                El gobierno anunció una "batalla cultural" y la llevó a las instituciones. Del Museo Nacional se retiraron <strong>47 de las 426 piezas</strong> examinadas en dos salas, vinculadas a la diversidad sexual, las luchas de las mujeres, la paz, las víctimas y el proceso constituyente: entre ellas, los afiches de Carlos Pizarro y Bernardo Jaramillo, candidatos presidenciales de izquierda asesinados en la contienda de 1990; la Séptima Papeleta y el bolígrafo con que se firmó el Acuerdo de Paz. Quienes protestaron frente al museo fueron dispersados con tanqueta de agua el 17 de octubre. Entre el 29 y el 30 de octubre se restituyeron 30 piezas por orden judicial, y el Gobierno impugnó el fallo.<a href="#fn-13" class="footnote-ref" id="fn-ref-13"><sup>[13]</sup></a>
+                            </p>
+                            <p>
+                                La exclusión llega también a la reparación de las víctimas. Se aplazaron de manera reiterada las medidas de reparación a la Unión Patriótica ordenadas por la Corte Interamericana —documental, monumento, placas y campaña contra la estigmatización—, y se retiró la conmemoración de Miguel Ángel Díaz Martínez, trabajador de Colcultura y militante de la UP desaparecido en 1984. Un gobierno puede discrepar sobre curaduría; no puede tratar como propaganda del adversario las memorias que el Estado está obligado a restituir.<a href="#fn-14" class="footnote-ref" id="fn-ref-14"><sup>[14]</sup></a>
+                            </p>
+                        </div>
+                    </article>
+
+                    <!-- Patrón 4 -->
+                    <article class="bg-white/40 backdrop-blur-sm border border-white/60 rounded-2xl p-6 md:p-8 space-y-4" data-animate="slide-up" style="--delay: 300ms;">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="w-10 h-10 flex items-center justify-center bg-orange-100 text-orange-600 rounded-xl font-black text-xl">4</span>
+                            <h3 class="text-2xl font-black text-slate-900">La coerción como demostración de autoridad</h3>
+                        </div>
+                        <div class="text-slate-700 font-light text-lg leading-relaxed space-y-4">
+                            <p>
+                                Desde una posesión en la que lo militar ocupó el lugar central, el presidente ha construido una representación armada de su autoridad. Aparece con pistola al cinto en actos oficiales, como la activación de la Fuerza de Tarea Conjunta Urano en Valledupar el 5 de octubre. Vistió uniforme camuflado y boina de fuerzas especiales en el Catatumbo y encabezó patrullajes armados en Santa Marta y otras capitales. Esa imagen se volvió política pública con el <strong>Decreto 1368 del 8 de septiembre</strong>, que levantó la suspensión general de los permisos de porte de armas.<a href="#fn-15" class="footnote-ref" id="fn-ref-15"><sup>[15]</sup></a>
+                            </p>
+                            <p>
+                                La exhibición pública de cuerpos tras los operativos, en Guaviare y Riohacha, y de personas detenidas continuó después de las advertencias de la Defensoría del Pueblo y dio lugar a una orden judicial sobre esas publicaciones. Cuando el jefe de un Estado civil se presenta como combatiente, la seguridad se asocia con el arma antes que con la ley; el uso de la fuerza se vuelve espectáculo, y quien disiente o está bajo custodia es humillado y queda inscrito en una lógica de enemigo, sin atención al debido proceso.<a href="#fn-16" class="footnote-ref" id="fn-ref-16"><sup>[16]</sup></a>
+                            </p>
+                            <p>
+                                En la víspera de las primeras marchas contra su gobierno, el presidente firmó el <strong>Decreto 1525 del 13 de octubre de 2026</strong>, que modificó el protocolo de protesta expedido en 2021 en cumplimiento de una sentencia de la Corte Suprema de Justicia. El diálogo sigue siendo la primera opción, pero deja de ser obligatorio cuando la violencia sea el factor principal de la protesta. Durante la consulta del borrador, la exdefensora del Pueblo de Bogotá Lina García advirtió que el texto no precisaba qué se entiende por violencia. En el puesto de mando de esa jornada, la Defensoría pidió moderar el uso de la fuerza frente a la resistencia de los mandos y del ministro de Defensa. Y la muerte del joven afrodescendiente Donovan Balanta bajo custodia policial, junto con las denuncias sobre menores muertos en bombardeos, exige investigaciones individualizadas: el caso de Balanta ya dio lugar a capturas e imputaciones por homicidio y tortura.<a href="#fn-17" class="footnote-ref" id="fn-ref-17"><sup>[17]</sup></a><a href="#fn-18" class="footnote-ref" id="fn-ref-18"><sup>[18]</sup></a><a href="#fn-19" class="footnote-ref" id="fn-ref-19"><sup>[19]</sup></a>
+                            </p>
+                        </div>
+                    </article>
+
+                    <!-- Patrón 5 -->
+                    <article class="bg-white/40 backdrop-blur-sm border border-white/60 rounded-2xl p-6 md:p-8 space-y-4" data-animate="slide-up" style="--delay: 400ms;">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="w-10 h-10 flex items-center justify-center bg-orange-100 text-orange-600 rounded-xl font-black text-xl">5</span>
+                            <h3 class="text-2xl font-black text-slate-900">Concentración de decisiones y debilitamiento de las autonomías</h3>
+                        </div>
+                        <div class="text-slate-700 font-light text-lg leading-relaxed space-y-4">
+                            <p>
+                                El quinto patrón acumula decisiones en el Ejecutivo y reduce la capacidad de otros para conocerlas o limitarlas. El proyecto de Ley de Rescate pide <strong>seis meses de facultades extraordinarias</strong> para reorganizar ministerios y entidades. El Fondo Milagro concentra los recursos de la reconstrucción tras el terremoto del 10 de agosto en una fiducia sin fecha fija de terminación, y el presupuesto de 2027 eliminó el reporte semestral detallado sobre los recursos administrados mediante fiducias mientras autorizó reorientar saldos hacia ese fondo. La representante Catherine Juvinao denunció reglas de contratación que permitirían demorar la publicación de contratos y ampliar la contratación directa.<a href="#fn-20" class="footnote-ref" id="fn-ref-20"><sup>[20]</sup></a>
+                            </p>
+                            <p>
+                                La presión alcanza también a los jueces. El 25 de septiembre, tres días después de que un juez de Mocoa mantuviera suspendido el piloto de aspersión en el Putumayo, el presidente pidió que la justicia estadounidense revisara a quienes se opusieran a la fumigación. Invocar consecuencias en el exterior encarece decidir con independencia, aunque la sanción nunca llegue.<a href="#fn-21" class="footnote-ref" id="fn-ref-21"><sup>[21]</sup></a>
+                            </p>
+                            <p>
+                                Al mismo tiempo, los órganos de control pierden capacidad material: se reporta la parálisis de la Comisión de Investigación y Acusación por falta de recursos, y el Gobierno pidió aplazar una sesión de control político sobre la reconstrucción. Más poder con menos seguimiento es la fórmula de la concentración.<a href="#fn-22" class="footnote-ref" id="fn-ref-22"><sup>[22]</sup></a><a href="#fn-23" class="footnote-ref" id="fn-ref-23"><sup>[23]</sup></a>
+                            </p>
+                        </div>
+                    </article>
+
+                    <!-- Patrón 6 -->
+                    <article class="bg-white/40 backdrop-blur-sm border border-white/60 rounded-2xl p-6 md:p-8 space-y-4" data-animate="slide-up" style="--delay: 500ms;">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="w-10 h-10 flex items-center justify-center bg-orange-100 text-orange-600 rounded-xl font-black text-xl">6</span>
+                            <h3 class="text-2xl font-black text-slate-900">El Estado social y la paz pierden capacidad de cumplimiento</h3>
+                        </div>
+                        <div class="text-slate-700 font-light text-lg leading-relaxed space-y-4">
+                            <p>
+                                La democracia no vive solo de libertades: necesita que los derechos se puedan ejercer. El proyecto de Ley de Rescate baja la tarifa de renta de las empresas del 35% al 31% en 2028, aumenta las cargas sobre el consumo y los aportes a la salud y propone recortar en 2028 un 20% del gasto de personal del Estado. La JEP tendría en 2027 $651.803 millones, frente a $821.803 millones proyectados. Los 50 centros de desarrollo infantil del Cesar suspendieron la atención desde el 31 de octubre durante un cambio de operadores, y la Procuraduría pidió reabrir el registro de damnificados del terremoto por la exclusión de familias rurales y étnicas.
+                            </p>
+                            <p>
+                                Estas decisiones recaen sobre uno de los países más desiguales del mundo: según el <em>World Inequality Report 2026</em>, el 10% de mayores ingresos recibe el 59,9% del ingreso total y la mitad más pobre apenas el 6,6%. Cuando el ajuste pesa más sobre quienes menos tienen, la desigualdad se convierte también en desigualdad política.<a href="#fn-24" class="footnote-ref" id="fn-ref-24"><sup>[24]</sup></a>
+                            </p>
+                        </div>
+                    </article>
+
+                    <!-- Cómo se conectan los patrones -->
+                    <article class="bg-orange-50/30 border border-orange-200/50 rounded-2xl p-6 md:p-8 space-y-4" data-animate="slide-up" style="--delay: 600ms;">
+                        <h3 class="text-xl font-bold text-orange-700">Cómo se conectan los patrones</h3>
+                        <div class="text-slate-700 font-light text-lg leading-relaxed space-y-4">
+                            <p>
+                                Los patrones no operan por separado. La <strong>intimidación</strong> une los tres primeros con el cuarto: el señalamiento de la oposición como terrorista, la salida de periodistas y del director del DANE y la exhibición de cuerpos y detenidos advierten a quienes observan qué cuesta disentir, aunque a ellos todavía no les haya pasado nada. Los <strong>cambios administrativos dispersos</strong> sostienen el quinto y el sexto: una autorización previa para hablar con la prensa, un reporte sobre fiducias que se suprime, una reorganización que reduce capacidades de protección. Cada medida tiene su propio objeto y ninguna, por sí sola, parece grave; sumadas, transforman el funcionamiento de las instituciones sin suprimir formalmente sus competencias. El lenguaje oficial recorre ambos mecanismos: prepara la deslegitimación de una persona o presenta una restricción como defensa de la nación. Por eso el diagnóstico no depende de un episodio, sino de su acumulación.<a href="#fn-25" class="footnote-ref" id="fn-ref-25"><sup>[25]</sup></a>
+                            </p>
+                        </div>
+                    </article>
+
+                    <!-- Realineamiento externo -->
+                    <article class="bg-white/40 backdrop-blur-sm border border-white/60 rounded-2xl p-6 md:p-8 space-y-4" data-animate="slide-up" style="--delay: 700ms;">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="w-10 h-10 flex items-center justify-center bg-orange-100 text-orange-600 rounded-xl font-black text-xl">↗</span>
+                            <h3 class="text-2xl font-black text-slate-900">Un realineamiento externo sin control democrático</h3>
+                        </div>
+                        <div class="text-slate-700 font-light text-lg leading-relaxed space-y-4">
+                            <p>
+                                En la política exterior se repiten dos de los patrones: la concentración de decisiones sin control (Patrón 5) y el uso de sanciones extranjeras como advertencia contra el disenso (Patrón 2). La política exterior cambió de rumbo sin debate público suficiente. La oficina jurídica de la Cancillería reconoció no tener información suficiente sobre el Escudo de las Américas, promovido por Estados Unidos, al que el Gobierno anunció su adhesión. Colombia reconoció la soberanía israelí sobre los Altos del Golán y trasladó su embajada a Jerusalén, en contravía del marco de Naciones Unidas; retiró su declaración de intervención ante la Corte Internacional de Justicia en el caso Sudáfrica contra Israel, salió del Grupo de La Haya y votó contra el fin del embargo a Cuba, rompiendo con una posición sostenida por gobiernos de todo el espectro político. Las obligaciones internacionales subsisten; lo que se debilita son los instrumentos para cumplirlas y la autonomía para decidir.<a href="#fn-26" class="footnote-ref" id="fn-ref-26"><sup>[26]</sup></a>
+                            </p>
+                        </div>
+                    </article>
+                </section>
+
+                <!-- Separador -->
+                <div class="relative py-4 my-4 border-t border-slate-200/60">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-px bg-gradient-to-r from-transparent via-orange-400 to-transparent"></div>
+                </div>
+
+                <!-- Chapter 4: El salto que viene: el proyecto de Estatuto Antiterrorista -->
+                <section id="capitulo-4" class="space-y-10">
+                    <h2 class="text-3xl md:text-4xl font-black text-slate-900 text-center">
+                        <span class="text-orange-600">4.</span> El salto que viene: el proyecto de Estatuto Antiterrorista
+                    </h2>
+
+                    <div class="max-w-3xl mx-auto space-y-6 text-slate-700 font-light text-lg leading-relaxed text-pretty">
+                        <p>
+                            Si los patrones descritos muestran hacia dónde se mueve el poder, el proyecto de Estatuto Antiterrorista muestra cómo podría quedar instalado. El informe <em>Cien días bajo presión</em> lo registró como un instrumento potencial; aquí lo examinamos a fondo porque es, de todas las iniciativas del Gobierno, la que con mayor probabilidad podría convertir la erosión en curso en un recorte duradero de la democracia.
+                        </p>
+
+                        <h3 class="text-xl font-bold text-slate-900 pt-4">En qué va</h3>
+
+                        <p>
+                            El Gobierno anunció el estatuto como la pieza central de su política de seguridad. El Consejo Superior de Política Criminal emitió concepto favorable el 15 de octubre, por 11 votos contra 3, pero al 10 de noviembre el proyecto <strong>aún no había sido radicado formalmente</strong> en el Congreso. Se anuncia su trámite con mensaje de urgencia ante las comisiones primeras. Como ley estatutaria, necesita mayoría absoluta en ambas cámaras, aprobación en una sola legislatura y revisión previa de la Corte Constitucional. Son exigencias altas, pero el Gobierno cuenta con mayorías en el Congreso y el presidente del Senado, Honorio Henríquez, ya lo calificó de herramienta "necesaria, urgente e inaplazable". Su aprobación es una posibilidad real.<a href="#fn-27" class="footnote-ref" id="fn-ref-27"><sup>[27]</sup></a><a href="#fn-28" class="footnote-ref" id="fn-ref-28"><sup>[28]</sup></a>
+                        </p>
+
+                        <p class="text-sm text-slate-500">
+                            Lo que sigue se basa en el borrador conocido públicamente, de 116 páginas, y en los análisis de la Fundación Paz y Reconciliación (Pares), La Silla Vacía y el Centro de Estudios Socio-Jurídicos Latinoamericanos (CESJUL). El texto que finalmente se radique podría cambiar, y así lo seguiremos.<a href="#fn-29" class="footnote-ref" id="fn-ref-29"><sup>[29]</sup></a><a href="#fn-30" class="footnote-ref" id="fn-ref-30"><sup>[30]</sup></a><a href="#fn-31" class="footnote-ref" id="fn-ref-31"><sup>[31]</sup></a>
+                        </p>
+
+                        <h3 class="text-xl font-bold text-slate-900 pt-4">Qué propone y por qué preocupa</h3>
+
+                        <!-- Tabla comparativa -->
+                        <div class="overflow-x-auto">
+                            <table class="w-full min-w-[600px] border-collapse">
+                                <thead>
+                                    <tr class="bg-orange-50 border-b-2 border-orange-200">
+                                        <th class="p-4 text-left font-bold text-orange-700">Lo que propone el borrador</th>
+                                        <th class="p-4 text-left font-bold text-orange-700">Por qué preocupa</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100">
+                                    <tr class="hover:bg-orange-50/30">
+                                        <td class="p-4 font-medium text-slate-800">Definición de terrorismo: cualquier "manifestación" individual o colectiva que produzca "miedo, pánico y zozobra", generando riesgos, amenazas o el uso de la violencia.</td>
+                                        <td class="p-4 text-slate-700">No exige violencia efectiva, medios de daño masivo ni un fin específico. Una protesta que se sale de control podría encuadrar en ella.</td>
+                                    </tr>
+                                    <tr class="hover:bg-orange-50/30">
+                                        <td class="p-4 font-medium text-slate-800">Colaborador: incluye aportes "intelectuales", "técnicos" o "informativos". El apoyo material a una organización designada se castiga con 13 a 22 años de prisión.</td>
+                                        <td class="p-4 text-slate-700">Periodistas que entrevistan a actores armados, defensores de derechos humanos, investigadores y habitantes de zonas con presencia armada quedan expuestos.</td>
+                                    </tr>
+                                    <tr class="hover:bg-orange-50/30">
+                                        <td class="p-4 font-medium text-slate-800">Registro Nacional: el Consejo de Seguridad Nacional incluye a organizaciones y personas mediante acto administrativo, con el apoyo de una instancia técnica de ministerios, Fiscalía y UIAF. El mismo Consejo revisa la lista cada seis meses y decide las exclusiones.</td>
+                                        <td class="p-4 text-slate-700">El Consejo lo integran funcionarios que el presidente nombra y remueve. No participan la Procuraduría ni la Defensoría. El Ejecutivo actúa como juez y parte.</td>
+                                    </tr>
+                                    <tr class="hover:bg-orange-50/30">
+                                        <td class="p-4 font-medium text-slate-800">Efectos inmediatos: congelamiento de bienes y cuentas en 24 horas, prohibición de contratar con el Estado y de recibir subsidios, y suspensión inmediata de la personería jurídica de asociaciones y fundaciones (un juez decide en hasta 60 días; los sindicatos quedan excluidos).</td>
+                                        <td class="p-4 text-slate-700">Es un castigo antes del juicio. Una ONG, un medio o una empresa pueden quedar paralizados antes de obtener una decisión judicial.</td>
+                                    </tr>
+                                    <tr class="hover:bg-orange-50/30">
+                                        <td class="p-4 font-medium text-slate-800">Información reservada: parte de la motivación de la inclusión puede ir en un anexo reservado.</td>
+                                        <td class="p-4 text-slate-700">El afectado puede no conocer las pruebas en su contra, lo que vacía su derecho de defensa.</td>
+                                    </tr>
+                                    <tr class="hover:bg-orange-50/30">
+                                        <td class="p-4 font-medium text-slate-800">Listas extranjeras: las designaciones de Estados Unidos, la Unión Europea u otros Estados que el Gobierno escoja por decreto entran al registro colombiano de forma provisional inmediata, hasta por 90 días.</td>
+                                        <td class="p-4 text-slate-700">Decisiones de gobiernos extranjeros, que cambian con sus intereses políticos, producirían efectos automáticos en Colombia.</td>
+                                    </tr>
+                                    <tr class="hover:bg-orange-50/30">
+                                        <td class="p-4 font-medium text-slate-800">Control judicial: la inclusión solo puede discutirse ante el Consejo de Estado, en única instancia, si el afectado demanda, y sin plazo para decidir.</td>
+                                        <td class="p-4 text-slate-700">El control llega tarde y sin segunda instancia.</td>
+                                    </tr>
+                                    <tr class="hover:bg-orange-50/30">
+                                        <td class="p-4 font-medium text-slate-800">Medidas sin imputación: restricciones de residencia, movimiento, contactos y salida del país por hasta 24 meses contra personas no acusadas, a solicitud de la Fiscalía ante un juez; incumplirlas se castiga con 2 a 6 años.</td>
+                                        <td class="p-4 text-slate-700">Para un líder social en un territorio bajo control armado, la condición de "no contacto" es casi imposible de cumplir.</td>
+                                    </tr>
+                                    <tr class="hover:bg-orange-50/30">
+                                        <td class="p-4 font-medium text-slate-800">Protesta: retener, rodear o desarmar a miembros de la fuerza pública se equipara al secuestro (320 a 504 meses de prisión); la pena por asonada se duplica si afecta infraestructura crítica, sin exigir vínculo con un grupo armado.</td>
+                                        <td class="p-4 text-slate-700">Un bloqueo de una guardia indígena o un cerco a agentes durante una protesta podría castigarse con hasta 42 años.</td>
+                                    </tr>
+                                    <tr class="hover:bg-orange-50/30">
+                                        <td class="p-4 font-medium text-slate-800">Agravante electoral ligado a "zonas bajo control armado".</td>
+                                        <td class="p-4 text-slate-700">Podría usarse para cuestionar el voto de regiones enteras de cara a las elecciones locales de 2027.</td>
+                                    </tr>
+                                    <tr class="hover:bg-orange-50/30">
+                                        <td class="p-4 font-medium text-slate-800">Alto Comisionado contra el Terrorismo, nombrado por el presidente por cinco años; las tutelas contra operaciones militares pasarían al Consejo de Estado.</td>
+                                        <td class="p-4 text-slate-700">Un periodo que excede el del propio gobierno y un cambio de juez para la protección de derechos frente a la fuerza.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-slate-900 pt-4">Por qué es la pieza más peligrosa</h3>
+
+                        <p>
+                            El estatuto no aparece en el vacío. Llega después de cien días en los que el Gobierno ha llamado "terrorismo" a la protesta, "apología del terrorismo" a la memoria y ha atribuido vínculos terroristas a la oposición. <strong class="text-orange-600">El discurso ya construyó la categoría; el estatuto entregaría el instrumento.</strong> Con definiciones abiertas y un registro manejado por el Ejecutivo, la distancia entre señalar a alguien como terrorista y congelarle las cuentas, suspender su organización o restringir sus movimientos se reduciría a un acto administrativo.<a href="#fn-32" class="footnote-ref" id="fn-ref-32"><sup>[32]</sup></a><a href="#fn-33" class="footnote-ref" id="fn-ref-33"><sup>[33]</sup></a>
+                        </p>
+
+                        <p>
+                            Como lo planteó Clara López Obregón, no corresponde a la oposición demostrar que esas facultades serán usadas inevitablemente en su contra: corresponde al Gobierno justificar por qué pretende poderes cuyo diseño facilita el abuso. Y los controles posteriores no resuelven el problema, porque "una organización comercial, política o social puede quedar paralizada antes de obtener una decisión favorable". Laura Bonilla, de Pares, lo describe como un "caballo de Troya": un paquete de seguridad que esconde la pérdida de garantías, del debido proceso y de los controles sobre la Presidencia.<a href="#fn-34" class="footnote-ref" id="fn-ref-34"><sup>[34]</sup></a><a href="#fn-35" class="footnote-ref" id="fn-ref-35"><sup>[35]</sup></a><a href="#fn-36" class="footnote-ref" id="fn-ref-36"><sup>[36]</sup></a>
+                        </p>
+
+                        <p>
+                            La Corte Suprema de Justicia, en su concepto sobre el proyecto, reconoció que persigue un fin constitucionalmente legítimo, pero advirtió posibles choques con la Constitución: la inclusión en el registro no puede ser, por sí sola, prueba de culpabilidad; los bienes no pueden terminar confiscados, lo que la Constitución prohíbe, sin demostrar su vínculo con actividades ilícitas; y no pueden imponerse restricciones por pertenecer a una organización sin pruebas suficientes y control judicial. Su principal debilidad jurídica, según la Corte, es hacer depender consecuencias penales y patrimoniales severas de un registro administrativo.<a href="#fn-37" class="footnote-ref" id="fn-ref-37"><sup>[37]</sup></a><a href="#fn-38" class="footnote-ref" id="fn-ref-38"><sup>[38]</sup></a><a href="#fn-39" class="footnote-ref" id="fn-ref-39"><sup>[39]</sup></a>
+                        </p>
+
+                        <h3 class="text-xl font-bold text-slate-900 pt-4">Lo que tiene de legítimo y lo que enseña la experiencia</h3>
+
+                        <p>
+                            Combatir los ataques contra civiles, la extorsión y las economías criminales es una obligación del Estado. El borrador incluye medidas útiles que la sociedad civil también ha pedido, como el control de drones y del oro de origen ilícito. El problema no es perseguir el terrorismo, sino hacerlo con un diseño que permite castigar al inocente.
+                        </p>
+
+                        <p>
+                            La historia ofrece advertencias claras. Según Pares, el Estatuto de Seguridad de 1978 dejó a muchos civiles e inocentes como víctimas de la represión. El estatuto antiterrorista que el Congreso aprobó en 2003 fue declarado inexequible por la Corte Constitucional en 2004 por vicios de trámite. Fuera del país, el Tribunal de Justicia de la Unión Europea anuló en 2008 un congelamiento de bienes porque las pruebas no se revelaron al afectado (caso <em>Kadi</em>), y la Corte Interamericana condenó a Chile en 2014 por aplicar definiciones vagas de terrorismo contra líderes mapuches (caso <em>Norín Catrimán</em>).
+                        </p>
+
+                        <!-- Lo que el Congreso debe exigir -->
+                        <div class="bg-orange-50/50 border border-orange-200/50 rounded-2xl p-6 md:p-8 space-y-4">
+                            <h4 class="text-lg font-bold text-orange-700">Lo que el Congreso debe exigir antes de aprobar cualquier estatuto</h4>
+                            <ul class="space-y-2 pl-6 list-disc text-slate-700">
+                                <li><strong>Una definición estricta:</strong> violencia grave contra las personas con el fin de aterrorizar a la población u obligar al Estado, con exclusión expresa de la protesta, el periodismo, la defensa de derechos humanos, la acción humanitaria y la actividad política.</li>
+                                <li><strong>Control judicial previo</strong> a la inclusión en el registro, al congelamiento de bienes y a la suspensión de personerías jurídicas, salvo urgencia con control judicial en 72 horas.</li>
+                                <li><strong>Participación de la Procuraduría y la Defensoría</strong> en el procedimiento de designación.</li>
+                                <li><strong>Acceso del afectado a las pruebas.</strong> Ninguna decisión puede basarse solo en información reservada.</li>
+                                <li><strong>Sin efectos automáticos de listas extranjeras.</strong> Toda inclusión debe ser una decisión colombiana, motivada y controlable.</li>
+                                <li><strong>Doble instancia y plazos perentorios</strong> para decidir los recursos.</li>
+                                <li><strong>Ninguna restricción sin imputación</strong> que no cumpla un estándar probatorio alto.</li>
+                                <li><strong>Tratamiento policial de la protesta:</strong> suprimir la equiparación de retener a agentes con el secuestro cuando no hay vínculo con un grupo armado.</li>
+                                <li><strong>Eliminar el agravante electoral</strong> por "zonas bajo control armado" y limitar el periodo del Alto Comisionado al del gobierno que lo nombra.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Separador -->
+                <div class="relative py-4 my-4 border-t border-slate-200/60">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-px bg-gradient-to-r from-transparent via-orange-400 to-transparent"></div>
+                </div>
+
+                <!-- Chapter 5: La memoria como advertencia -->
+                <section id="capitulo-5" class="space-y-8">
+                    <h2 class="text-3xl md:text-4xl font-black text-slate-900 text-center">
+                        <span class="text-orange-600">5.</span> La memoria como advertencia
+                    </h2>
+
+                    <div class="max-w-3xl mx-auto space-y-6 text-slate-700 font-light text-lg leading-relaxed text-pretty">
+                        <p>
+                            Nuestra historia impide considerar estos peligros como hipótesis remotas. Abelardo Forero Benavides mostró cómo el sectarismo y la arbitrariedad del poder alimentaron la violencia entre liberales y conservadores. Décadas después, el exterminio de la Unión Patriótica mostró de nuevo lo que cuesta negarle al adversario su lugar en la vida política.<a href="#fn-40" class="footnote-ref" id="fn-ref-40"><sup>[40]</sup></a>
+                        </p>
+
+                        <p>
+                            La sentencia de la Corte Interamericana de Derechos Humanos del 27 de julio de 2022 declaró la responsabilidad internacional de Colombia por las violaciones cometidas contra integrantes y militantes de la UP. En los párrafos 412 a 414, la Corte examinó cómo la identificación de la UP con las FARC y las declaraciones de altas autoridades aumentaron su vulnerabilidad. La lección es decisiva para el presente: <strong class="text-orange-600">el señalamiento desde el poder puede elevar el riesgo de una población aunque no adopte la forma de una orden de ataque.</strong><a href="#fn-41" class="footnote-ref" id="fn-ref-41"><sup>[41]</sup></a>
+                        </p>
+
+                        <p>
+                            La Comisión de la Verdad identificó la estigmatización y la extensión de la noción de "enemigo interno" como mecanismos que golpearon a organizaciones políticas y sociales, a defensores de derechos humanos y a sindicalistas. El daño comienza cuando la identidad, la organización o la crítica pasan a funcionar como indicios de peligrosidad: quien protesta debe demostrar primero que no es una amenaza, y el periodista que entrevista a un actor armado debe defenderse de la sospecha de complicidad.<a href="#fn-42" class="footnote-ref" id="fn-ref-42"><sup>[42]</sup></a>
+                        </p>
+
+                        <p class="font-medium text-slate-800">
+                            Registrar estigmatización, presiones o abusos no demuestra una política de exterminio ni permite atribuir al Ejecutivo toda amenaza privada. Esa precisión no debilita la advertencia; la fortalece. Si aquella persecución pudo ocurrir, no hay razón sensata para entregar nuevas facultades ambiguas al Ejecutivo. La memoria exige impedir las condiciones que hacen posible el abuso, sin esperar a que se repita una tragedia para reconocer el peligro.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Separador -->
+                <div class="relative py-4 my-4 border-t border-slate-200/60">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-px bg-gradient-to-r from-transparent via-orange-400 to-transparent"></div>
+                </div>
+
+                <!-- Chapter 6: Los controles funcionan, pero no bastan -->
+                <section id="capitulo-6" class="space-y-8">
+                    <h2 class="text-3xl md:text-4xl font-black text-slate-900 text-center">
+                        <span class="text-orange-600">6.</span> Los controles funcionan, pero no bastan
+                    </h2>
+
+                    <div class="max-w-3xl mx-auto space-y-6 text-slate-700 font-light text-lg leading-relaxed text-pretty">
+                        <p>Estos cien días también muestran que la democracia colombiana tiene defensas activas:</p>
+
+                        <ul class="space-y-3 pl-6 list-disc">
+                            <li>Por orden judicial, entre el 29 y el 30 de octubre se restituyeron 30 de las 47 piezas retiradas del Museo Nacional.<a href="#fn-43" class="footnote-ref" id="fn-ref-43"><sup>[43]</sup></a></li>
+                            <li>El piloto de aspersión en el Putumayo sigue suspendido por decisión de un juez de Mocoa.<a href="#fn-44" class="footnote-ref" id="fn-ref-44"><sup>[44]</sup></a></li>
+                            <li>La Policía revocó, mediante la Resolución 586 del 28 de octubre, una licitación de medicamentos por $1,45 billones tras una investigación de la revista Cambio.<a href="#fn-45" class="footnote-ref" id="fn-ref-45"><sup>[45]</sup></a></li>
+                            <li>La muerte de Donovan Balanta dio lugar a suspensiones de agentes, capturas e imputaciones por homicidio y tortura.<a href="#fn-46" class="footnote-ref" id="fn-ref-46"><sup>[46]</sup></a></li>
+                            <li>Un juez ordenó a la Fundación Colombia Luz y Sonrisas, de la primera dama, responder en 48 horas sobre las donaciones que promovió públicamente.<a href="#fn-47" class="footnote-ref" id="fn-ref-47"><sup>[47]</sup></a></li>
+                            <li>La moción de censura contra el ministro de Vivienda fue negada (61 votos contra 27), pero obligó a comparecer y a rendir cuentas.<a href="#fn-48" class="footnote-ref" id="fn-ref-48"><sup>[48]</sup></a></li>
+                            <li>La Defensoría, la FLIP y la Corte Suprema de Justicia han emitido advertencias oportunas, incluida la de la Corte sobre el Estatuto Antiterrorista.<a href="#fn-49" class="footnote-ref" id="fn-ref-49"><sup>[49]</sup></a></li>
+                        </ul>
+
+                        <p class="font-medium text-slate-800">
+                            Pero activar un control, obtener una orden y lograr que se cumpla son tres cosas distintas. Una orden pendiente de cumplimiento no es una garantía recuperada, y una corrección puntual puede coexistir con la repetición de la práctica en otro ámbito. Además, si el Estatuto Antiterrorista se aprueba tal como está diseñado, muchos de estos controles llegarían tarde: el daño se produciría antes de que un juez pudiera intervenir.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Separador -->
+                <div class="relative py-4 my-4 border-t border-slate-200/60">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-px bg-gradient-to-r from-transparent via-orange-400 to-transparent"></div>
+                </div>
+
+                <!-- Chapter 7: Conclusiones -->
+                <section id="capitulo-7" class="space-y-8">
+                    <h2 class="text-3xl md:text-4xl font-black text-slate-900 text-center">
+                        <span class="text-orange-600">7.</span> Conclusiones
+                    </h2>
+
+                    <div class="max-w-3xl mx-auto space-y-6 text-slate-700 font-light text-lg leading-relaxed text-pretty">
+                        <ol class="space-y-4 list-decimal list-inside">
+                            <li><strong>La erosión es real y está documentada.</strong> No se trata de una impresión ni de una diferencia ideológica con el Gobierno. De 256 episodios documentados con fuentes, el 64,1% fue valorado como riesgo institucional grave o erosión democrática. Cada uno puede verificarse.</li>
+                            <li><strong>Es sistemática, no accidental.</strong> Los episodios sostienen seis patrones que se refuerzan entre sí y tienen su antecedente en las hipótesis de la línea de base: el señalamiento prepara la exclusión, los cambios administrativos dispersos la imponen sin suprimir formalmente las instituciones y la intimidación disuade a quien podría reclamar. Ninguna medida aislada explica el diagnóstico; su combinación sí.<a href="#fn-50" class="footnote-ref" id="fn-ref-50"><sup>[50]</sup></a></li>
+                            <li><strong>El blanco principal es el disenso.</strong> La oposición es la dimensión más golpeada en proporción (cuatro de seis episodios son de erosión), y la presión alcanza también a la prensa, la protesta, la memoria, los jueces y los funcionarios técnicos. Lo que se erosiona es la posibilidad de contradecir al poder.</li>
+                            <li><strong>La seguridad se usa para concentrar poder.</strong> La representación armada del mando, el levantamiento de la restricción al porte de armas, el nuevo protocolo de protesta y el proyectado Estatuto Antiterrorista comparten una lógica: ampliar la discrecionalidad del Ejecutivo en nombre del orden y reducir los controles que la limitan.</li>
+                            <li><strong>La erosión está cambiando de fase: de la palabra a la ley.</strong> Hasta ahora, la mayor parte de las afectaciones han sido prácticas que un juez puede corregir. El Estatuto Antiterrorista, las facultades extraordinarias y el control de la pauta oficial les darían respaldo legal y permanencia. Por eso los próximos meses son decisivos.<a href="#fn-51" class="footnote-ref" id="fn-ref-51"><sup>[51]</sup></a></li>
+                            <li><strong>El ajuste social debilita las bases materiales de la democracia.</strong> Recortes a la paz, a la primera infancia y a la reparación de las víctimas, junto con alivios tributarios a las empresas, reducen la capacidad de ejercer derechos en uno de los países más desiguales del mundo.</li>
+                            <li><strong>Las defensas funcionan, pero llegan tarde.</strong> Jueces, órganos de control, prensa y ciudadanía han conseguido correcciones reales. Sin embargo, actúan después del daño, y el diseño del estatuto haría que llegaran todavía más tarde.</li>
+                            <li><strong>Todavía estamos a tiempo.</strong> El Congreso y la Corte Constitucional tienen en sus manos, en los próximos meses, la decisión más importante: permitir o impedir que la sospecha contra el adversario se convierta en ley.</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <!-- Separador -->
+                <div class="relative py-4 my-4 border-t border-slate-200/60">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-px bg-gradient-to-r from-transparent via-orange-400 to-transparent"></div>
+                </div>
+
+                <!-- Chapter 8: Recomendaciones -->
+                <section id="capitulo-8" class="space-y-10">
+                    <h2 class="text-3xl md:text-4xl font-black text-slate-900 text-center">
+                        <span class="text-orange-600">8.</span> Recomendaciones
+                    </h2>
+
+                    <div class="max-w-3xl mx-auto space-y-6 text-slate-700 font-light text-lg leading-relaxed text-pretty">
+                        <p>
+                            Detener la erosión exige medidas concretas, cada una con responsable, plazo, recursos y evidencia de cumplimiento. Proponemos cinco prioridades urgentes y tareas específicas para cada actor.
+                        </p>
+
+                        <!-- Cinco prioridades urgentes -->
+                        <div class="bg-orange-50/50 border border-orange-200/50 rounded-2xl p-6 md:p-8 space-y-4">
+                            <h3 class="text-lg font-bold text-orange-700">Cinco prioridades urgentes</h3>
+                            <ol class="space-y-3 pl-6 list-decimal text-slate-700">
+                                <li><strong>Impedir que el Estatuto Antiterrorista se apruebe sin garantías.</strong> Ningún texto debe aprobarse sin las diez condiciones mínimas del capítulo 4: definición estricta, control judicial previo, acceso a las pruebas, sin efectos automáticos de listas extranjeras y exclusión expresa de la protesta, el periodismo y la actividad política.</li>
+                                <li><strong>Desescalar el lenguaje oficial.</strong> El Gobierno debe rectificar los señalamientos que asocian a la oposición, la protesta y la memoria con el terrorismo, y cumplir la campaña contra la estigmatización ordenada por la Corte Interamericana en el caso de la Unión Patriótica.</li>
+                                <li><strong>Proteger la libertad de prensa.</strong> Retirar del proyecto de Ley de Rescate el visto bueno previo del DAPRE a la pauta oficial, o sustituirlo por criterios objetivos y públicos de asignación; derogar la exigencia de autorización previa para que los técnicos del Estado hablen con la prensa.</li>
+                                <li><strong>Revisar las reglas de la fuerza.</strong> Revisar el Decreto 1525 de protesta con participación de la Defensoría y de las organizaciones sociales, evaluar públicamente los efectos del Decreto 1368 de porte de armas y suspender la exhibición de cuerpos y de personas detenidas.</li>
+                                <li><strong>Blindar los recursos de la paz y de los derechos.</strong> Garantizar el presupuesto de la JEP, la continuidad de la atención a la primera infancia, la corrección del registro de damnificados y el cronograma de reparación a la Unión Patriótica.</li>
+                            </ol>
+                        </div>
+
+                        <!-- Recomendaciones por actor -->
+                        <div class="space-y-8" data-animate="stagger">
+                            <article class="bg-white/40 backdrop-blur-sm border border-white/60 rounded-2xl p-6 md:p-8 space-y-4" data-animate="slide-up" style="--delay: 0ms;">
+                                <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                                    <span class="w-8 h-8 flex items-center justify-center bg-orange-100 text-orange-600 rounded-lg font-black">G</span>
+                                    Gobierno nacional
+                                </h3>
+                                <ul class="space-y-2 pl-6 list-disc text-slate-700">
+                                    <li>Asumir un compromiso público de no estigmatización hacia la oposición, la prensa, los jueces y las organizaciones sociales.</li>
+                                    <li>Revisar las instrucciones que centralizan entrevistas y vocerías y publicar sus reglas.</li>
+                                    <li>Restituir las piezas del Museo Nacional y restablecer la conmemoración de Miguel Ángel Díaz Martínez, en consulta con su familia.</li>
+                                    <li>Publicar los compromisos adquiridos con Estados Unidos en materia de seguridad y de minerales estratégicos y tierras raras, incluido el Escudo de las Américas, y someterlos al control del Congreso.</li>
+                                    <li>Rendir cuentas periódicas y públicas sobre el Fondo Milagro y restablecer el reporte semestral sobre los recursos administrados mediante fiducias.</li>
+                                </ul>
+                            </article>
+
+                            <article class="bg-white/40 backdrop-blur-sm border border-white/60 rounded-2xl p-6 md:p-8 space-y-4" data-animate="slide-up" style="--delay: 100ms;">
+                                <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                                    <span class="w-8 h-8 flex items-center justify-center bg-orange-100 text-orange-600 rounded-lg font-black">C</span>
+                                    Congreso de la República
+                                </h3>
+                                <ul class="space-y-2 pl-6 list-disc text-slate-700">
+                                    <li>Convocar audiencias públicas sobre el Estatuto Antiterrorista con participación de la Procuraduría, la Defensoría, la academia, la prensa y las organizaciones sociales, antes de cualquier votación.</li>
+                                    <li>Limitar las facultades extraordinarias de la Ley de Rescate a objetivos precisos y verificables, y examinar el reparto de las cargas tributarias y el efecto de los recortes sobre las funciones del Estado.</li>
+                                    <li>Adelantar debates de control político sobre los Decretos 1525 y 1368 y sobre la exhibición de cuerpos tras los operativos.</li>
+                                    <li>Dotar de recursos a la Comisión de Investigación y Acusación para que pueda cumplir su función.</li>
+                                </ul>
+                            </article>
+
+                            <article class="bg-white/40 backdrop-blur-sm border border-white/60 rounded-2xl p-6 md:p-8 space-y-4" data-animate="slide-up" style="--delay: 200ms;">
+                                <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                                    <span class="w-8 h-8 flex items-center justify-center bg-orange-100 text-orange-600 rounded-lg font-black">J</span>
+                                    Jueces y órganos de control
+                                </h3>
+                                <ul class="space-y-2 pl-6 list-disc text-slate-700">
+                                    <li><strong>Corte Constitucional:</strong> aplicar un escrutinio estricto al Estatuto Antiterrorista, si es aprobado, a la luz de la experiencia de 2004 y de los estándares interamericanos.</li>
+                                    <li><strong>Procuraduría y Defensoría:</strong> reclamar su participación en cualquier procedimiento de designación de terroristas y acompañar las movilizaciones con observación independiente.</li>
+                                    <li><strong>Jueces:</strong> verificar el cumplimiento material de sus órdenes, no solo su expedición.</li>
+                                    <li><strong>Fiscalía:</strong> llevar hasta el final las investigaciones por la muerte de Donovan Balanta y las denuncias sobre menores muertos en bombardeos.</li>
+                                </ul>
+                            </article>
+
+                            <article class="bg-white/40 backdrop-blur-sm border border-white/60 rounded-2xl p-6 md:p-8 space-y-4" data-animate="slide-up" style="--delay: 300ms;">
+                                <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                                    <span class="w-8 h-8 flex items-center justify-center bg-orange-100 text-orange-600 rounded-lg font-black">S</span>
+                                    Partidos, organizaciones sociales y prensa
+                                </h3>
+                                <ul class="space-y-2 pl-6 list-disc text-slate-700">
+                                    <li>Promover una amplia convergencia democrática plural por las garantías que incluya a gremios, sindicatos, iglesias, universidades y medios, sin distinción de orientación política.</li>
+                                    <li>Documentar con rigor, separando hechos, inferencias y opiniones, y aportar información al Observatorio para el seguimiento de los episodios.</li>
+                                    <li>Hacer pedagogía ciudadana sobre los riesgos del Estatuto Antiterrorista en un lenguaje que cualquier persona pueda entender.</li>
+                                    <li>Exigir protección efectiva para periodistas, defensores y líderes sociales, sin distinción de orientación política.</li>
+                                </ul>
+                            </article>
+
+                            <article class="bg-white/40 backdrop-blur-sm border border-white/60 rounded-2xl p-6 md:p-8 space-y-4" data-animate="slide-up" style="--delay: 400ms;">
+                                <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                                    <span class="w-8 h-8 flex items-center justify-center bg-orange-100 text-orange-600 rounded-lg font-black">I</span>
+                                    Comunidad internacional
+                                </h3>
+                                <ul class="space-y-2 pl-6 list-disc text-slate-700">
+                                    <li>Pedir a la Comisión Interamericana de Derechos Humanos y a las relatorías de Naciones Unidas sobre libertad de expresión, derecho de reunión y lucha contra el terrorismo que hagan seguimiento al trámite del estatuto y al cumplimiento de las medidas de reparación a la Unión Patriótica.</li>
+                                </ul>
+                            </article>
+                        </div>
+
+                        <!-- Lo que vigilaremos -->
+                        <div class="bg-orange-50/30 border border-orange-200/50 rounded-2xl p-6 md:p-8 space-y-4" data-animate="slide-up" style="--delay: 500ms;">
+                            <h3 class="text-lg font-bold text-orange-700">Lo que vigilaremos en el próximo corte</h3>
+                            <p class="text-slate-700">
+                                El Observatorio verificará en su próximo informe si las medidas fueron anunciadas, adoptadas, ejecutadas y sostenidas, y si llegaron a quienes debían beneficiar. En particular seguirá el texto radicado del Estatuto Antiterrorista y su trámite; la restitución completa de las piezas del Museo Nacional; el acceso de la prensa a fuentes oficiales; las correcciones al registro de damnificados; el avance de las investigaciones penales; y la continuidad de las protecciones judiciales ya obtenidas. Además, una codificación independiente de los episodios nuevos verificará si los seis patrones y los dos mecanismos siguen describiendo lo que ocurre.
+                            </p>
+                            <p class="font-medium text-slate-800 text-orange-600">
+                                La democracia no se pierde de un día para otro, ni se defiende de una sola vez. Se sostiene cuando una persona puede disentir sin represalias, una comunidad recibe atención y una víctima obtiene protección y reparación. Esa es la promesa de la Constitución de 1991. <strong>Defenderla es tarea de todos, y el momento es ahora.</strong>
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Separador final -->
+                <div class="relative py-8 my-8 border-t border-slate-200/60">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-px bg-gradient-to-r from-transparent via-orange-400 to-transparent"></div>
+                </div>
+
+                <!-- Action Buttons Section -->
+                <section class="text-center space-y-8 pt-4 text-center">
+                    <h3 class="text-3xl font-bold text-slate-900 text-center">Accede a los documentos</h3>
+                    <p class="text-slate-600 max-w-xl mx-auto">
+                        Consulta el informe, el glosario y nota de prensa.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <!-- Informe Completo -->
+                        <a
+                            href="https://api.ilsa.org.co/wp-content/uploads/2026/11/Informe-Final-Cien-ddias-bajo-presion-Nov-2026.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="w-full sm:w-[300px] inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-orange-600 text-white rounded-[var(--radius-xl)] font-semibold text-sm hover:bg-orange-700 transition-all duration-300 shadow-md shadow-orange-500/20 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                        >
+                            <FileText className="w-4 h-4" aria-hidden="true" />
+                            <span>Informe</span>
+                        </a>
+
+                        <!-- Glosario -->
+                        <a
+                            href="https://api.ilsa.org.co/wp-content/uploads/2026/11/Resumen_Consolidado_297_Fichas_10_nov_2026.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="w-full sm:w-[300px] inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-white/80 backdrop-blur-sm border border-orange-200/60 text-orange-700 rounded-[var(--radius-xl)] font-semibold text-sm hover:bg-orange-50 transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                        >
+                            <FileText className="w-4 h-4" aria-hidden="true" />
+                            <span>Glosario</span>
+                        </a>
+
+                        <!-- Nota de Prensa -->
+                        <a
+                            href="https://ilsa.org.co/2026/11/cien-dias-bajo-presion-gobierno-de-la-espriella/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="w-full sm:w-[300px] inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-slate-100/80 backdrop-blur-sm border border-slate-200/60 text-slate-700 rounded-[var(--radius-xl)] font-semibold text-sm hover:bg-slate-200 transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                        >
+                            <ExternalLink className="w-4 h-4" aria-hidden="true" />
+                            <span>Nota de Prensa</span>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Footnotes Section -->
+                <section id="referencias" class="pt-8 border-t border-slate-200/60">
+                    <h3 class="text-lg font-bold text-slate-400 uppercase tracking-[0.2em] text-center mb-8">Referencias y notas</h3>
+                    <div class="max-w-2xl mx-auto space-y-3">
+                        {footnotes.map((fn) => (
+                            <SimpleAccordion
+                                id={"fn-" + fn.id}
+                                title={"[" + fn.id + "]"}
+                                class="border-slate-100"
+                                isOpen={true}
+                            >
+                                <p id={"fn-text-" + fn.id} class="text-sm text-slate-600 leading-relaxed">
+                                    {fn.text}
+                                    <a href={"#fn-ref-" + fn.id} class="ml-2 text-orange-600 hover:text-orange-800 font-bold">↩</a>
+                                </p>
+                            </SimpleAccordion>
+                        ))}
+                    </div>
+                </section>
+
+                <!-- Cierre institucional -->
+                <footer class="pt-8 text-center border-t border-slate-200/60 max-w-2xl mx-auto">
+                    <div class="flex items-center justify-center gap-3 mb-4">
+                        <div class="h-px w-8 bg-slate-200"></div>
+                        <span class="text-xs text-orange-700 font-bold uppercase tracking-[0.2em]">ILSA · Observatorio de la Democracia · 2026</span>
+                        <div class="h-px w-8 bg-slate-200"></div>
+                    </div>
+                    <p class="text-sm text-slate-500">
+                        Instituto Latinoamericano para una Sociedad y un Derecho Alternativos
+                    </p>
+                    <p class="text-xs text-slate-400 mt-1">
+                        Dirección y coordinación: Clara López Obregón · Equipo: Oscar Aguillón, Nem Patiño, Lina Sarmiento, Yurany Silva
+                    </p>
+                </footer>
+            </div>
+
+            <!-- Share Buttons Section moved to top -->
+            <!-- Removed duplicate from footer -->
+            <div class="mt-8 max-w-5xl mx-auto px-4 md:px-8">
+            </div>
+        </div>
+    </div>
+</Layout>
+
+<script>
+    // Handle footnote reference clicks - scroll to and open the accordion
+    document.addEventListener('click', (e: MouseEvent) => {
+        const target = e.target as HTMLElement | null;
+        if (!target || !target.closest) return;
+        
+        const footnoteRef = target.closest('.footnote-ref');
+        if (!footnoteRef) return;
+
+        e.preventDefault();
+        const href = footnoteRef.getAttribute('href');
+        if (!href || !href.startsWith('#fn-')) return;
+
+        const targetId = href.slice(1); // Remove #
+
+        // Call the global function from SimpleAccordion if it exists
+        const scrollFn = (window as unknown as { scrollToFootnote?: (id: string) => void }).scrollToFootnote;
+        if (typeof scrollFn === 'function') {
+            scrollFn(targetId);
+        } else {
+            // Fallback: just scroll to element
+            const targetEl = document.getElementById(targetId);
+            if (targetEl) {
+                targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+        
+        // Add highlight
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+            targetElement.classList.add('ring-2', 'ring-orange-500', 'rounded');
+            setTimeout(() => targetElement.classList.remove('ring-2', 'ring-orange-500', 'rounded'), 2000);
+        }
+    });
+
+    // Entrance animations for page elements
+    function animatePageElements() {
+      const elements = document.querySelectorAll('[data-animate]');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement;
+            let delay = 0;
+            
+            if (el.dataset.animate === 'stagger') {
+              // Parent stagger container - animate children
+              const children = el.querySelectorAll('[data-animate]');
+              children.forEach((child, childIndex) => {
+                const childDelay = childIndex * 80;
+                setTimeout(() => child.classList.add('animate-in'), childDelay);
+              });
+            } else {
+              // Individual element with optional CSS custom property delay
+              const styleDelay = parseInt(el.style.getPropertyValue('--delay') || '0', 10);
+              delay = styleDelay;
+              setTimeout(() => el.classList.add('animate-in'), delay);
+            }
+            observer.unobserve(el);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+      elements.forEach((el) => observer.observe(el));
+    }
+
+    // Ejecutar en carga y en transiciones de Astro
+    document.addEventListener('astro:page-load', animatePageElements);
+    document.addEventListener('DOMContentLoaded', animatePageElements);
+</script>
