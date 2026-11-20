@@ -5,7 +5,9 @@ import ReadingProgress from "../../../components/atoms/ReadingProgress.astro";
 import ShareButtons from "../../../components/atoms/ShareButtons.astro";
 import SimpleAccordion from "../../../components/molecules/SimpleAccordion.astro";
 import SemaphoreChart from "../../../components/molecules/SemaphoreChart.astro";
-import { MapPin, Calendar, ExternalLink, AlertTriangle, FileText, Download } from "lucide-react";
+import Button from "../../../components/Button.astro";
+import { ArrowRight, AlertTriangle, ChevronDown, FileText } from "lucide-react";
+import { cn } from "../../../lib/utils";
 import type { SeoData } from "../../../lib/seo";
 
 export const prerender = true;
@@ -256,6 +258,14 @@ const keyFigures = [
     { value: "64,1%", label: "Riesgo grave o erosión" },
     { value: "4/6", label: "Episodios de erosión en oposición" },
 ];
+
+const docs = [
+    { title: "Final Report", sub: "English · PDF", href: "https://api.ilsa.org.co/wp-content/uploads/2026/11/100-Days-under-pressure-Final-Report-.pdf", lang: 'en' },
+    { title: "Executive Summary", sub: "English · PDF", href: "https://api.ilsa.org.co/wp-content/uploads/2026/11/OneH-undred-Days-Under-Pressure-Summary-EN.pdf", lang: 'en' },
+    { title: "Consolidated Summary of Episodes", sub: "English · PDF", href: "https://api.ilsa.org.co/wp-content/uploads/2026/11/Consolidated_Summary_297_Records_10_Nov_2026_EN.pdf", lang: 'en' },
+    { title: "Informe Final", sub: "Español · PDF", href: "https://api.ilsa.org.co/wp-content/uploads/2026/11/Informe-Final-Cien-ddias-bajo-presion-Nov-2026-1.pdf", lang: 'es' },
+    { title: "Resumen Consolidado de Episodios", sub: "Español · PDF", href: "https://api.ilsa.org.co/wp-content/uploads/2026/11/Resumen_Consolidado_297_Fichas_10_nov_2026-1.pdf", lang: 'es' },
+];
 ---
 
 <Layout
@@ -306,6 +316,10 @@ const keyFigures = [
                         as="span"
                     />
                 </h1>
+                
+                <p class="text-xl md:text-2xl text-center font-medium text-slate-400 mt-2 tracking-tight">
+                    100 Days Under Pressure
+                </p>
 
                 <p class="text-lg md:text-xl lg:text-2xl text-center text-slate-600 max-w-3xl mx-auto text-balance leading-relaxed font-light mt-4">
             Una auditoría democrática de los primeros cien días del gobierno del presidente Abelardo de la Espriella en Colombia
@@ -314,22 +328,71 @@ const keyFigures = [
             <b>Dirección y coordinación:</b> Clara López Obregón
         </p>
 
-                <!-- Metadata Row -->
-                <div class="flex flex-wrap items-center justify-center gap-4 md:gap-6 pt-6 text-sm text-slate-500 font-medium">
-                    <div class="flex items-center gap-2 bg-white/60 px-4 py-2.5 rounded-full border border-white/70 backdrop-blur-sm shadow-sm">
-                        <MapPin className="w-4 h-4 text-orange-600" />
-                        <span>Colombia</span>
-                    </div>
-                    <div class="flex items-center gap-2 bg-white/60 px-4 py-2.5 rounded-full border border-white/70 backdrop-blur-sm shadow-sm">
-                        <Calendar className="w-4 h-4 text-orange-600" />
-                        <span>Periodo: 7 agosto – 10 noviembre 2026</span>
-                    </div>
-                    <div class="flex items-center gap-2 bg-white/60 px-4 py-2.5 rounded-full border border-white/70 backdrop-blur-sm shadow-sm">
-                        <FileText className="w-4 h-4 text-[var(--ilsa-blue)]" />
-                        <span>Versión de divulgación</span>
+                <!-- Documentos del informe -->
+                <div class="pt-10 md:pt-14" data-animate="slide-up">
+                    <h3 class="text-xl md:text-2xl lg:text-3xl text-center font-bold text-slate-800 mb-8 tracking-tight">
+                        Read the <span class="text-orange-600">Special Report</span>
+                    </h3>
+                    <div class="flex flex-wrap justify-center gap-4 max-w-5xl mx-auto">
+                        {docs.filter(d => d.lang === 'en').map((doc) => (
+                            <Button
+                                href={doc.href}
+                                variant="outline"
+                                size="lg"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="group flex h-auto w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1rem)] items-center justify-between gap-3 rounded-2xl border border-white/60 bg-white/55 px-5 py-4 text-left shadow-md shadow-slate-200/50 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-orange-200/60 hover:bg-white/70 hover:shadow-lg hover:shadow-orange-100/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 motion-reduce:transform-none motion-reduce:transition-none"
+                            >
+                                <span class="flex min-w-0 items-center gap-3">
+                                    <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-50 text-orange-600 transition-colors group-hover:bg-orange-100">
+                                        <FileText className="w-5 h-5" aria-hidden="true" />
+                                    </span>
+                                    <span class="flex min-w-0 flex-col">
+                                        <span class="text-sm font-bold leading-tight text-slate-900">{doc.title}</span>
+                                        <span class="mt-1 text-xs font-medium text-slate-500">{doc.sub}</span>
+                                    </span>
+                                </span>
+                                <ArrowRight
+                                    className="h-4 w-4 shrink-0 text-orange-400 transition-all duration-300 group-hover:translate-x-1 group-hover:text-orange-600 motion-reduce:transform-none"
+                                    aria-hidden="true"
+                                />
+                            </Button>
+                        ))}
+
+                        <!-- Separador de Idioma -->
+                        <div class="w-full flex items-center gap-4 py-6 opacity-60">
+                            <div class="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300 to-slate-300"></div>
+                            <span class="text-[10px] uppercase tracking-[0.3em] font-black text-slate-400">Versión en Español</span>
+                            <div class="h-px flex-1 bg-gradient-to-l from-transparent via-slate-300 to-slate-300"></div>
+                        </div>
+
+                        {docs.filter(d => d.lang === 'es').map((doc) => (
+                            <Button
+                                href={doc.href}
+                                variant="outline"
+                                size="lg"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="group flex h-auto w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1rem)] items-center justify-between gap-3 rounded-2xl border border-white/60 bg-white/55 px-5 py-4 text-left shadow-md shadow-slate-200/50 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-orange-200/60 hover:bg-white/70 hover:shadow-lg hover:shadow-orange-100/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 motion-reduce:transform-none motion-reduce:transition-none"
+                            >
+                                <span class="flex min-w-0 items-center gap-3">
+                                    <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-50 text-orange-600 transition-colors group-hover:bg-orange-100">
+                                        <FileText className="w-5 h-5" aria-hidden="true" />
+                                    </span>
+                                    <span class="flex min-w-0 flex-col">
+                                        <span class="text-sm font-bold leading-tight text-slate-900">{doc.title}</span>
+                                        <span class="mt-1 text-xs font-medium text-slate-500">{doc.sub}</span>
+                                    </span>
+                                </span>
+                                <ArrowRight
+                                    className="h-4 w-4 shrink-0 text-orange-400 transition-all duration-300 group-hover:translate-x-1 group-hover:text-orange-600 motion-reduce:transform-none"
+                                    aria-hidden="true"
+                                />
+                            </Button>
+                        ))}
                     </div>
                 </div>
-                
+
                 <!-- Share Buttons Section -->
                 <div class="pt-6 flex justify-center">
                     <ShareButtons
@@ -337,7 +400,15 @@ const keyFigures = [
                         title="Cien días bajo presión: Auditoría democrática de los primeros 100 días del gobierno de Abelardo de la Espriella | ILSA"
                     />
                 </div>
-            </div>
+
+                <!-- Pista de scroll de página -->
+                <div
+                    id="scroll-hint"
+                    class="scroll-hint mt-6 hidden items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 md:flex"
+                >
+                    <span>Desliza para explorar el informe</span>
+                    <ChevronDown className="scroll-hint__icon h-4 w-4 text-orange-500" aria-hidden="true" />
+                </div>
 
             <!-- Main Liquid Glass Container -->
             <div class="bg-white/50 backdrop-blur-3xl border border-white/60 shadow-2xl shadow-slate-200/50 rounded-[3rem] p-6 md:p-10 lg:p-14 space-y-12">
@@ -965,49 +1036,6 @@ const keyFigures = [
                     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-px bg-gradient-to-r from-transparent via-orange-400 to-transparent"></div>
                 </div>
 
-                <!-- Action Buttons Section -->
-                <section class="text-center space-y-8 pt-4 text-center">
-                    <h3 class="text-3xl font-bold text-slate-900 text-center">Accede a los documentos</h3>
-                    <p class="text-slate-600 max-w-xl mx-auto">
-                        Consulta el informe, el glosario y nota de prensa.
-                    </p>
-
-                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <!-- Informe Completo -->
-                        <a
-                            href="https://api.ilsa.org.co/wp-content/uploads/2026/11/Informe-Final-Cien-ddias-bajo-presion-Nov-2026.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="w-full sm:w-[300px] inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-orange-600 text-white rounded-[var(--radius-xl)] font-semibold text-sm hover:bg-orange-700 transition-all duration-300 shadow-md shadow-orange-500/20 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-                        >
-                            <FileText className="w-4 h-4" aria-hidden="true" />
-                            <span>Informe</span>
-                        </a>
-
-                        <!-- Glosario -->
-                        <a
-                            href="https://api.ilsa.org.co/wp-content/uploads/2026/11/Resumen_Consolidado_297_Fichas_10_nov_2026.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="w-full sm:w-[300px] inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-white/80 backdrop-blur-sm border border-orange-200/60 text-orange-700 rounded-[var(--radius-xl)] font-semibold text-sm hover:bg-orange-50 transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-                        >
-                            <FileText className="w-4 h-4" aria-hidden="true" />
-                            <span>Glosario</span>
-                        </a>
-
-                        <!-- Nota de Prensa -->
-                        <a
-                            href="https://ilsa.org.co/2026/11/cien-dias-bajo-presion-gobierno-de-la-espriella/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="w-full sm:w-[300px] inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-slate-100/80 backdrop-blur-sm border border-slate-200/60 text-slate-700 rounded-[var(--radius-xl)] font-semibold text-sm hover:bg-slate-200 transition-all duration-300 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-                        >
-                            <ExternalLink className="w-4 h-4" aria-hidden="true" />
-                            <span>Nota de Prensa</span>
-                        </a>
-                    </div>
-                </section>
-
                 <!-- Footnotes Section -->
                 <section id="referencias" class="pt-8 border-t border-slate-200/60">
                     <h3 class="text-lg font-bold text-slate-400 uppercase tracking-[0.2em] text-center mb-8">Referencias y notas</h3>
@@ -1120,4 +1148,41 @@ const keyFigures = [
     // Ejecutar en carga y en transiciones de Astro
     document.addEventListener('astro:page-load', animatePageElements);
     document.addEventListener('DOMContentLoaded', animatePageElements);
+
+    // Oculta la pista "Desliza" cuando el usuario recorre la tira de documentos
+    const docsHint = document.getElementById('scroll-hint');
+    if (docsHint) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 200) {
+                docsHint.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
+            }
+        }, { passive: true });
+    }
 </script>
+
+<style>
+    #scroll-hint {
+        transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .scroll-hint__icon {
+        animation: scroll-hint-float 1.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+    }
+    @keyframes scroll-hint-float {
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(4px);
+        }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        #scroll-hint {
+            transition: none;
+        }
+        .scroll-hint__icon {
+            animation: none;
+        }
+    }
+</style>
